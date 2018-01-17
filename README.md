@@ -34,15 +34,15 @@ About Conway's Game of Life :
   
   * Click / drag left vertical slider to change simulation speed.
   
-  * Click / drag right vertical slider to change cell size (min. 1 pixel).
+  * Click / drag right vertical slider to zoom in or out.
     
   * Click # to switch the grid on or off.
     The grid does not show when the cell size is 1 pixel.
     
   * Click current position (x,y) to go to position 0,0.
   
-  * Click P to see instructions or add a pattern to the universe by
-    pasting RLE formatted text
+  * Click P to show a text box with instructions and to add a pattern to
+    the universe by pasting RLE formatted text.
 
 <br>
 
