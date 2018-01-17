@@ -231,11 +231,12 @@ var patttxt =
       '#  is clicked, all the cells in the target grid are first set off. That is the\n' +
       '#  grid positioned around the center of the screen having the same\n' +
       '#  height and width as the decoded grid/pattern. Then the "on" cells\n' +
-      '#  of the pattern are added. The "/Reset" button is like "/Replace",\n' +
-      '#  but sets of all cells in the universe.\n' +
+      '#  of the pattern are added. The "/Reset" button sets off *all* cells\n' +
+      '#  in the universe and resets the generation counter, before adding\n' +
+      '#  the pattern.\n' +
       '\n' +
-      '#  A running simulation interferes with the process; you might want\n' +
-      '#  to stop it first before clicking "Run!".\n' +
+      '#  Although allowed, a concurrently running simulation interferes with\n' +
+      '#  the process. You might want to stop it first before clicking "Run!".\n' +
       '\n' +
       '\n' +
       '#  -----  GENERAL INSTRUCTIONS  -----\n' +
@@ -271,6 +272,7 @@ var patttxt =
       'x = 36, y = 9, rule = B3/S23\n' +
       '24bo11b$22bobo11b$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2o8bo5bo3b2o14b$2o8b\n' +
       'o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!';
+      
 window.onload = function(e) {
   document.getElementById('patternt').value = patttxt;
   canvas = document.getElementById('canvas');
@@ -340,7 +342,7 @@ window.onload = function(e) {
         sclpy2 = (posy - sclpy * cellsz) / cellsz;
       }
       scale = 100 - 100*(e.pageY-sclby)/sclbh;
-      cellsz = 1 + cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
+      calcCellsz();
       if (cellsz > 1) {
         if (sclpx < 0) {
           posx = (sclpx+1) * (cellsz+1) - cellsz;
@@ -455,6 +457,7 @@ function animate(ts) {
   runsim();
   requestAnimationFrame(animate); 
 }
+
 function runsim() {
   var x, y;
   chgcsz = chggsz = chgpos = false;
@@ -468,7 +471,7 @@ function runsim() {
     canvash.height = osh;
     tmet = null;
   }
-  cellsz = 1 + cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
+  calcCellsz();
   if (scl) {
     if (cellsz > 1) {
       if (sclpx < 0) {
@@ -562,6 +565,13 @@ function runsim() {
       titlefd = titlefds;
       titlemode++;
     }
+  }
+}
+
+function calcCellsz() {
+  cellsz = 1 + cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
+  if (cellsz < 1.1) {
+    cellsz = 1;
   }
 }
 
@@ -1217,6 +1227,7 @@ function runf1() {
     if (runpattm == 3) {
       cells = [];
       cidx = {};
+      gennum = 0;
     }
     return;
   }
