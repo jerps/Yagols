@@ -251,7 +251,7 @@ var patttxt =
       '#      Click green >> (running) to stop.\n' +
       '\n' +
       '#  *  Click / drag left vertical slider to change simulation speed.\n' +
-      '#      Click / drag right vertical slider to change cell size (min. 1 pixel).\n' +
+      '#      Click / drag right vertical slider to zoom in or out.\n' +
       '\n' +
       '#  *  Click # to switch the grid on or off.\n' +
       '#      The grid does not show when the cell size is 1 pixel.\n' +
@@ -339,7 +339,7 @@ window.onload = function(e) {
         sclpy2 = (posy - sclpy * cellsz) / cellsz;
       }
       scale = 100 - 100*(e.pageY-sclby)/sclbh;
-      cellsz = 1 + Math.floor(cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024);
+      cellsz = 1 + cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
       if (cellsz > 1) {
         if (sclpx < 0) {
           posx = (sclpx+1) * (cellsz+1) - cellsz;
@@ -467,7 +467,7 @@ function runsim() {
     canvash.height = osh;
     tmet = null;
   }
-  cellsz = 1 + Math.floor(cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024);
+  cellsz = 1 + cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
   if (scl) {
     if (cellsz > 1) {
       if (sclpx < 0) {
