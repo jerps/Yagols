@@ -33,7 +33,8 @@ About Conway's Game of Life :
   * Click green >> (running) to stop.
   
   * Click / drag left vertical slider to change simulation speed.
-    Click / drag right vertical slider to change cell size (min. 1 pixel).
+  
+  * Click / drag right vertical slider to change cell size (min. 1 pixel).
     
   * Click # to switch the grid on or off.
     The grid does not show when the cell size is 1 pixel.
