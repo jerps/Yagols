@@ -42,7 +42,8 @@ About Conway's Game of Life :
   * Click current position (x,y) to go to position 0,0.
   
   * Click P to show a text box with instructions and to add a pattern to
-    the universe by pasting RLE formatted text.
+    the universe by pasting RLE formatted text. Click P again to hide the
+    text box.
 
 <br>
 
