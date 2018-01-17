@@ -2,7 +2,7 @@
 
 Yagols is a smooth browser implementation of the cellular automaton simulation called Conway's Game of Life.
 <br>
-It consists of one .html page with HTML, CSS and JavaScript, with no further dependencies.
+It consists of one .html page containing JavaScript and a bit of HTML/CSS, with no further dependencies.
 
 <br> 
 
