@@ -26,7 +26,7 @@ About Conway's Game of Life :
   * Click and hold button to continuously set cells on or off.
     Release button to stop.
     
-  * Click and drag the universe to change the viewing position.
+  * Click and drag the universe to change viewing position.
   
   * Click blue || (stopped) to start the simulation.
   
@@ -41,8 +41,8 @@ About Conway's Game of Life :
     
   * Click current position (x,y) to go to position 0,0.
   
-  * Click P to add a pattern to the universe by pasting RLE formatted
-    text into a text box.
+  * Click P to see instructions or add a pattern to the universe by
+    pasting RLE formatted text
 
 <br>
 

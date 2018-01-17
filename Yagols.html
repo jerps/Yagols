@@ -245,7 +245,7 @@ var patttxt =
       '#  *  Click and hold button to continuously set cells on or off.\n' +
       '#      Release button to stop.\n' +
       '\n' +
-      '#  *  Click and drag the universe to change the viewing position.\n' +
+      '#  *  Click and drag the universe to change viewing position.\n' +
       '\n' +
       '#  *  Click blue || (stopped) to start the simulation.\n' +
       '#      Click green >> (running) to stop.\n' +
@@ -258,8 +258,8 @@ var patttxt =
       '\n' +
       '#  *  Click current position (x,y) to go to position 0,0.\n' +
       '\n' +
-      '#  *  Click P to add a pattern to the universe by pasting RLE formatted\n' +
-      '#      text into a text box.\n' +
+      '#  *  Click P to show a text box with instructions and to add a pattern\n' +
+      '#      to the universe by pasting RLE formatted text.\n' +
       '\n' +
       '\n' +
       '#N Gosper glider gun\n' +
@@ -376,10 +376,14 @@ window.onload = function(e) {
     } else if (e.pageX > pattbx && e.pageX < pattbx+pattbw && e.pageY > pattby && e.pageY < pattby+pattbh) {
       if (!pattb) {
         patt = !patt;
-        if (patt)
+        if (patt) {
           document.getElementById('pattern').style.display = "block";
-        else
+          if (document.getElementById('patternt').value == "") {
+            document.getElementById('patternt').value = patttxt;
+          }
+        } else {
           document.getElementById('pattern').style.display = "none";
+        }
       }
       pattb = true;
     } else if (e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth) {
