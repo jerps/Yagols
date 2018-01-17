@@ -14,7 +14,7 @@ About Conway's Game of Life :
 
 <br>
 
-## [Run the simulator . . .](http://erps.me/Yagols)
+## [Run the simulator . . .](http://erps.me/Yagols.html)
 
 
 <br>
