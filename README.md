@@ -37,7 +37,7 @@ About Conway's Game of Life :
   * Click / drag right vertical slider to zoom in or out.
     
   * Click # to switch the grid on or off.
-    The grid does not show when maximally zoomed out (1 pixel/cell).
+    The grid only shows when not too far zoomed out, (>16 pixels/cell).
     
   * Click current position (x,y) to go to position 0,0.
   
@@ -51,6 +51,12 @@ About Conway's Game of Life :
 
 <br>
 
+* V1.1 (jan 2018)
+  
+  * Bugfixes and improvements.
+  
+<br>
+  
 * V1 (jan 2018)
   
   * Initial

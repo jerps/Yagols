@@ -1,6 +1,6 @@
 <!--
 
-Yagols V1
+Yagols V1.1
 
 Copyright (c) 2018 John Erps
 
@@ -180,6 +180,7 @@ var dsppost = false, dsppostx = 0, dspposty = 0, dsppostw = 0, dspposth = 0;
 var patt = false, pattb = false, pattbx = 0, pattby = 0, pattbw = 0, pattbh = 0;
 var runpatt = null, runpattf = 0, runpattpos = 0, runpattd = null, runpattnt = 0, runpatth = 0, runpattw = 0, runpattnl = false, runpattm = 0, runpattnum = 0, runpatthx = 0, runpattnr = true, runpattx = 0, runpattnx = 0, runpattz = 0, runpattzx = null, runpattzy = 0, runpattzxp = 0, runpattzyp = 0, runpattnn = true, runpattz2 = 0, runpatta = [];
 var cidx = {};
+var grb = 4;
 var patttxt =
       '#  Welcome to Yagols, Yet another Game of Life simulator !\n' +
       '\n' +
@@ -232,8 +233,8 @@ var patttxt =
       '#  grid positioned around the center of the screen having the same\n' +
       '#  height and width as the decoded grid/pattern. Then the "on" cells\n' +
       '#  of the pattern are added. The "/Reset" button sets off *all* cells\n' +
-      '#  in the universe and resets the generation counter, before adding\n' +
-      '#  the pattern.\n' +
+      '#  in the universe, resets the generation counter and sets the viewing\n' +
+      '#  area\'s position to 0,0, before adding the pattern.\n' +
       '\n' +
       '#  Although allowed, a concurrently running simulation interferes with\n' +
       '#  the process. You might want to stop it first before clicking "Run!".\n' +
@@ -255,7 +256,7 @@ var patttxt =
       '#      Click / drag right vertical slider to zoom in or out.\n' +
       '\n' +
       '#  *  Click # to switch the grid on or off.\n' +
-      '#      The grid does not show when maximally zoomed out (1 pixel/cell).\n' +
+      '#      The grid only shows when not too far zoomed out, (>16 pixels/cell).\n' +
       '\n' +
       '#  *  Click current position (x,y) to go to position 0,0.\n' +
       '\n' +
@@ -274,11 +275,11 @@ var patttxt =
       'o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!';
       
 window.onload = function(e) {
-  document.getElementById('patternt').value = patttxt;
-  canvas = document.getElementById('canvas');
+  document.getElementById("patternt").value = patttxt;
+  canvas = document.getElementById("canvas");
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
-  canvash = document.getElementById('canvash');
+  canvash = document.getElementById("canvash");
   canvash.width = canvash.offsetWidth;
   canvash.height = canvash.offsetHeight;
   cellisz = Math.floor(canvas.width > canvas.height ? canvas.width / 80 : canvas.height / 80);
@@ -286,8 +287,8 @@ window.onload = function(e) {
     cellisz = 1;
   }
   cellsz = cellisz;
-  ctx = canvas.getContext('2d');
-  ctxh = canvash.getContext('2d');
+  ctx = canvas.getContext("2d");
+  ctxh = canvash.getContext("2d");
   titlefd = Math.floor(titlefds/3);
   canvas.addEventListener("mousedown", function(e) {
     if (e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr) {
@@ -296,7 +297,7 @@ window.onload = function(e) {
       scld = e.pageY - scly;
       sclpx = cellX(0);
       sclpy = cellY(0);
-      if (cellsz > 1) {
+      if (cellsz > grb) {
         if (sclpx < 0) {
           sclpx2 = (posx - ((sclpx+1) * (cellsz+1) - cellsz)) / cellsz;;
         } else {
@@ -305,7 +306,7 @@ window.onload = function(e) {
       } else {
         sclpx2 = (posx - sclpx * cellsz) / cellsz;
       }
-      if (cellsz > 1) {
+      if (cellsz > grb) {
         if (sclpy < 0) {
           sclpy2 = (posy - ((sclpy+1) * (cellsz+1) - cellsz)) / cellsz;
         } else {
@@ -323,7 +324,7 @@ window.onload = function(e) {
     } else if (e.pageX >= sclbx && e.pageX < sclbx+sclbw && e.pageY >= sclby && e.pageY < sclby+sclbh) {
       sclpx = cellX(0);
       sclpy = cellY(0);
-      if (cellsz > 1) {
+      if (cellsz > grb) {
         if (sclpx < 0) {
           sclpx2 = (posx - ((sclpx+1) * (cellsz+1) - cellsz)) / cellsz;;
         } else {
@@ -332,7 +333,7 @@ window.onload = function(e) {
       } else {
         sclpx2 = (posx - sclpx * cellsz) / cellsz;
       }
-      if (cellsz > 1) {
+      if (cellsz > grb) {
         if (sclpy < 0) {
           sclpy2 = (posy - ((sclpy+1) * (cellsz+1) - cellsz)) / cellsz;
         } else {
@@ -343,7 +344,7 @@ window.onload = function(e) {
       }
       scale = 100 - 100*(e.pageY-sclby)/sclbh;
       calcCellsz();
-      if (cellsz > 1) {
+      if (cellsz > grb) {
         if (sclpx < 0) {
           posx = (sclpx+1) * (cellsz+1) - cellsz;
         } else {
@@ -353,7 +354,7 @@ window.onload = function(e) {
         posx = sclpx * cellsz;
       }
       posx += Math.floor(cellsz * sclpx2);
-      if (cellsz > 1) {
+      if (cellsz > grb) {
         if (sclpy < 0) {
           posy = (sclpy+1) * (cellsz+1) - cellsz;
         } else {
@@ -380,12 +381,12 @@ window.onload = function(e) {
       if (!pattb) {
         patt = !patt;
         if (patt) {
-          document.getElementById('pattern').style.display = "block";
-          if (document.getElementById('patternt').value == "") {
-            document.getElementById('patternt').value = patttxt;
+          document.getElementById("pattern").style.display = "block";
+          if (document.getElementById("patternt").value == "") {
+            document.getElementById("patternt").value = patttxt;
           }
         } else {
-          document.getElementById('pattern').style.display = "none";
+          document.getElementById("pattern").style.display = "none";
         }
       }
       pattb = true;
@@ -473,7 +474,7 @@ function runsim() {
   }
   calcCellsz();
   if (scl) {
-    if (cellsz > 1) {
+    if (cellsz > grb) {
       if (sclpx < 0) {
         posx = (sclpx+1) * (cellsz+1) - cellsz;
       } else {
@@ -483,7 +484,7 @@ function runsim() {
       posx = sclpx * cellsz;
     }
     posx += Math.floor(cellsz * sclpx2);
-    if (cellsz > 1) {
+    if (cellsz > grb) {
       if (sclpy < 0) {
         posy = (sclpy+1) * (cellsz+1) - cellsz;
       } else {
@@ -531,7 +532,7 @@ function runsim() {
     drawbackg = false;
     ctxh.fillStyle = "rgba(0,0,0,1)";
     ctxh.fillRect(0, 0, canvash.width, canvash.height);
-    if (dspgrd && cellsz > 1) {
+    if (dspgrd && cellsz > grb) {
       drawGrid();
     }
   }
@@ -569,10 +570,7 @@ function runsim() {
 }
 
 function calcCellsz() {
-  cellsz = 1 + cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
-  if (cellsz < 1.1) {
-    cellsz = 1;
-  }
+  cellsz = cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
 }
 
 function toggleCell(x, y) {
@@ -604,7 +602,7 @@ function toggleCellCR(c, r, x) {
 
 function cellX(x) {
   var p = posx + x;
-  if (cellsz > 1) {
+  if (cellsz > grb) {
     if (p < 0) {
       p = Math.ceil(p / (cellsz+1)) - 1;
     } else {
@@ -622,7 +620,7 @@ function cellX(x) {
 
 function cellY(y) {
   var p = posy + y;
-  if (cellsz > 1) {
+  if (cellsz > grb) {
     if (p < 0) {
       p = Math.ceil(p / (cellsz+1)) - 1;
     } else {
@@ -640,14 +638,16 @@ function cellY(y) {
 
 function drawCells() {
   var l = cells.length;
+  ctx.save();
   for (var i = 0; i < l; i++) {
     drawCell(cells[i].c, cells[i].r, cells[i].g);
   }
+  ctx.restore();
 }
 
 function drawCell(x, y, g) {
-  var px, py, px2, py2, s;
-  if (cellsz > 1) {
+  var px, py, px2, py2, s, w, h;
+  if (cellsz > grb) {
     if (x < 0) {
       px = (x+1) * (cellsz+1) - cellsz;
     } else {
@@ -656,7 +656,7 @@ function drawCell(x, y, g) {
   } else {
     px = x * cellsz;
   }
-  if (cellsz > 1) {
+  if (cellsz > grb) {
     if (y < 0) {
       py = (y+1) * (cellsz+1) - cellsz;
     } else {
@@ -681,10 +681,12 @@ function drawCell(x, y, g) {
   if (py2 < 0) {
     py2 = 0;
   }
-  if (px2-px + 1 > 0 && py-py2 + 1 > 0) {
+  w = px2-px+1;
+  h = py-py2+1;
+  if (w > 0 && h > 0) {
     s = g && mingen > 0 ? ""+Math.floor(255*(g-mingen)/(maxgen-mingen+1)) : "255";
     ctx.fillStyle = "rgba(200, 100, " + s + ", 1)";
-    ctx.fillRect(px, py2, px2-px+1, py-py2+1, 0, 2 * Math.PI);
+    ctx.fillRect(px, py2, w, h, 0, 2 * Math.PI);
   }
 }
 
@@ -850,18 +852,18 @@ function drawGridToggle() {
   ctx.save();
   ctx.font = "60px " + font;
   if (grdt || dspgrd) {
-    ctx.fillStyle = "#AAAAFF";
+    ctx.fillStyle = "#00AAFF";
   } else {
-    ctx.fillStyle = "#AAAAAA";
+    ctx.fillStyle = "#0044EE";
   }
   ctx.textBaseline = "bottom";
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#FFFFFF";
-  grdtx = canvas.width - 155;
+  grdtx = canvas.width - 230;
   ctx.fillText("#", grdtx, 120);
   grdty = 60;
-  grdtw = 50;
-  grdth = 60;
+  grdtw = 45;
+  grdth = 50;
   ctx.restore();
 }
 
@@ -878,11 +880,11 @@ function drawPlayToggle() {
   ctx.textBaseline = "bottom";
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#FFFFFF";
-  playtx = canvas.width - 280;
+  playtx = canvas.width - 360;
   if (play) {
     ctx.fillText(">>", playtx, 120);
   } else {
-    ctx.fillText("||", playtx, 120);
+    ctx.fillText(" ||", playtx, 120);
   }
   playty = 60;
   playtw = 100;
@@ -896,18 +898,18 @@ function drawPatternButton() {
   if (runpattf != 0) {
     ctx.fillStyle = "#EE4400";
   } else if (pattb || patt) {
-    ctx.fillStyle = "#AAAAFF";
+    ctx.fillStyle = "#00AAFF";
   } else {
-    ctx.fillStyle = "#AAAAAA";
+    ctx.fillStyle = "#0044EE";
   }
   ctx.textBaseline = "bottom";
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#FFFFFF";
-  pattbx = canvas.width - 75;
+  pattbx = canvas.width - 150;
   ctx.fillText("P", pattbx, 120);
   pattby = 60;
   pattbw = 40;
-  pattbh = 60;
+  pattbh = 50;
   ctx.restore();
 }
 
@@ -977,7 +979,7 @@ function drawPos() {
   dsppostw = 12 * s.length;
   dspposth = 25;
   ctx.fillStyle = "#AAAAAA";
-  s = "w" + Math.floor(canvas.width/(cellsz>1?cellsz+1:cellsz))+",h"+Math.floor(canvas.height/(cellsz>1?cellsz+1:cellsz));
+  s = "w" + Math.floor(canvas.width/(cellsz>grb?cellsz+1:cellsz))+",h"+Math.floor(canvas.height/(cellsz>grb?cellsz+1:cellsz));
   ctx.fillText(s, dsppostx - 25 - 11 * s.length, 35);
   ctx.restore();
 }
@@ -1193,8 +1195,15 @@ function run(mode) {
   runpattnx = 0;
   runpattnn = true;
   runpatta = [];
-  document.getElementById('pattern').style.display = "none";
+  document.getElementById("pattern").style.display = "none";
   patt = false;
+  if (runpattm == 3) {
+    cells = [];
+    cidx = {};
+    gennum = 0;
+    posx = 0;
+    posy = 0;
+  }
 }
 
 function runf1() {
@@ -1224,11 +1233,6 @@ function runf1() {
         return 1;
       }
     });
-    if (runpattm == 3) {
-      cells = [];
-      cidx = {};
-      gennum = 0;
-    }
     return;
   }
   var c = runpatt[runpattpos], c2 = runpattpos < runpatt.length - 1 ? runpatt.substring(runpattpos,runpattpos+2) : "";
