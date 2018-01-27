@@ -90,7 +90,8 @@ Yagols is one .html page with JavaScript and a bit of HTML/CSS, with no further 
      cells at a certain size. A bigger viewing area will show bigger cells.
      Cells of that initial size are considered to be 80% zoomed-in. The top
      left of the viewing area shows the number of pixels per cell (px/c).
-     Click on it to recalculate the initial cell size.
+     Click on it to recalculate the initial cell size, using the current
+     size of the viewing area.
 
 <br>
 <br>
