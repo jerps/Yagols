@@ -30,6 +30,11 @@
   
   * Change the rule
 
+<br>
+<br>
+
+## [To Yagols . . .](http://erps.me/Yagols.html)
+
 <br> 
 <br>
 
@@ -39,11 +44,6 @@
 >#### [rules](http://web.stanford.edu/~cdebs/GameOfLife/#rules)
 >#### [youtube](https://youtu.be/C2vgICfQawE)
 >#### [google](https://www.google.nl/search?q=conway+game+of+life)
-
-<br>
-<br>
-
-## [To Yagols . . .](http://erps.me/Yagols.html)
 
 <br>
 <br>
