@@ -1,16 +1,13 @@
 # Yagols - Yet another Game of Life simulator
 
 <br>
-<br>
 
 Yagols is a browser (canvas) implementation of the well-known cellular automaton simulation Conway's Game of Life.
 
 <br>
-<br>
 
 Yagols is one .html page with JavaScript and a bit of HTML/CSS, with no further dependencies.
 
-<br>
 <br>
 
 ### Features:
@@ -34,9 +31,9 @@ Yagols is one .html page with JavaScript and a bit of HTML/CSS, with no further 
 <br> 
 <br>
 
-###About Conway's Game of Life :
+### About Conway's Game of Life :
 
->#### [www.conwaylife.com](http://www.conwaylife.com)
+>#### [conwaylife](http://www.conwaylife.com)
 >#### [rules](http://web.stanford.edu/~cdebs/GameOfLife/#rules)
 >#### [youtube](https://youtu.be/C2vgICfQawE)
 >#### [google](https://www.google.nl/search?q=conway+game+of+life)
