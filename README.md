@@ -63,9 +63,9 @@ Yagols is one .html page with JavaScript and a bit of HTML/CSS, with no further 
   
   * Click > to calculate one new generation. Hold to repeat.
   
-  * Click / drag left vertical slider to change simulation speed.
+  * Click and drag left vertical slider to change simulation speed.
   
-  * Click / drag right vertical slider to zoom in or out.
+  * Click and drag right vertical slider to zoom in or out.
     
   * Click position (x,y) to go to position 0,0 in the universe (center).
     
