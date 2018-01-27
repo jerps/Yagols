@@ -1,6 +1,6 @@
 <!--
 
-Yagols V1.1
+Yagols V1.2
 
 Copyright (c) 2018 John Erps
 
@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>Yagols</title>
   <meta name="description" content="Yet another Game of Life simulator">
   <meta name="author" content="John Erps">
@@ -113,7 +113,7 @@ table {
   height: 80%;
   border-radius: 10px;
   border: 5px #FFAAAA solid;
-  color: #DDDDDD;
+  color: #CCCCCC;
   background-color: #444444;
   outline-width: 0;
   font-size: 16px;
@@ -160,7 +160,7 @@ table {
   </div>
 </body>
 <script>
-var title = [ "Yet another", "Game of Life", "simulator", "Conway's", ". Enjoy  ." ];
+var title = [ "Yet another", "Game of Life", "simulator", "Conway's", "Enjoy", "With Yagols", "click P for instructions" ];
 var font = "Verdana";
 var lts = null;
 var gennum = 0, speed = 20, play = false, posx = 0, posy = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80; cells = [];
@@ -180,18 +180,24 @@ var dsppost = false, dsppostx = 0, dspposty = 0, dsppostw = 0, dspposth = 0;
 var patt = false, pattb = false, pattbx = 0, pattby = 0, pattbw = 0, pattbh = 0;
 var runpatt = null, runpattf = 0, runpattpos = 0, runpattd = null, runpattnt = 0, runpatth = 0, runpattw = 0, runpattnl = false, runpattm = 0, runpattnum = 0, runpatthx = 0, runpattnr = true, runpattx = 0, runpattnx = 0, runpattz = 0, runpattzx = null, runpattzy = 0, runpattzxp = 0, runpattzyp = 0, runpattnn = true, runpattz2 = 0, runpatta = [];
 var cidx = {};
+var duni = false, dunib = false, dunibx = 0, duniby = 0, dunibw = 0, dunibh = 0, unix = 0, uniy = 0, uniw = 0, unih = 0, unim=24;
 var grb = 4;
+var genps = 0, gencs = 0;
+var cellsl = null, cellsr = null, cellst = null, cellsb = null;
+var dsppxct = false, dsppxctx = 0, dsppxcty = 0, dsppxctw = 0, dsppxcth = 0;
 var patttxt =
       '#  Welcome to Yagols, Yet another Game of Life simulator !\n' +
       '\n' +
       '\n' +
       '#  About Conway\'s Game of Life :\n' +
       '\n' +
-      '#      https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life\n' +
-      '\n' +
       '#      http://www.conwaylife.com\n' +
       '\n' +
+      '#      http://web.stanford.edu/~cdebs/GameOfLife/#rules\n' +
+      '\n' +
       '#      https://youtu.be/C2vgICfQawE\n' +
+      '\n' +
+      '#      https://www.google.nl/search?q=conway+game+of+life\n' +
       '\n' +
       '\n' +
       '#  See FURTHER DOWN this text for GENERAL INSTRUCTIONS.\n' +
@@ -207,10 +213,9 @@ var patttxt =
       '#  center of the current viewing area, by switching cells on and/or off.\n' +
       '\n' +
       '#  Cells are always two-state (cell is on or off). Any given dimension\n' +
-      '#  with line "x = ..." is simply ignored. Only the actual run-length\n' +
-      '#  encoded pattern data is relevant, which is decoded into a grid\n' +
-      '#  width and height, and the "on" cell positions in the grid which\n' +
-      '#  constitute the pattern.\n' + 
+      '#  with line "x = ..." is simply ignored. Only the actual encoded pattern\n' +
+      '#  data is relevant, which is decoded into a grid width and height, and\n' +
+      '#  the "on" cell positions in the grid which constitute the pattern.\n' +
       '\n' +
       '#  The decoder is very forgiving. Blank lines and lines where the\n' +
       '#  first non-whitespace character(s) begin with "#", "x=" or "x "\n' +
@@ -230,17 +235,19 @@ var patttxt =
       '#  the process just adds the "on" cells of the pattern to the universe,\n' +
       '#  centered in the current viewing area. When the "/Replace" button\n' +
       '#  is clicked, all the cells in the target grid are first set off. That is the\n' +
-      '#  grid positioned around the center of the screen having the same\n' +
-      '#  height and width as the decoded grid/pattern. Then the "on" cells\n' +
-      '#  of the pattern are added. The "/Reset" button sets off *all* cells\n' +
-      '#  in the universe, resets the generation counter and sets the viewing\n' +
-      '#  area\'s position to 0,0, before adding the pattern.\n' +
+      '#  grid positioned around the center of the viewing area having the\n' +
+      '#  same height and width as the decoded grid/pattern. Then the "on"\n' +
+      '#  cells of the pattern are added. The "/Reset" button sets off *all*\n' +
+      '#  cells in the universe, resets the generation counter and sets the\n' +
+      '#  viewing area\'s position to 0,0, before adding the pattern.\n' +
       '\n' +
       '#  Although allowed, a concurrently running simulation interferes with\n' +
       '#  the process. You might want to stop it first before clicking "Run!".\n' +
       '\n' +
       '\n' +
       '#  -----  GENERAL INSTRUCTIONS  -----\n' +
+      '\n' +
+      '#  *  Use a mouse.\n' +
       '\n' +
       '#  *  Double-click to set a cell on or off.\n' +
       '\n' +
@@ -249,20 +256,32 @@ var patttxt =
       '\n' +
       '#  *  Click and drag the universe to change viewing position.\n' +
       '\n' +
-      '#  *  Click blue || (stopped) to start the simulation.\n' +
-      '#      Click green >> (running) to stop.\n' +
+      '#  *  Click || (stopped) to start the simulation.\n' +
+      '#      Click >> (running) to stop.\n' +
       '\n' +
       '#  *  Click / drag left vertical slider to change simulation speed.\n' +
       '#      Click / drag right vertical slider to zoom in or out.\n' +
       '\n' +
-      '#  *  Click # to switch the grid on or off.\n' +
-      '#      The grid only shows when not too far zoomed out, (>16 pixels/cell).\n' +
+      '#  *  Click position (x,y) to go to position 0,0 in the universe (center).\n' +
       '\n' +
-      '#  *  Click current position (x,y) to go to position 0,0.\n' +
+      '#  *  Click # to switch the grid on or off.\n' +
+      '#      The grid only shows when not too far zoomed out (>16 pixels/cell).\n' +
       '\n' +
       '#  *  Click P to show a text box with instructions and to add a pattern\n' +
       '#      to the universe by pasting RLE formatted text. Click P again to\n' +
       '#      hide the text box.\n' +
+      '\n' +
+      '#  *  To clear/reset the universe click P, delete all text, then click\n' +
+      '#      "Run! /Reset". Or "refresh" the browser.\n' +
+      '\n' +
+      '#  *  Click O to show all "on" cells in the universe at once. Click anywhere\n' +
+      '#      within the cells to position the viewing area. Click O again to hide.\n' +
+      '\n' +
+      '#  *  When Yagols is (re)started (refresh page) the viewing area shows the\n' +
+      '#      cells at a certain size. A bigger viewing area will show bigger cells.\n' +
+      '#      Cells of that initial size are considered to be 80% zoomed-in. The\n' +
+      '#      top left of the viewing area shows the number of pixels per cell (px/c).\n' +
+      '#      Click on it to recalculate the initial cell size.\n' +
       '\n' +
       '\n' +
       '#N Gosper glider gun\n' +
@@ -275,6 +294,7 @@ var patttxt =
       'o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!';
       
 window.onload = function(e) {
+  var x1, x2, y1, y2, w, h;
   document.getElementById("patternt").value = patttxt;
   canvas = document.getElementById("canvas");
   canvas.width = canvas.offsetWidth;
@@ -282,15 +302,13 @@ window.onload = function(e) {
   canvash = document.getElementById("canvash");
   canvash.width = canvash.offsetWidth;
   canvash.height = canvash.offsetHeight;
-  cellisz = Math.floor(canvas.width > canvas.height ? canvas.width / 80 : canvas.height / 80);
-  if (cellisz < 1) {
-    cellisz = 1;
-  }
-  cellsz = cellisz;
+  calcICellsz();
+  calcCellsz();
   ctx = canvas.getContext("2d");
   ctxh = canvash.getContext("2d");
   titlefd = Math.floor(titlefds/3);
   canvas.addEventListener("mousedown", function(e) {
+    e.preventDefault();
     if (e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr) {
       curx = e.pageX;
       cury = e.pageY;
@@ -353,7 +371,7 @@ window.onload = function(e) {
       } else {
         posx = sclpx * cellsz;
       }
-      posx += Math.floor(cellsz * sclpx2);
+      posx += Math.ceil(cellsz * sclpx2);
       if (cellsz > grb) {
         if (sclpy < 0) {
           posy = (sclpy+1) * (cellsz+1) - cellsz;
@@ -363,7 +381,7 @@ window.onload = function(e) {
       } else {
         posy = sclpy * cellsz;
       }
-      posy += Math.floor(cellsz * sclpy2);
+      posy += Math.ceil(cellsz * sclpy2);
     } else if (e.pageX >= spdbx && e.pageX < spdbx+spdbw && e.pageY >= spdby && e.pageY < spdby+spdbh) {
       speed = 100 - 100*(e.pageY-spdby)/spdbh;      
     } else if (e.pageX > grdtx && e.pageX < grdtx+grdtw && e.pageY > grdty && e.pageY < grdty+grdth) {
@@ -390,11 +408,86 @@ window.onload = function(e) {
         }
       }
       pattb = true;
+    } else if (e.pageX > dunibx && e.pageX < dunibx+dunibw && e.pageY > duniby && e.pageY < duniby+dunibh) {
+      if (!dunib) {
+        duni = !duni;
+      }
+      dunib = true;
     } else if (e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth) {
       if (!dsppost) {
         posx = posy = 0;
       }
       dsppost = true;
+    } else if (e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth) {
+      if (!dsppxct) {
+        x1 = cellX(0);
+        y1 = cellY(0);
+        if (cellsz > grb) {
+          if (x1 < 0) {
+            x2 = (posx - ((x1+1) * (cellsz+1) - cellsz)) / cellsz;;
+          } else {
+            x2 = (posx - (x1 * (cellsz+1) + 1)) / cellsz;
+          }
+        } else {
+          x2 = (posx - x1 * cellsz) / cellsz;
+        }
+        if (cellsz > grb) {
+          if (y1 < 0) {
+            y2 = (posy - ((y1+1) * (cellsz+1) - cellsz)) / cellsz;
+          } else {
+            y2 = (posy - (y1 * (cellsz+1) + 1)) / cellsz;
+          }
+        } else {
+          y2 = (posy - y1 * cellsz) / cellsz;
+        }
+        calcICellsz();
+        calcCellsz();
+        if (cellsz > grb) {
+          if (x1 < 0) {
+            posx = (x1+1) * (cellsz+1) - cellsz;
+          } else {
+            posx = x1 * (cellsz+1) + 1;
+          }
+        } else {
+          posx = x1 * cellsz;
+        }
+        posx += Math.ceil(cellsz * x2);
+        if (cellsz > grb) {
+          if (y1 < 0) {
+            posy = (y1+1) * (cellsz+1) - cellsz;
+          } else {
+            posy = y1 * (cellsz+1) + 1;
+        }
+        } else {
+          posy = y1 * cellsz;
+        }
+        posy += Math.ceil(cellsz * y2);
+      }
+      dsppxct = true;
+    } else if (duni && cells.length > 0 && uniw > unim && unih > unim && e.pageX >= unix+unim/2-0.5 && e.pageX < unix+uniw-unim/2+0.5 && e.pageY > uniy+unim/2-0.5 && e.pageY < uniy+unih-unim/2+0.5) {
+      w = (uniw-unim) / (cellsr-cellsl+1);
+      h = (unih-unim) / (cellst-cellsb+1);
+      x1 = cellsl + Math.floor((e.pageX - unix-unim/2 + 0.5) / w);
+      y1 = cellst - Math.floor((e.pageY - uniy-unim/2 + 0.5) / h) + 1;
+      if (cellsz > grb) {
+        if (x1 < 0) {
+          posx = (x1+1) * (cellsz+1) - cellsz;
+        } else {
+          posx = x1 * (cellsz+1) + 1;
+        }
+      } else {
+        posx = x1 * cellsz;
+      }
+      posx += Math.floor(cellsz/2);
+      if (cellsz > grb) {
+        if (y1 < 0) {
+          posy = (y1+1) * (cellsz+1) - cellsz;
+        } else {
+          posy = y1 * (cellsz+1) + 1;
+        }
+      } else {
+        posy = y1 * cellsz;
+      }
     } else {
       if (!mdown) {
         toncd = 15;
@@ -406,35 +499,48 @@ window.onload = function(e) {
     }
   }, false);
   canvas.addEventListener("mouseup", function(e) {
+    e.preventDefault();
     scl = false;
     spd = false;
     grdt = false;
     playt = false;
     pattb = false;
+    dunib = false;
     dsppost = false;
+    dsppxct = false;
     mdown = false;
     toncd = 0;
   }, false);
   canvas.addEventListener("mousemove", function(e) {
+    e.preventDefault();
     curx = e.pageX;
     cury = e.pageY;
-    if (mdown && !ton) {
-      toncd = 0;
-      posx -= e.pageX - sx;
-      posy += e.pageY - sy;
-      sx = e.pageX;
-      sy = e.pageY;
+    if (!(duni && cells.length && e.pageX > unix && e.pageX < unix+uniw && e.pageY > uniy && e.pageY < uniy+unih)) {
+      if (mdown && !ton) {
+        toncd = 0;
+        posx -= e.pageX - sx;
+        posy += e.pageY - sy;
+        sx = e.pageX;
+        sy = e.pageY;
+      }
     }
   }, false);
   canvas.addEventListener("dblclick", function(e) {
+    e.preventDefault();
     if ((!(e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr))
+        && (!(duni && cells.length && e.pageX > unix && e.pageX < unix+uniw && e.pageY > uniy && e.pageY < uniy+unih))
         && (!(e.pageX > spdx-spdr && e.pageX < spdx+spdr && e.pageY > spdy-spdr && e.pageY < spdy+spdr))
         && (!(e.pageX > grdtx && e.pageX < grdtx+grdtw && e.pageY > grdty && e.pageY < grdty+grdth))
         && (!(e.pageX > playtx && e.pageX < playtx+playtw && e.pageY > playty && e.pageY < playty+playth))
         && (!(e.pageX > pattbx && e.pageX < pattbx+pattbw && e.pageY > pattby && e.pageY < pattby+pattbh))
-        && (!(e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth))) {
+        && (!(e.pageX > dunibx && e.pageX < dunibx+dunibw && e.pageY > duniby && e.pageY < duniby+dunibh))
+        && (!(e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth))
+        && (!(e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth))) {
       toggleCell(e.pageX, e.pageY);
     }
+  }, false); 
+  canvas.addEventListener("click", function(e) {
+    e.preventDefault();
   }, false); 
   requestAnimationFrame(animate);
   setInterval(function() {
@@ -483,7 +589,7 @@ function runsim() {
     } else {
       posx = sclpx * cellsz;
     }
-    posx += Math.floor(cellsz * sclpx2);
+    posx += Math.ceil(cellsz * sclpx2);
     if (cellsz > grb) {
       if (sclpy < 0) {
         posy = (sclpy+1) * (cellsz+1) - cellsz;
@@ -493,7 +599,7 @@ function runsim() {
     } else {
       posy = sclpy * cellsz;
     }
-    posy += Math.floor(cellsz * sclpy2);
+    posy += Math.ceil(cellsz * sclpy2);
   }
   if (mdown) {
     if (toncd > 0) {
@@ -538,11 +644,15 @@ function runsim() {
   }
   ctx.drawImage(canvash, 0, 0);
   drawCells();
+  if (duni && cells.length > 0) {
+    drawUni();
+  }
   drawScale();
   drawSpeed();
   drawGridToggle();
   drawPlayToggle();
   drawPatternButton();
+  drawUniButton();
   drawInfo();
   drawFramesSec();
   drawPos();
@@ -566,6 +676,13 @@ function runsim() {
       titlefd = titlefds;
       titlemode++;
     }
+  }
+}
+
+function calcICellsz() {
+  cellisz = Math.floor(canvas.width > canvas.height ? canvas.width / (2*Math.sqrt(canvas.width)) : canvas.height / (2*Math.sqrt(canvas.height)));
+  if (cellisz < 1) {
+    cellisz = 1;
   }
 }
 
@@ -598,6 +715,7 @@ function toggleCellCR(c, r, x) {
     cells.push({c:c,r:r});
     cidx[""+c+"-"+r] = true;
   }
+  calcUni();
 }
 
 function cellX(x) {
@@ -646,7 +764,7 @@ function drawCells() {
 }
 
 function drawCell(x, y, g) {
-  var px, py, px2, py2, s, w, h;
+  var px, py, px2, py2, w, h;
   if (cellsz > grb) {
     if (x < 0) {
       px = (x+1) * (cellsz+1) - cellsz;
@@ -683,11 +801,105 @@ function drawCell(x, y, g) {
   }
   w = px2-px+1;
   h = py-py2+1;
-  if (w > 0 && h > 0) {
-    s = g && mingen > 0 ? ""+Math.floor(255*(g-mingen)/(maxgen-mingen+1)) : "255";
-    ctx.fillStyle = "rgba(200, 100, " + s + ", 1)";
-    ctx.fillRect(px, py2, w, h, 0, 2 * Math.PI);
+  if (   w > 0 && h > 0
+      && (!duni || cells.length < 1 || px < unix || px > unix + uniw - w || py2 < uniy || py2 > uniy + unih - h)) {
+    ctx.fillStyle = "rgba(200, 100, " + (g && mingen > 0 ? ""+Math.floor(255*(g-mingen)/(maxgen-mingen+1)) : "255") + ", 0.7)";
+    ctx.fillRect(px, py2, w, h);
   }
+}
+
+function calcUni() {
+  var i;
+  cellsl = cellsr = cellst = cellsb = null;
+  if (cells.length > 0) {
+    for (i = 0; i < cells.length; i++) {
+      if (!cellsl || cells[i].c < cellsl) {
+        cellsl = cells[i].c;
+      }
+      if (!cellsr || cells[i].c > cellsr) {
+        cellsr = cells[i].c;
+      }
+      if (!cellst || cells[i].r > cellst) {
+        cellst = cells[i].r;
+      }
+      if (!cellsb || cells[i].r < cellsb) {
+        cellsb = cells[i].r;
+      }
+    }
+  }
+  calcUni2();
+}
+
+function calcUni2() {
+  if (cells.length > 0) {
+    if (canvas.height/canvas.width > (cellst-cellsb+1)/(cellsr-cellsl+1)) {
+      uniw = canvas.width * 0.8;
+      unih = uniw * (cellst-cellsb+1)/(cellsr-cellsl+1);
+    } else {
+      unih = canvas.height * 0.8;
+      uniw = unih * (cellsr-cellsl+1)/(cellst-cellsb+1);
+    }
+  } else {
+    uniw = 0;
+    unih = 0;
+  }
+}
+
+function drawUni() {
+  var i, ulw, w, h, x, y, x2, y2;
+  calcUni2();
+  if (uniw <= unim || unih <= unim) {
+    return;
+  }
+  unix = (canvas.width-uniw) / 2;
+  uniy = (canvas.height-unih) / 2;
+  ulw = 1 + Math.floor(uniw*unih/1000000)*2;
+  ctx.save();
+  ctx.lineWidth = "" + ulw;
+  ctx.strokeStyle = "rgba(200, 250, 0, .7)";
+  ctx.strokeRect(unix, uniy, uniw, unih);
+  ctx.fillStyle = "rgba(0, 0, 0, 1)";
+  ctx.fillRect(unix+ulw, uniy+ulw, uniw-ulw*2, unih-ulw*2);
+  w = (uniw-unim) / (cellsr-cellsl+1);
+  h = (unih-unim) / (cellst-cellsb+1);
+  for (i = 0; i < cells.length; i++) {
+    ctx.fillStyle = "rgba(150, 50, " + (cells[i].g && mingen > 0 ? ""+Math.floor(200*(cells[i].g-mingen)/(maxgen-mingen+1)) : "200") + ", .7)";
+    ctx.fillRect(unix + (unim/2+0.5) + w * (cells[i].c - cellsl),  uniy + (unim/2+0.5) + h * (cellst - cells[i].r), w>grb?w-1:w, h>grb?h-1:h);
+  }
+  vw = Math.floor(canvas.width/(cellsz>grb?cellsz+1:cellsz));
+  vh = Math.floor(canvas.height/(cellsz>grb?cellsz+1:cellsz));
+  x = unix + unim/2 - 0.5 + (cellX(0) - Math.round(vw / 2) - cellsl) * w;
+  y = uniy + unim/2 - 0.5 + (cellst - cellY(0) - Math.round((vh - 1) / 2)) * h;
+  x2 = x + (vw+1) * w + (w>grb?0:1);
+  y2 = y + (vh+1) * h + (w>grb?0:1);
+  ctx.lineWidth = 1;
+  ctx.setLineDash([1, 0]);
+  ctx.strokeStyle = "#888888";
+  if (y >= uniy + unim/2 - 1.5 && y < uniy + unih - unim/2 + 0.5) {
+    ctx.beginPath();
+    ctx.moveTo(x<unix+unim/2-0.5?unix+unim/2-0.5:x, y);
+    ctx.lineTo(x2>=unix+uniw-unim/2+0.5?unix+uniw-unim/2-0.5:x2, y);
+    ctx.stroke();
+  }
+  if (y2 >= uniy + unim/2 - 0.5 && y2 < uniy + unih - unim/2 + 0.5) {
+    ctx.beginPath();
+    ctx.moveTo(x<unix+unim/2-0.5?unix+unim/2-0.5:x, y2);
+    ctx.lineTo(x2>=unix+uniw-unim/2+0.5?unix+uniw-unim/2-0.5:x2, y2);
+    ctx.stroke();
+  }
+  if (x >= unix + unim/2 - 1.5 && x < unix + uniw - unim/2 + 0.5) {
+    ctx.beginPath();
+    ctx.moveTo(x, y<uniy+unim/2-0.5?uniy+unim/2-0.5:y);
+    ctx.lineTo(x, y2>=uniy+unih-unim/2+0.5?uniy+unih-unim/2-0.5:y2);
+    ctx.stroke();
+  }
+  if (x2 >= unix + unim/2 - 0.5 && x2 < unix + uniw - unim/2 + 0.5) {
+    ctx.beginPath();
+    ctx.moveTo(x2, y<uniy+unim/2-0.5?uniy+unim/2-0.5:y);
+    ctx.lineTo(x2, y2>=uniy+unih-unim/2+0.5?uniy+unih-unim/2-0.5:y2);
+    ctx.stroke();
+  }
+  ctx.restore();
 }
 
 function drawScale() {
@@ -695,26 +907,26 @@ function drawScale() {
   if (w > 20) {
     w = 20;
   }
-  var h = Math.floor(canvas.height * 0.50);
+  var h = Math.floor(canvas.height * 0.45);
   if (h > canvas.height) {
     h = canvas.height;
   }
   if (h < 1) {
     h = 1;
   }
-  var x = canvas.width - w * 6, y = Math.floor((canvas.height - h) / 2);
+  var x = canvas.width - w * 6, y = 100 + Math.floor((canvas.height - h - 170) / 2);
   sclbx = x;
   sclby = y;
   sclbw = w;
   sclbh = h;
   ctx.save();
-  ctx.fillStyle = "rgba(150, 100, 150, 0.35)";
+  ctx.fillStyle = "rgba(150, 100, 150, 0.8)";
   ctx.shadowBlur = w;
   ctx.shadowColor = "#FFFFFF";
   ctx.fillRect(x,y,w,h);
   ctx.beginPath();
   if (scl) {
-    ctx.fillStyle = "rgba(0, 150, 200, 0.35)";
+    ctx.fillStyle = "rgba(0, 150, 200, 0.8)";
     p = cury - scld;
     if (p < y) {
       p = y;
@@ -724,14 +936,14 @@ function drawScale() {
     }
     scale = 100 - 100*(p-y)/h;
   } else {
-    ctx.fillStyle = "rgba(150, 130, 150, 0.35)";
+    ctx.fillStyle = "rgba(150, 130, 150, 0.8)";
   }
   sclx = x+w/2;
   scly = y+h-h*scale/100;
   sclr = w*1.5;
   ctx.arc(sclx, scly, sclr, 0, 2 * Math.PI);
   ctx.fill();
-  ctx.strokeStyle = "rgba(0, 150, 200, 0.35)";
+  ctx.strokeStyle = "rgba(0, 150, 200, 0.8)";
   ctx.lineWidth = w/4;
   ctx.arc(sclx, scly, sclr, 0, 2 * Math.PI);
   ctx.stroke();
@@ -743,23 +955,23 @@ function drawSpeed() {
   if (w > 20) {
     w = 20;
   }
-  var h = Math.floor(canvas.height * 0.50);
+  var h = Math.floor(canvas.height * 0.45);
   if (h > canvas.height) {
     h = canvas.height;
   }
-  var x = canvas.width - w * 12, y = Math.floor((canvas.height - h) / 2);
+  var x = canvas.width - w * 12, y = 100 + Math.floor((canvas.height - h - 170) / 2);
   spdbx = x;
   spdby = y;
   spdbw = w;
   spdbh = h;
   ctx.save();
-  ctx.fillStyle = "rgba(150, 100, 150, 0.35)";
+  ctx.fillStyle = "rgba(150, 100, 150, 0.8)";
   ctx.shadowBlur = w;
   ctx.shadowColor = "#FFFFFF";
   ctx.fillRect(x,y,w,h);
   ctx.beginPath();
   if (spd) {
-    ctx.fillStyle = "rgba(0, 150, 200, 0.35)";
+    ctx.fillStyle = "rgba(0, 150, 200, 0.8)";
     p = cury - spdd;
     if (p < y) {
       p = y;
@@ -769,14 +981,14 @@ function drawSpeed() {
     }
     speed = 100 - 100*(p-y)/h;
   } else {
-    ctx.fillStyle = "rgba(150, 130, 150, 0.35)";
+    ctx.fillStyle = "rgba(150, 130, 150, 0.8)";
   }
   spdx = x+w/2;
   spdy = y+h-h*speed/100;
   spdr = w*1.5;
   ctx.arc(spdx, spdy, spdr, 0, 2 * Math.PI);
   ctx.fill();
-  ctx.strokeStyle = "rgba(0, 150, 200, 0.35)";
+  ctx.strokeStyle = "rgba(0, 150, 200, 0.8)";
   ctx.lineWidth = w/4;
   ctx.arc(spdx, spdy, spdr, 0, 2 * Math.PI);
   ctx.stroke();
@@ -795,8 +1007,8 @@ function drawTitle() {
   s = ""+(70-Math.floor(70*x));
   ctx.fillStyle = "rgba("+s+","+s+","+s+","+(1-1*x)+")";
   ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 5;
-  ctx.shadowColor = "#AAAAAA";
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "#DDDDDD";
   if (!tmet[1]) {
     tmet[1] = ctx.measureText(title[1]);
   }
@@ -819,7 +1031,7 @@ function drawTitle() {
   if (titlemode >= 2 || titlemode == 1 && titlefd < titlex) {
     if (titlemode == 1) {
       x = (titlex-titlefd)/titlex;
-      s = ""+(Math.floor(70*x/7));
+      s = ""+(Math.floor(70*x/5.5));
       ctx.fillStyle = "rgba("+s+","+s+","+s+","+(1*x/7)+")";
     }
     h = fs*2.5;
@@ -832,17 +1044,26 @@ function drawTitle() {
       ctx.fillText(title[3], (canvas.width-tmet[3].width)/2, (canvas.height-h)/2+fs);
       ctx.fillText(title[1], (canvas.width-tmet[1].width)/2, (canvas.height-h)/2+fs*2.5);
     }
-    if (!tmet[4]) {
-      tmet[4] = ctx.measureText(title[4]);
-    }
     if (titleh) {
+      if (!tmet[4]) {
+        tmet[4] = ctx.measureText(title[4]);
+      }
+      if (!tmet[5]) {
+        tmet[5] = ctx.measureText(title[5]);
+      }
       if (titlemode == 1) {
         x = (titlex-titlefd)/titlex;
         ctx.fillStyle = "rgba(190,0,0,"+(1*x/7)+")";
       } else {
         ctx.fillStyle = "rgba(190,0,0,"+(1-1*x)+")";
       }
-      ctx.fillText(title[4], (canvas.width-tmet[4].width)/2, fs*2.5);
+      ctx.fillText(title[4], (canvas.width-tmet[4].width)/2, (canvas.height-h)/2-fs/2);
+      ctx.fillText(title[5], (canvas.width-tmet[5].width)/2, (canvas.height-h)/2+fs*4);
+      ctx.font = Math.floor(fs/2) + "px " + font;
+      if (!tmet[6]) {
+        tmet[6] = ctx.measureText(title[6]);
+      }
+      ctx.fillText(title[6], (canvas.width-tmet[6].width)/2, (canvas.height-h)/2+fs*4.6);
     }
   }
   ctx.restore();
@@ -860,8 +1081,8 @@ function drawGridToggle() {
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#FFFFFF";
   grdtx = canvas.width - 230;
-  ctx.fillText("#", grdtx, 120);
-  grdty = 60;
+  ctx.fillText("#", grdtx, 130);
+  grdty = 70;
   grdtw = 45;
   grdth = 50;
   ctx.restore();
@@ -882,11 +1103,11 @@ function drawPlayToggle() {
   ctx.shadowColor = "#FFFFFF";
   playtx = canvas.width - 360;
   if (play) {
-    ctx.fillText(">>", playtx, 120);
+    ctx.fillText(">>", playtx, 130);
   } else {
-    ctx.fillText(" ||", playtx, 120);
+    ctx.fillText(" ||", playtx, 130);
   }
-  playty = 60;
+  playty = 70;
   playtw = 100;
   playth = 60;
   ctx.restore();
@@ -906,14 +1127,34 @@ function drawPatternButton() {
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#FFFFFF";
   pattbx = canvas.width - 150;
-  ctx.fillText("P", pattbx, 120);
-  pattby = 60;
+  ctx.fillText("P", pattbx, 130);
+  pattby = 70;
   pattbw = 40;
   pattbh = 50;
   ctx.restore();
 }
 
+function drawUniButton() {
+  ctx.save();
+  ctx.font = "60px " + font;
+  if (dunib || duni) {
+    ctx.fillStyle = "#00AAFF";
+  } else {
+    ctx.fillStyle = "#0044EE";
+  }
+  ctx.textBaseline = "bottom";
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "#FFFFFF";
+  dunibx = canvas.width - 80;
+  ctx.fillText("O", dunibx, 130);
+  duniby = 70;
+  dunibw = 50;
+  dunibh = 50;
+  ctx.restore();
+}
+
 function drawInfo() {
+  var s;
   ctx.save();
   ctx.font = "40px " + font;
   ctx.fillStyle = "#AAAAAA";
@@ -921,7 +1162,23 @@ function drawInfo() {
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#FFFFFF";
   ctx.fillText("" + gennum + " / " + cells.length + (runpattf==2?" <"+runpattn:""), 30, 70);
+  ctx.font = "13px " + font;
+  if (dsppxct) {
+    ctx.fillStyle = "#00AAFF";
+  } else {
+    ctx.fillStyle = "#0077EE";
+  }
+  ctx.shadowBlur = 5;
+  ctx.shadowColor = "#AAAAAA";
+  dsppxctx = 40;
+  s = "" + (Math.floor(cellsz*cellsz*1000)/1000) + " px/c";
+  ctx.fillText(s, dsppxctx, 100);
+  dsppxcty = 90;
+  dsppxctw = 7 * s.length;
+  dsppxcth = 15;
   if (runpattf != 0) {
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = "#FFFFFF";
     ctx.font = "30px " + font;
     ctx.fillStyle = "#EE4400";
     ctx.fillText("w,h / c : "+runpattw+","+runpatth+" / "+(runpattf==1?runpattn:runpattnx), 90, 190);
@@ -939,7 +1196,7 @@ function drawInfo() {
 }
 
 function drawFramesSec() {
-  var t, s;
+  var t, s, x;
   if (!rsct) {
     rsct = gts;
   }
@@ -950,37 +1207,48 @@ function drawFramesSec() {
   ctx.textBaseline = "bottom";
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#FFFFFF";
-  s = Math.floor(rsc / (t - rsct) * 1000).toString();
-  ctx.fillText(s, canvas.width - 10 - 10 * s.length - 35, 35);
-  if ((t - rsct) > 1000) {
+  s = "" + Math.floor(rsc / (t - rsct + 1) * 1000) + " f/s";
+  ctx.fillText(s, canvas.width - 10 - 10 * s.length, 35);
+  if ((t - rsct) > 2000) {
     rsct = t;
     rsc = 0;
+    gencs = gennum;
   }
   rsc++;
+  if (play) {
+    ctx.font = "13px " + font;
+    ctx.fillText("" + Math.floor((gennum - gencs) / (t - rsct + 1) * 1000) + " g/s", 40, 125);
+  }
   ctx.restore();
 }
 
 function drawPos() {
   var x = cellX(0), y = cellY(0);
   ctx.save();
-  ctx.font = "18px " + font;
-  if (dsppost) {
-    ctx.fillStyle = "#AAAAFF";
-  } else {
-    ctx.fillStyle = "#AAAAAA";
-  }
   ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
+  ctx.shadowBlur = 5;
+  ctx.shadowColor = "#AAAAAA";
+  ctx.fillStyle = "#AAAAAA";
+  ctx.font = "13px " + font;
+  ctx.fillText("V w" + Math.floor(canvas.width/(cellsz>grb?cellsz+1:cellsz))+",h"+Math.floor(canvas.height/(cellsz>grb?cellsz+1:cellsz)), canvas.width - 397, 55);
+  ctx.font = "18px " + font;
+  if (cells.length > 0) {
+    s = "U w" + (cellsr-cellsl+1) + ",h" + (cellst-cellsb+1);
+  } else {
+    s = "U w0,h0";
+  }
+  ctx.fillText(s, canvas.width - 400, 35);
+  if (dsppost) {
+    ctx.fillStyle = "#00AAFF";
+  } else {
+    ctx.fillStyle = "#0077EE";
+  }
   s = "x" + x + ",y" + y;
-  dsppostx = canvas.width - 105 - 11 * s.length;
+  dsppostx = canvas.width - 115 - 10 * s.length;
   ctx.fillText(s, dsppostx, 35);
   dspposty = 10;
   dsppostw = 12 * s.length;
   dspposth = 25;
-  ctx.fillStyle = "#AAAAAA";
-  s = "w" + Math.floor(canvas.width/(cellsz>grb?cellsz+1:cellsz))+",h"+Math.floor(canvas.height/(cellsz>grb?cellsz+1:cellsz));
-  ctx.fillText(s, dsppostx - 25 - 11 * s.length, 35);
   ctx.restore();
 }
 
@@ -1018,7 +1286,6 @@ function drawGrid() {
       ctxh.beginPath();
       ctxh.moveTo(p2, 0);
       ctxh.lineTo(p2, h-1);
-      ctxh.closePath();
       ctxh.lineWidth = 1;
       ctxh.setLineDash([1, 0]);
       ctxh.strokeStyle = "#303030";
@@ -1061,7 +1328,6 @@ function drawGrid() {
       ctxh.beginPath();
       ctxh.moveTo(0, p2);
       ctxh.lineTo(w-1, p2);
-      ctxh.closePath();
       ctxh.lineWidth = 1;
       ctxh.setLineDash([1, 0]);
       ctxh.strokeStyle = "#303030";
@@ -1078,10 +1344,9 @@ function drawGrid() {
     ctxh.beginPath();
     ctxh.moveTo(p, 0);
     ctxh.lineTo(p, h-1);
-    ctxh.closePath();
     ctxh.lineWidth = 1;
     ctxh.setLineDash([1, 0]);
-    ctxh.strokeStyle = "#505050";
+    ctxh.strokeStyle = "#555555";
     ctxh.stroke();
   }
   if (Math.abs(posy) < h / 2) {
@@ -1089,7 +1354,6 @@ function drawGrid() {
     ctxh.beginPath();
     ctxh.moveTo(0, p);
     ctxh.lineTo(w-1, p);
-    ctxh.closePath();
     ctxh.lineWidth = 1;
     ctxh.setLineDash([1, 0]);
     ctxh.strokeStyle = "#555555";
@@ -1106,6 +1370,7 @@ function calcGen() {
   for (i = 0; i < cells.length; i++) {
     cidx[""+cells[i].c+"-"+cells[i].r] = true;
   }
+  cellsl = cellsr = cellst = cellsb = null;
   e = [];
   x = 0;
   for (i = 0; i < cells.length; i++) {
@@ -1115,6 +1380,18 @@ function calcGen() {
       maxgen = cells[i].g ? maxgen == 0 ? cells[i].g : maxgen < cells[i].g ? cells[i].g : maxgen : maxgen;
       if (!cells[i].g) {
         cells[i].g = gennum;
+      }
+      if (!cellsl || cells[i].c < cellsl) {
+        cellsl = cells[i].c;
+      }
+      if (!cellsr || cells[i].c > cellsr) {
+        cellsr = cells[i].c;
+      }
+      if (!cellst || cells[i].r > cellst) {
+        cellst = cells[i].r;
+      }
+      if (!cellsb || cells[i].r < cellsb) {
+        cellsb = cells[i].r;
       }
       cells[x] = cells[i];
       x++;
@@ -1127,9 +1404,22 @@ function calcGen() {
       idx[k] = true;
       if (neighbours(e[i].c, e[i].r, cidx) == 3) {
         cells.push(e[i]);
+        if (!cellsl || e[i].c < cellsl) {
+          cellsl = e[i].c;
+        }
+        if (!cellsr || e[i].c > cellsr) {
+          cellsr = e[i].c;
+        }
+        if (!cellst || e[i].r > cellst) {
+          cellst = e[i].r;
+        }
+        if (!cellsb || e[i].r < cellsb) {
+          cellsb = e[i].r;
+        }
       }
     }
   }
+  calcUni2();
   gennum++;
 }
 
@@ -1203,6 +1493,7 @@ function run(mode) {
     gennum = 0;
     posx = 0;
     posy = 0;
+    calcUni();
   }
 }
 
