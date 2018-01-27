@@ -1,36 +1,46 @@
 # Yagols - Yet another Game of Life simulator
-
+<br>
+<br>
 Yagols is a browser (canvas) implementation of the well-known cellular automaton simulation Conway's Game of Life.
 <br>
 <br>
 Yagols is one .html page with JavaScript and a bit of HTML/CSS, with no further dependencies.
 <br>
 <br>
-
 Features:
-
+<br>
   * Dynamic & non-restrictive user interface
+  
   * Infinite universe
+  
   * Set cells on or off in "continuous" mode
+  
   * Drag sliders to zoom in/out or to change speed
+  
   * Drag universe to change viewing area
+  
   * Paste an RLE formatted text to add a pattern to the universe
+  
   * Show all "on" cells in the universe at once; click to position viewing area
+  
+  * Change the rule
 
 <br> 
+<br>
 
 About Conway's Game of Life :
-
+<br>
 >#### [www.conwaylife.com](http://www.conwaylife.com)
 >#### [rules](http://web.stanford.edu/~cdebs/GameOfLife/#rules)
 >#### [youtube](https://youtu.be/C2vgICfQawE)
 >#### [google](https://www.google.nl/search?q=conway+game+of+life)
 
 <br>
+<br>
 
 ## [To Yagols . . .](http://erps.me/Yagols.html)
 
-
+<br>
 <br>
 
 ## INSTRUCTIONS
@@ -47,6 +57,8 @@ About Conway's Game of Life :
   * Click || (stopped) to start the simulation.
   
   * Click >> (running) to stop.
+  
+  * Click > to calculate one new generation. Hold to repeat.
   
   * Click / drag left vertical slider to change simulation speed.
   
@@ -66,6 +78,10 @@ About Conway's Game of Life :
     
   * Click O to show all "on" cells in the universe at once. Click anywhere
     within the cells to position the viewing area. Click O again to hide.
+    
+  * The default rule is B3/S23. To change the rule just type "B", "b",
+    "S" or "s" and one or more digits "0".."8". Press Enter or click button
+    "Accept" to accept the new rule, or click "Forget" to forget about it. 
 
   * When Yagols is (re)started (refresh page) the viewing area shows the
      cells at a certain size. A bigger viewing area will show bigger cells.
@@ -73,16 +89,32 @@ About Conway's Game of Life :
      left of the viewing area shows the number of pixels per cell (px/c).
      Click on it to recalculate the initial cell size.
 
-
+<br>
 <br>
 
 ## Changes
 
 <br>
 
+* V2 (jan 2018)
+  
+  * The rule can be changed.
+  
+  * Misc. improvements.
+
+<br>
+
+* V1.3 (jan 2018)
+  
+  * Button > to calculate one generation.
+  
+  * Misc. improvements.
+
+<br>
+
 * V1.2 (jan 2018)
   
-  * Show all "on" cells in the universe at once
+  * Show all "on" cells in the universe at once.
   
   * Bugfixes and improvements.
 
