@@ -1,13 +1,13 @@
 <!--
 
-Yagols V2
+Yagols V3
 
 Copyright (c) 2018 John Erps
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+use, copy, modify, merge, publish, distribut	e, sublicense, and/or sell copies
 of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
@@ -24,13 +24,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>Yagols</title>
-  <meta name="description" content="Yet another Game of Life simulator">
-  <meta name="author" content="John Erps">
-  <meta name="keywords" content="yagols john conway's game of life simulator cellular automaton">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name="description" content="Yet another Game of Life simulator"/>
+  <meta name="author" content="John Erps"/>
+  <meta name="keywords" content="yagols john conway's game of life simulator cellular automaton"/>
 </head>
 <style>
 html, body, div, span, applet, object, iframe,
@@ -61,7 +61,20 @@ footer, header, hgroup, menu, nav, section {
 ::selection {
   background-color: #FFAAAA;
   text-shadow: none; }
-  
+
+a {
+  text-decoration: none;
+  color: black; }
+a:hover {
+  text-decoration: none;
+  color: black; }
+a:active {
+  text-decoration: none;
+  color: black; }
+a:visited {
+  text-decoration: none;
+  color: black; }
+
 body {
 	line-height: 1;
 }
@@ -76,26 +89,20 @@ q:before, q:after {
 	content: '';
 	content: none;
 }
+* {
+  font-family: 'Verdana';
+}
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-#canvas {
-  height: 100vh;
-  width: 100vw;
-}
-#canvash {
-  visibility: hidden;
-  height: 100vh;
-  width: 100vw;
-}
 #footer {
-  font-family: 'Verdana';
-  font-size: 0.6em;
-  position: absolute;
-  bottom: 0px;
+  font-size: 0.8rem;
+  position: fixed;
+  bottom: 6px;
+  right: 18px;
   text-align: right;
-  width: 100%;"
+  width: 100%;
 }
 #pattern {
   display: none;
@@ -107,6 +114,7 @@ table {
   top: 15%;
   left: 25%;
   opacity: 0.8;
+  z-index: 20;
 }
 #patternt {
   width: 100%;
@@ -116,7 +124,7 @@ table {
   color: #CCCCCC;
   background-color: #444444;
   outline-width: 0;
-  font-size: 16px;
+  font-size: 15px;
   padding: 15px;
   white-space: nowrap;
   overflow: auto;
@@ -146,10 +154,11 @@ table {
   flex-direction: column;
   justify-content: space-around;
   position: fixed;
-  width: 20%;
+  width: 30%;
   bottom: 5%;
-  left: 25%;
+  left: 15%;
   opacity: 0.8;
+  z-index: 30;
 }
 #crulet {
   width: 100%;
@@ -186,12 +195,21 @@ table {
 }
 </style>
 <body style="overflow:hidden;">
-  <canvas id="canvas">
+  <canvas id="canvas0" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 0;">
   </canvas>
-  <canvas id="canvash">
+  <canvas id="canvas1" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 1;">
+  </canvas>
+  <canvas id="canvas2" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 2;">
   </canvas>
   <div id="footer">
-    <a style="color: #404040; user-select: none;" href="http://jerps.nl">Copyright (c) 2018 John Erps</a>
+    <a style="color: #505070; user-select: none; outline: none;" href="http://erps.me" target="_blank" tabindex="-1">Copyright (c) 2018 John Erps</a>
+  </div>
+  <div id="crule">
+  <div id="crulet"></div>
+  <div id="cruleb">
+  <div id="cruleba" class="crulebx" onclick="crulebut(1);false;">Accept</div>
+  <div id="crulebf" class="crulebx" onclick="crulebut(2);false;">Forget</div>
+  </div>
   </div>
   <div id="pattern">
   <textarea id="patternt"></textarea>
@@ -201,49 +219,67 @@ table {
   <div class="patternbx" onclick="run(3);false;">Run!&nbsp;&nbsp;/Reset</div>
   </div>
   </div>
-  <div id="crule">
-  <div id="crulet"></div>
-  <div id="cruleb">
-  <div id="cruleba" class="crulebx" onclick="crulebut(1);false;">Accept</div>
-  <div class="crulebx" onclick="crulebut(2);false;">Forget</div>
-  </div>
-  </div>
 </body>
 <script>
-var title = [ "Yet another", "Game of Life", "simulator", "Conway's", "Enjoy", "With Yagols", "click P for instructions" ];
+var title = [ "Yet another", "Game of Life", "simulator", "Conway's", "Enjoy", "With Yagols", "- - - Click P for Instructions - - -" ];
 var font = "Verdana";
 var lts = null;
-var gennum = 0, speed = 20, play = false, posx = 0, posy = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80; cells = [];
-var canvas, canvash, ctx, ctxh, mingen = 0, maxgen = 0;
-var titlefd = 0, titlefds = 500, titlemode = 0, tmet = null, titlex = 300, titleh = true;
+var gennum = 0, gennumc = 0, speed = 20, play = false, playcd = null, playcdn = 500, playcdc = 0, playbc = 0, playcd2 = null, playcdn2 = 800, playcd3 = null, playcdn3 = 1400, playcd4 = null, playcdn4 = 1400, playcd5 = null, playcdn5 = 800, posx = 0, posy = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80, cells = [];
+var canvas0, canvas1, canvas2, ctx0, ctx1, ctx2, mingen = 0;
+var titlefd = 0, titlefdt = null, titlefds = 1000, titlemode = 0, tmet = null, titlex = 625, titleh = true, titlecd = performance.now(), titlecdn = 60000, titlecd2 = null, titlecdn2 = 7000, titlecd3 = null, titlecdn3 = 1200, titlemf = false;
 var mdown = false, ton = false, toncd = 0, tonx = 0, tony = 0, tonw = 0;
-var scl = false, sclx = 0, scly = 0, sclr = 0, sclpx = 0, sclpy = 0, sclbx = 0, sclby = 0, sclbw = 0, sclbh = 0, scld = 0, sclpx2 = 0, sclpy2 = 0;
+var scl = false, sclx = 0, scly = 0, sclr = 0, sclpx = 0, sclpy = 0, sclbx = 0, sclby = 0, sclbw = 0, sclbh = 0, scld = 0;
 var spd = false, spdx = 0, spdy = 0, spdr = 0, spdbx = 0, spdby = 0, spdbw = 0, spdbh = 0, spdd = 0;
-var sx, sy, curx = 0, cury = 0;
+var diffx = 0, diffy = 0, curx = 0, cury = 0;
 var dspgrd = false, grdt = false, grdtx = 0, grdty = 0, grdtw = 0, grdth = 0;
 var playt = false, playtx = 0, playty = 0, playtw = 0, playth = 0;
-var rsc = 0, rsct = null;
+var rsc = 0, rsct = null, rscn = 0;
 var gts;
 var osw = null, osh = null;
 var chgcsz = true, chggsz = true, chgpos = true, prvgsz = null, prvposx = null, prvposy = null, drawbackg = true;
-var dsppost = false, dsppostx = 0, dspposty = 0, dsppostw = 0, dspposth = 0;
+var dsppost = false, dsppostx = 0, dspposty = 0, dsppostw = 0, dspposth = 0, dspposcd = null, dspposcdn = 300;
 var patt = false, pattb = false, pattbx = 0, pattby = 0, pattbw = 0, pattbh = 0;
 var runpatt = null, runpattf = 0, runpattpos = 0, runpattd = null, runpattnt = 0, runpatth = 0, runpattw = 0, runpattnl = false, runpattm = 0, runpattnum = 0, runpatthx = 0, runpattnr = true, runpattx = 0, runpattnx = 0, runpattz = 0, runpattzx = null, runpattzy = 0, runpattzxp = 0, runpattzyp = 0, runpattnn = true, runpattz2 = 0, runpatta = [];
-var cidx = {};
-var duni = false, dunib = false, dunibx = 0, duniby = 0, dunibw = 0, dunibh = 0, unix = 0, uniy = 0, uniw = 0, unih = 0, unim=24;
+var dwrld = false, dwrldb = false, dwrldbx = 0, dwrldby = 0, dwrldbw = 0, dwrldbh = 0, wrldx = 0, wrldy = 0, wrldw = 0, wrldh = 0, wrldm=24, wrldcd = null, wrldcdn = 200, wrlda = false, wrldax = 0, wrlday = 0, wrldaw = 0, wrldah = 0;
 var grb = 4;
-var genps = 0, gencs = 0;
-var cellsl = null, cellsr = null, cellst = null, cellsb = null;
-var dsppxct = false, dsppxctx = 0, dsppxcty = 0, dsppxctw = 0, dsppxcth = 0;
-var ngen = false, ngencd = 0, ngencd2 = 0, ngencd3 = 0, ngencd4 = 0, ngenb = false, ngenbx = 0, ngenby = 0, ngenbw = 0, ngenbh = 0;
-var cruleb = "3", crules = "23", crulebn = cruleb, crulesn = crules, crulem = 0, crulec = false, ccruleb = [false, false, false, true, false, false, false, false, false, false],  ccrules = [false, false, true, true, false, false, false, false, false, false]
-var patttxt =
+var gencs = 0;
+var dsppxct = false, dsppxctx = 0, dsppxcty = 0, dsppxctw = 0, dsppxcth = 0, dsppxccd = null, dsppxccdn = 300;
+var ngen = false, ngencd = null, ngencdn = 700, ngencd2 = null, ngencd3 = 0, ngencd4 = null, ngencdn4 = 300, ngencd5 = null, ngencdn5 = 300, ngenb = false, ngenbx = 0, ngenby = 0, ngenbw = 0, ngenbh = 0;
+var pgen = false, pgencd = null, pgencdn = 700, pgencd2 = null, pgencd3 = 0, pgencd4 = null, pgencdn4 = 300, pgencd5 = null, pgencdn5 = 300, pgenb = false, pgenbx = 0, pgenby = 0, pgenbw = 0, pgenbh = 0;
+var genbbl = false;
+var cruleb = "3", crules = "23", crulebn = "", crulesn = "", crulem = 0, crulec = false, cruler = false, ccruleb = [false, false, false, true, false, false, false, false, false, false],  ccrules = [false, false, true, true, false, false, false, false, false, false]
+var hist = [[[[[],null,0,[0,0],false,0,0,0,0,0,0,[0,0]]],0,-1,-1]], histh = 0, histhm = 0, histod = 0, histcr = [cruleb,crules], histi = 0, histp = 0, tarr = [], tidx = {}, histgp = 0, histgn = 0, hupdc = 0;
+var cellsn = 0;
+var hlcrcd = null, hlcrcdn = 1500, hlcrcd2 = null, hlcrcdn2 = 1500, hlcrcd3 = null, hlcrcdn3 = 1500;
+var dgps = false, dgpsx = 0, dgpsn = 0;
+var captx = 0, capty = 0, captw = 0, capth = 0, capcd = null, capcdn = 1200, capcd2 = null, capcdn2 = 2500, capcds2 = "";
+var ffw = 0, ngenfx = 0, ngenfy = 0, ngenfw = 0, ngenfh = 0, ngenfcd = null, ngenfcdn = 300, pgenfx = 0, pgenfy = 0, pgenfw = 0, pgenfh = 0, pgenfcd = null, pgenfcdn = 300;
+var orulex = 0, oruley = 0, orulew = 0, oruleh = 0;
+var tfs3 = 0;
+var slidh = 0.5;
+var cidxb = [[[null,null,null],-1,-1,null]], cidxbi = 0, cidxbx1 = 0, cidxbx2 = 0, cidxby1 = 0, cidxby2 = 0, cidxbb = null;
+var cellslen = 0, cellsa = [], cellsan = 0, cellsfs = [], cellsfsl = 0, cellsx = [], cellsxl = 0, cellsx2 = [], cellsx2l = 0, cellsf = false, cellsxf = false;
+var frl = [], frll = 0, frlfs = [], frlfsl = 0;
+var ddiama = 0, ddiamb = 0, ddiamcd = null, ddiamcdn = 800, ddiamx = 0, ddiamy = 0, ddiamw = 0, ddiamh = 0, ddiamcd2 = null, ddiamcdn2 = 1200, ddiamf = 0;
+var swzmt = false, swzmtx = 0, swzmty = 0, swzmtw = 0, swzmth = 0, swzmcd = null, swzmcdn = 300, swzmcd2 = null, swzmcdn2 = 300, swzmf = true, swzmsw = true;
+var hbck = [], hbcksl = [], hbcksll = 0; hbckslf = 0;
+var msgl = [], msgll = 0, msgf1 = 0, msgcd1 = performance.now(), msgcdn1 = 60000, msgcd2 = performance.now(), msgcdn2 = 5000, msgl1 = "", msgl2 = "", msgl3 = "";
+var histmax = 500;
+var maxl = -9999999; maxt = 9999999; maxr = 9999999; maxb = -9999999;
+var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
+var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", stmsgn2 = "Yet \u22C5 another \u22C5 GoL \u22C5 simulator     ", stmsgo1 = "", stmsgo2 = "", stmsgcd = performance.now(), stmsgcdn = 1000, stmsgcd2, stmsgcdn2 = 1300, stmsgntm1 = null, stmsgntm2 = null, stmsgotm1 = null, stmsgotm2 = null;
+var patttxt = 
       '#  Welcome to Yagols, Yet another Game of Life simulator !\n' +
+      '\n' +
+      '\n' +
+      '#  https://github.com/jerps/Yagols\n' +
       '\n' +
       '\n' +
       '#  About Conway\'s Game of Life :\n' +
       '\n' +
       '#      http://www.conwaylife.com\n' +
+      '\n' +
+      '#      http://beltoforion.de/article.php?a=game_of_life\n' +
       '\n' +
       '#      http://web.stanford.edu/~cdebs/GameOfLife/#rules\n' +
       '\n' +
@@ -255,7 +291,7 @@ var patttxt =
       '#  See FURTHER DOWN this text for GENERAL INSTRUCTIONS.\n' +
       '\n' +
       '\n' +
-      '#  This text box is used to paste text in "Extended RLE" format\n' +
+      '#  This text box is used to paste text in (Extended) RLE format\n' +
       '#  (Run Length Encoding) which encodes a cell pattern.\n' +
       '#  See http://golly.sourceforge.net/Help/formats.html#rle.\n' +
       '\n' +
@@ -289,58 +325,82 @@ var patttxt =
       '#  is clicked, all the cells in the target grid are first set off. That is the\n' +
       '#  grid positioned around the center of the viewing area having the\n' +
       '#  same height and width as the decoded grid/pattern. Then the "on"\n' +
-      '#  cells of the pattern are added. The "/Reset" button sets off *all*\n' +
-      '#  cells in the universe, resets the generation counter and sets the\n' +
-      '#  viewing area\'s position to 0,0, before adding the pattern.\n' +
+      '#  cells of the pattern are added. The "/Reset" button first resets the\n' +
+      '#  universe.\n' +
       '\n' +
       '#  Although allowed, a concurrently running simulation interferes with\n' +
       '#  the process. You might want to stop it first before clicking "Run!".\n' +
       '\n' +
       '\n' +
-      '#  -----  GENERAL INSTRUCTIONS  -----\n' +
+      '#   -----  GENERAL INSTRUCTIONS  -----\n' +
       '\n' +
-      '#  *  Use a mouse.\n' +
+      '#   Use a mouse.\n' +
       '\n' +
-      '#  *  Double-click to set a cell on or off.\n' +
+      '#   Double-click to set one cell on or off.\n' +
       '\n' +
-      '#  *  Click and hold button to continuously set cells on or off.\n' +
-      '#      Release button to stop.\n' +
+      '#   Click and hold button to set multiple cells on or off. Release button\n' +
+      '#     to stop.\n' +
       '\n' +
-      '#  *  Click and drag the universe to change viewing position.\n' +
+      '#   Click and drag the universe to change viewing area position.\n' +
       '\n' +
-      '#  *  Click || (stopped) to start the simulation.\n' +
-      '#      Click >> (running) to stop.\n' +
+      '#   Click || (stopped) to start the simulation, automatically calculating\n' +
+      '#     new generations.\n' + 
       '\n' +
-      '#  *  Click > to calculate one new generation. Hold to repeat.\n' +
+      '#   Click >> (playing) to stop the simulation.\n' +
       '\n' +
-      '#  *  Click and drag left vertical slider to change simulation speed.\n' +
-      '#      Click and drag right vertical slider to zoom in or out.\n' +
+      '#   Click > to calculate one new generation. Hold to repeat.\n' +
       '\n' +
-      '#  *  Click position (x,y) to go to position 0,0 in the universe (center).\n' +
+      '#   Click and drag left vertical slider to change simulation speed.\n' +
       '\n' +
-      '#  *  Click # to switch the grid on or off.\n' +
-      '#      The grid only shows when not too far zoomed out (>16 pixels/cell).\n' +
+      '#   Click and drag right vertical slider to zoom in or out.\n' +
       '\n' +
-      '#  *  Click P to show a text box with instructions and to add a pattern\n' +
-      '#      to the universe by pasting RLE formatted text. Click P again to\n' +
-      '#      hide the text box.\n' +
+      '#   Click position (x,y) to go to position 0,0 (center) of the universe.\n' +
       '\n' +
-      '#  *  To clear/reset the universe click P, delete all text, then click\n' +
-      '#      "Run! /Reset". Or "refresh" the browser.\n' +
+      '#   Click # to switch the grid on or off. The grid only shows when not\n' +
+      '#     too far zoomed out (>16 pixels/cell).\n' +
       '\n' +
-      '#  *  Click O to show all "on" cells in the universe at once. Click anywhere\n' +
-      '#      within the cells to position the viewing area. Click O again to hide.\n' +
+      '#   Click P to show a text box with instructions and to add a pattern\n' +
+      '#     to the universe by pasting RLE formatted text. Click P again to\n' +
+      '#     hide the text box.\n' +
       '\n' +
-      '#  *  The default rule is B3/S23. To change the rule just type "B", "b", "S"\n' +
-      '#      or "s" and one or more digits "0".."8". Press Enter or click button\n' +
-      '#      "Accept" to accept the new rule, or click "Forget" to forget about it.\n' +
+      '#   Click W to show the whole GoL world, i.e. all "on" cells in the universe,\n' +
+      '#     fitted within the viewing area. Click anywhere within the GoL world to\n' +
+      '#     change the viewing area position. Click W again to hide.\n' +
       '\n' +
-      '#  *  When Yagols is (re)started (refresh page) the viewing area shows the\n' +
-      '#      cells at a certain size. A bigger viewing area will show bigger cells.\n' +
-      '#      Cells of that initial size are considered to be 80% zoomed-in. The\n' +
-      '#      top left of the viewing area shows the number of pixels per cell (px/c).\n' +
-      '#      Click on it to recalculate the initial cell size, using the current\n' +
-      '#      size of the viewing area.\n' +
+      '#   The default rule is B3/S23 (born with 3 neighbour cells, survive with\n' +
+      '#     2 or 3 neighbour cells). To change the rule just type "b", "B", "s"\n' +
+      '#     or "S" and one or more digits "0".."8". Press Enter or click "Accept"\n' +
+      '#     to accept the new rule. Click "Forget" or any key that is not "b", "B",\n' +
+      '#     "s", "S", "0".."9", "d" or "D" or Enter to forget about it. Press "d"\n' +
+      '#     or "D" to accept the default rule. Doesn\'t work when P (text box with\n' +
+      '#     pattern) is active. The new rule will be applied and set when the next\n' +
+      '#     new generation is calculated. Going back or forth in history sets the\n' +
+      '#     rule that was set in the visible generation. When a new rule has been\n' +
+      '#     accepted (but not set) the previous rule shows next to the new rule,\n' +
+      '#     in darker green and smaller font. Double click on it to re-set the\n' +
+      '#     previous rule.\n' +
+      '\n' +
+      '#   When Yagols is (re)started (refresh page) the viewing area shows the\n' +
+      '#     initial cells at a certain size. A bigger viewing area will show bigger\n' +
+      '#     cells. Cells of that initial size are considered to be 80% zoomed-in.\n' +
+      '#     The top left of the viewing area shows the number of pixels per cell\n' +
+      '#     (px/c). Click on it to recalculate the initial cell size, using the\n' +
+      '#     current size of the viewing area.\n' +
+      '\n' +
+      '\n' +
+      '#   -----  Tips -----\n' +
+      '\n' +
+      '#   To clear/reset the universe click P, delete all text, then click "Run! /Reset".\n' +
+      '#     Or refresh the browser.\n' +
+      '\n' +
+      '#   To clear the viewing area, click P, replace any text with, for example,\n' +
+      '#     "100b60$", then click "Run! /Replace". This will clear an area, centered\n' +
+      '#     in the viewing area, as large as 100x60 cells.\n' +
+      '\n' +
+      '#   To let this text appear again, click P, delete all text, click "Run! /Add"\n' +
+      '#     and then click P again.\n' +
+      '\n' +
+      '#   To accept the default rule, just type "bd" or "sd" (uppercase or lowercase).\n' +
       '\n' +
       '\n' +
       '#N Gosper glider gun\n' +
@@ -351,98 +411,321 @@ var patttxt =
       'x = 36, y = 9, rule = B3/S23\n' +
       '24bo11b$22bobo11b$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2o8bo5bo3b2o14b$2o8b\n' +
       'o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!';
-      
+
 window.onload = function(e) {
-  var x1, x2, y1, y2, w, h, px, py;
+  (function() {
+    var timeouts = [];
+    var messageName = "zero-timeout-message";
+    function setZeroTimeout(fn) {
+      timeouts.push(fn);
+      window.postMessage(messageName, "*");
+    }
+    function handleMessage(event) {
+      if (event.source == window && event.data == messageName) {
+        event.stopPropagation();
+        if (timeouts.length > 0) {
+          var fn = timeouts.shift();
+          fn();
+        }
+      }
+    }
+    window.addEventListener("message", handleMessage, true);
+    window.setZeroTimeout = setZeroTimeout;
+  })();
+  
   document.getElementById("patternt").value = patttxt;
-  canvas = document.getElementById("canvas");
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-  canvash = document.getElementById("canvash");
-  canvash.width = canvash.offsetWidth;
-  canvash.height = canvash.offsetHeight;
+  canvas0 = document.getElementById("canvas0");
+  canvas0.width = canvas0.offsetWidth;
+  canvas0.height = canvas0.offsetHeight;
+  canvas1 = document.getElementById("canvas1");
+  canvas1.width = canvas1.offsetWidth;
+  canvas1.height = canvas1.offsetHeight;
+  canvas2 = document.getElementById("canvas2");
+  canvas2.width = canvas2.offsetWidth;
+  canvas2.height = canvas2.offsetHeight;
   calcICellsz();
   calcCellsz();
-  ctx = canvas.getContext("2d");
-  ctxh = canvash.getContext("2d");
+  ctx0 = canvas0.getContext("2d");
+  ctx0.imageSmoothingEnabled = false;
+  ctx1 = canvas1.getContext("2d");
+  ctx1.imageSmoothingEnabled = false;
+  ctx2 = canvas2.getContext("2d");
+  ctx2.imageSmoothingEnabled = false;
   titlefd = Math.floor(titlefds/3);
-  canvas.addEventListener("mousedown", function(e) {
+  titlefdt = performance.now();
+  
+  // https://developer.mozilla.org/en-US/docs/Web/Events/wheel
+  // creates a global "addWheelListener" method
+  // example: addWheelListener( elem, function( e ) { console.log( e.deltaY ); e.preventDefault(); } );
+  (function(window,document) {
+    var prefix = "", _addEventListener, support;
+    // detect event model
+    if ( window.addEventListener ) {
+        _addEventListener = "addEventListener";
+    } else {
+        _addEventListener = "attachEvent";
+        prefix = "on";
+    }
+    // detect available wheel event
+    support = "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
+              document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+              "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+    window.addWheelListener = function( elem, callback, useCapture ) {
+        _addWheelListener( elem, support, callback, useCapture );
+        // handle MozMousePixelScroll in older Firefox
+        if( support == "DOMMouseScroll" ) {
+            _addWheelListener( elem, "MozMousePixelScroll", callback, useCapture );
+        }
+    };
+    function _addWheelListener( elem, eventName, callback, useCapture ) {
+        elem[ _addEventListener ]( prefix + eventName, support == "wheel" ? callback : function( originalEvent ) {
+            !originalEvent && ( originalEvent = window.event );
+            // create a normalized event object
+            var event = {
+                // keep a ref to the original event object
+                originalEvent: originalEvent,
+                target: originalEvent.target || originalEvent.srcElement,
+                type: "wheel",
+                deltaMode: originalEvent.type == "MozMousePixelScroll" ? 0 : 1,
+                deltaX: 0,
+                deltaY: 0,
+                deltaZ: 0,
+                preventDefault: function() {
+                    originalEvent.preventDefault ?
+                        originalEvent.preventDefault() :
+                        originalEvent.returnValue = false;
+                }
+            };
+            // calculate deltaY (and deltaX) according to the event
+            if ( support == "mousewheel" ) {
+                event.deltaY = - 1/40 * originalEvent.wheelDelta;
+                // Webkit also support wheelDeltaX
+                originalEvent.wheelDeltaX && ( event.deltaX = - 1/40 * originalEvent.wheelDeltaX );
+            } else {
+                event.deltaY = originalEvent.deltaY || originalEvent.detail;
+            }
+            // it's time to fire the callback
+            return callback( event );
+        }, useCapture || false );
+    }
+  })(window,document);  
+
+(function(window) {  
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule normalizeWheel
+ * @typechecks
+ */
+
+// Reasonable defaults
+var PIXEL_STEP  = 10;
+var LINE_HEIGHT = 40;
+var PAGE_HEIGHT = 800;
+
+/**
+ * Mouse wheel (and 2-finger trackpad) support on the web sucks.  It is
+ * complicated, thus this doc is long and (hopefully) detailed enough to answer
+ * your questions.
+ *
+ * If you need to react to the mouse wheel in a predictable way, this code is
+ * like your bestest friend. * hugs *
+ *
+ * As of today, there are 4 DOM event types you can listen to:
+ *
+ *   'wheel'                -- Chrome(31+), FF(17+), IE(9+)
+ *   'mousewheel'           -- Chrome, IE(6+), Opera, Safari
+ *   'MozMousePixelScroll'  -- FF(3.5 only!) (2010-2013) -- don't bother!
+ *   'DOMMouseScroll'       -- FF(0.9.7+) since 2003
+ *
+ * So what to do?  The is the best:
+ *
+ *   normalizeWheel.getEventType();
+ *
+ * In your event callback, use this code to get sane interpretation of the
+ * deltas.  This code will return an object with properties:
+ *
+ *   spinX   -- normalized spin speed (use for zoom) - x plane
+ *   spinY   -- " - y plane
+ *   pixelX  -- normalized distance (to pixels) - x plane
+ *   pixelY  -- " - y plane
+ *
+ * Wheel values are provided by the browser assuming you are using the wheel to
+ * scroll a web page by a number of lines or pixels (or pages).  Values can vary
+ * significantly on different platforms and browsers, forgetting that you can
+ * scroll at different speeds.  Some devices (like trackpads) emit more events
+ * at smaller increments with fine granularity, and some emit massive jumps with
+ * linear speed or acceleration.
+ *
+ * This code does its best to normalize the deltas for you:
+ *
+ *   - spin is trying to normalize how far the wheel was spun (or trackpad
+ *     dragged).  This is super useful for zoom support where you want to
+ *     throw away the chunky scroll steps on the PC and make those equal to
+ *     the slow and smooth tiny steps on the Mac. Key data: This code tries to
+ *     resolve a single slow step on a wheel to 1.
+ *
+ *   - pixel is normalizing the desired scroll delta in pixel units.  You'll
+ *     get the crazy differences between browsers, but at least it'll be in
+ *     pixels!
+ *
+ *   - positive value indicates scrolling DOWN/RIGHT, negative UP/LEFT.  This
+ *     should translate to positive value zooming IN, negative zooming OUT.
+ *     This matches the newer 'wheel' event.
+ *
+ * Why are there spinX, spinY (or pixels)?
+ *
+ *   - spinX is a 2-finger side drag on the trackpad, and a shift + wheel turn
+ *     with a mouse.  It results in side-scrolling in the browser by default.
+ *
+ *   - spinY is what you expect -- it's the classic axis of a mouse wheel.
+ *
+ *   - I dropped spinZ/pixelZ.  It is supported by the DOM 3 'wheel' event and
+ *     probably is by browsers in conjunction with fancy 3D controllers .. but
+ *     you know.
+ *
+ * Implementation info:
+ *
+ * Examples of 'wheel' event if you scroll slowly (down) by one step with an
+ * average mouse:
+ *
+ *   OS X + Chrome  (mouse)     -    4   pixel delta  (wheelDelta -120)
+ *   OS X + Safari  (mouse)     -  N/A   pixel delta  (wheelDelta  -12)
+ *   OS X + Firefox (mouse)     -    0.1 line  delta  (wheelDelta  N/A)
+ *   Win8 + Chrome  (mouse)     -  100   pixel delta  (wheelDelta -120)
+ *   Win8 + Firefox (mouse)     -    3   line  delta  (wheelDelta -120)
+ *
+ * On the trackpad:
+ *
+ *   OS X + Chrome  (trackpad)  -    2   pixel delta  (wheelDelta   -6)
+ *   OS X + Firefox (trackpad)  -    1   pixel delta  (wheelDelta  N/A)
+ *
+ * On other/older browsers.. it's more complicated as there can be multiple and
+ * also missing delta values.
+ *
+ * The 'wheel' event is more standard:
+ *
+ * http://www.w3.org/TR/DOM-Level-3-Events/#events-wheelevents
+ *
+ * The basics is that it includes a unit, deltaMode (pixels, lines, pages), and
+ * deltaX, deltaY and deltaZ.  Some browsers provide other values to maintain
+ * backward compatibility with older events.  Those other values help us
+ * better normalize spin speed.  Example of what the browsers provide:
+ *
+ *                          | event.wheelDelta | event.detail
+ *        ------------------+------------------+--------------
+ *          Safari v5/OS X  |       -120       |       0
+ *          Safari v5/Win7  |       -120       |       0
+ *         Chrome v17/OS X  |       -120       |       0
+ *         Chrome v17/Win7  |       -120       |       0
+ *                IE9/Win7  |       -120       |   undefined
+ *         Firefox v4/OS X  |     undefined    |       1
+ *         Firefox v4/Win7  |     undefined    |       3
+ *
+ */
+function normalizeWheel(/*object*/ event) /*object*/ {
+  var sX = 0, sY = 0,       // spinX, spinY
+      pX = 0, pY = 0;       // pixelX, pixelY
+
+  // Legacy
+  if ('detail'      in event) { sY = event.detail; }
+  if ('wheelDelta'  in event) { sY = -event.wheelDelta / 120; }
+  if ('wheelDeltaY' in event) { sY = -event.wheelDeltaY / 120; }
+  if ('wheelDeltaX' in event) { sX = -event.wheelDeltaX / 120; }
+
+  // side scrolling on FF with DOMMouseScroll
+  if ( 'axis' in event && event.axis === event.HORIZONTAL_AXIS ) {
+    sX = sY;
+    sY = 0;
+  }
+
+  pX = sX * PIXEL_STEP;
+  pY = sY * PIXEL_STEP;
+
+  if ('deltaY' in event) { pY = event.deltaY; }
+  if ('deltaX' in event) { pX = event.deltaX; }
+
+  if ((pX || pY) && event.deltaMode) {
+    if (event.deltaMode == 1) {          // delta in LINE units
+      pX *= LINE_HEIGHT;
+      pY *= LINE_HEIGHT;
+    } else {                             // delta in PAGE units
+      pX *= PAGE_HEIGHT;
+      pY *= PAGE_HEIGHT;
+    }
+  }
+
+  // Fall-back if spin cannot be determined
+  if (pX && !sX) { sX = (pX < 1) ? -1 : 1; }
+  if (pY && !sY) { sY = (pY < 1) ? -1 : 1; }
+
+  return { spinX  : sX,
+           spinY  : sY,
+           pixelX : pX,
+           pixelY : pY };
+}
+window.normalizeWheel = normalizeWheel;
+})(window);
+  
+  addWheelListener(canvas2, function( e ) {
+    var e2, x, y;
     e.preventDefault();
-    if (e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr) {
-      curx = e.pageX;
-      cury = e.pageY;
-      scld = e.pageY - scly;
-      sclpx = cellX(0);
-      sclpy = cellY(0);
-      if (cellsz > grb) {
-        if (sclpx < 0) {
-          sclpx2 = (posx - ((sclpx+1) * (cellsz+1) - cellsz)) / cellsz;;
-        } else {
-          sclpx2 = (posx - (sclpx * (cellsz+1) + 1)) / cellsz;
-        }
-      } else {
-        sclpx2 = (posx - sclpx * cellsz) / cellsz;
+    if (swzmsw) {
+      swzmsw = false;
+      if (swzmf) {
+        swzmf = false;
+        swzmcd2 = performance.now();
       }
-      if (cellsz > grb) {
-        if (sclpy < 0) {
-          sclpy2 = (posy - ((sclpy+1) * (cellsz+1) - cellsz)) / cellsz;
-        } else {
-          sclpy2 = (posy - (sclpy * (cellsz+1) + 1)) / cellsz;
-        }
-      } else {
-        sclpy2 = (posy - sclpy * cellsz) / cellsz;
+    }
+    e2 = normalizeWheel(e); 
+    x = cellX(posx);
+    y = cellY(posy);
+    scale -= e2.spinY * 5;
+    if (scale < 0) {
+      scale = 0;
+    }
+    if (scale > 100) {
+      scale = 100;
+    }
+    calcCellsz();
+    posx = x * (cellsz+(cellsz>grb?1:cellsz/grb));
+    posy = y * (cellsz+(cellsz>grb?1:cellsz/grb));
+  });
+  canvas2.addEventListener("mousedown", function(e) {
+    var x, y;
+    e.preventDefault();
+    if ((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr) {
+      if (!scl) {
+        diffx = e.pageX;
+        diffy = e.pageY;
+        scld = e.pageY - scly;
+        sclpx = cellX(posx);
+        sclpy = cellY(posy);
       }
       scl = true;
+      swzmsw = false;
     } else if (e.pageX > spdx-spdr && e.pageX < spdx+spdr && e.pageY > spdy-spdr && e.pageY < spdy+spdr) {
-      curx = e.pageX;
-      cury = e.pageY;
-      spdd = e.pageY - spdy;
+      if (!spd) {
+        diffx = e.pageX;
+        diffy = e.pageY;
+        spdd = e.pageY - spdy;
+      }
       spd = true;
-    } else if (e.pageX >= sclbx && e.pageX < sclbx+sclbw && e.pageY >= sclby && e.pageY < sclby+sclbh) {
-      sclpx = cellX(0);
-      sclpy = cellY(0);
-      if (cellsz > grb) {
-        if (sclpx < 0) {
-          sclpx2 = (posx - ((sclpx+1) * (cellsz+1) - cellsz)) / cellsz;;
-        } else {
-          sclpx2 = (posx - (sclpx * (cellsz+1) + 1)) / cellsz;
-        }
-      } else {
-        sclpx2 = (posx - sclpx * cellsz) / cellsz;
-      }
-      if (cellsz > grb) {
-        if (sclpy < 0) {
-          sclpy2 = (posy - ((sclpy+1) * (cellsz+1) - cellsz)) / cellsz;
-        } else {
-          sclpy2 = (posy - (sclpy * (cellsz+1) + 1)) / cellsz;
-        }
-      } else {
-        sclpy2 = (posy - sclpy * cellsz) / cellsz;
-      }
+    } else if ((swzmf || swzmcd2) && e.pageX >= sclbx && e.pageX < sclbx+sclbw && e.pageY >= sclby && e.pageY < sclby+sclbh) {
+      sclpx = cellX(posx);
+      sclpy = cellY(posy);
       scale = 100 - 100*(e.pageY-sclby)/sclbh;
       calcCellsz();
-      if (cellsz > grb) {
-        if (sclpx < 0) {
-          posx = (sclpx+1) * (cellsz+1) - cellsz;
-        } else {
-          posx = sclpx * (cellsz+1) + 1;
-        }
-      } else {
-        posx = sclpx * cellsz;
-      }
-      posx += Math.ceil(cellsz * sclpx2);
-      if (cellsz > grb) {
-        if (sclpy < 0) {
-          posy = (sclpy+1) * (cellsz+1) - cellsz;
-        } else {
-          posy = sclpy * (cellsz+1) + 1;
-        }
-      } else {
-        posy = sclpy * cellsz;
-      }
-      posy += Math.ceil(cellsz * sclpy2);
+      posx = sclpx * (cellsz+(cellsz>grb?1:cellsz/grb));
+      posy = sclpy * (cellsz+(cellsz>grb?1:cellsz/grb));
+      swzmsw = false;
     } else if (e.pageX >= spdbx && e.pageX < spdbx+spdbw && e.pageY >= spdby && e.pageY < spdby+spdbh) {
-      speed = 100 - 100*(e.pageY-spdby)/spdbh;      
+      speed = 100 - 100*(e.pageY-spdby)/spdbh;
     } else if (e.pageX > grdtx && e.pageX < grdtx+grdtw && e.pageY > grdty && e.pageY < grdty+grdth) {
       if (!grdt) {
         dspgrd = !dspgrd;
@@ -452,6 +735,23 @@ window.onload = function(e) {
     } else if (e.pageX > playtx && e.pageX < playtx+playtw && e.pageY > playty && e.pageY < playty+playth) {
       if (!playt) {
         play = !play;
+        if (play) {
+          ffw = 0;
+          if (!ngen && !ngenb && !pgen && !pgenb) {
+            genbbl = true;
+          }
+        } else {
+          genbbl = false;
+        }
+        x = performance.now();
+        if (playcd3) {
+          playcd3 = x-playcd3>playcdn3?x:x-playcdn3*(1-(x-playcd3)/playcdn3);
+        } else {
+          playcd3 = x;
+        }
+        if (!play && !playcd2 && !playcd4 && !playcd5) {
+          playcd2 = performance.now();
+        }
       }
       playt = true;
     } else if (e.pageX > pattbx && e.pageX < pattbx+pattbw && e.pageY > pattby && e.pageY < pattby+pattbh) {
@@ -459,7 +759,7 @@ window.onload = function(e) {
         patt = !patt;
         if (patt) {
           document.getElementById("pattern").style.display = "block";
-          if (document.getElementById("patternt").value == "") {
+          if (document.getElementById("patternt").value === "") {
             document.getElementById("patternt").value = patttxt;
           }
         } else {
@@ -467,199 +767,309 @@ window.onload = function(e) {
         }
       }
       pattb = true;
-    } else if (e.pageX > dunibx && e.pageX < dunibx+dunibw && e.pageY > duniby && e.pageY < duniby+dunibh) {
-      if (!dunib) {
-        duni = !duni;
+    } else if (e.pageX > dwrldbx && e.pageX < dwrldbx+dwrldbw && e.pageY > dwrldby && e.pageY < dwrldby+dwrldbh) {
+      if (!dwrldb) {
+        dwrld = !dwrld;
+        if (!dwrld) {
+          wrlda = false;
+          wrldcd = null;
+        }
       }
-      dunib = true;
+      dwrldb = true;
     } else if (e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth) {
       if (!dsppost) {
         posx = posy = 0;
+        dspposcd = performance.now();
       }
       dsppost = true;
     } else if (e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth) {
       if (!dsppxct) {
-        x1 = cellX(0);
-        y1 = cellY(0);
-        if (cellsz > grb) {
-          if (x1 < 0) {
-            x2 = (posx - ((x1+1) * (cellsz+1) - cellsz)) / cellsz;;
-          } else {
-            x2 = (posx - (x1 * (cellsz+1) + 1)) / cellsz;
-          }
-        } else {
-          x2 = (posx - x1 * cellsz) / cellsz;
-        }
-        if (cellsz > grb) {
-          if (y1 < 0) {
-            y2 = (posy - ((y1+1) * (cellsz+1) - cellsz)) / cellsz;
-          } else {
-            y2 = (posy - (y1 * (cellsz+1) + 1)) / cellsz;
-          }
-        } else {
-          y2 = (posy - y1 * cellsz) / cellsz;
-        }
+        x = cellX(posx);
+        y = cellY(posy);
         calcICellsz();
         calcCellsz();
-        if (cellsz > grb) {
-          if (x1 < 0) {
-            posx = (x1+1) * (cellsz+1) - cellsz;
-          } else {
-            posx = x1 * (cellsz+1) + 1;
-          }
-        } else {
-          posx = x1 * cellsz;
-        }
-        posx += Math.ceil(cellsz * x2);
-        if (cellsz > grb) {
-          if (y1 < 0) {
-            posy = (y1+1) * (cellsz+1) - cellsz;
-          } else {
-            posy = y1 * (cellsz+1) + 1;
-        }
-        } else {
-          posy = y1 * cellsz;
-        }
-        posy += Math.ceil(cellsz * y2);
+        posx = x * (cellsz+(cellsz>grb?1:cellsz/grb));
+        posy = y * (cellsz+(cellsz>grb?1:cellsz/grb));
+        dsppxccd = performance.now();
       }
       dsppxct = true;
-    } else if (e.pageX > ngenbx && e.pageX < ngenbx+ngenbw && e.pageY > ngenby && e.pageY < ngenby+ngenbh) {
+    } else if (!genbbl && e.pageX > ngenbx && e.pageX < ngenbx+ngenbw && e.pageY > ngenby && e.pageY < ngenby+ngenbh) {
       if (!ngenb) {
-        calcGen();
-        ngencd = 50;
+        nextGen();
+        ngencd = performance.now();
+        ngencd5 = performance.now();
       }
       ngenb = true;
-    } else if (duni && cells.length > 0 && uniw > unim && unih > unim && e.pageX >= unix && e.pageX < unix+uniw && e.pageY > uniy && e.pageY < uniy+unih) {
-      px = e.pageX;
-      py = e.pageY;
-      if (px < unix+unim/2-0.5) {
-        px = unix+unim/2-0.5;
+    } else if (!genbbl && histgp > 0 && e.pageX > pgenbx && e.pageX < pgenbx+pgenbw && e.pageY > pgenby && e.pageY < pgenby+pgenbh) {
+      if (!pgenb) {
+        prevGen();
+        pgencd = performance.now();
+        pgencd5 = performance.now();
       }
-      if (px >= unix+uniw-unim/2+0.5) {
-        px = unix+uniw-unim/2-0.5;
-      }
-      if (py < uniy+unim/2-0.5) {
-        py = uniy+unim/2-0.5;
-      }
-      if (py >= uniy+unih-unim/2+0.5) {
-        py = uniy+unih-unim/2-0.5;
-      }
-      w = (uniw-unim) / (cellsr-cellsl+1);
-      h = (unih-unim) / (cellst-cellsb+1);
-      x1 = cellsl + Math.floor((px - unix-unim/2 + 0.5) / w);
-      y1 = cellst - Math.floor((py - uniy-unim/2 + 0.5) / h);
-      if (cellsz > grb) {
-        if (x1 < 0) {
-          posx = (x1+1) * (cellsz+1) - cellsz;
-        } else {
-          posx = x1 * (cellsz+1) + 1;
-        }
+      pgenb = true;
+    } else if (histgp > 0 && e.pageX > pgenfx && e.pageX < pgenfx+pgenfw && e.pageY > pgenfy && e.pageY < pgenfy+pgenfh) {
+      if (ffw === -1) {
+        ffw = 0;
+        genbbl = false;
       } else {
-        posx = x1 * cellsz;
-      }
-      if (cellsz > grb) {
-        if (y1 < 0) {
-          posy = (y1+1) * (cellsz+1) - cellsz;
-        } else {
-          posy = y1 * (cellsz+1) + 1;
+        ffw = -1;
+        play = false;
+        if (!ngen && !ngenb && !pgen && !pgenb) {
+          genbbl = true;
         }
+        pgenfcd = performance.now();
+        ngenfcd = null;
+      }
+    } else if (histgn > 0 && ngenfx > 0 && e.pageX > ngenfx && e.pageX < ngenfx+ngenfw && e.pageY > ngenfy && e.pageY < ngenfy+ngenfh) {
+      if (ffw === 1) {
+        ffw = 0;
+        genbbl = false;
       } else {
-        posy = y1 * cellsz;
+        ffw = 1;
+        play = false;
+        if (!ngen && !ngenb && !pgen && !pgenb) {
+          genbbl = true;
+        }
+        ngenfcd = performance.now();
+        pgenfcd = null;
+      }
+    } else if ((cruleb !== histcr[0] || crules !== histcr[1]) && e.pageX > orulex && e.pageX < orulex+orulew && e.pageY > oruley && e.pageY < oruley+oruleh) {
+      cruleb = histcr[0];
+      crules = histcr[1];
+      hlcrcd2 = performance.now();
+      hlcrcd = null;
+      hlcrcd3 = null;
+    } else if (e.pageX > swzmtx && e.pageX < swzmtx+swzmtw && e.pageY > swzmty && e.pageY < swzmty+swzmth) {
+      if (!swzmt) {
+        swzmf = !swzmf;
+        x = performance.now();
+        if (swzmcd2) {
+          swzmcd2 = x-swzmcd2>swzmcdn2?x:x-swzmcdn2*(1-(x-swzmcd2)/swzmcdn2);
+        } else {
+          swzmcd2 = x;
+        }
+        swzmcd = performance.now();
+      }
+      swzmt = true;
+      swzmsw = false;
+    } else if ((capcd || histgn > 0) && e.pageX > captx && e.pageX < captx+captw && e.pageY > capty && e.pageY < capty+capth) {
+    } else if (!ddiamcd && ddiamx > 0 && e.pageX > ddiamx && e.pageX < ddiamx+ddiamw && e.pageY > ddiamy && e.pageY < ddiamy+ddiamh) {
+    } else if (dwrld && cellsn > 0 && wrldw > wrldm && wrldh > wrldm && wrldax > 0 - wrldaw && wrldax < canvas2.width && wrlday > 0 - wrldah && wrlday < canvas2.height && e.pageX >= wrldax && e.pageX < wrldax+wrldaw && e.pageY > wrlday && e.pageY < wrlday+wrldah) {
+      if ((!((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr))
+          && (!((swzmf || swzmcd2) && e.pageX >= sclbx && e.pageX < sclbx+sclbw && e.pageY >= sclby && e.pageY < sclby+sclbh))
+          && (!(e.pageX > spdx-spdr && e.pageX < spdx+spdr && e.pageY > spdy-spdr && e.pageY < spdy+spdr))
+          && (!(e.pageX >= spdbx && e.pageX < spdbx+spdbw && e.pageY >= spdby && e.pageY < spdby+spdbh))
+          && (!(e.pageX > grdtx && e.pageX < grdtx+grdtw && e.pageY > grdty && e.pageY < grdty+grdth))
+          && (!(e.pageX > playtx && e.pageX < playtx+playtw && e.pageY > playty && e.pageY < playty+playth))
+          && (!(e.pageX > pattbx && e.pageX < pattbx+pattbw && e.pageY > pattby && e.pageY < pattby+pattbh))
+          && (!(e.pageX > dwrldbx && e.pageX < dwrldbx+dwrldbw && e.pageY > dwrldby && e.pageY < dwrldby+dwrldbh))
+          && (!(e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth))
+          && (!(e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth))
+          && (!(!genbbl && e.pageX > ngenbx && e.pageX < ngenbx+ngenbw && e.pageY > ngenby && e.pageY < ngenby+ngenbh))
+          && (!(!genbbl && e.pageX > pgenbx && e.pageX < pgenbx+pgenbw && e.pageY > pgenby && e.pageY < pgenby+pgenbh))
+          && (!(histgp > 0 && e.pageX > pgenfx && e.pageX < pgenfx+pgenfw && e.pageY > pgenfy && e.pageY < pgenfy+pgenfh))
+          && (!(histgn > 0 && ngenfx > 0 && e.pageX > ngenfx && e.pageX < ngenfx+ngenfw && e.pageY > ngenfy && e.pageY < ngenfy+ngenfh))
+          && (!((cruleb !== histcr[0] || crules !== histcr[1]) && e.pageX > orulex && e.pageX < orulex+orulew && e.pageY > oruley && e.pageY < oruley+oruleh))
+          && (!(e.pageX > swzmtx && e.pageX < swzmtx+swzmtw && e.pageY > swzmty && e.pageY < swzmty+swzmth))) {
+        if (!wrlda) {
+          diffx = e.pageX;
+          diffy = e.pageY;
+          wrldcd = performance.now();
+        }
       }
     } else {
       if (!mdown) {
         toncd = 15;
         ton = false;
-        sx = e.pageX;
-        sy = e.pageY;
+        diffx = e.pageX;
+        diffy = e.pageY;
         mdown = true;
       }
     }
+    return false;
   }, false);
-  canvas.addEventListener("mouseup", function(e) {
+  canvas2.addEventListener("mouseup", function(e) {
     e.preventDefault();
     scl = false;
     spd = false;
     grdt = false;
     playt = false;
     pattb = false;
-    dunib = false;
+    dwrldb = false;
     dsppost = false;
     dsppxct = false;
     ngenb = false;
     ngen = false;
+    pgenb = false;
+    pgen = false;
     mdown = false;
+    wrlda = false;
+    wrldcd = null;
+    swzmt = false;
     toncd = 0;
-    ngencd = 0;
+    return false;
   }, false);
-  canvas.addEventListener("mousemove", function(e) {
+  canvas2.addEventListener("mousemove", function(e) {
+    var p, x, y, c, r;
     e.preventDefault();
     curx = e.pageX;
     cury = e.pageY;
-    if (!(duni && cells.length && e.pageX > unix && e.pageX < unix+uniw && e.pageY > uniy && e.pageY < uniy+unih)) {
+    if (!(dwrld && cellsn > 0 && e.pageX > wrldx && e.pageX < wrldx+wrldw && e.pageY > wrldy && e.pageY < wrldy+wrldh)) {
       if (mdown && !ton) {
         toncd = 0;
-        posx -= e.pageX - sx;
-        posy += e.pageY - sy;
-        sx = e.pageX;
-        sy = e.pageY;
+        x = posx;
+        y = posy;
+        posx -= e.pageX - diffx;
+        posy += e.pageY - diffy;
+        diffx = e.pageX;
+        diffy = e.pageY;
+        c = cellX(posx,true);
+        r = cellY(posy,true);
+        if (c < maxl || c > maxr || r < maxb || r > maxt) {
+          posx = x;
+          posy = y;
+        }
       }
     }
+    if (spd) {
+      p = cury - spdd;
+      if (p < spdby) {
+        p = spdby;
+      }
+      if (p >= spdby + spdbh) {
+        p = spdby + spdbh - 1;
+      }
+      speed = 100 - 100*(p-spdby)/spdbh;
+    }
+    if (scl) {
+      p = cury - scld;
+      if (p < sclby) {
+        p = sclby;
+      }
+      if (p >= sclby + sclbh) {
+        p = sclby + sclbh - 1;
+      }
+      scale = 100 - 100*(p-sclby)/sclbh;
+      calcCellsz();
+      posx = sclpx * (cellsz+(cellsz>grb?1:cellsz/grb));
+      posy = sclpy * (cellsz+(cellsz>grb?1:cellsz/grb));
+    }
+    if (wrlda) {
+      posx -= ((diffx - e.pageX) / ((wrldw-wrldm) / (cellsr-cellsl+1))) * (cellsz+(cellsz>grb?1:cellsz/grb));
+      posy += ((diffy - e.pageY) / ((wrldh-wrldm) / (cellst-cellsb+1))) * (cellsz+(cellsz>grb?1:cellsz/grb));
+      diffx = e.pageX;
+      diffy = e.pageY;
+    }
+    return false;
   }, false);
-  canvas.addEventListener("dblclick", function(e) {
+  canvas2.addEventListener("dblclick", function(e) {
+    var u, x, y;
     e.preventDefault();
-    if ((!(e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr))
-        && (!(duni && cells.length && e.pageX > unix && e.pageX < unix+uniw && e.pageY > uniy && e.pageY < uniy+unih))
+    if ((!((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr && e.pageY > scly-sclr && e.pageY < scly+sclr))
+        && (!((swzmf || swzmcd2) && e.pageX >= sclbx && e.pageX < sclbx+sclbw && e.pageY >= sclby && e.pageY < sclby+sclbh))
         && (!(e.pageX > spdx-spdr && e.pageX < spdx+spdr && e.pageY > spdy-spdr && e.pageY < spdy+spdr))
+        && (!(e.pageX >= spdbx && e.pageX < spdbx+spdbw && e.pageY >= spdby && e.pageY < spdby+spdbh))
         && (!(e.pageX > grdtx && e.pageX < grdtx+grdtw && e.pageY > grdty && e.pageY < grdty+grdth))
         && (!(e.pageX > playtx && e.pageX < playtx+playtw && e.pageY > playty && e.pageY < playty+playth))
         && (!(e.pageX > pattbx && e.pageX < pattbx+pattbw && e.pageY > pattby && e.pageY < pattby+pattbh))
-        && (!(e.pageX > dunibx && e.pageX < dunibx+dunibw && e.pageY > duniby && e.pageY < duniby+dunibh))
+        && (!(e.pageX > dwrldbx && e.pageX < dwrldbx+dwrldbw && e.pageY > dwrldby && e.pageY < dwrldby+dwrldbh))
         && (!(e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth))
         && (!(e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth))
-        && (!(e.pageX > ngenbx && e.pageX < ngenbx+ngenbw && e.pageY > ngenby && e.pageY < ngenby+ngenbh))) {
-      toggleCell(e.pageX, e.pageY);
+        && (!(!genbbl && e.pageX > ngenbx && e.pageX < ngenbx+ngenbw && e.pageY > ngenby && e.pageY < ngenby+ngenbh))
+        && (!(!genbbl && e.pageX > pgenbx && e.pageX < pgenbx+pgenbw && e.pageY > pgenby && e.pageY < pgenby+pgenbh))
+        && (!(histgp > 0 && e.pageX > pgenfx && e.pageX < pgenfx+pgenfw && e.pageY > pgenfy && e.pageY < pgenfy+pgenfh))
+        && (!(histgn > 0 && ngenfx > 0 && e.pageX > ngenfx && e.pageX < ngenfx+ngenfw && e.pageY > ngenfy && e.pageY < ngenfy+ngenfh))
+        && (!((cruleb !== histcr[0] || crules !== histcr[1]) && e.pageX > orulex && e.pageX < orulex+orulew && e.pageY > oruley && e.pageY < oruley+oruleh))
+        && (!(e.pageX > swzmtx && e.pageX < swzmtx+swzmtw && e.pageY > swzmty && e.pageY < swzmty+swzmth))) {
+
+      if ((capcd || histgn > 0) && e.pageX > captx && e.pageX < captx+captw && e.pageY > capty && e.pageY < capty+capth) {
+        if (histgn > 0) {
+          capHist();
+          appendHUpd(hist[histh][0][histi][0], (u = hupdates()), hist[histh][0][histi][3][1]);
+          if (u.length > 0) {
+            hist[histh][0][histi][3][1]++;
+          }
+          capcd = performance.now();
+        }
+      } else if (!ddiamcd && ddiamx > 0 && e.pageX > ddiamx && e.pageX < ddiamx+ddiamw && e.pageY > ddiamy && e.pageY < ddiamy+ddiamh) {
+        if (hist[histh][0][histi][3][1] + (hupdc > 0 ? 1:0) > 0) {
+          revert();
+          ddiamcd2 = performance.now();
+        }
+      } else if (dwrld && cellsn > 0 && wrldw > wrldm && wrldh > wrldm && e.pageX >= wrldx && e.pageX < wrldx+wrldw && e.pageY > wrldy && e.pageY < wrldy+wrldh) {
+        x = e.pageX;
+        y = e.pageY;
+        if (x < wrldx+wrldm/2-0.5) {
+          x = wrldx+wrldm/2-0.5;
+        }
+        if (x >= wrldx+wrldw-wrldm/2+0.5) {
+          x = wrldx+wrldw-wrldm/2-0.5;
+        }
+        if (y < wrldy+wrldm/2-0.5) {
+          y = wrldy+wrldm/2-0.5;
+        }
+        if (y >= wrldy+wrldh-wrldm/2+0.5) {
+          y = wrldy+wrldh-wrldm/2-0.5;
+        }
+        posx = (cellsl + Math.floor((x - wrldx-wrldm/2 + 0.5) / ((wrldw-wrldm) / (cellsr-cellsl+1)))) * (cellsz+(cellsz>grb?1:cellsz/grb));
+        posy = (cellst - Math.floor((y - wrldy-wrldm/2 + 0.5) / ((wrldh-wrldm) / (cellst-cellsb+1)))) * (cellsz+(cellsz>grb?1:cellsz/grb));
+      } else {
+        toggleCell(e.pageX, e.pageY);
+      }
     }
-  }, false); 
-  canvas.addEventListener("click", function(e) {
+    return false;
+  }, false);
+  canvas2.addEventListener("click", function(e) {
     e.preventDefault();
-  }, false); 
-  window.addEventListener("keypress", function(e) {
-    var s, p, i, cc;
-    if (crulec && e.keyCode == 13) {
+    return false;
+  }, false);
+  window.addEventListener("keyup", function(e) {
+    var s, p, i, a ,b;
+    e.preventDefault();
+    if (crulec && e.keyCode === 13) {
       crulebut(1);
-    } else if (e.key == "B" || e.key == "b" || e.key == "S" || e.key == "s" || e.key == "0" || e.key == "1" || e.key == "2" || e.key == "3" || e.key == "4" || e.key == "5" || e.key == "6" || e.key == "7" || e.key == "8" || e.key == "9") {
+    } else if (e.keyCode === 98 || e.keyCode === 66 || e.keyCode === 115 || e.keyCode === 83 || e.keyCode === 48 || e.keyCode === 49 || e.keyCode === 50 || e.keyCode === 51 || e.keyCode === 52 || e.keyCode === 53 || e.keyCode === 54 || e.keyCode === 55 || e.keyCode === 56 || e.keyCode === 57) {
+      if (crulem === 0) {
+        crulebn = "";
+        crulesn = "";
+      }
       if (!patt) {
-        if (e.key == "B" || e.key == "b") {
+        if (e.keyCode === 98 || e.keyCode === 66) {
           crulem = 1;
-          crulebn = "";
-          if (crulesn == "") {
+          cruler = true;
+          if (crulesn === "") {
             crulesn = crules;
           }
-        } else if (e.key == "S" || e.key == "s") {
+        } else if (e.keyCode === 115 || e.keyCode === 83) {
           crulem = 2;
-          crulesn = "";
-          if (crulebn == "") {
+          cruler = true;
+          if (crulebn === "") {
             crulebn = cruleb;
           }
-        } else if (e.key != "9" && (e.key != "0" || crulem != 1)) {
-          if (crulem == 1) {
+        } else if (e.keyCode !== 57 && crulem !== 0 && (e.keyCode !== 48 || crulem !== 1)) {
+          if (crulem === 1) {
+            if (cruler) {
+              crulebn = "";
+            }
             s = crulebn;
           } else {
+            if (cruler) {
+              crulesn = "";
+            }
             s = crulesn;
           }
-          cc = e.key.charCodeAt(0);
+          cruler = false;
           p = -1;
           for (i = 0; i < s.length; i++) {
-            if (s.charCodeAt(i) - cc > 0) {
+            if (s.charCodeAt(i) > e.keyCode) {
               break;
             } else {
               p = i;
             }
           }
-          if (p == -1 || s.charAt(p) != e.key) {
-            s = s.substring(0,p+1) + e.key + s.substring(p+1);
-            if (crulem == 1) {
+          if (p === -1 || s.charCodeAt(p) !== e.keyCode) {
+            s = s.substring(0,p+1) + String.fromCharCode(e.keyCode) + s.substring(p+1);
+            if (crulem === 1) {
               crulebn = s;
             } else {
               crulesn = s;
@@ -667,100 +1077,165 @@ window.onload = function(e) {
           }
         }
       }
-      if (crulem != 0 && (crulebn.length > 0 && crulebn != cruleb || crulesn.length > 0 && crulesn != crules)) {
+      if (crulem !== 0 && (crulebn.length > 0 && crulebn !== cruleb || crulesn.length > 0 && crulesn !== crules)) {
         crulec = true;
       }
       if (crulec) {
         document.getElementById("crule").style.display = "block";
-        if (crulebn.length > 0 && crulebn != cruleb || crulesn.length > 0 && crulesn != crules) {
-          document.getElementById("crulet").innerHTML = 'Accept or Forget New Rule<br><br><span style="font-size: 32px; color: rgba(100,220,100,0.6);">'+"B"+(crulebn.length==0?cruleb:crulebn)+' '+'S'+(crulesn.length==0?crules:crulesn)+'</span>';
+        if (crulebn.length > 0 && crulebn !== cruleb || crulesn.length > 0 && crulesn !== crules) {
+          document.getElementById("crulet").innerHTML = 'Accept or Forget New Rule<br><br>Click Button or Press Enter to Accept<br>Press "d" or "D" to Accept Default Rule<br><br><span style="font-size: 32px; color: rgba(100,220,100,0.6);">'+"B"+(crulebn.length===0?cruleb:crulebn)+' '+'S'+(crulesn.length===0?crules:crulesn)+'</span>';
           document.getElementById("cruleba").style.display = "block";
+          document.getElementById("crulebf").innerHTML = 'Forget';
         } else {
-          document.getElementById("crulet").innerHTML = 'Type New Rule or Forget';
+          document.getElementById("crulet").innerHTML = 'Current Rule<br><br><span style="font-size: 32px; color: rgba(150,150,150,0.6);">'+"B"+(crulebn.length===0?cruleb:crulebn)+' '+'S'+(crulesn.length===0?crules:crulesn)+'</span>';
           document.getElementById("cruleba").style.display = "none";
+          document.getElementById("crulebf").innerHTML = 'Leave';
         }
       }
-    } else {
+    } else if (crulem !== 0) {
+      if (e.keyCode === 100 || e.keyCode === 68) {
+        cruleb = "3";
+        crules = "23";
+      }
       crulem = 0;
-      crulebn = cruleb;
-      crulesn = crules;
       crulec = false;
+      cruler = false;
       document.getElementById("crule").style.display = "none";
     }
-  }, false); 
-  requestAnimationFrame(animate);
-  setInterval(function() {
-    var t = performance.now();
-    if (!lts) {
-      lts = t;
+    a = hist[histh][0][histi][3][0] + (cruleb !== histcr[0] || crules !== histcr[1] ? 1:0);
+    b = hist[histh][0][histi][3][1] + (hupdc > 0 ? 1:0);
+    if (a > 0 || b > 0) {
+      ddiama = a;
+      ddiamb = b;
+      ddiamcd = null;
     }
-    if (runpattf == 1) {
+    return false;
+  }, false);
+  requestAnimationFrame(animate);
+  setZeroTimeout(tick);
+}
+
+function tick() {
+  var t = performance.now(), i;
+  gts = t;
+  if (!lts) {
+    lts = t;
+  }
+  if (ffw !== 0) {
+    if (ffw > 0) {
+      if (histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1]) {
+        nextGen();
+        if (hist[histh][0][histi][3][0] > 0 || hist[histh][0][histi][3][1] > 0) {
+          ffw = 0;
+        }
+      } else {
+        ffw = 0;
+      }
+    } else {
+      if (histgp > 0 && (histgn === 0 || hupdc === 0)) {
+        prevGen();
+        if (hist[histh][0][histi][3][0] > 0 || hist[histh][0][histi][3][1] > 0) {
+          ffw = 0;
+        }
+      } else {
+        ffw = 0;
+      }
+    }
+    if (ffw === 0) {
+      genbbl = false;
+    }
+  }
+  if (runpattf !== 0) {
+    if (runpattf === 1) {
       runf1();
-    } else if (runpattf == 2) {
+    } else if (runpattf === 2) {
       runf2();
     }
-    if (play && t-lts>3000*(Math.pow(2,10/100*(100-speed))-1)/1024) {
-      calcGen();
-      lts = t;
+  }
+  playcdn = 3000 * ((Math.pow(2,6+4*((100-speed)/100))-1)/1024);
+  if (play && t-lts>3000*((Math.pow(2,10*((100-speed)/100))-1)/1024)) {
+    lts = t;
+    calcGen();
+  }
+  i = 0;
+  while (cellsn < cellslen/2.3) {
+    while (i < cellslen && cells[i][3] === 1) {
+      i++;
     }
-  }, 0);
-}
+    while (i < cellslen && cellslen > 0 && cells[cellslen-1][3] !== 1) {
+      cellslen--;
+      cellsfs[0-cells[cellslen][3]] = -1;
+    }
+    if (i < cellslen) {
+      cellslen--;
+      cellsfs[0-cells[i][3]] = -1;
+      cells[i][0] = cells[cellslen][0];
+      cells[i][1] = cells[cellslen][1];
+      cells[i][2] = cells[cellslen][2];
+      cells[i][3] = 1;
+      cells[i][4] = cells[cellslen][4];
+      cells[i][4][2] = i + 1;
+      cells[cellslen][4] = null;
+    }
+  }
+  i = 0;
+  while (i < frll) {
+    if (frl[i]) {
+      if (frl[i][1] === 2 && frl[i][4]) {
+        if (gts - frl[i][2] > frl[i][0].length * 1.3 * 1000) {
+          frl[i][1] = 3;
+          frl[i][4][1][0][frl[i][4][0]] = null;
+          frl[i][4][1][1]--;
+          frl[i] = null;
+        }
+      } else {
+        frl[i] = null;
+      }
+      if (!frl[i]) {
+       frlfs[frlfsl++] = i;
+      }
+    }
+    i++;
+  }
+  setZeroTimeout(tick);
+};
+
+
 function animate(ts) {
   gts = ts;
   runsim();
-  requestAnimationFrame(animate); 
+  requestAnimationFrame(animate);
 }
 
 function runsim() {
   var x, y;
   chgcsz = chggsz = chgpos = false;
-  if (!osw || canvas.offsetWidth != osw || !osh || canvas.offsetHeight != osh) {
+  if (!osw || canvas2.offsetWidth !== osw || !osh || canvas2.offsetHeight !== osh) {
     chgcsz = true;
-    osw = canvas.offsetWidth;
-    osh = canvas.offsetHeight;
-    canvas.width = osw;
-    canvas.height = osh;
-    canvash.width = osw;
-    canvash.height = osh;
+    osw = canvas2.offsetWidth;
+    osh = canvas2.offsetHeight;
+    canvas2.width = osw;
+    canvas2.height = osh;
+    canvas1.width = osw;
+    canvas1.height = osh;
+    canvas0.width = osw;
+    canvas0.height = osh;
     tmet = null;
-  }
-  calcCellsz();
-  if (scl) {
-    if (cellsz > grb) {
-      if (sclpx < 0) {
-        posx = (sclpx+1) * (cellsz+1) - cellsz;
-      } else {
-        posx = sclpx * (cellsz+1) + 1;
-      }
-    } else {
-      posx = sclpx * cellsz;
-    }
-    posx += Math.ceil(cellsz * sclpx2);
-    if (cellsz > grb) {
-      if (sclpy < 0) {
-        posy = (sclpy+1) * (cellsz+1) - cellsz;
-      } else {
-        posy = sclpy * (cellsz+1) + 1;
-      }
-    } else {
-      posy = sclpy * cellsz;
-    }
-    posy += Math.ceil(cellsz * sclpy2);
   }
   if (mdown) {
     if (toncd > 0) {
       toncd--;
       if (toncd < 1) {
         ton = true;
-        tonx = cellX(curx);
-        tony = cellY(cury);
+        tonx = cellX(posx+curx,true);
+        tony = cellY(posy+cury,true);
         toggleCell(curx, cury);
       }
     }
     if (ton) {
-      x = cellX(curx);
-      y = cellY(cury);
-      if (tonw <= 0 && (x != tonx || y != tony)) {
+      x = cellX(posx+curx,true);
+      y = cellY(posy+cury,true);
+      if (tonw <= 0 && (x !== tonx || y !== tony)) {
         toggleCell(curx, cury);
         tonw = 5;
       }
@@ -771,80 +1246,201 @@ function runsim() {
       tony = y;
     }
   }
-  if (ngenb) {
-    if (ngencd > 0) {
-      ngencd--;
-      if (ngencd < 1) {
-        ngen = true;
-        ngencd = 0;
-        ngencd2 = 0;
-        ngencd3 = 12;
-        ngencd4 = 6;
+  if (capcd && gts - capcd > capcdn) {
+    capcd = null;
+  }
+  if (capcd2 && gts - capcd2 > capcdn2) {
+    capcd2 = null;
+  }
+  if (hlcrcd && (gts - hlcrcd > hlcrcdn)) {
+    hlcrcd = null;
+  }
+  if (hlcrcd2 && gts - hlcrcd2 > hlcrcdn2) {
+    hlcrcd2 = null;
+  }
+  if (hlcrcd3 && gts - hlcrcd3 > hlcrcdn3) {
+    hlcrcd3 = null;
+  }
+  if (ngencd && gts - ngencd > ngencdn) {
+    ngencd = null;
+  }
+  if (ngencd2 && gts - ngencd2 > ngencd3) {
+    ngencd2 = null;
+  }
+  if (ngencd4 && gts - ngencd4 > ngencdn4) {
+    ngencd4 = null;
+  }
+  if (ngencd5 && gts - ngencd5 > ngencdn5) {
+    ngencd5 = null;
+  }
+  if (ngenfcd && gts - ngenfcd > ngenfcdn) {
+    ngenfcd = null;
+  }
+  if (pgencd && gts - pgencd > pgencdn) {
+    pgencd = null;
+  }
+  if (pgencd2 && gts - pgencd2 > pgencd3) {
+    pgencd2 = null;
+  }
+  if (pgencd4 && gts - pgencd4 > pgencdn4) {
+    pgencd4 = null;
+  }
+  if (pgencd5 && gts - pgencd5 > pgencdn5) {
+    pgencd5 = null;
+  }
+  if (pgenfcd && gts - pgenfcd > pgenfcdn) {
+    pgenfcd = null;
+  }
+  if (ddiamcd && gts - ddiamcd > ddiamcdn) {
+    ddiamcd = null;
+    ddiama = 0;
+    ddiamb = 0;
+  }
+  if (ddiamcd2 && gts - ddiamcd2 > ddiamcdn2) {
+    ddiamcd2 = null;
+  }
+  if (playcd && gts - playcd > playcdn) {
+    playcd = null;
+  }
+  if (playcd2 && gts - playcd2 > playcdn2) {
+    playcd2 = null;
+    playcd5 = gts;
+  }
+  if (playcd3 && gts - playcd3 > playcdn3) {
+    playcd3 = null;
+  }
+  if (playcd4 && gts - playcd4 > playcdn4) {
+    playcd4 = null;
+  }
+  if (playcd5 && gts - playcd5 > playcdn5) {
+    playcd5 = null;
+    playcd4 = gts;
+  }
+  if (wrldcd && gts - wrldcd > wrldcdn) {
+    wrldcd = null;
+    wrlda = true;
+  }
+  if (msgcd1 && gts - msgcd1 > msgcdn1) {
+    msgcd1 = performance.now();
+    if (msgf1 === 0) {
+      swstmsg();
+    }
+    msgf1 = 0;
+  }
+  if (msgcd2 && gts - msgcd2 > msgcdn2) {
+    msgcd2 = performance.now();
+    if ((msgf1 === 1 || msgf1 === 2) && cellsn > 0
+        || msgf1 === 3 && (cellsxl > 0 || histgn > 0)
+        || msgf1 === 11 && gennum > 0
+        || msgf1 === 12 && histp === 0) {
+      msgf1 = 0;
+      swstmsg();
+    }
+  }
+  if (dspposcd && gts - dspposcd > dspposcdn) {
+    dspposcd = null;
+  }
+  if (dsppxccd && gts - dsppxccd > dsppxccdn) {
+    dsppxccd = null;
+  }
+  if (swzmcd && gts - swzmcd > swzmcdn) {
+    swzmcd = null;
+  }
+  if (swzmcd2 && gts - swzmcd2 > swzmcdn2) {
+    swzmcd2 = null;
+  }
+  if (stmsgcd && gts - stmsgcd > stmsgcdn) {
+    stmsgcd = null;
+    stmsgo1 = stmsgn1;
+    stmsgo2 = stmsgn2;
+    stmsgotm1 = stmsgntm1;
+    stmsgotm2 = stmsgntm2;
+    stmsgn1 = "";
+    stmsgn2 = "";
+    stmsgcd2 = performance.now();
+  }
+  if (stmsgcd2 && gts - stmsgcd2 > stmsgcdn2) {
+    stmsgcd2 = null;
+  }
+  if (titlecd && gts - titlecd > titlecdn) {
+    titlecd = null;
+    titlecd2 = performance.now();
+  }
+  if (titlecd2 && gts - titlecd2 > titlecdn2) {
+    titlecd2 = null;
+    titleh = false;
+  }
+  if (titlecd3 && gts - titlecd3 > titlecdn3) {
+    titlecd3 = null;
+  }
+  if (ngenb && !ngencd && !ngen) {
+    ngen = true;
+    ngencd2 = null;
+    ngencd3 = 500;
+    ngencd4 = null;
+  }
+  if (ngen) {
+    if (!ngencd2) {
+      nextGen();
+      ngencd2 = gts;
+      if (!ngencd4) {
+        ngencd3 -= ngencd3 > 0 ? 50 : 0;
+        ngencd4 = gts;
       }
     }
   }
-  if (ngen) {
-    if (ngencd2 > 0) {
-      ngencd2--;
-    }
-    if (ngencd2 < 1) {
-      calcGen();
-      ngencd2 = ngencd3;
-      ngencd4--;
-      if (ngencd4 < 1) {
-        ngencd4 = 6;
-        if (ngencd3 > 2) {
-          ngencd3--;
-        }
+  if (pgenb && !pgencd && !pgen && histgp > 0) {
+    pgen = true;
+    pgencd2 = null;
+    pgencd3 = 500;
+    pgencd4 = null;
+  }
+  if (pgen) {
+    if (!pgencd2) {
+      prevGen();
+      pgencd2 = gts;
+      if (!pgencd4) {
+        pgencd3 -= pgencd3 > 0 ? 50 : 0;
+        pgencd4 = gts;
       }
     }
-  } 
-  if (cellsz != prvgsz) {
+  }
+  if (histgp < 1) {
+    pgen = false;
+  }
+  if (cellsz !== prvgsz) {
     prvgsz = cellsz;
     chggsz = true;
   }
-  if (posx != prvposx || posy != prvposy) {
+  if (posx !== prvposx || posy !== prvposy) {
     prvposx = posx;
     prvposy = posy;
     chgpos = true;
   }
   if (drawbackg || chgcsz || chggsz || chgpos) {
     drawbackg = false;
-    ctxh.fillStyle = "rgba(0,0,0,1)";
-    ctxh.fillRect(0, 0, canvash.width, canvash.height);
+    ctx0.fillStyle = "rgba(0,0,0,1)";
+    ctx0.fillRect(0, 0, canvas0.width, canvas0.height);
     if (dspgrd && cellsz > grb) {
       drawGrid();
     }
   }
-  ctx.drawImage(canvash, 0, 0);
   drawCells();
-  if (duni && cells.length > 0) {
-    drawUni();
-  }
-  drawScale();
-  drawSpeed();
-  drawGridToggle();
-  drawPlayToggle();
-  drawPatternButton();
-  drawUniButton();
-  drawNGenButton();
-  drawInfo();
-  drawFramesSec();
-  drawPos();
-  drawCRule();
-  if (titlemode >= 2 && cells.length == 0 && titlefd <= titlex) {
-    titlefd++;
+  ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+  if (titlemode >= 2 && cellsn === 0 && msgll === 0 && titlefd <= titlex) {
+    titlefd += (gts-titlefdt)/1000*60;
   }
   if (titlefd > 0) {
     drawTitle();
-    if (titlemode < 2 || cells.length > 0 || titlefd > titlex) {
-      titlefd--;
-      if (titlemode == 2 && titlefd <= 0) {
+    if (titlemode < 2 || cellsn > 0 || msgll > 0 || titlefd > titlex) {
+      titlefd -= (gts-titlefdt)/1000*(msgll>0?120:60);
+      if (titlemode === 2 && titlefd <= 0) {
         titleh = false;
       }
     }
   }
-  if (titlemode == 0 && cells.length > 0) {
+  titlefdt = gts;
+  if (titlemode === 0 && (cellsn > 0 || msgll > 0)) {
     titlefd = 0;
   }
   if (titlemode < 2) {
@@ -853,10 +1449,29 @@ function runsim() {
       titlemode++;
     }
   }
+  drawInfo();
+  if (dwrld && cellsn > 0) {
+    drawWrld();
+  }
+  drawScale();
+  drawSpeed();
+  drawDiamond();
+  drawGridToggle();
+  drawPlayToggle();
+  drawPatternButton();
+  drawWrldButton();
+  drawNGenButton();
+  drawPGenButton();
+  drawCapButton();
+  drawFramesSec();
+  drawPos();
+  drawCRule();
+  drawStmsg();
+  drawMsgs();
 }
 
 function calcICellsz() {
-  cellisz = Math.floor(canvas.width > canvas.height ? canvas.width / (2*Math.sqrt(canvas.width)) : canvas.height / (2*Math.sqrt(canvas.height)));
+  cellisz = Math.floor(canvas2.width > canvas2.height ? canvas2.width / (2*Math.sqrt(canvas2.width)) : canvas2.height / (2*Math.sqrt(canvas2.height)));
   if (cellisz < 1) {
     cellisz = 1;
   }
@@ -867,287 +1482,443 @@ function calcCellsz() {
 }
 
 function toggleCell(x, y) {
-  toggleCellCR(cellX(x - canvas.width / 2), cellY(canvas.height / 2 - y));
+  var c = cellX(posx + (x - canvas2.width / 2), true), r =  cellY(posy + (canvas2.height / 2 - y), true);
+  if (c >= maxl && c <= maxr && r >= maxb && r <= maxt) {
+    toggleCellCR(c, r);
+  }
 }
-  
+
 function toggleCellCR(c, r, x) {
-  var l = cells.length, i;
-  i = 0;
+  var i, n, g, n2, a, c0 = c, r0 = r, z;
+  clrcellsx();
+  if (c0 < maxl) {
+    c0 = maxr - maxl + c0 + 1;
+  }
+  if (c0 > maxr) {
+    c0 = maxl + c0 - maxr - 1;
+  }
+  if (r0 < maxb) {
+    r0 = maxt - maxb + r0 + 1;
+  }
+  if (r0 > maxt) {
+    r0 = maxb + r0 - maxt - 1;
+  }
   if (x) {
     i = x - 1;
   } else {
-    while (i < l && (cells[i].c != c || cells[i].r != r)) {
-      i++;
-    }
+    i = ((a = fcidx(c,r)) ? a[0] === 1 ? a[2]-1 : cellslen : cellslen);
   }
-  if (i < l) {
-    while (i < l - 1) {
-      cells[i] = cells[i+1];
-      i++;
+  n = tidx[crkey(c0,r0)];
+  n2 = n?n<0?n-1:n+1:1;
+  if (i < cellslen) {
+    g = cells[i][2];
+    if (g === 0) {
+      if (Math.abs(n2%2) === 1) {
+        hupdc++;
+      } else {
+        hupdc--;
+      }
+    } else {
+      hupdc++;
+      n2 = -2;
     }
-    cells.pop();
-    cidx[""+c+"-"+r] = false;
+    if (!n) {
+      tarr.push([c0,r0,g]);
+    }
+    rmvCell(i);
+    fcidx(c,r,1);
+    cellsn--;
   } else {
-    cells.push({c:c,r:r});
-    cidx[""+c+"-"+r] = true;
+    if (Math.abs(n2%2) === 1) {
+      hupdc++;
+    } else {
+      hupdc--;
+    }
+    if (!n || n === -2) {
+      tarr.push([c0,r0,-1]);
+    }
+    z = addCell(c0,r0);
+    cells[z][4] = fcidx(c,r,[1,0,z+1,0]);
+    cellsn++;
   }
-  calcUni();
+  tidx[crkey(c0,r0)] = n2;
+  calcWrld();
+  a = hist[histh][0][histi][3][0] + (cruleb !== histcr[0] || crules !== histcr[1] ? 1:0);
+  b = hist[histh][0][histi][3][1] + (hupdc > 0 ? 1:0);
+  if (a > 0 || b > 0) {
+    ddiama = a;
+    ddiamb = b;
+    ddiamcd = null;
+  }
 }
 
-function cellX(x) {
-  var p = posx + x;
-  if (cellsz > grb) {
-    if (p < 0) {
-      p = Math.ceil(p / (cellsz+1)) - 1;
-    } else {
-      p = Math.floor(p / (cellsz+1));
-    }
-  } else {
-    if (p < 0) {
-      p = Math.ceil((p+1) / cellsz) - 1;
-    } else {
-      p = Math.floor(p / cellsz);
-    }
+function cellX(x,r) {
+  var z = x / (cellsz+(cellsz>grb?1:cellsz/grb));
+  if (r) {
+    return Math.floor(z);
   }
-  return p;
+  return z;
 }
 
-function cellY(y) {
-  var p = posy + y;
-  if (cellsz > grb) {
-    if (p < 0) {
-      p = Math.ceil(p / (cellsz+1)) - 1;
-    } else {
-      p = Math.floor(p / (cellsz+1));
-    }
-  } else {
-    if (p < 0) {
-      p = Math.ceil((p+1) / cellsz) - 1;
-    } else {
-      p = Math.floor(p / cellsz);
-    }
+function cellY(y,r) {
+  var z = y / (cellsz+(cellsz>grb?1:cellsz/grb));
+  if (r) {
+    return Math.floor(z);
   }
-  return p;
+  return z;
 }
 
 function drawCells() {
-  var l = cells.length;
-  ctx.save();
-  for (var i = 0; i < l; i++) {
-    drawCell(cells[i].c, cells[i].r, cells[i].g);
+  var ci;
+  ctx1.clearRect(0, 0, canvas2.width, canvas2.height);
+  ctx1.setLineDash([]);
+  for (var i = 0; i < cellslen; i++) {
+    if ((ci = cells[i])[3] === 1) {
+      drawCell(ci[0], ci[1], ci[2]);
+    }
   }
-  ctx.restore();
 }
 
 function drawCell(x, y, g) {
-  var px, py, px2, py2, w, h;
-  if (cellsz > grb) {
-    if (x < 0) {
-      px = (x+1) * (cellsz+1) - cellsz;
-    } else {
-      px = x * (cellsz+1) + 1;
-    }
-  } else {
-    px = x * cellsz;
-  }
-  if (cellsz > grb) {
-    if (y < 0) {
-      py = (y+1) * (cellsz+1) - cellsz;
-    } else {
-      py = y * (cellsz+1) + 1;
-    }
-  } else {
-	py = y * cellsz;
-  }
-  px = canvas.width / 2 + px - posx;
-  py = canvas.height / 2 - py + posy; 
-  px2 = px + cellsz - 1;
-  py2 = py - cellsz + 1;
-  if (px < 0) {
-    px = 0;
-  }
-  if (px2 >= canvas.width) {
-    px2 = canvas.width - 1;
-  }
-  if (py >= canvas.height) {
-    py = canvas.height - 1;
-  }
-  if (py2 < 0) {
-    py2 = 0;
-  }
-  w = px2-px+1;
-  h = py-py2+1;
-  if (   w > 0 && h > 0
-      && (!duni || cells.length < 1 || px < unix || px > unix + uniw - w || py2 < uniy || py2 > uniy + unih - h)) {
-    ctx.fillStyle = "rgba(200, 100, " + (g && mingen > 0 ? ""+Math.floor(255*(g-mingen)/(maxgen-mingen+1)) : "255") + ", 0.7)";
-    ctx.fillRect(px, py2, w, h);
+  var px, py, n, f;
+  px = canvas1.width / 2 + (x * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx;
+  py = canvas1.height / 2 - (y * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1;
+  if (px >= 0 - cellsz && px < canvas1.width + cellsz && py >= 0 - cellsz && py < canvas1.height + cellsz) {
+    n = ((g>0?g:gennum)-mingen+1) / (gennum-mingen+1);
+    ctx1.strokeStyle = "rgba(120, 200, "+Math.floor(155*n)+", 0.6)";
+    ctx1.lineWidth = cellsz/7;
+    f = cellsz/8;
+    ctx1.strokeRect((px+f)+0.5|0, (py+f)+0.5|0, (cellsz-2*f)+0.5|0, (cellsz-2*f)+0.5|0);
+    f = cellsz/7;
+    ctx1.fillStyle = "rgba(230, 160, "+(100+Math.floor(155*n))+", 0.6)";
+    ctx1.fillRect((px+f)+0.5|0, (py+f)+0.5|0, (cellsz-2*f)+0.5|0, (cellsz-2*f)+0.5|0);
   }
 }
 
-function calcUni() {
-  var i;
-  cellsl = cellsr = cellst = cellsb = null;
-  if (cells.length > 0) {
-    for (i = 0; i < cells.length; i++) {
-      if (!cellsl || cells[i].c < cellsl) {
-        cellsl = cells[i].c;
+function calcWrld() {
+  var i, ci;
+  mingen = 0;
+  cellsl = maxr + 1;
+  cellsr = maxl - 1;
+  cellst = maxb - 1;
+  cellsb = maxt + 1;
+  for (i = 0; i < cellslen; i++) {
+    ci = cells[i];
+    if (ci[3] === 1) {
+      mingen = ci[2] > 0 ? mingen === 0 ? ci[2] : mingen > ci[2] ? ci[2] : mingen : mingen === 0 ? gennum : mingen;
+      if (ci[0] < cellsl) {
+        cellsl = ci[0];
       }
-      if (!cellsr || cells[i].c > cellsr) {
-        cellsr = cells[i].c;
+      if (ci[0] > cellsr) {
+        cellsr = ci[0];
       }
-      if (!cellst || cells[i].r > cellst) {
-        cellst = cells[i].r;
+      if (ci[1] > cellst) {
+        cellst = ci[1];
       }
-      if (!cellsb || cells[i].r < cellsb) {
-        cellsb = cells[i].r;
+      if (ci[1] < cellsb) {
+        cellsb = ci[1];
       }
     }
   }
-  calcUni2();
+  calcWrld2();
 }
 
-function calcUni2() {
-  if (cells.length > 0) {
-    if (canvas.height/canvas.width > (cellst-cellsb+1)/(cellsr-cellsl+1)) {
-      uniw = canvas.width * 0.8;
-      unih = uniw * (cellst-cellsb+1)/(cellsr-cellsl+1);
+function calcWrld2() {
+  if (cellsn > 0) {
+    if (canvas2.height/canvas2.width > (cellst-cellsb+1)/(cellsr-cellsl+1)) {
+      wrldw = canvas2.width * 0.7;
+      wrldh = wrldw * (cellst-cellsb+1)/(cellsr-cellsl+1);
     } else {
-      unih = canvas.height * 0.8;
-      uniw = unih * (cellsr-cellsl+1)/(cellst-cellsb+1);
+      wrldh = canvas2.height * 0.7;
+      wrldw = wrldh * (cellsr-cellsl+1)/(cellst-cellsb+1);
     }
   } else {
-    uniw = 0;
-    unih = 0;
+    wrldw = 0;
+    wrldh = 0;
   }
 }
 
-function drawUni() {
-  var i, ulw, w, h, x, y, x2, y2;
-  calcUni2();
-  if (uniw <= unim || unih <= unim) {
+function drawWrld() {
+  var i, ulw, w, h, x, y, x2, y2, ci;
+  if (cellsn === 0) {
     return;
   }
-  unix = (canvas.width-uniw) / 2;
-  uniy = (canvas.height-unih) / 2;
-  ulw = 1 + Math.floor(uniw*unih/1000000)*2;
-  ctx.save();
-  ctx.lineWidth = "" + ulw;
-  ctx.strokeStyle = "rgba(200, 250, 0, .7)";
-  ctx.strokeRect(unix, uniy, uniw, unih);
-  ctx.fillStyle = "rgba(0, 0, 0, 1)";
-  ctx.fillRect(unix+ulw, uniy+ulw, uniw-ulw*2, unih-ulw*2);
-  w = (uniw-unim) / (cellsr-cellsl+1);
-  h = (unih-unim) / (cellst-cellsb+1);
-  for (i = 0; i < cells.length; i++) {
-    ctx.fillStyle = "rgba(150, 50, " + (cells[i].g && mingen > 0 ? ""+Math.floor(200*(cells[i].g-mingen)/(maxgen-mingen+1)) : "200") + ", .7)";
-    ctx.fillRect(unix + (unim/2+0.5) + w * (cells[i].c - cellsl),  uniy + (unim/2+0.5) + h * (cellst - cells[i].r), w<1?1:w>grb?w-1:w, h<1?1:h>grb?h-1:h);
+  calcWrld2();
+  if (wrldw <= wrldm || wrldh <= wrldm) {
+    return;
   }
-  vw = Math.floor(canvas.width/(cellsz>grb?cellsz+1:cellsz));
-  vh = Math.floor(canvas.height/(cellsz>grb?cellsz+1:cellsz));
-  x = unix + unim/2 - 0.5 + (cellX(0) - Math.ceil((vw-1) / 2) - cellsl) * w;
-  y = uniy + unim/2 - 0.5 + (cellst - cellY(0) - Math.ceil((vh-1) / 2)) * h;
-  x2 = x + (vw+1) * w + (w>grb?0:1);
-  y2 = y + (vh+1) * h + (h>grb?0:1);
-  ctx.lineWidth = 1;
-  ctx.setLineDash([1, 0]);
-  ctx.strokeStyle = "#888888";
-  if (y >= uniy + unim/2 - 1.5 && y < uniy + unih - unim/2 + 0.5) {
-    ctx.beginPath();
-    ctx.moveTo(x<unix+unim/2-0.5?unix+unim/2-0.5:x, y);
-    ctx.lineTo(x2>=unix+uniw-unim/2+0.5?unix+uniw-unim/2-0.5:x2, y);
-    ctx.stroke();
+  wrldx = (canvas2.width-wrldw) / 2;
+  wrldy = (canvas2.height-wrldh) / 2 + 40;
+  wlw = 2 + Math.floor(wrldw*wrldh/1000000)*3;
+  ctx2.lineWidth = wlw;
+  ctx2.setLineDash([2,2]);
+  ctx2.strokeStyle = "rgba(250, 250, 250, 1)";
+  ctx2.strokeRect(wrldx+wrldm/2-3|0, wrldy+wrldm/2-3|0, wrldw-wrldm+8|0, wrldh-wrldm+8|0);
+  ctx2.setLineDash([]);
+  ctx2.strokeStyle = "rgba(130, 160, 0, 0.8)";
+  ctx2.strokeRect(wrldx+0.5|0, wrldy+0.5|0, wrldw+0.5|0, wrldh+0.5|0);
+  ctx2.fillStyle = "rgba(0, 0, 0, 0.7)";
+  ctx2.fillRect((wrldx+wlw)+0.5|0, (wrldy+wlw)+0.5|0, (wrldw-wlw*2)+0.5|0, (wrldh-wlw*2)+0.5|0);
+  w = (wrldw-wrldm) / (cellsr-cellsl+1);
+  h = (wrldh-wrldm) / (cellst-cellsb+1);
+  d = (wrldw*wrldh)/(500*300)*0.3;
+  for (i = 0; i < cellslen; i++) {
+    if ((ci = cells[i])[3] === 1) {
+      ctx2.beginPath();
+      if (ci[2] > 0) {
+        ctx2.fillStyle = "rgba(60, 170, 60, 0.7";
+      } else {
+        ctx2.fillStyle = "rgba(220, 30, 30, 0.7";
+      }
+      ctx2.fillRect((wrldx - d + (wrldm/2+0.5) + w * (ci[0] - cellsl))+0.5|0,  (wrldy - d + (wrldm/2+0.5) + h * (cellst - ci[1]))+0.5|0, ((w<1?1:w)+d*2)+0.5|0, ((h<1?1:h)+d*2)+0.5|0);
+    }
   }
-  if (y2 >= uniy + unim/2 - 0.5 && y2 < uniy + unih - unim/2 + 0.5) {
-    ctx.beginPath();
-    ctx.moveTo(x<unix+unim/2-0.5?unix+unim/2-0.5:x, y2);
-    ctx.lineTo(x2>=unix+uniw-unim/2+0.5?unix+uniw-unim/2-0.5:x2, y2);
-    ctx.stroke();
+  ctx2.lineWidth = 1+d*2;
+  ctx2.setLineDash([]);
+  vw = Math.ceil(canvas2.width/cellsz);
+  vh = Math.ceil(canvas2.height/cellsz);
+  x = cellX(posx) - (vw-1) / 2 - cellsl;
+  y = cellst - cellY(posy) - (vh-1) / 2;
+  x = wrldx + wrldm/2 - 0.5 + (x-0.5) * w - d;
+  x2 = x + vw * w + d*2;
+  y = wrldy + wrldm/2 - 0.5 + (y+0.5) * h - d;
+  y2 = y + vh * h + d*2;
+  wrldax = x;
+  wrlday = y;
+  wrldaw = x2 - x;
+  wrldah = y2 - y;
+  if (wrlda) {
+    ctx2.strokeStyle = "rgba(200, 200, 200, 1)";
+  } else {
+    ctx2.strokeStyle = "rgba(140, 140, 140, 1)";
   }
-  if (x >= unix + unim/2 - 1.5 && x < unix + uniw - unim/2 + 0.5) {
-    ctx.beginPath();
-    ctx.moveTo(x, y<uniy+unim/2-0.5?uniy+unim/2-0.5:y);
-    ctx.lineTo(x, y2>=uniy+unih-unim/2+0.5?uniy+unih-unim/2-0.5:y2);
-    ctx.stroke();
+  if (x < wrldx+wrldw-wrldm/2+0.5 && x2 > wrldx+wrldm/2-0.5 && y >= wrldy + wrldm/2 - 1.5 && y < wrldy + wrldh - wrldm/2 + 0.5) {
+    ctx2.beginPath();
+    ctx2.moveTo((x<wrldx+wrldm/2-0.5?wrldx+wrldm/2-0.5:x)+0.5|0, y+0.5|0);
+    ctx2.lineTo((x2>=wrldx+wrldw-wrldm/2+0.5?wrldx+wrldw-wrldm/2-0.5:x2)+0.5|0, y+0.5|0);
+    ctx2.stroke();
   }
-  if (x2 >= unix + unim/2 - 0.5 && x2 < unix + uniw - unim/2 + 0.5) {
-    ctx.beginPath();
-    ctx.moveTo(x2, y<uniy+unim/2-0.5?uniy+unim/2-0.5:y);
-    ctx.lineTo(x2, y2>=uniy+unih-unim/2+0.5?uniy+unih-unim/2-0.5:y2);
-    ctx.stroke();
+  if (x < wrldx+wrldw-wrldm/2+0.5 && x2 > wrldx+wrldm/2-0.5 && y2 >= wrldy + wrldm/2 - 0.5 && y2 < wrldy + wrldh - wrldm/2 + 0.5) {
+    ctx2.beginPath();
+    ctx2.moveTo((x<wrldx+wrldm/2-0.5?wrldx+wrldm/2-0.5:x)+0.5|0, y2+0.5|0);
+    ctx2.lineTo((x2>=wrldx+wrldw-wrldm/2+0.5?wrldx+wrldw-wrldm/2-0.5:x2)+0.5|0, y2+0.5|0);
+    ctx2.stroke();
   }
-  ctx.restore();
+  if (y < wrldy+wrldh-wrldm/2+0.5 && y2 > wrldy+wrldm/2-0.5 && x >= wrldx + wrldm/2 - 1.5 && x < wrldx + wrldw - wrldm/2 + 0.5) {
+    ctx2.beginPath();
+    ctx2.moveTo(x+0.5|0, (y<wrldy+wrldm/2-0.5?wrldy+wrldm/2-0.5:y)+0.5|0);
+    ctx2.lineTo(x+0.5|0, (y2>=wrldy+wrldh-wrldm/2+0.5?wrldy+wrldh-wrldm/2-0.5:y2)+0.5|0);
+    ctx2.stroke();
+  }
+  if (y < wrldy+wrldh-wrldm/2+0.5 && y2 > wrldy+wrldm/2-0.5 && x2 >= wrldx + wrldm/2 - 0.5 && x2 < wrldx + wrldw - wrldm/2 + 0.5) {
+    ctx2.beginPath();
+    ctx2.moveTo(x2+0.5|0, (y<wrldy+wrldm/2-0.5?wrldy+wrldm/2-0.5:y)+0.5|0);
+    ctx2.lineTo(x2+0.5|0, (y2>=wrldy+wrldh-wrldm/2+0.5?wrldy+wrldh-wrldm/2-0.5:y2)+0.5|0);
+    ctx2.stroke();
+  }
+  if (wrlda) {
+    ctx2.strokeStyle = "rgba(200, 200, 200, 0.5)";
+  } else {
+    ctx2.strokeStyle = "rgba(140, 140, 140, 0.5)";
+  }
+  if (x < wrldx+wrldw-wrldm/2+0.5 && x2 > wrldx+wrldm/2-0.5 && y >= wrldy + wrldm/2 - 1.5 && y < wrldy + wrldh - wrldm/2 + 0.5) {
+    if (x<wrldx+wrldm/2-0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x+0.5|0, y+0.5|0);
+      ctx2.lineTo((wrldx+wrldm/2-0.5)+0.5|0, y+0.5|0);
+      ctx2.stroke();
+    }
+    if (x2>=wrldx+wrldw-wrldm/2+0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x2+0.5|0, y+0.5|0);
+      ctx2.lineTo((wrldx+wrldw-wrldm/2+0.5)+0.5|0, y+0.5|0);
+      ctx2.stroke();
+    }
+  } else {
+    ctx2.beginPath();
+    ctx2.moveTo(x+0.5|0, y+0.5|0);
+    ctx2.lineTo(x2+0.5|0, y+0.5|0);
+    ctx2.stroke();
+  }
+  if (x < wrldx+wrldw-wrldm/2+0.5 && x2 > wrldx+wrldm/2-0.5 && y2 >= wrldy + wrldm/2 - 0.5 && y2 < wrldy + wrldh - wrldm/2 + 0.5) {
+    if (x<wrldx+wrldm/2-0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x+0.5|0, y2+0.5|0);
+      ctx2.lineTo((wrldx+wrldm/2-0.5)+0.5|0, y2+0.5|0);
+      ctx2.stroke();
+    }
+    if (x2>=wrldx+wrldw-wrldm/2+0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x2+0.5|0, y2+0.5|0);
+      ctx2.lineTo((wrldx+wrldw-wrldm/2+0.5)+0.5|0, y2+0.5|0);
+      ctx2.stroke();
+    }
+  } else {
+    ctx2.beginPath();
+    ctx2.moveTo(x+0.5|0, y2+0.5|0);
+    ctx2.lineTo(x2+0.5|0, y2+0.5|0);
+    ctx2.stroke();
+  }
+  if (y < wrldy+wrldh-wrldm/2+0.5 && y2 > wrldy+wrldm/2-0.5 && x >= wrldx + wrldm/2 - 1.5 && x < wrldx + wrldw - wrldm/2 + 0.5) {
+    if (y<wrldy+wrldm/2-0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x+0.5|0, y+0.5|0);
+      ctx2.lineTo(x+0.5|0, (wrldy+wrldm/2-0.5)+0.5|0);
+      ctx2.stroke();
+    }
+    if (y2>=wrldy+wrldh-wrldm/2+0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x+0.5|0, y2+0.5|0);
+      ctx2.lineTo(x+0.5|0, (wrldy+wrldh-wrldm/2+0.5)+0.5|0);
+      ctx2.stroke();
+    }
+  } else {
+    ctx2.beginPath();
+    ctx2.moveTo(x+0.5|0, y+0.5|0);
+    ctx2.lineTo(x+0.5|0, y2+0.5|0);
+    ctx2.stroke();
+  }
+  if (y < wrldy+wrldh-wrldm/2+0.5 && y2 > wrldy+wrldm/2-0.5 && x2 >= wrldx + wrldm/2 - 0.5 && x2 < wrldx + wrldw - wrldm/2 + 0.5) {
+    if (y<wrldy+wrldm/2-0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x2+0.5|0, y+0.5|0);
+      ctx2.lineTo(x2+0.5|0, (wrldy+wrldm/2-0.5)+0.5|0);
+      ctx2.stroke();
+    }
+    if (y2>=wrldy+wrldh-wrldm/2+0.5) {
+      ctx2.beginPath();
+      ctx2.moveTo(x2+0.5|0, y2+0.5|0);
+      ctx2.lineTo(x2+0.5|0, (wrldy+wrldh-wrldm/2+0.5)+0.5|0);
+      ctx2.stroke();
+    }
+  } else {
+    ctx2.beginPath();
+    ctx2.moveTo(x2+0.5|0, y+0.5|0);
+    ctx2.lineTo(x2+0.5|0, y2+0.5|0);
+    ctx2.stroke();
+  }
 }
 
 function drawScale() {
-  var w = Math.floor(1 + 5 * canvas.width / 500), p;
-  if (w > 20) {
-    w = 20;
+  var w = Math.floor(1 + 5 * canvas2.width / 500), p, sc;
+  if (w > 60) {
+    w = 60;
   }
-  var h = Math.floor(canvas.height * 0.6);
-  if (h > canvas.height) {
-    h = canvas.height;
+  var h = Math.floor(canvas2.height * slidh);
+  if (h > canvas2.height) {
+    h = canvas2.height;
   }
   if (h < 1) {
     h = 1;
   }
-  var x = canvas.width - w * 6, y = 130 + Math.floor((canvas.height - h - 170) / 2);
+  var x = canvas2.width - w * 6, y = 130 + Math.floor((canvas2.height - h - 170) / 2), fs, t;
+  if (swzmcd2) {
+    t = gts - swzmcd2 > swzmcdn2 ? 1 : (gts - swzmcd2) / swzmcdn2;
+    if (!swzmf) {
+      t = 1 - t;
+    }
+  } else {
+    t = 1;
+  }
   sclbx = x;
   sclby = y;
   sclbw = w;
   sclbh = h;
-  ctx.save();
-  ctx.fillStyle = "rgba(150, 100, 150, 0.8)";
-  ctx.shadowBlur = w;
-  ctx.shadowColor = "#FFFFFF";
-  ctx.fillRect(x,y,w,h);
-  ctx.beginPath();
-  if (scl) {
-    ctx.fillStyle = "rgba(0, 150, 200, 0.8)";
-    p = cury - scld;
-    if (p < y) {
-      p = y;
-    }
-    if (p >= y + h) {
-      p = y + h - 1;
-    }
-    scale = 100 - 100*(p-y)/h;
-  } else {
-    ctx.fillStyle = "rgba(150, 130, 150, 0.8)";
+  ctx2.textBaseline = "bottom";
+  if (swzmf || swzmcd2) {
+    ctx2.strokeStyle = "rgba(100, 100, 100, " + (t*0.7) + ")";
+    ctx2.setLineDash([]);
+    ctx2.lineWidth = w/4;
+    ctx2.strokeRect(x+0.5|0,y+0.5|0,w+0.5|0,h+0.5|0);
   }
-  sclx = x+w/2;
-  scly = y+h-h*scale/100;
-  sclr = w*1.5;
-  ctx.arc(sclx, scly, sclr, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.strokeStyle = "rgba(0, 150, 200, 0.8)";
-  ctx.lineWidth = w/4;
-  ctx.arc(sclx, scly, sclr, 0, 2 * Math.PI);
-  ctx.stroke();
-  ctx.restore();
+  ctx2.font = "30px " + font;
+  swzmtx = sclbx + w + 24;
+  swzmty = y + 13;
+  swzmtw = 25;
+  swzmth = 29;
+  if (swzmf || swzmcd2) {
+    if (swzmt || swzmcd) {
+      ctx2.fillStyle = "rgba(0, 170, 255, " + (0.5 * (swzmcd2 ? t : 1)) + ")";
+    } else {
+      ctx2.fillStyle = "rgba(0, 70, 200, " + (0.5 * (swzmcd2 ? t : 1)) + ")";
+    }
+    ctx2.fillText("\u2A02", swzmtx - 3, swzmty + 27);
+  }
+  if (!swzmf || swzmcd2) {
+    if (swzmt || swzmcd) {
+      ctx2.fillStyle = "rgba(0, 170, 255, " + (0.5 * (swzmcd2 ? (1 - t) : 1)) + ")";
+    } else {
+      ctx2.fillStyle = "rgba(0, 70, 200, " + (0.5 * (swzmcd2 ? (1 - t) : 1)) + ")";
+    }
+    ctx2.fillText("\u2A01", swzmtx - 3, swzmty + 27);
+  }
+  if (swzmf || swzmcd2) {  
+    sc = scale;
+    if (scl) {
+      fs = "rgba(50, 70, 90, " + (t*0.4) + ")";
+      p = cury - scld;
+      if (p < y) {
+        p = y;
+      }
+      if (p >= y + h) {
+        p = y + h - 1;
+      }
+      sc = 100 - 100*(p-y)/h;
+    } else {
+      fs = "rgba(0, 0, 0, " + (t*0.6) + ")";
+    }
+    sclx = x+w/2;
+    scly = y+h-h*sc/100;
+    sclr = w*1.5;
+    ctx2.font = "14px " + font;
+    ctx2.fillStyle = "rgba(220, 220, 220, " + (t*0.8) + ")";
+    ctx2.fillText("zm", (x-3)+0.5|0, (scly+w/2+1)+0.5|0);
+    ctx2.fillStyle = fs;
+    ctx2.beginPath();
+    ctx2.arc(sclx+0.5|0, scly+0.5|0, sclr+0.5|0, 0, 2 * Math.PI);
+    ctx2.fill();
+    if (scl) {
+      ctx2.strokeStyle = "rgba(0, 140, 180, " + (t*0.7) + ")";
+    } else {
+      ctx2.strokeStyle = "rgba(0, 100, 150, " + (t*0.7) + ")";
+    }
+    ctx2.arc(sclx+0.5|0, scly+0.5|0, sclr+0.5|0, 0, 2 * Math.PI);
+    ctx2.stroke();
+  }
 }
 
 function drawSpeed() {
-  var w = Math.floor(1 + 5 * canvas.width / 500), p;
-  if (w > 20) {
-    w = 20;
+  var w = Math.floor(1 + 5 * canvas2.width / 500), p, sp;
+  if (w > 60) {
+    w = 60;
   }
-  var h = Math.floor(canvas.height * 0.6);
-  if (h > canvas.height) {
-    h = canvas.height;
+  var h = Math.floor(canvas2.height * slidh);
+  if (h > canvas2.height) {
+    h = canvas2.height;
   }
-  var x = canvas.width - w * 12, y = 130 + Math.floor((canvas.height - h - 170) / 2);
+  var x = canvas2.width - w * 12, y = 130 + Math.floor((canvas2.height - h - 170) / 2), fs, t;
+  if (swzmcd2) {
+    x = ((canvas2.width - w * 6) - (canvas2.width - w * 12)) * Math.cbrt(gts - swzmcd2 > swzmcdn2 ? 1 : (gts - swzmcd2) / swzmcdn2);
+    if (swzmf) {
+      x = (canvas2.width - w * 6) - x;
+    } else {
+      x = (canvas2.width - w * 12) + x;
+    }
+  } else if (!swzmf) {
+    x = canvas2.width - w * 6;
+  }
+  t = 1;
   spdbx = x;
   spdby = y;
   spdbw = w;
   spdbh = h;
-  ctx.save();
-  ctx.fillStyle = "rgba(150, 100, 150, 0.8)";
-  ctx.shadowBlur = w;
-  ctx.shadowColor = "#FFFFFF";
-  ctx.fillRect(x,y,w,h);
-  ctx.beginPath();
+  ctx2.strokeStyle = "rgba(100, 100, 100, " + (t*0.7) + ")";
+  ctx2.setLineDash([]);
+  ctx2.lineWidth = w/4;
+  ctx2.strokeRect(x+0.5|0,y+0.5|0,w+0.5|0,h+0.5|0);
+  sp = speed;
   if (spd) {
-    ctx.fillStyle = "rgba(0, 150, 200, 0.8)";
+    fs = "rgba(50, 70, 90, " + (t*0.4) + ")";
     p = cury - spdd;
     if (p < y) {
       p = y;
@@ -1155,525 +1926,1143 @@ function drawSpeed() {
     if (p >= y + h) {
       p = y + h - 1;
     }
-    speed = 100 - 100*(p-y)/h;
+    sp = 100 - 100*(p-y)/h;
   } else {
-    ctx.fillStyle = "rgba(150, 130, 150, 0.8)";
+    fs = "rgba(0, 0, 0, " + (t*0.6) + ")";
   }
   spdx = x+w/2;
-  spdy = y+h-h*speed/100;
+  spdy = y+h-h*sp/100;
   spdr = w*1.5;
-  ctx.arc(spdx, spdy, spdr, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.strokeStyle = "rgba(0, 150, 200, 0.8)";
-  ctx.lineWidth = w/4;
-  ctx.arc(spdx, spdy, spdr, 0, 2 * Math.PI);
-  ctx.stroke();
-  ctx.restore();
+  ctx2.textBaseline = "bottom";  
+  ctx2.font = "14px " + font;
+  ctx2.fillStyle = "rgba(220, 220, 220, " + (t*0.8) + ")";
+  ctx2.fillText("spd", (x-6)+0.5|0, (spdy+w/2)+0.5|0);
+  ctx2.fillStyle = fs;
+  ctx2.beginPath();
+  ctx2.arc(spdx+0.5|0, spdy+0.5|0, spdr+0.5|0, 0, 2 * Math.PI);
+  ctx2.fill();
+  if (spd) {
+    ctx2.strokeStyle = "rgba(0, 140, 180, " + (t*0.7) + ")";
+  } else {
+    ctx2.strokeStyle = "rgba(0, 100, 150, " + (t*0.7) + ")";
+  }
+  ctx2.arc(spdx+0.5|0, spdy+0.5|0, spdr+0.5|0, 0, 2 * Math.PI);
+  ctx2.stroke();
 }
 
 function drawTitle() {
-  var x, s, h;
-  var fs = Math.floor(canvas.width/500*30);
-  ctx.save();
-  ctx.font = fs + "px " + font;
+  var x, s, h, fs2, fs = Math.floor(canvas2.width/500*30), z;
+  fs2 = fs;
+  ctx2.textBaseline = "bottom";
+  ctx2.font = fs + "px " + font;
+  x = titlemode === 0 ? 0 : Math.log(titlefds-(titlemode===2&&titlefd>titlex?titlex:titlefd)+1)/Math.log(titlefds+1);
+  fs = fs2*(1-x);
+  s = ""+(70-Math.floor(70*x));
+  ctx2.fillStyle = "rgba("+s+","+s+","+s+","+(1-1*x)+")";
+  ctx2.shadowBlur = 5;
+  ctx2.shadowColor = "#EEEEEE";
   if (!tmet) {
     tmet = [];
   }
-  x = titlemode == 0 ? 0 : Math.log(titlefds-(titlemode==2&&titlefd>titlex?titlex:titlefd)+1)/Math.log(titlefds+1);
-  s = ""+(70-Math.floor(70*x));
-  ctx.fillStyle = "rgba("+s+","+s+","+s+","+(1-1*x)+")";
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#DDDDDD";
   if (!tmet[1]) {
-    tmet[1] = ctx.measureText(title[1]);
+    tmet[1] = ctx2.measureText(title[1]);
   }
   if (titlemode < 2) {
     if (!tmet[0]) {
-      tmet[0] = ctx.measureText(title[0]);
+      tmet[0] = ctx2.measureText(title[0]);
     }
     if (!tmet[2]) {
-      tmet[2] = ctx.measureText(title[2]);
+      tmet[2] = ctx2.measureText(title[2]);
     }
     h = fs*4;
-    if (canvas.height < h) {
-      ctx.fillText(title[1], (canvas.width-tmet[1].width)/2, (canvas.height-fs)/2+fs);
+    if (canvas2.height < h) {
+      ctx2.fillText(title[1], (canvas2.width-tmet[1].width)/2+0.5|0, ((canvas2.height-fs)/2+fs)+0.5|0);
     } else {
-      ctx.fillText(title[0], (canvas.width-tmet[0].width)/2, (canvas.height-h)/2+fs);
-      ctx.fillText(title[1], (canvas.width-tmet[1].width)/2, (canvas.height-h)/2+fs*2.5);
-      ctx.fillText(title[2], (canvas.width-tmet[2].width)/2, (canvas.height-h)/2+fs*4);
+      ctx2.fillText(title[0], (canvas2.width-tmet[0].width)/2+0.5|0, ((canvas2.height-h)/2+fs)+0.5|0);
+      ctx2.fillText(title[1], (canvas2.width-tmet[1].width)/2+0.5|0, ((canvas2.height-h)/2+fs*2.5)+0.5|0);
+      ctx2.fillText(title[2], (canvas2.width-tmet[2].width)/2+0.5|0, ((canvas2.height-h)/2+fs*4)+0.5|0);
     }
   }
-  if (titlemode >= 2 || titlemode == 1 && titlefd < titlex) {
-    if (titlemode == 1) {
+  if (titlemode >= 2 || titlemode === 1 && titlefd < titlex) {
+    if (titlemode === 1) {
+      tfs3 = 0;
       x = (titlex-titlefd)/titlex;
       s = ""+(Math.floor(70*x/5.5));
-      ctx.fillStyle = "rgba("+s+","+s+","+s+","+(1*x/7)+")";
+      ctx2.fillStyle = "rgba("+s+","+s+","+s+","+(1*x/7)+")";
     }
+    fs = fs2*(x+1.1)*0.34;
+    if (fs < tfs3) {
+      fs = tfs3;
+    }
+    tfs3 = fs;
     h = fs*2.5;
-    if (canvas.height < h) {
-      ctx.fillText(title[1], (canvas.width-tmet[1].width)/2, (canvas.height-fs)/2+fs);
+    if (canvas2.height < h) {
+      ctx2.fillText(title[1], (canvas2.width-tmet[1].width)/2+0.5|0, ((canvas2.height-fs)/2+fs)+0.5|0);
     } else {
       if (!tmet[3]) {
-        tmet[3] = ctx.measureText(title[3]);
+        tmet[3] = ctx2.measureText(title[3]);
       }
-      ctx.fillText(title[3], (canvas.width-tmet[3].width)/2, (canvas.height-h)/2+fs);
-      ctx.fillText(title[1], (canvas.width-tmet[1].width)/2, (canvas.height-h)/2+fs*2.5);
+      ctx2.fillText(title[3], (canvas2.width-tmet[3].width)/2+0.5|0, ((canvas2.height-h)/2+fs)+0.5|0);
+      ctx2.fillText(title[1], (canvas2.width-tmet[1].width)/2+0.5|0, ((canvas2.height-h)/2+fs*2.5)+0.5|0);
     }
     if (titleh) {
       if (!tmet[4]) {
-        tmet[4] = ctx.measureText(title[4]);
+        tmet[4] = ctx2.measureText(title[4]);
       }
       if (!tmet[5]) {
-        tmet[5] = ctx.measureText(title[5]);
+        tmet[5] = ctx2.measureText(title[5]);
       }
-      if (titlemode == 1) {
-        x = (titlex-titlefd)/titlex;
-        ctx.fillStyle = "rgba(190,0,0,"+(1*x/7)+")";
+      if (!titlemf && msgll > 0) {
+        titlemf = true;
+        titlecd3 = performance.now();
+      } else if (titlemf && msgll === 0) {
+        titlemf = false;
+        titlecd3 = performance.now();
+      }
+      if (titlecd3) {
+        z = gts-titlecd3>titlecdn3?0.7:((gts-titlecd3)/titlecdn3)*0.7;
+        if (titlemf) {
+          z = 1 - z;
+        } else {
+          z = 0.3 + z;
+        }
       } else {
-        ctx.fillStyle = "rgba(190,0,0,"+(1-1*x)+")";
+        if (titlemf) {
+          z = 0.3;
+        } else {
+          z = 1;
+        }
       }
-      ctx.fillText(title[4], (canvas.width-tmet[4].width)/2, (canvas.height-h)/2-fs/2);
-      ctx.fillText(title[5], (canvas.width-tmet[5].width)/2, (canvas.height-h)/2+fs*4);
-      ctx.font = Math.floor(fs/2) + "px " + font;
+      if (titlemode === 1) {
+        x = (titlex-titlefd)/titlex;
+        x = 1*x/7;
+      } else {
+        x = 1-1*x;
+      }
+      x = x * z;
+      x *= titlecd2 ? gts - titlecd2 > titlecdn2 ? 0 : 1 - (gts - titlecd2) / titlecdn2 : 1;
+      ctx2.fillStyle = "rgba(190,0,0,"+x+")";
+      ctx2.fillText(title[4], (canvas2.width-tmet[4].width)/2+0.5|0, ((canvas2.height-h)/2-fs/2)+0.5|0);
+      ctx2.fillText(title[5], (canvas2.width-tmet[5].width)/2+0.5|0, ((canvas2.height-h)/2+fs*4)+0.5|0);
+      ctx2.font = Math.floor(fs2/2.2) + "px " + font;
       if (!tmet[6]) {
-        tmet[6] = ctx.measureText(title[6]);
+        tmet[6] = ctx2.measureText(title[6]);
       }
-      ctx.fillText(title[6], (canvas.width-tmet[6].width)/2, (canvas.height-h)/2+fs*4.6);
+      ctx2.fillText(title[6], (canvas2.width-tmet[6].width)/2+0.5|0, ((canvas2.height-h)/2+fs*5)+0.5|0);
     }
   }
-  ctx.restore();
+  ctx2.shadowBlur = 0;
+}
+
+function drawMsgs() {
+  var i, x, s, h, fs2, fs = Math.floor(canvas2.width/500*22), y1, y2, y3, d;
+  ctx2.textBaseline = "bottom";
+  ctx2.shadowBlur = 5;
+  ctx2.shadowColor = "#EEEEEE";
+  ctx2.font = fs + "px " + font;
+  for (i = 0; i < msgll; i++) {
+    if (msgl[i][0]) {
+      if (i < msgll - 1 && msgl[i+1][0] && msgl[i][0][0] == msgl[i+1][0][0] && msgl[i][0][1] == msgl[i+1][0][1] && msgl[i][0][2] == msgl[i+1][0][2]) {
+        drawMsgsStm(msgl[i][0][0], msgl[i][0][2]);
+      } else {
+        d = false;
+        if (msgl[i][3] === 0 && gts - msgl[i][2] > 1200) {
+          msgl[i][3] = 1;
+          msgl[i][2] = performance.now();
+        } else if (msgl[i][3] === 1 && gts - msgl[i][2] > msgl[i][1]) {
+          msgl[i][3] = 2;
+          msgl[i][2] = performance.now();
+          drawMsgsStm(msgl[i][0][0], msgl[i][0][2]);
+        } else if (msgl[i][3] === 2 && gts - msgl[i][2] > 1200) {
+          msgl[i][0] = null;
+          msgl[i][4] = null;
+        } else {
+          x = msgl[i][3] !== 1 ? (gts-msgl[i][2]) / 1200 : 1;
+          x = 0.85-Math.log(x*x*x*x*0.3)/Math.sqrt(x*0.2)*0.02;
+          if (msgl[i][3] === 2) {
+            x = 1-Math.sqrt(0.8/x);
+          }
+          fs2 = fs*x;
+          s = ""+Math.floor(70*x);
+          ctx2.fillStyle = "rgba("+Math.floor(255*x)+","+s+","+s+","+(i<msgll-1?0.18+x*0.4*(i/(msgll-1)):x*1)+")";
+          d = true;
+          h = fs2*4;
+          y1 = (canvas2.height-h)/2+fs2;
+          y2 = (canvas2.height-h)/2+fs2*2.5;
+          y3 = (canvas2.height-h)/2+fs2*4;
+          if (msgl[i][0].length > 0) {
+            ctx2.fillText(msgl[i][0][0], (canvas2.width-msgl[i][4][0].width)/2*(1/x)+i*18-50+0.5|0, y1-(msgll-1)*15+i*30+0.5|0);
+          }
+          if (msgl[i][0].length > 1) {
+            ctx2.fillText(msgl[i][0][1], (canvas2.width-msgl[i][4][1].width)/2*(1/x)+i*18-50+0.5|0, y2-(msgll-1)*15+i*30+0.5|0);
+          }
+          if (msgl[i][0].length > 2) {
+            ctx2.fillText(msgl[i][0][2], (canvas2.width-msgl[i][4][2].width)/2*(1/x)+i*18-50+0.5|0, y3-(msgll-1)*15+i*30+0.5|0);
+          }
+        }
+      }
+    }
+  }  
+  ctx2.shadowBlur = 0;
+  while (msgll > 0 && !msgl[msgll-1][0]) {
+    msgll--;
+  }
+}
+
+function drawMsgsStm(s1, s2) {
+  swstmsg(s1.trim().replace(/ /g," \u22C5 ")+"   \u22C5", s2.trim().replace(/ /g," \u22C5 ")+"   \u22C5");
+}
+
+function drawStmsg() {
+  var x;
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "25px " + font;
+  if (!stmsgntm1) {
+    stmsgntm1 = ctx2.measureText(stmsgn1);
+  }
+  if (!stmsgntm2) {
+    stmsgntm2 = ctx2.measureText(stmsgn2);
+  }
+  if (!stmsgotm1) {
+    stmsgotm1 = ctx2.measureText(stmsgo1);
+  }
+  if (!stmsgotm2) {
+    stmsgotm2 = ctx2.measureText(stmsgo2);
+  }
+  if (stmsgcd) {
+    x = (gts-stmsgcd)>stmsgcdn?1:(gts-stmsgcd)/stmsgcdn;
+    if (stmsgn1.length > 0 || stmsgn2.length > 0) {
+      ctx2.fillStyle = "rgba("+Math.floor(170+30*x)+", "+Math.floor(200*x)+", "+Math.floor(200*x)+", "+(x*0.85)+")";
+      ctx2.fillText(stmsgn1, canvas2.width - 590 - stmsgntm1.width, 49);
+      ctx2.fillText(stmsgn2, canvas2.width - 563 - stmsgntm2.width, 81);
+    }
+    if (stmsgo1.length > 0 || stmsgo2.length > 0) {
+      ctx2.fillStyle = "rgba("+Math.floor(150+30*x)+", "+Math.floor(50+130*x)+", "+Math.floor(50+130*x)+", "+((1-x)*0.7)+")";
+      ctx2.fillText(stmsgo1, canvas2.width - 590 - stmsgotm1.width, 49);
+      ctx2.fillText(stmsgo2, canvas2.width - 563 - stmsgotm2.width, 81);  
+    }
+  } else if (stmsgcd2) {
+    if (stmsgo1.length > 0 || stmsgo2.length > 0) {
+      x = (gts-stmsgcd2)>stmsgcdn2?1:(gts-stmsgcd2)/stmsgcdn2;
+      ctx2.fillStyle = "rgba("+Math.floor(200-30*x)+", "+Math.floor(200-130*x)+", "+Math.floor(200-130*x)+", "+(0.85-0.15*x)+")";
+      ctx2.fillText(stmsgo1, canvas2.width - 590 - stmsgotm1.width, 49);
+      ctx2.fillText(stmsgo2, canvas2.width - 563 - stmsgotm2.width, 81);
+    }
+  } else if (stmsgo1.length > 0 || stmsgo2.length > 0) {
+    ctx2.fillStyle = "rgba(170, 70, 70, 0.7)";
+    ctx2.fillText(stmsgo1, canvas2.width - 590 - stmsgotm1.width, 49);
+    ctx2.fillText(stmsgo2, canvas2.width - 563 - stmsgotm2.width, 81);
+  }
 }
 
 function drawGridToggle() {
-  ctx.save();
-  ctx.font = "60px " + font;
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "54px " + font;
   if (grdt || dspgrd) {
-    ctx.fillStyle = "#00AAFF";
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
   } else {
-    ctx.fillStyle = "#0044EE";
+    ctx2.fillStyle = "rgba(0, 70, 200, 1)";
   }
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  grdtx = canvas.width - 230;
-  ctx.fillText("#", grdtx, 130);
-  grdty = 70;
-  grdtw = 45;
-  grdth = 50;
-  ctx.restore();
+  grdtx = canvas2.width - 204;
+  ctx2.fillText("\u2317", grdtx - 3, 148);
+  grdty = 105;
+  grdtw = 36;
+  grdth = 40;
 }
 
 function drawPlayToggle() {
-  ctx.save();
-  ctx.font = "60px " + font;
-  if (playt) {
-    ctx.fillStyle = "#AAAAFF";
-  } else if (play) {
-    ctx.fillStyle = "#44EE00";
-  } else {
-    ctx.fillStyle = "#0044EE";
+  var a, b;
+  a = 1;
+  b = 1;
+  if (playcd3) {
+    if (play) {
+      a = 1 - (gts-playcd3>playcdn3?1:(gts-playcd3)/playcdn3);
+      b = 1 - a;
+    } else {
+      a = gts-playcd3>playcdn3?1:(gts-playcd3)/playcdn3;
+      b = 1 - a;
+    }
   }
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  playtx = canvas.width - 360;
-  if (play) {
-    ctx.fillText(">>", playtx, 130);
-  } else {
-    ctx.fillText(" ||", playtx, 130);
+  ctx2.textBaseline = "bottom";  
+  playtx = canvas2.width - 343;
+  ctx2.setLineDash([]);
+  ctx2.lineWidth = 1;
+  if (play || playcd3) {
+    if (!playcd) {
+      playcd = performance.now();
+      playcdc++;
+      if (playcdc > 3) {
+        playcdc = 1;
+      }
+    }
+    ctx2.font = "41px " + font;
+    ctx2.strokeStyle = "rgba(100,120,170,"+(1*b)+")";
+    ctx2.strokeText("\u25B7", playtx-13, 147);
+    ctx2.strokeText("\u25B7", playtx+15, 147);
+    ctx2.strokeText("\u25B7", playtx+43, 147);
+    ctx2.font = "30px " + font;
+    ctx2.fillStyle = "rgba(0,50,150,"+(0.7*b)+")";
+    ctx2.fillText("\u25B7", playtx-8, 141);
+    ctx2.fillText("\u25B7", playtx+20, 141);
+    ctx2.fillText("\u25B7", playtx+48, 141);
+    ctx2.fillStyle = "rgba(170,250,250,"+(0.7*b)+")";
+    if (playcdc === 1) {
+      ctx2.fillText("\u25B7", playtx-8, 140);
+    } else if (playcdc === 2) {
+      ctx2.fillText("\u25B7", playtx+20, 140);
+    } else if (playcdc === 3) {
+      ctx2.fillText("\u25B7", playtx+48, 140);
+    }
   }
-  playty = 70;
-  playtw = 100;
-  playth = 60;
-  ctx.restore();
+  if (!play || playcd3) {
+    if (histgn > 0 && !playcd3 || playcd3 && playbc === 1 && play) {
+      ctx2.fillStyle = "rgba(170, 0, 0,"+a+")";
+      playbc = 1;
+    } else {
+      ctx2.fillStyle = "rgba(0, 70, 200,"+a+")";
+      playbc = 0;
+    }
+    ctx2.font = "34px " + font;
+    ctx2.fillText("\u25B7", playtx-10, 142);
+    ctx2.fillText("\u25B7", playtx+18, 142);
+    ctx2.fillText("\u25B7", playtx+46, 142);
+  }
+  playty = 105;
+  playtw = 88;
+  playth = 41;
+  if (playcd2 || playcd4 || playcd5) {
+    ctx2.font = "34px " + font;
+    ctx2.strokeStyle = "rgba(220,220,220,"+(0.5*(playcd2?(gts-playcd2)>playcdn2?1:(gts-playcd2)/playcdn2:playcd4?(gts-playcd4)>playcdn4?0:(1-(gts-playcd4)/playcdn4):1))+")";
+    ctx2.strokeText("\u25B7", playtx-10, 142);
+    ctx2.strokeText("\u25B7", playtx+18, 142);
+    ctx2.strokeText("\u25B7", playtx+46, 142);
+  }  
 }
 
 function drawPatternButton() {
-  ctx.save();
-  ctx.font = "60px " + font;
-  if (runpattf != 0) {
-    ctx.fillStyle = "#EE4400";
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "44px " + font;
+  if (runpattf !== 0) {
+    ctx2.fillStyle = "rgba(170, 0, 0, 1)";
   } else if (pattb || patt) {
-    ctx.fillStyle = "#00AAFF";
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
   } else {
-    ctx.fillStyle = "#0044EE";
+    ctx2.fillStyle = "rgba(0, 70, 200, 1)";
   }
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  pattbx = canvas.width - 150;
-  ctx.fillText("P", pattbx, 130);
-  pattby = 70;
-  pattbw = 40;
-  pattbh = 50;
-  ctx.restore();
+  pattbx = canvas2.width - 131;
+  ctx2.fillText("P", pattbx - 5, 148);
+  pattby = 105;
+  pattbw = 27;
+  pattbh = 43;
 }
 
-function drawUniButton() {
-  ctx.save();
-  ctx.font = "60px " + font;
-  if (dunib || duni) {
-    ctx.fillStyle = "#00AAFF";
+function drawWrldButton() {
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "44px " + font;
+  if (dwrldb || dwrld) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
   } else {
-    ctx.fillStyle = "#0044EE";
+    ctx2.fillStyle = "rgba(0, 70, 200, 1)";
   }
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  dunibx = canvas.width - 80;
-  ctx.fillText("O", dunibx, 130);
-  duniby = 70;
-  dunibw = 50;
-  dunibh = 50;
-  ctx.restore();
+  dwrldbx = canvas2.width - 72;
+  ctx2.fillText("W", dwrldbx - 3, 148);
+  dwrldby = 105;
+  dwrldbw = 45;
+  dwrldbh = 43;
 }
 
 function drawNGenButton() {
-  ctx.save();
-  ctx.font = "60px " + font;
+  var s;
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "60px " + font;
   if (ngen) {
-    ctx.fillStyle = "#44EE00";
-  } else if (ngenb) {
-    ctx.fillStyle = "#00AAFF";
+    ctx2.fillStyle = "rgba(170, 170, 255, 1)";
+  } else if (ngenb || ngencd5) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
+  } else if (genbbl) {
+    ctx2.fillStyle = "rgba(120, 120, 120, 0.5)";
+  } else if (histgn > 0 && (hupdc > 0 || cruleb !== histcr[0] || crules !== histcr[1])) {
+    ctx2.fillStyle = "rgba(170, 0, 0, 1)";
   } else {
-    ctx.fillStyle = "#0044EE";
+    ctx2.fillStyle = "rgba(0, 70, 200, 1)";
   }
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  ngenbx = canvas.width - 430;
-  ctx.fillText(">", ngenbx - 10, 130);
-  ngenby = 80;
-  ngenbw = 40;
-  ngenbh = 40;
-  ctx.restore();
+  ngenbx = canvas2.width - 440;
+  ctx2.fillText("\u2AA2", ngenbx - 3, 151);
+  ngenby = 101;
+  ngenbw = 42;
+  ngenbh = 42;
+  if (histgn === 0) {
+    ngenfx = 0;
+  } else {
+    ctx2.font = "16px " + font;
+    if (ffw === 1 || ngenfcd) {
+      ctx2.fillStyle = "rgba(170, 170, 255, 1)";
+    } else {
+      ctx2.fillStyle = "rgba(0, 120, 240, 1)";
+    }
+    s = ""+histgn;
+    ngenfx = ngenbx + ngenbw - (s.length>3?3:s.length) * 10 - 7;
+    ctx2.fillText(s, ngenfx, 101);
+    ngenfx += 1;
+    ngenfy = 82;
+    ngenfw = s.length * 9 + 7;
+    ngenfh = 29;
+  }
+}
+
+function drawPGenButton() {
+  var s;
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "60px " + font;
+  if (pgen) {	
+    ctx2.fillStyle = "rgba(170, 170, 255, 1)";
+  } else if (pgenb || pgencd5) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
+  } else if (histgp < 1 || genbbl) {
+    ctx2.fillStyle = "rgba(120, 120, 120, 0.5)";
+  } else if (histgn > 0 && hupdc > 0) {
+    ctx2.fillStyle = "rgba(170, 0, 0, 1)";
+  } else {
+    ctx2.fillStyle = "rgba(0, 70, 200, 1)";
+  }
+  pgenbx = canvas2.width - 532;
+  ctx2.fillText("\u2AA1", pgenbx - 4, 151);
+  pgenby = 104;
+  pgenbw = 36;
+  pgenbh = 39;
+  if (histgp > 0) {
+    ctx2.font = "16px " + font;
+    if (ffw === -1 || pgenfcd) {
+      ctx2.fillStyle = "rgba(170, 170, 255, 1)";
+    } else {
+      ctx2.fillStyle = "rgba(0, 120, 240, 1)";
+    }
+    s = ""+histgp;
+    pgenfx = pgenbx + 1;
+    if (s.length > 3) {
+      pgenfx -= (s.length-3)*10;
+    }
+    ctx2.fillText(s, pgenfx, 101);
+    pgenfx -= 1;
+    pgenfy = 82;
+    pgenfw = s.length * 9 + 13;
+    pgenfh = 29;
+  }
+}
+
+function drawCapButton() {
+  var l, r, sl, sr, q;
+  ctx2.textBaseline = "bottom";
+  ctx2.fillStyle = "rgba(250,250,250,0.5)";
+  ctx2.font = "12px " + font;
+  l = 0;
+  r = 0;
+  if (hist[histh][0][histi][2] > 0) {
+    r = hist[histh][0][histi][2] + 1;
+  } else {
+    if (histgp > 1) {
+      q = prevHist(histh,histi);
+      l = hist[q[0]][0][q[1]][2] + 1;
+    }
+  }
+  sl = "";
+  sr = "";
+  if (l > 1) {
+    sl = "<" + l;
+  }
+  if (r > 1) {
+    sr = "" + r + ">";
+  }
+  if (sl.length > 0 || sr.length > 0) {
+    ctx2.fillText(sl.length > 0 ? sl : sr, canvas2.width - 468- ((sl.length > 0 ? sl : sr).length*8/2), 100);
+  }
+  if (capcd || histgn > 0) {
+    ctx2.font = "49px " + font;
+    if (capcd && (gts - capcd)%300>=150) {
+      ctx2.fillStyle = "rgba(240, 0, 0, 0.7)";
+    } else {
+      ctx2.fillStyle = "rgba(170, 0, 0, 0.7)";
+    }
+    captx = canvas2.width - 485;
+    ctx2.fillText("\u29BB", captx, 147);
+    capty = 107;
+    captw = 35;
+    capth = 35;
+  }
+  if (capcd2) {
+    ctx2.font = "17px " + font;
+    ctx2.fillStyle = "rgba(220, 220, 220, " + (0.7*((gts-capcd2)>capcdn2?0:1-(gts-capcd2)/capcdn2)) + ")";
+    ctx2.fillText(capcds2, canvas2.width - 468 - (capcds2.length/2)*11, 133);
+  }
 }
 
 function drawInfo() {
   var s;
-  ctx.save();
-  ctx.font = "40px " + font;
-  ctx.fillStyle = "#AAAAAA";
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  ctx.fillText("" + gennum + " / " + cells.length + (runpattf==2?" <"+runpattn:""), 30, 70);
-  ctx.font = "13px " + font;
-  if (dsppxct) {
-    ctx.fillStyle = "#00AAFF";
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "40px " + font;
+  ctx2.fillStyle = "rgba(170, 170, 170, 1)";
+  ctx2.fillText("" + gennum + " / " + cellsn + (runpattf===2?" <"+runpattn:""), 30, 70);
+  ctx2.font = "13px " + font;
+  if (dsppxct || dsppxccd) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
   } else {
-    ctx.fillStyle = "#0077EE";
+    ctx2.fillStyle = "rgba(0, 120, 240, 1)";
   }
-  ctx.shadowBlur = 5;
-  ctx.shadowColor = "#AAAAAA";
   dsppxctx = 40;
   s = "" + (Math.floor(cellsz*cellsz*1000)/1000) + " px/c";
-  ctx.fillText(s, dsppxctx, 100);
+  ctx2.fillText(s, dsppxctx, 105);
   dsppxcty = 90;
   dsppxctw = 7 * s.length;
   dsppxcth = 15;
-  if (runpattf != 0) {
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = "#FFFFFF";
-    ctx.font = "30px " + font;
-    ctx.fillStyle = "#EE4400";
-    ctx.fillText("w,h / c : "+runpattw+","+runpatth+" / "+(runpattf==1?runpattn:runpattnx), 90, 190);
+  if (runpattf !== 0) {
+    ctx2.font = "30px " + font;
+    ctx2.fillStyle = "rgba(170, 0, 0, 1)";
+    ctx2.fillText("w,h / c : "+runpattw+","+runpatth+" / "+(runpattf===1?runpattn:runpattnx), 90, 240);
   }
-  if (runpattf == 1) {
-    ctx.fillStyle = "#EE4400";
-    ctx.fillText("char : "+runpattpos+" / "+(runpatt?runpatt.length:0), 130, 250);
+  if (runpattf === 1) {
+    ctx2.fillStyle = "rgba(170, 0, 0, 1)";
+    ctx2.fillText("char : "+runpattpos+" / "+(runpatt?runpatt.length:0), 130, 300);
   }
-  if (runpattf == 2) {
-    ctx.fillStyle = "#EE4400";
-    ctx.fillText("pos : "+runpattzxp+","+runpattzyp, 140, 250);
-    ctx.fillText("on<>off : "+runpattnt, 70, 310);
+  if (runpattf === 2) {
+    ctx2.fillStyle = "rgba(170, 0, 0, 1)";
+    ctx2.fillText("pos : "+runpattzxp+","+runpattzyp, 140, 300);
+    ctx2.fillText("on<>off : "+runpattnt, 70, 360);
   }
-  ctx.restore();
+}
+
+function drawDiamond() {
+  var s, x, y, x2, y2, q, a, b;  
+  a = hist[histh][0][histi][3][0] + (cruleb !== histcr[0] || crules !== histcr[1] ? 1:0);
+  b = hist[histh][0][histi][3][1] + (hupdc > 0 ? 1:0);
+  if (!ddiamcd && a === 0 && b === 0 && (ddiama > 0 || ddiamb > 0)) {
+    ddiamcd = performance.now();
+  }
+  ddiamx = 0;
+  ddiamy = 0;
+  ddiamw = 0;
+  ddiamh = 0;
+  if (ddiamcd || a > 0 || b > 0) {
+    if (a > 0 || b > 0) {
+      ddiama = a;
+      ddiamb = b;
+      ddiamcd = null;
+    }
+    x = x2 = canvas2.width - 334;
+    y = y2 = 85;
+    q = ddiamcd?0.6-0.5*(gts-ddiamcd>ddiamcdn?ddiamcdn:gts-ddiamcd)/ddiamcdn:0.6;
+    ctx2.textBaseline = "bottom";
+    ctx2.fillStyle = "rgba(240,240,0,"+q+")";
+    if (ddiama > 0 && ddiamb === 0) {
+      s = "\u25C7";
+      ctx2.font = "91px " + font;
+      x += 2;
+      y += 8;
+    } else if (ddiama > 0 && ddiamb > 0) {
+      s = "\u25C8";
+      ctx2.font = "62px " + font;
+      x += 3;
+      y -= 4;
+    } else {
+      s = "\u25C6";
+      ctx2.font = "83px " + font;
+    }
+    ctx2.fillText(s, x, y);
+    ddiamx = x;
+    ddiamy = y - 80;
+    ddiamw = 55;
+    ddiamh = 70;
+    ctx2.fillStyle = "rgba(170, 170, 170, 1)";
+    ctx2.font = "12px " + font;
+    if (ddiama > 1) {
+      s = ""+ddiama;
+      ctx2.fillStyle = "rgba(80, 200, 80,"+q+")";
+      ctx2.fillText(s, x2 - s.length*8 + 17, y2-9);
+    }
+    if (ddiamb > 1) {
+      s = ""+ddiamb;
+      ctx2.fillStyle = "rgba(230, 160, 255,"+q+")";
+      ctx2.fillText(s, x2 + 42, y2-9);
+    }
+    if (!ddiamcd && !ddiamcd2) {
+      ddiamf = 0;
+    }
+    if ((ddiamcd && ddiamf > 0) || ddiamcd2 || !ddiamcd && b > 0) {
+      ctx2.font = "34px " + font;
+      if (ddiamcd2) {
+        if ((gts - ddiamcd2)%300>=150) {
+          if (ddiamf === 2) {
+            ctx2.fillStyle = "rgba(220, 0, 0,"+q+")";
+          } else {
+            ctx2.fillStyle = "rgba(180, 180, 180,"+q+")";
+          }
+        } else {
+          ctx2.fillStyle = "rgba(120, 120, 120,"+q+")";
+        }
+      } else if (!ddiamcd && histgn > 0 && hupdc === 0 || ddiamcd && ddiamf === 2) {
+        ctx2.fillStyle = "rgba(220, 0, 0,"+q+")";
+        ddiamf = 2;
+      } else {
+        ctx2.fillStyle = "rgba(50, 50, 50, "+q+")";
+        ddiamf = 1;
+      }
+      ctx2.fillText("\u29BB", x2+18, y2-22);
+    }
+  }
 }
 
 function drawFramesSec() {
-  var t, s, x;
+  var t, s, x, d;
   if (!rsct) {
     rsct = gts;
   }
   t = gts;
-  ctx.save();
-  ctx.font = "15px " + font;
-  ctx.fillStyle = "#AAAAAA";
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  s = "" + Math.floor(rsc / (t - rsct + 1) * 1000) + " f/s";
-  ctx.fillText(s, canvas.width - 10 - 10 * s.length, 35);
-  if ((t - rsct) > 2000) {
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "15px " + font;
+  ctx2.fillStyle = "rgba(170, 170, 170, 1)";
+  s = "" + rscn + " f/s";
+  ctx2.fillText(s, canvas2.width - 10 - 10 * s.length, 40);
+  if ((t - rsct) > 1200) {
+    rscn = Math.floor(rsc / (t - rsct + 1) * 1000);
+    dgpsn = Math.floor(Math.abs(gennum - gencs) / (t - rsct + 1) * 1000)
     rsct = t;
     rsc = 0;
+    dgps = gennum !== gencs;
     gencs = gennum;
   }
   rsc++;
-  if (play) {
-    ctx.font = "13px " + font;
-    ctx.fillText("" + Math.floor((gennum - gencs) / (t - rsct + 1) * 1000) + " g/s", 40, 125);
+  if (dgps) {
+    ctx2.font = "14px " + font;
+    ctx2.fillText("" + dgpsn + " g/s", 40, 135);
   }
-  ctx.restore();
 }
 
 function drawPos() {
-  var x = cellX(0), y = cellY(0);
-  ctx.save();
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 5;
-  ctx.shadowColor = "#AAAAAA";
-  ctx.fillStyle = "#AAAAAA";
-  ctx.font = "13px " + font;
-  ctx.fillText("V w" + Math.floor(canvas.width/(cellsz>grb?cellsz+1:cellsz))+",h"+Math.floor(canvas.height/(cellsz>grb?cellsz+1:cellsz)), canvas.width - 397, 55);
-  ctx.font = "18px " + font;
-  if (cells.length > 0) {
-    s = "U w" + (cellsr-cellsl+1) + ",h" + (cellst-cellsb+1);
+  var x = cellX(posx,true), y = cellY(posy,true), x2, y2, s1, s2, l;
+  s1 = ""+(cellsn>0?cellsr-cellsl+1:0);
+  s2 = ""+Math.floor(canvas2.width/(cellsz>grb?cellsz+1:cellsz));
+  l = Math.max(s1.length * 12, s2.length * 8) + 5;
+  ctx2.textBaseline = "bottom";
+  ctx2.font = "18px " + font;
+  x2 = canvas2.width - 562;
+  y2 = 38;
+  ctx2.fillStyle = "rgba(140, 140, 140, 1)";
+  ctx2.fillText("World", x2, y2);
+  x2 = canvas2.width - 494;
+  ctx2.fillStyle = "rgba(170, 0, 0, 0.7)";
+  ctx2.fillRect(x2-9, y2-10, 3, 3);
+  ctx2.fillStyle = "rgba(170, 170, 170, 0.6)";
+  ctx2.fillText("w", x2, y2);
+  ctx2.fillStyle = "rgba(170, 200, 170, 1)";
+  ctx2.fillText(s1, x2 + 20, y2);
+  ctx2.fillStyle = "rgba(170, 170, 170, 0.6)";
+  ctx2.fillText("h", x2 + 20 + l + 6, y2);
+  ctx2.fillStyle = "rgba(170, 200, 170, 1)";
+  ctx2.fillText(""+(cellsn>0?cellst-cellsb+1:0), x2 + 20 + l + 6 + 16, y2);
+  ctx2.font = "14px " + font;
+  x2 = canvas2.width - 544;
+  y2 = 60;
+  ctx2.fillStyle = "rgba(140, 140, 140, 1)";
+  ctx2.fillText("View", x2, y2);
+  x2 = canvas2.width - 494;
+  ctx2.fillStyle = "rgba(170, 0, 00, 0.7)";
+  ctx2.fillRect(x2-9, y2-8, 3, 3);
+  ctx2.fillStyle = "rgba(170, 0, 0, 0.5)";
+  ctx2.fillText("\u22C5", x2-8, y2);
+  ctx2.fillStyle = "rgba(170, 170, 170, 0.6)";
+  ctx2.fillText("w", x2+2, y2);
+  ctx2.fillStyle = "rgba(170, 200, 170, 1)";
+  ctx2.fillText(s2, x2 + 19, y2);
+  ctx2.fillStyle = "rgba(170, 170, 170, 0.6)";
+  ctx2.fillText("h", x2 + 19 + l + 9, y2);
+  ctx2.fillStyle = "rgba(170, 200, 170, 1)";
+  ctx2.fillText(""+Math.floor(canvas2.height/(cellsz>grb?cellsz+1:cellsz)), x2 + 19 + l + 9 + 14, y2);
+  s1 = ""+x;
+  s2 = ""+y;
+  dsppostx = canvas2.width - 121 - 11 * (s1.length+s2.length+4);
+  ctx2.font = "18px " + font;
+  if (dsppost || dspposcd) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 0.6)";
   } else {
-    s = "U w0,h0";
+    ctx2.fillStyle = "rgba(0, 120, 240, 0.6)";
   }
-  ctx.fillText(s, canvas.width - 400, 35);
-  if (dsppost) {
-    ctx.fillStyle = "#00AAFF";
+  ctx2.fillText("x", dsppostx-2, 42);
+  if (dsppost || dspposcd) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
   } else {
-    ctx.fillStyle = "#0077EE";
+    ctx2.fillStyle = "rgba(0, 120, 240, 1)";
   }
-  s = "x" + x + ",y" + y;
-  dsppostx = canvas.width - 115 - 10 * s.length;
-  ctx.fillText(s, dsppostx, 35);
-  dspposty = 10;
-  dsppostw = 12 * s.length;
-  dspposth = 25;
-  ctx.restore();
+  ctx2.fillText(s1, dsppostx-2 + 15, 42);
+  if (dsppost || dspposcd) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 0.6)";
+  } else {
+    ctx2.fillStyle = "rgba(0, 120, 240, 0.6)";
+  }
+  ctx2.fillText("y", dsppostx-2 + 23 + 11 * s1.length, 42);
+  if (dsppost || dspposcd) {
+    ctx2.fillStyle = "rgba(0, 170, 255, 1)";
+  } else {
+    ctx2.fillStyle = "rgba(0, 120, 240, 1)";
+  }
+  ctx2.fillText(s2, dsppostx-2 + 23 + 11 * s1.length + 15, 42);
+  dspposty = 25;
+  dsppostw = 11 * (s1.length+s2.length+4) - 4;
+  dspposth = 18;
 }
 
 function drawCRule() {
-  ctx.save();
-  ctx.font = "20px " + font;
-  ctx.fillStyle = "rgba(100,220,100,0.6)";
-  ctx.textBaseline = "bottom";
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "#FFFFFF";
-  ctx.fillText("B"+cruleb+" "+"S"+crules, 30, canvas.height - 20);
-  ctx.restore();
+  var s1, s2, fs, x, y, w, h;
+  ctx2.textBaseline = "bottom";
+  if (hist[histh][0][histi][1] && cruleb === histcr[0] && crules === histcr[1]) {
+    s1 = "B"+hist[histh][0][histi][1][1][0]+" "+"S"+hist[histh][0][histi][1][1][1];
+    s2 = "B"+hist[histh][0][histi][1][0][0]+" "+"S"+hist[histh][0][histi][1][0][1];
+  } else {
+    s1 = "B"+cruleb+" "+"S"+crules;
+    if (cruleb === histcr[0] && crules === histcr[1]) {
+      s2 = "";
+    } else {
+      s2 = "B"+histcr[0]+" "+"S"+histcr[1];
+    }
+  }
+  if (hlcrcd && s2.length === 0 || cruleb !== histcr[0] || crules !== histcr[1]) {
+    ctx2.fillStyle = "rgba(220,220,0,"+(hlcrcd?0.8-0.8*(gts-hlcrcd>hlcrcdn?hlcrcdn:gts-hlcrcd)/hlcrcdn:0.8)+")";
+    ctx2.font = "50px " + font;
+    ctx2.fillText("\u25C7", 25, canvas2.height - 18);
+    orulex = 25;
+    oruley = canvas2.height - 59;
+    orulew = 30;
+    oruleh = 33;
+  }
+  if (hlcrcd && s2.length === 0) {
+    ctx2.fillStyle = "rgba(220,220,0,0.8)";
+    fs = 24;
+  } else if (hlcrcd2) {
+    ctx2.fillStyle = "rgba(50,150,50,0.8)";
+    fs = 22;
+  } else {
+    ctx2.fillStyle = "rgba(80,200,80,0.8)";
+    fs = 22;
+  }
+  ctx2.font = ""+fs+"px " + font;
+  ctx2.fillText(s1, 70, canvas2.height - 30);
+  if (s2.length > 0) {
+    x = 110 + (fs-8) * s1.length;
+    if (hlcrcd3) {
+      fs = 17;
+      ctx2.fillStyle = "rgba(220,200,80,0.8)";
+    } else {
+      fs = 16;
+      ctx2.fillStyle = "rgba(70,180,70,0.4)";
+    }
+    ctx2.font = ""+fs+"px " + font;
+    ctx2.fillText(s2, x, canvas2.height - 30);
+  }
 }
 
 function drawGrid() {
-  var w = canvas.width, h = canvas.height, x, y, p, p2;
-  ctxh.save();
-  if (posx < 0) {  
-    p = posx + w / 2;
-  } else {
-    p = posx - w / 2;
-  }
-  x = Math.floor((Math.abs(p)+1) / (cellsz+1));
-  if (posx < 0) {
-    if (p < 0) {
-      p = 0 - x * (cellsz+1);
-    } else {
-      p = (x+1) * (cellsz+1);
+  var w = canvas0.width, h = canvas0.height, p, p2, n;
+  p = w/2 - (posx / (cellsz + 1) - Math.floor(posx / (cellsz + 1))) * (cellsz + 1);
+  p = p - Math.ceil(p / (cellsz + 1)) * (cellsz + 1);
+  p2 = Math.round(cellX(posx+(p-w/2)));
+  while (p < w) {
+    if (p >= 0) {
+      ctx0.beginPath();
+      ctx0.lineWidth = 1;
+      ctx0.moveTo(p+0.5|0, 0);
+      ctx0.lineTo(p+0.5|0, h-1);
+      if (p2 === 0) {
+        ctx0.setLineDash([2,2]);
+        ctx0.strokeStyle = "rgba(200,200,200,0.7)";
+      } else if (p2%10 === 0) {
+        ctx0.setLineDash([]);
+        ctx0.strokeStyle = "rgba(70,70,120,1)";
+      } else {
+        ctx0.setLineDash([]);
+        ctx0.strokeStyle = "rgba(70,70,70,0.9)";
+      }
+      ctx0.stroke();
     }
-  } else {
-    if (p < 0) {
-      p = 0 - (x+1) * (cellsz+1);
-    } else {
-      p = x * (cellsz+1);
+    p += cellsz + 1;
+    p2++;
+  }
+  p = h/2 + (posy / (cellsz + 1) - Math.floor(posy / (cellsz + 1))) * (cellsz + 1);
+  p = p + Math.ceil((h - p) / (cellsz + 1)) * (cellsz + 1);
+  p2 = Math.round(cellY(posy-(p-h/2)));
+  while (p >= 0) {
+    if (p < h) {
+      ctx0.beginPath();
+      ctx0.lineWidth = 1;
+      ctx0.moveTo(0, p+0.5|0, 0);
+      ctx0.lineTo(w-1, p+0.5|0, h);
+      if (p2 === 0) {
+        ctx0.setLineDash([2,2]);
+        ctx0.strokeStyle = "rgba(200,200,200,0.7)";
+      } else if (p2%10 === 0) {
+        ctx0.setLineDash([]);
+        ctx0.strokeStyle = "rgba(70,70,120,1)";
+      } else {
+        ctx0.setLineDash([]);
+        ctx0.strokeStyle = "rgba(70,70,70,0.9)";
+      }
+      ctx0.stroke();
     }
+    p -= cellsz + 1;
+    p2++;
   }
-  x = (Math.floor(w / (cellsz+1)) + 1) * (cellsz+1);
-  if (posx < 0) {
-    y = p - x;
-  } else {
-    y = p + x;
-  }
-  while (posx < 0 && p >= y || posx >= 0 && p <= y) {
-    p2 = w / 2 + p - posx;
-    if (p2 >= 0 && p2 < w) {
-      ctxh.beginPath();
-      ctxh.moveTo(p2, 0);
-      ctxh.lineTo(p2, h-1);
-      ctxh.lineWidth = 1;
-      ctxh.setLineDash([1, 0]);
-      ctxh.strokeStyle = "#303030";
-      ctxh.stroke();
-    }
-    if (posx < 0) {
-      p -= cellsz+1;
-    } else {
-      p += cellsz+1;
-    }
-  }
-  if (posy < 0) {
-    p = posy + h / 2;
-  } else {
-    p = posy - h / 2;
-  }
-  x = Math.floor((Math.abs(p)+1) / (cellsz+1));
-  if (posy < 0) {
-    if (p < 0) {
-      p = 0 - x * (cellsz+1);
-    } else {
-      p = (x+1) * (cellsz+1);
-    }
-  } else {
-    if (p < 0) {
-      p = 0 - (x+1) * (cellsz+1);
-    } else {
-      p = x * (cellsz+1);
-    }
-  }
-  x = (Math.floor(h / (cellsz+1)) + 1) * (cellsz+1);
-  if (posy < 0) {
-    y = p - x;
-  } else {
-    y = p + x;
-  }
-  while (posy < 0 && p >= y || posy >= 0 && p <= y) {
-    p2 = h / 2 - p + posy;
-    if (p2 >= 0 && p2 < h) {
-      ctxh.beginPath();
-      ctxh.moveTo(0, p2);
-      ctxh.lineTo(w-1, p2);
-      ctxh.lineWidth = 1;
-      ctxh.setLineDash([1, 0]);
-      ctxh.strokeStyle = "#303030";
-      ctxh.stroke();
-    }
-    if (posy < 0) {
-      p -= cellsz+1;
-    } else {
-      p += cellsz+1;
-    }
-  }
-  if (Math.abs(posx) < w / 2) {
-    p = w / 2 - posx;
-    ctxh.beginPath();
-    ctxh.moveTo(p, 0);
-    ctxh.lineTo(p, h-1);
-    ctxh.lineWidth = 1;
-    ctxh.setLineDash([1, 0]);
-    ctxh.strokeStyle = "#555555";
-    ctxh.stroke();
-  }
-  if (Math.abs(posy) < h / 2) {
-    p = h / 2 + posy;
-    ctxh.beginPath();
-    ctxh.moveTo(0, p);
-    ctxh.lineTo(w-1, p);
-    ctxh.lineWidth = 1;
-    ctxh.setLineDash([1, 0]);
-    ctxh.strokeStyle = "#555555";
-    ctxh.stroke();
-  }
-  ctxh.restore();
 }
 
-function calcGen() {
-  var idx, e, i, x, k, n;
-  mingen = 0;
-  maxgen = 0;
-  cidx = {}
-  for (i = 0; i < cells.length; i++) {
-    cidx[""+cells[i].c+"-"+cells[i].r] = true;
-  }
-  cellsl = cellsr = cellst = cellsb = null;
-  e = [];
-  x = 0;
-  for (i = 0; i < cells.length; i++) {
-    n = neighbours(cells[i].c, cells[i].r, cidx, e);
-    if (ccrules[n]) {
-      mingen = cells[i].g ? mingen == 0 ? cells[i].g : mingen > cells[i].g ? cells[i].g : mingen : mingen;
-      maxgen = cells[i].g ? maxgen == 0 ? cells[i].g : maxgen < cells[i].g ? cells[i].g : maxgen : maxgen;
-      if (!cells[i].g) {
-        cells[i].g = gennum;
-      }
-      if (!cellsl || cells[i].c < cellsl) {
-        cellsl = cells[i].c;
-      }
-      if (!cellsr || cells[i].c > cellsr) {
-        cellsr = cells[i].c;
-      }
-      if (!cellst || cells[i].r > cellst) {
-        cellst = cells[i].r;
-      }
-      if (!cellsb || cells[i].r < cellsb) {
-        cellsb = cells[i].r;
-      }
-      cells[x] = cells[i];
-      x++;
+function hupdates() {
+  var i, n, a;
+  a = [];
+  for (i = 0; i < tarr.length; i++) {
+    n = tidx[crkey(tarr[i][0],tarr[i][1])];
+    if (n < 0 && tarr[i][2] > 0 || Math.abs(n%2) === 1) {
+      a.push([tarr[i][0],tarr[i][1],tarr[i][2],0,1]);
     }
   }
-  cells = cells.splice(0,x);
-  idx = {};
-  for (i = 0; i < e.length; i++) {
-    if (!idx[k=""+e[i].c+"-"+e[i].r]) {
-      idx[k] = true;
-      if (ccruleb[neighbours(e[i].c, e[i].r, cidx)]) {
-        cells.push(e[i]);
-        if (!cellsl || e[i].c < cellsl) {
-          cellsl = e[i].c;
-        }
-        if (!cellsr || e[i].c > cellsr) {
-          cellsr = e[i].c;
-        }
-        if (!cellst || e[i].r > cellst) {
-          cellst = e[i].r;
-        }
-        if (!cellsb || e[i].r < cellsb) {
-          cellsb = e[i].r;
-        }
+  tarr = [];
+  tidx = {};
+  hupdc = 0;
+  return a;
+}
+
+function calcGen(u) {
+  var i, u2, q, hi = hist[histh][0][histi], ci, cxi, z, c, hf = false;
+  c = cellsn;
+  capHist();
+  if ((u2 = u?u:hupdates()).length > 0) {
+    hi[3][1]++;
+    hf = true;
+  }
+  appendHUpd(hi[0], u2, hi[3][1]-1);
+  cellsf = false;
+  if (cruleb !== histcr[0] || crules !== histcr[1]) {
+    clrcellsx();
+    hf = true;
+    crulecomp();
+    cellsf = true;
+    if (hi[1]) {
+      histcr = hi[1][0];
+    }
+    hi[1] = [histcr, [cruleb,crules]];
+    histcr = [cruleb,crules];
+    hlcrcd = performance.now();
+    hlcrd2 = null;
+    hlcrd3 = null;
+    hi[3][0]++;
+    dspmsg(["New Rule      ","\u22C5      \u22C5","   B"+cruleb+" S"+crules]);    
+  }
+  hi[5] = mingen;
+  hi[6] = cellst;
+  hi[7] = cellsr;
+  hi[8] = cellsb;
+  hi[9] = cellsl;
+  if (hbcksll === 0 && (histp === 0 || hf)) {
+    hi[10] = hbckhac();
+    hbckslf = 0;
+    for (i = hbcksl.length; i < 500; i++) {
+      hbcksl[i] = 0;
+    }
+    q = [histh,histi];
+    z = histgp;
+    while (true) {
+      if (hist[q[0]][0][q[1]][10] === 0 || !hist[q[0]][0][q[1]][0] || hist[q[0]][0][q[1]][0].length === 0 || hist[q[0]][0][q[1]][2] > 0) {
+        break;
       }
+      hbcksl[hbcksll] = hist[q[0]][0][q[1]][10];
+      hbcksll++;
+      z--;
+      if (z < 0 || hbcksll >= hbcksl.length || hist[q[0]][0][q[1]][3][0] > 0 || hist[q[0]][0][q[1]][3][1] > 0) {
+        break;
+      }
+      q = prevHist(q[0],q[1]);
     }
   }
-  calcUni2();
+  //hbckcheck(hi);
   gennum++;
+  histgp++;
+  if (histp === 0 || hf) {
+    mingen = 0;
+    cellsl = maxr + 1;
+    cellsr = maxl - 1;
+    cellst = maxb - 1;
+    cellsb = maxt + 1;
+    cellsan = 0;
+    if (cellsxf) {
+      for (i = 0; i < cellsxl; i++) {
+        cxi = cellsx[i];
+        if (cxi[0][0] === 1 && !ccrules[cxi[0][3]]) {
+          cellsf = true;
+          cellsan++;
+          if (cellsan > cellsa.length) {
+            cellsa[cellsan-1] = [1,cxi[1],cxi[2],cxi[0][2]-1];
+          } else {
+            cellsa[cellsan-1][0] = 1;
+            cellsa[cellsan-1][1] = cxi[1];
+            cellsa[cellsan-1][2] = cxi[2];
+            cellsa[cellsan-1][3] = cxi[0][2]-1;
+          }
+          hi[0].push([cxi[1],cxi[2],cells[cxi[0][2]-1][2],0,0]);
+        }
+      }
+      for (i = 0; i < cellslen; i++) {
+        ci = cells[i];
+        if (ci[3] === 1) {
+          mingen = ci[2] > 0 ? mingen === 0 ? ci[2] : mingen > ci[2] ? ci[2] : mingen : mingen === 0 ? gennum : mingen;
+          if (ci[2] === 0) {
+            cellsf = true;
+            hi[0].push([ci[0],ci[1],-2,0,0]);
+            ci[2] = gennum;
+          }
+          if (ci[0] < cellsl) {
+            cellsl = ci[0];
+          }
+          if (ci[0] > cellsr) {
+            cellsr = ci[0];
+          }
+          if (ci[1] > cellst) {
+            cellst = ci[1];
+          }
+          if (ci[1] < cellsb) {
+            cellsb = ci[1];
+          }
+        }
+      }
+      for (i = 0; i < cellsxl; i++) {
+        cxi = cellsx[i];
+        if (cxi[0][0] !== 1 && ccruleb[cxi[0][3]]) {
+          cellsf = true;
+          hi[0].push([cxi[1],cxi[2],-1,0,0]);
+          cellsan++;
+          if (cellsan > cellsa.length) {
+            cellsa[cellsan-1] = [0, cxi[1], cxi[2], null];
+          } else {
+            cellsa[cellsan-1][0] = 0;
+            cellsa[cellsan-1][1] = cxi[1];
+            cellsa[cellsan-1][2] = cxi[2];
+            cellsa[cellsan-1][3] = null;
+          }
+          if (cxi[1] < cellsl) {
+            cellsl = cxi[1];
+          }
+          if (cxi[1] > cellsr) {
+            cellsr = cxi[1];
+          }
+          if (cxi[2] > cellst) {
+            cellst = cxi[2];
+          }
+          if (cxi[2] < cellsb) {
+            cellsb = cxi[2];
+          }
+        }
+      }
+      clrcellsx(true);
+    } else {
+      for (i = 0; i < cellslen; i++) {
+        ci = cells[i];
+        if (ci[3] === 1) {
+          if (ccrules[fcidx(ci[0],ci[1])[3] = neighbours(ci[0], ci[1], true)]) {
+            mingen = ci[2] > 0 ? mingen === 0 ? ci[2] : mingen > ci[2] ? ci[2] : mingen : mingen === 0 ? gennum : mingen;
+            if (ci[2] === 0) {
+              cellsf = true;
+              hi[0].push([ci[0],ci[1],-2,0,0]);
+              ci[2] = gennum;
+            }
+            if (ci[0] < cellsl) {
+              cellsl = ci[0];
+            }
+            if (ci[0] > cellsr) {
+              cellsr = ci[0];
+            }
+            if (ci[1] > cellst) {
+              cellst = ci[1];
+            }
+            if (ci[1] < cellsb) {
+              cellsb = ci[1];
+            }
+          } else {
+            cellsf = true;
+            cellsan++;
+            if (cellsan > cellsa.length) {
+              cellsa[cellsan-1] = [1,ci[0],ci[1],i];
+            } else {
+              cellsa[cellsan-1][0] = 1;
+              cellsa[cellsan-1][1] = ci[0];
+              cellsa[cellsan-1][2] = ci[1];
+              cellsa[cellsan-1][3] = i;
+            }
+            hi[0].push([ci[0],ci[1],ci[2],0,0]);
+          }
+        }
+      }
+    }
+    cellsxf = true;
+    for (i = 0; i < cellsan; i++) {
+      if (cellsa[i][0] !== 1 && cellsa[i][3]) {
+        if (cellsa[i][3][1] === 1) {
+          cellsa[i][3][1] = 0;
+        }
+        cellsa[i][3] = null;
+      }
+      if (cellsa[i][0] === 0) {
+        z = addCell(cellsa[i][1],cellsa[i][2]);
+        cells[z][4] = fcidx(cellsa[i][1],cellsa[i][2],2,z+1);
+        cellsn++;
+      } else {
+        if (cellsa[i][0] === 1) {
+          rmvCell(cellsa[i][3]);
+          cellsn--;
+        }
+        fcidx(cellsa[i][1],cellsa[i][2],1);
+      }
+    }
+    calcWrld2();
+  } else {
+    hbcksll = 0;
+  }
+  if (hf) {
+    histp = 0;
+  }
+  if (histp > 0) {
+    if (hi[11][0] > 0) {
+      hi[11][1] = 1;
+    } else {
+      q = prevHist(histh, histi);
+      hist[q[0]][0][q[1]][11][1]++;
+      histp++;
+    }
+  }
+  if (!cellsf && hi[4] && histp === 0) {
+    q = prevHist(histh, histi);
+    hist[q[0]][0][q[1]][2]++;
+  } else if (histp === 0 || hi[11][0] > 0) {
+    z = hist[histh][0][histi][10];
+    nextHist();
+    hist[histh][0][histi] = [[],null,0,[0,0],!cellsf,mingen,cellst,cellsr,cellsb,cellsl,(cellsn===0?0:cellsxl===0?z:hbckhac()),[0,0]];
+  }
+  if (cellsn === 0 || cellsxl === 0) {
+    hbcksll = 0;
+  } else if (hbcksll > 0) {
+    if (hbckslf > 0) {
+      hbckslf--;
+    } else {
+      hbckslf = hbcksl.length - 1;
+    }
+    if (hbcksll < hbcksl.length) {
+      hbcksll++;
+    }
+    hbcksl[hbckslf] = hist[histh][0][histi][10];
+  }
+  if (c === 0 && cellsn === 0) {
+    if (msgf1 !== 1 && msgf1 !== 2) {
+      dspmsg(["Empty      ","\u22C5      \u22C5","      World"]);
+      msgf1 = 1;
+    }
+  } else if (c > 0 && cellsn === 0) {
+    if (msgf1 !== 2) {
+      dspmsg(["Life      ","\u22C5      \u22C5","      Ended"]);
+      msgf1 = 2;
+    }
+  } else if (cellsn > 0 && cellsxl === 0) {
+    if (msgf1 !== 3) {
+      dspmsg(["Still      ","\u22C5      \u22C5","      Life"]);
+      msgf1 = 3;
+    }
+  }
 }
 
-function neighbours(x, y, idx, e) {
-  var n = 0;
-  if (idx[""+x+"-"+(y+1)]) {
+function neighbours(x, y, f) {
+  var n = 0, v;
+  if ((v = fcidx(x,y+1)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x,r:y+1});
+  } else if (f) {
+    newnb(x,y+1,v);
   }
-  if (idx[""+(x+1)+"-"+(y+1)]) {
+  if ((v = fcidx(x+1,y+1)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x+1,r:y+1});
+  } else if (f) {
+    newnb(x+1,y+1,v);
   }
-  if (idx[""+(x+1)+"-"+y]) {
+  if ((v = fcidx(x+1,y)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x+1,r:y});
+  } else if (f) {
+    newnb(x+1,y,v);
   }
-  if (idx[""+(x+1)+"-"+(y-1)]) {
+  if ((v = fcidx(x+1,y-1)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x+1,r:y-1});
+  } else if (f) {
+    newnb(x+1,y-1,v);
   }
-  if (idx[""+x+"-"+(y-1)]) {
+  if ((v = fcidx(x,y-1)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x,r:y-1});
+  } else if (f) {
+    newnb(x,y-1,v);
   }
-  if (idx[""+(x-1)+"-"+(y-1)]) {
+  if ((v = fcidx(x-1,y-1)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x-1,r:y-1});
+  } else if (f) {
+    newnb(x-1,y-1,v);
   }
-  if (idx[""+(x-1)+"-"+y]) {
+  if ((v = fcidx(x-1,y)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x-1,r:y});
+  } else if (f) {
+    newnb(x-1,y,v);
   }
-  if (idx[""+(x-1)+"-"+(y+1)]) {
+  if ((v = fcidx(x-1,y+1)) && v[0] === 1) {
     n++;
-  } else {
-    e && e.push({c:x-1,r:y+1});
+  } else if (f) {
+    newnb(x-1,y+1,v);
   }
   return n;
+}
+
+function newnb(x, y, v) {
+  var v0, x0 = x, y0 = y;
+  if ((v0 = v) && v0[1] === 1) {
+    return;
+  }
+  if (!v0) {
+    v0 = fcidx(x, y, [0,1,0,0]);
+  } else {
+    v0[1] = 1;
+  }
+  if (x0 < maxl) {
+    x0 = maxr - maxl + x0 + 1;
+  }
+  if (x0 > maxr) {
+    x0 = maxl + x0 - maxr - 1;
+  }
+  if (y0 < maxb) {
+    y0 = maxt - maxb + y0 + 1;
+  }
+  if (y0 > maxt) {
+    y0 = maxb + y0 - maxt - 1;
+  }
+  cellsan++;
+  if (cellsan > cellsa.length) {
+    cellsa[cellsan-1] = [2, x0, y0, v0];
+  } else {
+    cellsa[cellsan-1][0] = 2;
+    cellsa[cellsan-1][1] = x0;
+    cellsa[cellsan-1][2] = y0;
+    cellsa[cellsan-1][3] = v0;
+  }
+  if (ccruleb[(v0[3] = neighbours(x0, y0, false))]) {
+    cellsf = true;
+    hist[histh][0][histi][0].push([x0,y0,-1,0,0]);
+    cellsa[cellsan-1][0] = 0;
+    if (x0 < cellsl) {
+      cellsl = x0;
+    }
+    if (x0 > cellsr) {
+      cellsr = x0;
+    }
+    if (y0 > cellst) {
+      cellst = y0;
+    }
+    if (y0 < cellsb) {
+      cellsb = y0;
+    }
+  }
 }
 
 function run(mode) {
@@ -1695,13 +3084,52 @@ function run(mode) {
   runpatta = [];
   document.getElementById("pattern").style.display = "none";
   patt = false;
-  if (runpattm == 3) {
+  if (runpattm === 3) {
     cells = [];
-    cidx = {};
+    cellsn = 0;
+    cellslen = 0;
+    cellsa = [];
+    cellsan = 0;
+    cellsfs = [];
+    cellsfsl = 0;
+    cellsx = [];
+    cellsxl = 0;
+    cellsx2 = [];
+    cellsx2l = 0;
+    cellsf = false;
+    cellsxf = false;
+    cidxb = [[[null],-1,-1,null]];
+    cidxbb = null;
+    cidxbi = 0;
+    frl = [];
+    frll = 0;
+    frlfs = [];
+    frlfsl = 0;
     gennum = 0;
+    mingen = 0;
+    cellsl = 0;
+    cellsr = 0;
+    cellst = 0;
+    cellsb = 0;
     posx = 0;
     posy = 0;
-    calcUni();
+    hist = [[[[[],null,0,[0,0],false,0,0,0,0,0,0,[0,0]]],0,-1,-1]];
+    histi = 0;
+    histh = 0;
+    histp = 0;
+    histod = 0;
+    tarr = [];
+    tidx = {};
+    hupdc = 0;
+    histgp = 0;
+    histgn = 0;
+    msgl = [];
+    msgll = 0;
+    hbck = [];
+    hbcksl = [];
+    hbcksll = 0;
+    hbckslf = 0;
+    calcWrld();
   }
 }
 
@@ -1716,17 +3144,17 @@ function runf1() {
     runpattz = 0;
     runpattzx = Math.floor(runpattw / 2);
     runpattzy = Math.floor(runpatth / 2);
-    runpattzxp = cellX(0);
-    runpattzyp = cellY(0);
+    runpattzxp = cellX(posx,true);
+    runpattzyp = cellY(posy,true);
     runpattz2 = 0;
     runpatta.sort(function(a,b) {
-      var x1 = a.c - runpattzx;
-      var y1 = a.r - runpattzy;
-      var x2 = b.c - runpattzx;
-      var y2 = b.r - runpattzy;
+      var x1 = a[0] - runpattzx;
+      var y1 = a[1] - runpattzy;
+      var x2 = b[0] - runpattzx;
+      var y2 = b[1] - runpattzy;
       if (Math.abs(x1)*Math.abs(y1) < Math.abs(x2)*Math.abs(y2)) {
         return -1;
-      } else if (x1 == x2 && y1 == y2) {
+      } else if (x1 === x2 && y1 === y2) {
         return 0;
       } else {
         return 1;
@@ -1739,14 +3167,14 @@ function runf1() {
   if (!(/^\d+$/.test(c))) {
     runpattnn = true;
   }
-  if (c == "\n" || c == "\r") {
+  if (c === "\n" || c === "\r") {
     runpattnl = true;
   } else if (runpattnl) {
-    if (c.search(/\S|$/) == 0) {
-      runpattnl = false;	
-      if (c == "#" ||  c2 == "x=" || c2 == "x ") {
+    if (c.search(/\S|$/) === 0) {
+      runpattnl = false;
+      if (c === "#" ||  c2 === "x=" || c2 === "x ") {
         runpattpos += runpatt.substring(runpattpos).search(/\n|\r|$/);
-        runpattnl = true;	
+        runpattnl = true;
       } else {
         runpattpos--;
       }
@@ -1757,67 +3185,69 @@ function runf1() {
       runpattnn = false;
     }
     runpattnum = runpattnum * 10 + parseInt(c);
-  } else if (c == "!") {
+  } else if (c === "!") {
     runpattpos = runpatt.length - 1;
-  } else if (c == "$") {
-    runpattnum == 0 ? runpatthx++ : runpatthx += runpattnum;
+  } else if (c === "$") {
+    runpattnum === 0 ? runpatthx++ : runpatthx += runpattnum;
     runpattnr = true;
     runpattx = 0;
     runpattnum = 0;
-  } else if (c == "b" || c == "." || c == "o" || c == "A") {
+  } else if (c === "b" || c === "." || c === "o" || c === "A") {
     if (runpattnr) {
       runpattnr = false;
       runpatth += runpatthx;
       runpatthx = 0;
     }
     x = runpattx;
-    runpattnum == 0 ? runpattx++ : runpattx += runpattnum;
+    runpattnum === 0 ? runpattx++ : runpattx += runpattnum;
     runpattnum = 0;
-    if (c == "o" || c == "A") {
+    if (c === "o" || c === "A") {
       for (; x < runpattx; x++) {
         runpattd[""+x+"-"+(runpatth-1)] = true;
         runpattn++;
-        runpatta.push({c:x,r:runpatth-1});
+        runpatta.push([x,runpatth-1]);
       }
     }
     if (runpattx > runpattw) {
       runpattw = runpattx;
     }
-  }  
+  }
   runpattpos++;
 }
 
 function runf2() {
-  var zx = 0, zy = 0;
+  var zx = 0, zy = 0, v;
   if (runpattz2 >= runpatta.length) {
     runpattf = 0;
     var d = new Date();
     document.getElementById("patternt").value =
         "# "
-      + d.getFullYear()    + "-" 
+      + d.getFullYear()    + "-"
       + (d.getMonth() + 1) + "-"
       + d.getDate()        + " "
       + d.getHours()       + ":"
       + d.getMinutes()     + ":"
       + d.getSeconds()     + " - "
-      + (runpattm==1?"/Add":runpattm==2?"/Replace":"/Reset") + " - grid w/h " + runpattw + "/" + runpatth + " - " + runpattnx + ' "on" cells - pos ' + runpattzxp+","+runpattzyp + " - " + runpattnt + " cells switched on<>off"
+      + (runpattm===1?"/Add":runpattm===2?"/Replace":"/Reset") + " - grid w" + runpattw + ",h" + runpatth +  " - " + runpattnx + ' "on" cells - pos ' + runpattzxp+","+runpattzyp + " - " + runpattnt + " cells switched on<>off"
       + "\n\n"
       + document.getElementById("patternt").value;
     return;
   }
-  if (runpattm == 2 && runpattz < cells.length) {
-    zx = cells[runpattz].c - runpattzxp;
-    zy = runpattzyp - cells[runpattz].r;
-    if (   runpattzx+zx >= 0 && runpattzx+zx < runpattw && runpattzy+zy >= 0 && runpattzy+zy < runpatth
-        && !runpattd[""+(runpattzx+zx)+"-"+(runpattzy+zy)]) {
-      toggleCellCR(runpattzxp+zx, runpattzyp-zy, runpattz+1);
-      runpattnt++;
+  if (runpattm === 2 && runpattz < cellslen) {
+    if (cells[runpattz][3] === 1) {
+      zx = cells[runpattz][0] - runpattzxp;
+      zy = runpattzyp - cells[runpattz][1];
+      if (   runpattzx+zx >= 0 && runpattzx+zx < runpattw && runpattzy+zy >= 0 && runpattzy+zy < runpatth
+          && !runpattd[""+(runpattzx+zx)+"-"+(runpattzy+zy)]) {
+        toggleCellCR(runpattzxp+zx, runpattzyp-zy, runpattz+1);
+        runpattnt++;
+      }
     }
     runpattz++;
   } else if (runpattz2 < runpatta.length) {
-    zx = runpatta[runpattz2].c - runpattzx;
-    zy = runpatta[runpattz2].r - runpattzy;
-    if (!cidx[""+(runpattzxp+zx)+"-"+(runpattzyp-zy)]) {
+    zx = runpatta[runpattz2][0] - runpattzx;
+    zy = runpatta[runpattz2][1] - runpattzy;
+    if (!((v = fcidx(runpattzxp+zx,runpattzyp-zy)) && v[0] === 1)) {
       toggleCellCR(runpattzxp+zx, runpattzyp-zy);
       runpattnt++;
     }
@@ -1826,31 +3256,1138 @@ function runf2() {
   }
 }
 
-function crulebut(f) {
-  var i;
-  if (f == 1) {
-    cruleb = crulebn;
-    crules = crulesn;
-    for (i = 0; i < ccruleb.length; i++) {
-      if (cruleb.indexOf(""+i) > -1) {
-        ccruleb[i] = true;
-      } else {
-        ccruleb[i] = false;        
-      }
-    }
-    for (i = 0; i < ccrules.length; i++) {
-      if (crules.indexOf(""+i) > -1) {
-        ccrules[i] = true;
-      } else {
-        ccrules[i] = false;        
-      }
+function crulecomp() {
+  for (i = 0; i < ccruleb.length; i++) {
+    if (cruleb.indexOf(""+i) > -1) {
+      ccruleb[i] = true;
+    } else {
+      ccruleb[i] = false;
     }
   }
+  for (i = 0; i < ccrules.length; i++) {
+    if (crules.indexOf(""+i) > -1) {
+      ccrules[i] = true;
+    } else {
+      ccrules[i] = false;
+    }
+  }
+}
+
+function crulebut(f) {
+  var i;
+  if (f === 1) {
+    cruleb = crulebn;
+    crules = crulesn;
+  }
   crulem = 0;
-  crulebn = cruleb;
-  crulesn = crules;
   crulec = false;
   document.getElementById("crule").style.display = "none";
 }
+
+function capHist() {
+  var h, i, hi, n, q;
+  h = histh;
+  i = histi;
+  n = histgn;
+  if (histp > 0) {
+    q = prevHist(histh, histi);
+    if (hist[q[0]][0][q[1]][11][0] > 0) {
+      histgn -= hist[q[0]][0][q[1]][11][1] - histp;
+      hist[q[0]][0][q[1]][11][1] = histp;
+    }
+  }
+  histgn -= hist[histh][0][histi][2];
+  if (hist[histh][0][histi][11][0] > 0) {
+    histgn -= hist[histh][0][histi][11][1] - 1;
+  }
+  while (histgn > 0) {
+    nextHist();
+    histgn -= hist[histh][0][histi][2] + 1;
+    if (hist[histh][0][histi][11][0] > 0) {
+      histgn -= hist[histh][0][histi][11][1] - 1;
+    }
+    hist[histh][0][histi] = null;
+  }
+  histh = h;
+  histi = i;
+  hi = hist[histh][0][histi];
+  a = [];
+  for (i = 0; i < hi[0].length; i++) {
+    if (hi[0][i][4] === 1) {
+      a.push(hi[0][i]);
+    }
+  }
+  hi[0] = a;
+  hi[2] = 0;
+  hi[11][0] = 0;
+  hi[11][1] = 0;
+  if (n > 0) {
+    capcd2 = performance.now();
+    capcds2 = ""+n;
+  }
+}
+
+function prevGen() {
+  var i, c, r, g, z, u, q, hi, v;
+  if (histgp > 0) {
+    clrcellsx();
+    cruleb = histcr[0];
+    crules = histcr[1];
+    hi = hist[histh][0][histi];
+    if ((u = hupdates()).length > 0) {
+      //if (hi[2] === 0) {
+        capHist();
+      //} else {
+      //  capHist();
+      //  nextHist();
+      //  hist[histh][0][histi] = [[],null,0,[0,0],false,0,0,0,0,0,0,[0,0]];
+      //  hi = hist[histh][0][histi];
+      //}
+      appendHUpd(hi[0], u, hi[3][1]);
+      hi[3][1]++;
+      hi[5] = mingen;
+      hi[6] = cellst;
+      hi[7] = cellsr;
+      hi[8] = cellsb;
+      hi[9] = cellsl;
+      hi[10] = hbckhac();
+    }
+    if (hi[1]) {
+      cruleb = hi[1][0][0];
+      crules = hi[1][0][1];
+      histcr = [cruleb,crules];
+      crulecomp();
+    }
+    i = hi[0].length - 1;
+    while (i >= 0) {
+      if (hi[0][i][4] === 1) {
+        c = hi[0][i][0];
+        r = hi[0][i][1];
+        g = hi[0][i][2];
+        z = ((v = fcidx(c,r)) ? v[0] === 1 ? v[2] : null : null);
+        if (g >= 0) {
+          if (z) {
+            z--;
+          } else {
+            z = addCell(c,r);
+            cells[z][3] = 0;
+            fcidx(c,r,(v=[1,0,z+1,0]));
+          }
+          if (!cells[z] || cells[z][3] !== 1) {
+            cellsn++;
+          }
+          if (cells[z]) {
+            cells[z][0] = c;
+            cells[z][1] = r;
+            cells[z][2] = g;
+            cells[z][3] = 1;
+            cells[z][4] = v;
+          } else {
+            cells[z] = [c,r,g,1,v];
+          }
+        } else if (g === -1) {
+          if (z) {
+            z--;
+            fcidx(c,r,1);
+            if (cells[z] && cells[z][3] === 1) {
+              cellsn--;
+            }
+            rmvCell(z);
+          }
+        } else if (g === -2) {
+          if (z) {
+            z--;
+            cells[z][2] = 0;
+          }
+        }
+      }
+      i--;
+    }
+    q = prevHist(histh, histi);
+    histh = q[0];
+    histi = q[1];
+    hi = hist[histh][0][histi];
+    if (hi[1]) {
+      hlcrcd3 = performance.now();
+      hlcrcd = null;
+      hlcrcd2 = null;
+      cruleb = hi[1][1][0];
+      crules = hi[1][1][1];
+      histcr = [cruleb,crules];
+      crulecomp();
+    }
+    i = hi[0].length - 1;
+    while (i >= 0) {
+      if (hi[0][i][4] !== 1) {
+        c = hi[0][i][0];
+        r = hi[0][i][1];
+        g = hi[0][i][2];
+        z = ((v = fcidx(c,r)) ? v[0] === 1 ? v[2] : null : null);
+        if (g >= 0) {
+          if (z) {
+            z--;
+          } else {
+            z = addCell(c,r);
+            cells[z][3] = 0;
+            fcidx(c,r,(v=[1,0,z+1,0]));
+          }
+          if (!cells[z] || cells[z][3] !== 1) {
+            cellsn++;
+          }
+          if (cells[z]) {
+            cells[z][0] = c;
+            cells[z][1] = r;
+            cells[z][2] = g;
+            cells[z][3] = 1;
+            cells[z][4] = v;
+          } else {
+            cells[z] = [c,r,G,1,v];
+          }
+        } else if (g === -1) {
+          if (z) {
+            z--;
+            fcidx(c,r,1);
+            if (cells[z] && cells[z][3] === 1) {
+              cellsn--;
+            }
+            rmvCell(z);
+          }
+        } else if (g === -2) {
+          if (z) {
+            z--;
+            cells[z][2] = 0;
+          }
+        }
+      }
+      i--;
+    }
+    gennum -= hi[2] + 1;
+    histgp -= hi[2] + 1;
+    histgn += hi[2] + 1;
+    mingen = hi[5];
+    cellst = hi[6];
+    cellsr = hi[7];
+    cellsb = hi[8];
+    cellsl = hi[9];
+    if (gennum === 0 && msgf1 === 0) {
+      dspmsg(["Generation   ","\u22C5      \u22C5","      Zero"]);
+      msgf1 = 11;
+    }
+  }
+}
+
+function nextGen() {
+  var i, c, r, g, z, u, q, hi, v;
+  u = null;
+  if (   (u = hupdates()).length > 0
+      || histgn < 1
+      || cruleb !== histcr[0]
+      || crules !== histcr[1]) {
+    calcGen(u);
+  } else {
+    clrcellsx();
+    hi = hist[histh][0][histi];
+    gennum += hi[2] + 1;
+    histgp += hi[2] + 1;
+    histgn -= hi[2] + 1;
+    cruleb = histcr[0];
+    crules = histcr[1];
+    if (hi[1]) {
+      hlcrcd = performance.now();
+      hlcrcd2 = null;
+      hlcrcd3 = null;
+      cruleb = hi[1][1][0];
+      crules = hi[1][1][1];
+      histcr = [cruleb,crules];
+      crulecomp();
+    }
+    i = 0;
+    while (i < hi[0].length) {
+      if (hi[0][i][4] !== 1) {
+        c = hi[0][i][0];
+        r = hi[0][i][1];
+        g = hi[0][i][2];
+        z = ((v = fcidx(c,r)) ? v[0] === 1 ? v[2] : null : null);
+        if (g >= 0) {
+          if (z) {
+            z--;
+            fcidx(c,r,1);
+            if (cells[z] && cells[z][3] === 1) {
+              cellsn--;
+            }
+            rmvCell(z);
+          }
+        } else if (g === -1) {
+          if (z) {
+            z--;
+          } else {
+            z = addCell(c,r);
+            cells[z][3] = 0;
+            fcidx(c,r,(v=[1,0,z+1,0]));
+          }
+          if (!cells[z] || cells[z][3] !== 1) {
+            cellsn++;
+          }
+          if (cells[z]) {
+            cells[z][0] = c;
+            cells[z][1] = r;
+            cells[z][2] = 0;
+            cells[z][3] = 1;
+            cells[z][4] = v;
+          } else {
+            cells[z] = [c,r,0,1,v];
+          }
+        } else if (g === -2) {
+          if (z) {
+            z--;
+            cells[z][2] = gennum;
+          }
+        }
+      }
+      i++;
+    }
+    nextHist();
+    hi = hist[histh][0][histi];
+    i = 0;
+    while (i < hi[0].length) {
+      if (hi[0][i][4] === 1) {
+        c = hi[0][i][0];
+        r = hi[0][i][1];
+        g = hi[0][i][2];
+        z = ((v = fcidx(c,r)) ? v[0] === 1 ? v[2] : null : null);
+        if (g >= 0) {
+          if (z) {
+            z--;
+            fcidx(c,r,1);
+            if (cells[z] && cells[z][3] === 1) {
+              cellsn--;
+            }
+            rmvCell(z);
+          }
+        } else if (g === -1) {
+          if (z) {
+            z--;
+          } else {
+            z = addCell(c,r);
+            cells[z][3] = 0;
+            fcidx(c,r,(v=[1,0,z+1,0]));
+          }
+          if (!cells[z] || !cells[z][3] !== 1) {
+            cellsn++;
+          }
+          if (cells[z]) {
+            cells[z][0] = c;
+            cells[z][1] = r;
+            cells[z][2] = 0;
+            cells[z][3] = 1;
+            cells[z][4] = v;
+          } else {
+            cells[z] = [c,r,0,1,v];
+          }
+        } else if (g === -2) {
+          if (z) {
+            z--;
+            cells[z][2] = gennum;
+          }
+        }
+      }
+      i++;
+    }
+    mingen = hi[5];
+    cellst = hi[6];
+    cellsr = hi[7];
+    cellsb = hi[8];
+    cellsl = hi[9];
+  }
+}
+
+function appendHUpd(a, b, c) {
+  for (var i = 0; i < b.length; i++) {
+    b[i][b[i].length] = c;
+    a.push(b[i]);
+  }
+}
+
+function fcidx(c, r, v, vx) {
+  var n = Math.pow(2,cidxb[cidxbi][0].length+1), c2, r2, v2, d, c0 = c, r0 = r, u;
+  if (c0 < maxl) {
+    c0 = maxr - maxl + c0 + 1;
+  }
+  if (c0 > maxr) {
+    c0 = maxl + c0 - maxr - 1;
+  }
+  if (r0 < maxb) {
+    r0 = maxt - maxb + r0 + 1;
+  }
+  if (r0 > maxt) {
+    r0 = maxb + r0 - maxt - 1;
+  }
+  if (!cidxbb || cidxbb[1] === 3 || c0 < cidxbx1 || c0 > cidxbx2 || r0 < cidxby1 || r0 > cidxby2) {
+    cidxbb = fcidxb(cidxbi, cidxb[cidxbi][0].length-1, (c2 = Math.floor(c0/n)), (r2 = Math.floor(r0/n)));
+    cidxbx1 = c2 * n;
+    cidxby1 = r2 * n;
+    cidxbx2 = cidxbx1 + n - 1;
+    cidxby2 = cidxby1 + n - 1;
+  }
+  if (cidxbb[1] === 2) {
+    cidxbb[2] = performance.now();
+  }
+  v2 = (cidxbb[1] === 1 ? cidxbb[0][c0-cidxbx1][r0-cidxby1] : null);
+  if (v) {
+    if (v === 3) {
+      if (v2 && v2[0] === 1) {
+        v2[1] = 0;
+        v2[3] = 0;
+        v = v2;
+      } else {
+        v = null;
+      }
+    }
+    if (cellsxf) {
+      u = 0;
+      if (v === 1) {
+        if (v2) {
+          u = v2[0] === 1 ? -1 : 0;
+          v2[0] = 0;
+          v2[2] = 0;
+          v = v2;
+          if (v[3] === 0 && v[1] !== 2 && v[1] !== 3) {
+            v[1] = 3;
+            cellsx2l++;
+            if (cellsx2l > cellsx2.length) {
+              cellsx2[cellsx2l-1] = [v, c0, r0];
+            } else {
+              cellsx2[cellsx2l-1][0] = v;
+              cellsx2[cellsx2l-1][1] = c0;
+              cellsx2[cellsx2l-1][2] = r0;
+            }
+          }
+        } else {
+          v = null;
+        }
+      } else if (v === 2) {
+        if (v2) {
+          u = v2[0] === 1 ? 0 : 1;
+          v2[0] = 1;
+          v2[2] = vx;
+          v = v2;
+        } else {
+          u = 1;
+          v = [1, 0, vx, 0];
+        }
+      }
+    }
+    v = (cidxbb[0][c0-cidxbx1][r0-cidxby1] = (v === 1 ? null : v));
+    if ((d = (v2 === null ? v === null ? 0 : 1 : v === null ? -1 : 0)) !== 0) {
+      cidxbb[2] = (cidxbb[1] === 1 ? cidxbb[2] + d : d);
+      if (cidxbb[1] === 1 && cidxbb[2] === 0) {
+        fcidxafrl(cidxbb);
+      } else if (cidxbb[1] === 2 && cidxbb[2] > 0) {
+        frl[cidxbb[3]] = null;
+        frlfs[frlfsl++] = cidxbb[3];
+        cidxbb[1] = 1;
+      }
+    }
+    if (cellsxf) {
+      updnb(c0, r0, u);
+    }
+    return v;
+  }
+  return v2;
+}
+
+function fcidxb(bi, l, c, r) {
+  var b, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, j, l2, c3, r3, k3;
+  t = l === cidxb[bi][0].length - 1 && cidxb[bi][2] === -1;
+  if (!t && (!cidxb[bi][0][l] || cidxb[bi][0][l][1] < 1)) {
+    if (l === 0 && cidxb[bi][1] === -1) {
+      cidxb[bi][0][l] = true;
+      return null;
+    } else if (l > 0) {
+      if (cidxb[bi][0][l-1] === true) {
+        cidxb[bi][0][l] = true;
+        return null;
+      } else {
+        cidxb[bi][0][l] = null;
+      }
+    }
+  }
+  k = crkey(c,r);
+  if (b = (cidxb[bi][0][l] && cidxb[bi][0][l] !== true ? cidxb[bi][0][l][0][k] : null)) {
+    if (t) {
+      return b;
+    }
+    cidxb[bi][0][l][0][k] = null;
+    cidxb[bi][0][l][1]--;
+    if (b[2] === 2) {
+      frl[b[3]] = null;
+      frlfs[frlfsl++] = b[3];
+    }
+    if (cidxb[bi][0][l][1] < 1) {
+      if (l === 0 && cidxb[bi][1] === -1) {
+        cidxb[bi][0][l] = true;
+      } else if (l > 0) {
+        if (cidxb[bi][0][l-1] === true) {
+          cidxb[bi][0][l] = true;
+        } else {
+          cidxb[bi][0][l] = null;
+        }
+      }
+    }
+    if (b[1] === 1) {
+      return b;
+    }
+    b = null;
+  }
+  if (cidxb[bi][0][l] === true) {
+    return null;
+  }
+  if (l === 0) {
+    if (cidxb[bi][1] > -1) {
+      l2 = cidxb[cidxb[bi][1]][0].length-1;
+      if (cidxb[cidxb[bi][1]][0][l2] === true) {
+        cidxb[bi][1] = -1;
+        cidxb[bi][3] = null;
+      } else {
+        n2 = Math.pow(2, l2+2);
+        if (!cidxb[bi][3]) {
+          cidxb[bi][3] = {};
+        }
+        c2 = Math.floor(c/(n2/4));
+        r2 = Math.floor(r/(n2/4));
+        k2 = crkey(c2,r2);
+        if (!cidxb[bi][3][k2]) {
+          cidxb[bi][3][k2] = true;
+          if (b1 = fcidxb(cidxb[bi][1],l2,c2,r2)) {
+            i = 0;
+            while (i < n2) {
+              j = 0;
+              while (j < n2) {
+                if (t || b1[0][i][j] || b1[0][i][j+1] || b1[0][i][j+2] || b1[0][i][j+3] || b1[0][i+1][j] || b1[0][i+1][j+1] || b1[0][i+1][j+2] || b1[0][i+1][j+3]|| b1[0][i+2][j] || b1[0][i+2][j+1] || b1[0][i+2][j+2] || b1[0][i+2][j+3]|| b1[0][i+3][j] || b1[0][i+3][j+1] || b1[0][i+3][j+2] || b1[0][i+3][j+3]) {
+                  c3 = c2*n2/4+i;
+                  r3 = r2*n2/4+j;
+                  k3 = crkey(c3,r3);
+                  b2 = [[[b1[0][i][j],b1[0][i][j+1],b1[0][i][j+2],b1[0][i][j+3]],[b1[0][i+1][j],b1[0][i+1][j+1],b1[0][i+1][j+2],b1[0][i+1][j+3]],[b1[0][i+2][j],b1[0][i+2][j+1],b1[0][i+2][j+2],b1[0][i+2][j+3]],[b1[0][i+3][j],b1[0][i+3][j+1],b1[0][i+3][j+2],b1[0][i+3][j+3]]],1,0,-1,null];
+                  if (t || c3 !== c || r3 !== r) {
+                    if (!cidxb[bi][0][l]) {
+                      cidxb[bi][0][l] = [{},0];
+                    }
+                    cidxb[bi][0][l][0][k3] = b2;
+                    cidxb[bi][0][l][1]++;
+                  }
+                  if (t) {
+                    b2[4] = [k3,cidxb[bi][0][l]];
+                  }
+                  if (c3 === c && r3 === r) {
+                    b = b2;
+                  }
+                  if (b1[0][i][j]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i][j+1]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i][j+2]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i][j+3]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+1][j]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+1][j+1]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+1][j+2]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+1][j+3]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+2][j]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+2][j+1]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+2][j+2]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+2][j+3]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+3][j]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+3][j+1]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+3][j+2]) {
+                    b2[2]++;
+                  }
+                  if (b1[0][i+3][j+3]) {
+                    b2[2]++;
+                  }
+                }
+                j += 4;
+              }
+              i += 4;
+            }
+          }
+        }
+      }
+    }
+    if (t && !b) {
+      if (!cidxb[bi][0][l]) {
+        cidxb[bi][0][l] = [{},0];
+      }
+      cidxb[bi][0][l][0][k] = (b = [[[null,null,null,null],[null,null,null,null],[null,null,null,null],[null,null,null,null]],1,0,-1,[k,cidxb[bi][0][l]]]);
+      cidxb[bi][0][l][1]++;
+      fcidxafrl(b);
+    }
+  } else {
+    n = Math.pow(2, l+2);
+    if (cidxb[bi][0][l-1] !== true) {
+      if (c < 0) {
+        c2 = (c+1)*2-2;
+      } else {
+        c2 = c*2;
+      }
+      if (r < 0) {
+        r2 = (r+1)*2-2;
+      } else {
+        r2 = r*2;
+      }
+      b1 = fcidxb(bi,l-1,c2,r2);
+      b2 = fcidxb(bi,l-1,c2,r2+1);
+      b3 = fcidxb(bi,l-1,c2+1,r2+1);
+      b4 = fcidxb(bi,l-1,c2+1,r2);
+      if (b1 || b2 || b3 || b4) {
+        b = [[],1,0,-1,null];
+        fcidxbc(n/2,b1,b,0,0);
+        fcidxbc(n/2,b2,b,0,n/2);
+        fcidxbc(n/2,b4,b,n/2,0);
+        fcidxbc(n/2,b3,b,n/2,n/2);
+      }
+      if (!t && b && b[2] === 0) {
+        b = null;
+      }
+    }
+    if (t) {
+      if (!b) {
+        b = [[],1,0,-1,null];
+        fcidxbc(n,null,b,0,0);
+      }
+      if (!cidxb[bi][0][l]) {
+        cidxb[bi][0][l] = [{},0];
+      }
+      cidxb[bi][0][l][0][k] = b;
+      cidxb[bi][0][l][1]++;
+      b[4] = [k,cidxb[bi][0][l]];
+      if (b[2] === 0) {
+        fcidxafrl(b);
+      }
+    } else if (cidxb[bi][0][l-1] === true) {
+      cidxb[bi][0][l] = true;
+    }
+  }
+  return b;
+}
+
+function fcidxbc(n, s, t, c, r) {
+  var i, j;
+  i = 0;
+  while (i < n) {
+    if (!t[0][c+i]) {
+      t[0][c+i] = [];
+    }
+    j = 0;
+    while (j < n) {
+      t[0][c+i][r+j] = s ? s[0][i][j] : null;
+      j++;
+    }
+    i++;
+  }
+  if (s) {
+    t[2] += s[2];
+  }
+}
+
+function fcidxafrl(b) {
+  b[1] = 2;
+  b[2] = performance.now();
+  b[3] = (frlfsl === 0 ? frll++ : frlfs[--frlfsl]);
+  frl[b[3]] = b;
+}
+
+function crkey(c, r) {
+  return (c-maxl) * 100000000 + r-maxb;
+}
+
+function updnb(c, r, n) {
+  if (n !== 0) {
+    updnb0(c-1,r+1,n);
+    updnb0(c,r+1,n);
+    updnb0(c+1,r+1,n);
+    updnb0(c+1,r,n);
+    updnb0(c+1,r-1,n);
+    updnb0(c,r-1,n);
+    updnb0(c-1,r-1,n);
+    updnb0(c-1,r,n);
+  }
+}
+
+function updnb0(c, r, n) {
+  var v;
+  if (!(v = fcidx(c, r))) {
+    v = fcidx(c, r, [0, 2, 0, 0]);
+    cellsxl++;
+    if (cellsxl > cellsx.length) {
+      cellsx[cellsxl-1] = [v, c, r];
+    } else {
+      cellsx[cellsxl-1][0] = v;
+      cellsx[cellsxl-1][1] = c;
+      cellsx[cellsxl-1][2] = r;
+    }
+  } else if (v[1] !== 2) {
+    v[1] = 2;
+    cellsxl++;
+    if (cellsxl > cellsx.length) {
+      cellsx[cellsxl-1] = [v, c, r];
+    } else {
+      cellsx[cellsxl-1][0] = v;
+      cellsx[cellsxl-1][1] = c;
+      cellsx[cellsxl-1][2] = r;
+    }
+  }
+  v[3] += n;
+}
+
+function clrcellsx(f) {
+  var i, v, cxi, ci;
+  if (!f) {
+    hbcksll = 0;
+  }
+  if (!cellsxf) {
+    return;
+  }
+  cellsxf = false;
+  for (i = 0; i < cellsxl; i++) {
+    cxi = cellsx[i];
+    if (cxi[0][0] !== 1 && cxi[0][3] === 0) {
+      fcidx(cxi[1], cxi[2], 1);
+    } else {
+      cxi[0][1] = 0;
+      cxi[0] = null;
+    }
+  }
+  cellsxl = 0;
+  for (i = 0; i < cellsx2l; i++) {
+    if ((cxi = cellsx2[i])[0][1] === 3) {
+      if (cxi[0][1] === 3 && cxi[0][0] !== 1 && cxi[0][3] === 0) {
+        fcidx(cxi[1], cxi[2], 1);
+      } else {
+        cxi[0][1] = 0;
+        cxi[0] = null;
+      }
+    }
+  }
+  cellsx2l = 0;
+  if (!f) {
+    for (i = 0; i < cellslen; i++) {
+      if ((ci = cells[i])[3] === 1) {
+        fcidx(ci[0],ci[1],3);
+        fcidx(ci[0]-1,ci[1]+1,3);
+        fcidx(ci[0],ci[1]+1,3);
+        fcidx(ci[0]+1,ci[1]+1,3);
+        fcidx(ci[0]+1,ci[1],3);
+        fcidx(ci[0]+1,ci[1]-1,3);
+        fcidx(ci[0],ci[1]-1,3);
+        fcidx(ci[0]-1,ci[1]-1,3);
+        fcidx(ci[0]-1,ci[1],3);
+      }
+    }
+  }
+}
+
+function nextHist() {
+  histi++;
+  if (histi >= histmax) {
+    histi = 0;
+  }
+  if (histi === hist[histh][1]) {
+    if (histgn > 0 ) {
+      histh = hist[histh][2];
+      histi = hist[histh][1];
+    } else if (histhm > hist.length - 1) {
+      hist[histh][2] = hist.length;
+      hist[hist.length] = [[],0,-1,histh];
+      histh = hist.length - 1;
+      histi = 0;
+    } else {
+      histh = histod;
+      histi = hist[histh][1];
+      histgp -= 1 + hist[histh][0][histi][2];
+      hist[histh][1]++;
+      if (hist[histh][1] >= histmax) {
+        hist[histh][1] = 0;
+        if (hist[histh][2] === -1) {
+          histod = 0;
+        } else {
+          histod = hist[histh][2];
+        }
+      }
+    }
+  }
+}
+
+function prevHist(h, i) {
+  var h2, i2;
+  h2 = h;
+  i2 = i;
+  if (i2 === hist[h2][1]) {
+    if (hist[h2][3] === -1) {
+      return [h2,i2];
+    }
+    h2 = hist[h2][3];
+    i2 = hist[h2][1];
+  };
+  if (i2 > 0) {
+    i2--;
+  } else {
+    i2 = histmax - 1;
+  }
+  return [h2,i2];
+}
+
+function rlHist(h, i, p, q1) {
+  var q1, q2, p0, m;
+  q1 = q1 ? q1 : prevHist(h, i);
+  q2 = prevHist(q1[0], q1[1]);
+  p0 = hist[q1[0]][0][q1[1]][11][0];
+  m = p%p0;
+  if (m > 0) {
+    m = p0 - m;
+  }
+  while (m >= 0) {
+    if (hist[q2[0]][0][q2[1]][11][0] > 0) {
+      q1 = rlHist(0, 0, hist[q2[0]][0][q2[1]][11][1], q2);
+    } else {
+      q1 = q2;
+    }
+    q2 = prevHist(q1[0], q1[1]);
+    m--;
+  }
+  return [q1[0],q1[1]];
+}
+
+function rmvCell(i) {
+  cellsfs[cellsfsl++] = i;
+  cells[i][3] = 0 - cellsfsl + 1;
+  cells[i][4] = null;
+}
+
+function addCell(c, r) {
+  var i;
+  while (cellsfsl > 0 && cellsfs[cellsfsl-1] === -1) {
+    cellsfsl--;
+  }
+  if (cellsfsl === 0) {
+    i=cellslen++;
+    if (cellslen > cells.length) {
+      cells[i] = [c,r,0,1,null];
+    } else {
+      cells[i][0] = c;
+      cells[i][1] = r;
+      cells[i][2] = 0;
+      cells[i][3] = 1;
+      cells[i][4] = null;
+    }
+  } else {
+    i=cellsfs[--cellsfsl];
+    cells[i][0] = c;
+    cells[i][1] = r;
+    cells[i][2] = 0;
+    cells[i][3] = 1;
+    cells[i][4] = null;
+  }
+  return i;
+}
+
+function revert() {
+  var u = hupdates(), i, a, hi = hist[histh][0][histi], v, f;
+  if ((f = u.length === 0) && hi[3][1] > 0) {
+    hi[3][1]--;
+    a = [];
+    i = 0;
+    while (i < hi[0].length) {
+      if (hi[0][i][4] === 1 && hi[0][i][hi[0][i].length-1] === hi[3][1]) {
+        u.push(hi[0][i]);
+      } else {
+        a.push(hi[0][i]);
+      }
+      i++;
+    }
+    hi[0] = a;
+  }
+  if ((i = u.length - 1) >= 0) {
+    if (f) {
+      capHist();
+    }
+    clrcellsx();
+  }
+  while (i >= 0) {
+    c = u[i][0];
+    r = u[i][1];
+    g = u[i][2];
+    z = ((v = fcidx(c,r)) ? v[0] === 1 ? v[2] : null : null);
+    if (g >= 0) {
+      if (z) {
+        z--;
+      } else {
+        z = addCell(c,r);
+        cells[z][3] = 0;
+        fcidx(c,r,(v=[1,0,z+1,0]));
+      }
+      if (!cells[z] || cells[z][3] !== 1) {
+        cellsn++;
+      }
+      if (cells[z]) {
+        cells[z][0] = c;
+        cells[z][1] = r;
+        cells[z][2] = g;
+        cells[z][3] = 1;
+        cells[z][4] = v;
+      } else {
+        cells[z] = [c,r,g,1,v];
+      }
+    } else if (g === -1) {
+      if (z) {
+        z--;
+        fcidx(c,r,1);
+        if (cells[z] && cells[z][3] === 1) {
+          cellsn--;
+        }
+        rmvCell(z);
+      }
+    } else if (g === -2) {
+      if (z) {
+        z--;
+        cells[z][2] = 0;
+      }
+    }
+    i--;
+  }
+  calcWrld();
+}
+
+function dspmsg(m, d) {
+  var i, tm;
+  if (m[0] == msgl1 && m[1] == msgl2 && m[2] == msgl3) {
+    drawMsgsStm(m[0], m[2]);
+    return;
+  }
+  msgl1 = m[0];
+  msgl2 = m[1];
+  msgl3 = m[2];
+  i = 0;
+  j = 0;
+  while (i < msgll) {
+    while (i < msgll && msgl[i][0]) {
+      i++;
+    }
+    if (i < msgll) {
+      if (j < i) {
+        j = i + 1;
+      }
+      while (j < msgll && !msgl[j][0]) {
+        j++;
+      }
+      if (j < msgll) {
+        msgl[i][0] = msgl[j][0];
+        msgl[i][1] = msgl[j][1];
+        msgl[i][2] = msgl[j][2];
+        msgl[i][3] = msgl[j][3];
+        msgl[i][4] = msgl[j][4];
+        msgl[j][0] = null;
+        msgl[j][4] = null;
+      }
+    }
+    while (msgll > 0 && !msgl[msgll-1][0]) {
+      msgll--;
+    }
+  }  
+  tm = [];
+  for (i = 0; i < m.length; i++) {
+    tm.push(ctx2.measureText(m[i]));
+  }
+  if (msgll < msgl.length) {
+    msgl[msgll][0] = m;
+    msgl[msgll][1] = d?d:3500;
+    msgl[msgll][2] = performance.now();
+    msgl[msgll][3] = 0;
+    msgl[msgll][4] = tm;
+    msgll++;
+  } else {
+    msgl[msgll++] = [m,d?d:3500,performance.now(),0,tm];
+  }
+}
+
+function hbckhac() {
+  var i, k, h;
+  if (cellsn === 0) {
+    return 0;
+  }
+  for (i = 0; i < 256; i++) {
+    hbck[i] = 0;
+  }
+  for (i = 0; i < cellslen; i++) {
+    if ((ci = cells[i])[3] === 1) {
+      k = crkey(ci[0],ci[1]);
+      h = 0;
+      h = ((h<<5)-h) + (k & 0xFF);
+      h = h & h;
+      h = ((h<<5)-h) + ((k>>>8) & 0xFF);
+      h = h & h;
+      h = ((h<<5)-h) + ((k>>>16) & 0xFF);
+      h = h & h;
+      h = ((h<<5)-h) + ((k>>>24) & 0xFF);
+      h = h & h;
+      hbck[h & 0xFF] += ((h>>>24) & 0xF);
+      hbck[(h>>>8) & 0xFF] += ((h>>>16) & 0xF0);
+      hbck[(h>>>16) & 0xFF] += ((h>>>8) & 0xF);
+      hbck[(h>>>24) & 0xFF] += (h & 0xF0);
+    }
+  }
+  h = 0;
+  for (i = 0; i < hbck.length; i++) {
+    k = hbck[i];
+    h = ((h<<5)-h) + (k & 0xFF);
+    h = h & h;
+    h = ((h<<5)-h) + ((k>>>8) & 0xFF);
+    h = h & h;
+    h = ((h<<5)-h) + ((k>>>16) & 0xFF);
+    h = h & h;
+    h = ((h<<5)-h) + ((k>>>24) & 0xFF);
+    h = h & h;
+  }
+  return h;
+}
+
+function hbckcheck(hi0) {
+  var p, i, h, x, ci, n, hi, q, j, c, r, g, z, k;
+  if (hbcksll < 3) {
+    return;
+  }
+  p = 0;
+  h = hbcksl[hbckslf];
+  i = hbckslf;
+  while (p < 2 || p < hbcksll && h !== hbcksl[i]) {
+    p++;
+    i++;
+    if (i >= hbcksl.length) {
+      i = 0;
+    }
+  }
+  if (p < hbcksll) {
+    x = {};
+    for (i = 0; i < cellslen; i++) {
+      if ((ci = cells[i])[3] === 1) {      
+        x[crkey(ci[0],ci[1])] = true;
+      }
+    }
+    n = cellsn;
+    q = [histh,histi];
+    hi = hist[q[0]][0][q[1]];
+    for (j = 1; j <= p; j++) {
+      i = hi[0].length - 1;
+      while (i >= 0) {
+        if (hi[0][i][4] === 1) {
+          c = hi[0][i][0];
+          r = hi[0][i][1];
+          g = hi[0][i][2];
+          k = crkey(c,r);
+          z = x[k];
+          if (g >= 0) {
+            if (!z) {
+              x[k] = true;
+              n++;
+            }
+          } else if (g === -1) {
+            if (z) {
+              x[k] = false;
+              n--;
+            }
+          }
+        }
+        i--;
+      }
+      q = prevHist(q[0], q[1]);
+      hi = hist[q[0]][0][q[1]];
+      i = hi[0].length - 1;
+      while (i >= 0) {
+        if (hi[0][i][4] !== 1) {
+          c = hi[0][i][0];
+          r = hi[0][i][1];
+          g = hi[0][i][2];
+          k = crkey(c,r);
+          z = x[k];
+          if (g >= 0) {
+            if (!z) {
+              x[k] = true;
+              n++;
+            }
+          } else if (g === -1) {
+            if (z) {
+              x[k] = false;
+              n--;
+            }
+          }
+        }
+        i--;
+      }
+    }
+    if (n === cellsn) {
+      for (i = 0; i < cellslen; i++) {
+        if ((ci = cells[i])[3] === 1 && !x[crkey(ci[0],ci[1])]) {
+          n = -1;
+          break;
+        }
+      }
+    } else {
+      n = -1;
+    }
+    if (n >= 0) {
+      hi0[11][0] = p;
+      hi0[11][1] = 0;
+      histp = 1;
+      dspmsg(["Oscillating       ","\u22C5      \u22C5","   At p"+p], 4000);    
+      msgf1 = 12;
+    }
+  }
+}
+
+function swstmsg(s1, s2) {
+  if (!s1 && !s2) {
+    s1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s   \u22C5";
+    s2 = "\u22C5";
+  }
+  stmsgn1 = s1;
+  stmsgn2 = s2;
+  stmsgntm1 = null;
+  stmsgntm2 = null;
+  if (stmsgcd2) {
+    stmsgo1 = s1;
+    stmsgo2 = s2;
+    stmsgotm1 = null;
+    stmsgotm2 = null;
+  }
+  if (!stmsgcd && !stmsgcd2) {
+    stmsgcd = performance.now();
+    stmsgcd2 = null;
+  }
+}
+
 </script>
 </html>
