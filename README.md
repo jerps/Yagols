@@ -18,31 +18,29 @@
 
 ### Features:
 
-  * Smooth, intuitive and mode-less user interface with lots of feedback.
+  * Smooth, intuitive real-time user interface.
 
   * Keeps history of generations; works like a tape recorder (fast-forward, rewind).
   
-  * Generations can be easiliy updated with other "on"/"off" cells. With undo option.
+  * Generations can be easily changed with other "on"/"off" cells. With unlimited undo option.
   
-  * Generations that were updated are marked and can be easiliy found back.
+  * Generations that got a new rule or were cells where changed are marked and can be easiliy found back.
   
   * "Infinite" universe in theory, in practice it's a toroidal plane 19,999,999 x 19,999,999.
+    
+  * Change GoL rule and change cells on the fly.
+  
+  * Paste RLE formatted text to add patterns.
   
   * Recognizes when the pattern evolves into an oscillator or spaceship.
+  
+  * Helicopter view of all "on" cells in the universe fitted within the viewing area.
   
   * Older cells get a darker color.
   
   * Drag sliders to zoom in/out or to change simulation speed.
   
   * Drag universe to change viewing area position.
-    
-  * Change GoL rule and add/remove cells on the fly.
-  
-  * Paste RLE formatted text to add patterns.
-  
-  * Helicopter view of all "on" cells in the universe fitted within the viewing area.
-  
-  * Everything happens real-time.
 
 <br>
 <br>
