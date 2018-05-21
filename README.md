@@ -50,7 +50,7 @@
 <br>
 
 <p align="center">
-  <img src="Screenshot.png" width="800"/>
+  <img src="Screenshot.png"/>
 </p>
 
 <br> 
