@@ -45,6 +45,10 @@
 <br>
 <br>
 
+<p align="center">
+  <img src="Screenshot.png" width="800"/>
+</p>
+
 (https://raw.githubusercontent.com/jerps/Yagols/master/Screenshot.png)
 
 <br>
