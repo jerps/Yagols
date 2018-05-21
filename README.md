@@ -28,6 +28,8 @@
   
   * "Infinite" universe in theory, in practice it's a toroidal plane 19,999,999 x 19,999,999.
   
+  * Recognizes when the pattern evolves into an oscillator or spaceship.
+  
   * Older cells get a darker color.
   
   * Drag sliders to zoom in/out or to change simulation speed.
