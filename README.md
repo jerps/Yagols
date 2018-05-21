@@ -45,16 +45,13 @@
 <br>
 <br>
 
+## [To Yagols . . .](http://erps.me/Yagols.html)
+
+<br>
+
 <p align="center">
   <img src="Screenshot.png" width="800"/>
 </p>
-
-(https://raw.githubusercontent.com/jerps/Yagols/master/Screenshot.png)
-
-<br>
-<br>
-
-## [To Yagols . . .](http://erps.me/Yagols.html)
 
 <br> 
 <br>
