@@ -10,7 +10,7 @@
   
   * One big .html page with JavaScript and a bit of HTML/CSS. No further dependencies.
   
-  * A bit of a hack... Clean code was not an objective of this project (learning Javascript/Canvas was). 
+  * A bit of a hack... Clean code was not an objective of this project (learning JavaScript/Canvas was). 
     So lots of good ol' procedural code, globals with funny names, functions which do multiple things,
     same code copied all over the place, etc.
 
