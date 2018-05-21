@@ -24,7 +24,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--#include virtual="/include/gtag.html" -->
   <title>Yagols - Yet another Game of Life simulator</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -96,6 +95,17 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+#cpyr {
+  font-size: 0.8rem;
+  position: fixed;
+  bottom: 6px;
+  right: 18px;
+  text-align: right;
+  width: 100%;
+  color: #505070;
+  user-select: none;
+  outline: none;  
 }
 @keyframes showdiv {
   0% {
@@ -229,8 +239,8 @@ table {
   </canvas>
   <canvas id="canvas2" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 2; opacity: 0;">
   </canvas>
-  <div id="footer">
-    <a style="color: #505070; user-select: none; outline: none;" href="http://erps.me" target="_blank" tabindex="-1">&#x00A9 2018 John Erps</a>
+  <div id="cpyr">
+    <a href="http://erps.me" target="_blank" tabindex="-1">&#x00A9 2018 John Erps</a>
   </div>
   <div id="crule">
   <div id="crulet"></div>
