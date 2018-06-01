@@ -53,7 +53,6 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -96,6 +95,7 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 #cpyr {
   font-size: 0.8rem;
   position: fixed;
@@ -107,6 +107,7 @@ table {
   user-select: none;
   outline: none;  
 }
+
 @keyframes showdiv {
   0% {
     visibility: hidden;
@@ -134,14 +135,6 @@ table {
     visibility: hidden;
     opacity: 0;
   }
-}
-#footer {
-  font-size: 0.8rem;
-  position: fixed;
-  bottom: 6px;
-  right: 18px;
-  text-align: right;
-  width: 100%;
 }
 #pattern {
   visibility: hidden;
@@ -237,10 +230,14 @@ table {
   </canvas>
   <canvas id="canvas1" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 1;">
   </canvas>
-  <canvas id="canvas2" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 2; opacity: 0;">
+  <canvas id="canvas1a" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 2;">
+  </canvas>
+  <canvas id="canvas2" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 3; opacity: 0;">
+  </canvas>
+  <canvas id="canvas3" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 999;">
   </canvas>
   <div id="cpyr">
-    <a style="color: #505070; user-select: none; outline: none;" href="http://erps.me" target="_blank" tabindex="-1">&#x00A9 2018 John Erps</a>
+    <a style="color: #444466; user-select: none; outline: none;" href="http://erps.me" target="_blank" tabindex="-1">&#x00A9 2018 John Erps</a>
   </div>
   <div id="crule">
   <div id="crulet"></div>
@@ -262,8 +259,8 @@ table {
 var title = [ "Yet another", "Game\u22C5of\u22C5Life", "simulator", "Conway\u22C5s", "\u22C5  Enjoy  \u22C5", "\u22C5   With Yagols   \u22C5", "\u22C5        \u22C5       Click  ?  For Help       \u22C5        \u22C5"];
 var font = "Verdana";
 var gennum = 0, gennumc = 0, speed = 20, run = false, runcd = null, runcdn = 500, runcdc = 0, runbc = 0, runcd2 = null, runcdn2 = 100, runcd3 = null, runcdn3 = 800, runcd4 = null, runcdn4 = 1400, runcd5 = null, runcdn5 = 800, posx = 0, posy = 0, posx2 = 0, posy2 = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80, cells = [];
-var canvas0, canvas1, canvas2, canvasos0, canvasos1, canvasos2, ctx0, ctx1, ctx2, ctxos0, ctxos1, mingen = 0;
-var titlefd = 0, titlefdt = null, titlefds = 1000, titlemode = 0, tmet = null, titlex = 625, titleh = true, titlecd = null, titlecdn = 37000, titlecd2 = null, titlecdn2 = 7000, titlecd3 = null, titlecdn3 = 1200, titlemf = false;
+var canvas0, canvas1, canvas1a, canvas2, canvas3, canvasos0, canvasos1, canvasos2, ctx0, ctx1, ctx1a, ctx2, ctx3, ctxos0, ctxos1, mingen = 0;
+var titlefd = 0, titlefdt = null, titlefds = 1000, titlemode = 0, tmet = null, titlex = 625, titleh = true, titlecd = null, titlecdn = 37000, titlecd2 = null, titlecdn2 = 7000, titlecd3 = null, titlecdn3 = 1200, titlemf = false, title0cd = null, title0cdn = 2000, title0x = 0, title0y = 0;
 var mdown = false, ton = false, toncd = 0, tonx = 0, tony = 0, tonw = 0;
 var scl = false, sclx = 0, scly = 0, sclr = 0, sclpx = 0, sclpy = 0, sclbx = 0, sclby = 0, sclbw = 0, sclbh = 0, scld = 0;
 var spd = false, spdx = 0, spdy = 0, spdr = 0, spdbx = 0, spdby = 0, spdbw = 0, spdbh = 0, spdd = 0;
@@ -310,8 +307,9 @@ var mstabu = 1, mstabd = 1;
 var keyesupp = false;
 var dmsgs = true;
 var clrucd = null, clrucdn = 1000;
-var dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcdn = 2000, dhlpcd2 = null, dhlpcdn2 = 180000, dhlplf = 1, dhlpcd3 = null, dhlpcdn3 = 400;
+var dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcdn = 2000, dhlpcd2 = null, dhlpcdn2 = 300000, dhlplf = 1, dhlpcd3 = null, dhlpcdn3 = 400;
 var cwidth = 0, cheight = 0;
+var divl = [];
 var histmax = 500;
 var maxl = -9999999, maxt = 9999999, maxr = 9999999, maxb = -9999999;
 var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
@@ -340,9 +338,7 @@ function clrvars() {
   dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcd2 = null, dhlplf = 1, dhlpcd3 = null;
   cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
   calcWrld();
-  if (!clrucd) {
-    clrucd = performance.now();
-  }
+  clrucd = performance.now();
   dspmsg(["Universe      ","\u22C5      \u22C5","      Cleared"]);
   msgf1 = 0;
 }
@@ -367,7 +363,12 @@ var patttxt =
       "#      https://www.google.nl/search?q=conway+game+of+life\r\n" +
       "\r\n" +
       "\r\n" +
-      "#  See FURTHER DOWN this text for GENERAL INSTRUCTIONS.\r\n" +
+      "#  INSTRUCTIONS.\r\n" +
+      "\r\n" +
+      "#      Press the ? button and explore.\r\n" +
+      "\r\n" +
+      "\r\n" +
+      "#  ----------\r\n" +
       "\r\n" +
       "\r\n" +
       "#  This text box is used to paste text in (Extended) RLE format\r\n" +
@@ -411,75 +412,7 @@ var patttxt =
       "#  the process. You might want to stop it first before clicking \"Run!\".\r\n" +
       "\r\n" +
       "\r\n" +
-      "#   -----  GENERAL INSTRUCTIONS  -----\r\n" +
-      "\r\n" +
-      "#   Use a mouse.\r\n" +
-      "\r\n" +
-      "#   Double-click to set one cell on or off.\r\n" +
-      "\r\n" +
-      "#   Click and hold button to set multiple cells on or off. Release button\r\n" +
-      "#     to stop.\r\n" +
-      "\r\n" +
-      "#   Click and drag the universe to change viewing area position.\r\n" +
-      "\r\n" +
-      "#   Click || (stopped) to start the simulation, automatically calculating\r\n" +
-      "#     new generations.\r\n" + 
-      "\r\n" +
-      "#   Click >> (playing) to stop the simulation.\r\n" +
-      "\r\n" +
-      "#   Click > to calculate one new generation. Hold to repeat.\r\n" +
-      "\r\n" +
-      "#   Click and drag left vertical slider to change simulation speed.\r\n" +
-      "\r\n" +
-      "#   Click and drag right vertical slider to zoom in or out.\r\n" +
-      "\r\n" +
-      "#   Click position (x,y) to go to position 0,0 (center) of the universe.\r\n" +
-      "\r\n" +
-      "#   Click # to switch the grid on or off. The grid only shows when not\r\n" +
-      "#     too far zoomed out (>16 pixels/cell).\r\n" +
-      "\r\n" +
-      "#   Click P to show a text box with instructions and to add a pattern\r\n" +
-      "#     to the universe by pasting RLE formatted text. Click P again to\r\n" +
-      "#     hide the text box.\r\n" +
-      "\r\n" +
-      "#   Click W to show the whole GoL world, i.e. all \"on\" cells in the universe,\r\n" +
-      "#     fitted within the viewing area. Click anywhere within the GoL world to\r\n" +
-      "#     change the viewing area position. Click W again to hide.\r\n" +
-      "\r\n" +
-      "#   The default rule is B3/S23 (born with 3 neighbour cells, survive with\r\n" +
-      "#     2 or 3 neighbour cells). To change the rule just type \"b\", \"B\", \"s\"\r\n" +
-      "#     or \"S\" and one or more digits \"0\"..\"8\". Press Enter or click \"Accept\"\r\n" +
-      "#     to accept the new rule. Click \"Forget\" or any key that is not \"b\", \"B\",\r\n" +
-      "#     \"s\", \"S\", \"0\"..\"9\", \"d\" or \"D\" or Enter to forget about it. Press \"d\"\r\n" +
-      "#     or \"D\" to accept the default rule. Doesn\"t work when P (text box with\r\n" +
-      "#     pattern) is active. The new rule will be applied and set when the next\r\n" +
-      "#     new generation is calculated. Going back or forth in history sets the\r\n" +
-      "#     rule that was set in the visible generation. When a new rule has been\r\n" +
-      "#     accepted (but not set) the previous rule shows next to the new rule,\r\n" +
-      "#     in darker green and smaller font. Double click on it to re-set the\r\n" +
-      "#     previous rule.\r\n" +
-      "\r\n" +
-      "#   When Yagols is (re)started (refresh page) the viewing area shows the\r\n" +
-      "#     initial cells at a certain size. A bigger viewing area will show bigger\r\n" +
-      "#     cells. Cells of that initial size are considered to be 80% zoomed-in.\r\n" +
-      "#     The top left of the viewing area shows the number of pixels per cell\r\n" +
-      "#     (px/c). Click on it to recalculate the initial cell size, using the\r\n" +
-      "#     current size of the viewing area.\r\n" +
-      "\r\n" +
-      "\r\n" +
-      "#   -----  Tips -----\r\n" +
-      "\r\n" +
-      "#   To clear/reset the universe click P, delete all text, then click \"Run! /Reset\".\r\n" +
-      "#     Or refresh the browser.\r\n" +
-      "\r\n" +
-      "#   To clear the viewing area, click P, replace any text with, for example,\r\n" +
-      "#     \"100b60$\", then click \"Run! /Replace\". This will clear an area, centered\r\n" +
-      "#     in the viewing area, as large as 100x60 cells.\r\n" +
-      "\r\n" +
-      "#   To let this text appear again, click P, delete all text, click \"Run! /Add\"\r\n" +
-      "#     and then click P again.\r\n" +
-      "\r\n" +
-      "#   To accept the default rule, just type \"bd\" or \"sd\" (uppercase or lowercase).\r\n" +
+      "#  ----------\r\n" +
       "\r\n" +
       "\r\n" +
       "#N Gosper glider gun\r\n" +
@@ -492,8 +425,6 @@ var patttxt =
       "o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!";
 
 window.onload = function(e) {
-
-  var x;
 
   (function(window) {
     var timeouts = [];
@@ -571,167 +502,186 @@ window.onload = function(e) {
     }
   })(window,document);
 
-(function(window) {  
-/**
- * Copyright (c) 2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule normalizeWheel
- * @typechecks
- */
+  (function(window) {  
+  /**
+   * Copyright (c) 2015, Facebook, Inc.
+   * All rights reserved.
+   *
+   * This source code is licensed under the BSD-style license found in the
+   * LICENSE file in the root directory of this source tree. An additional grant
+   * of patent rights can be found in the PATENTS file in the same directory.
+   *
+   * @providesModule normalizeWheel
+   * @typechecks
+   */
+  /**
+   * Mouse wheel (and 2-finger trackpad) support on the web sucks.  It is
+   * complicated, thus this doc is long and (hopefully) detailed enough to answer
+   * your questions.
+   *
+   * If you need to react to the mouse wheel in a predictable way, this code is
+   * like your bestest friend. * hugs *
+   *
+   * As of today, there are 4 DOM event types you can listen to:
+   *
+   *   'wheel'                -- Chrome(31+), FF(17+), IE(9+)
+   *   'mousewheel'           -- Chrome, IE(6+), Opera, Safari
+   *   'MozMousePixelScroll'  -- FF(3.5 only!) (2010-2013) -- don't bother!
+   *   'DOMMouseScroll'       -- FF(0.9.7+) since 2003
+   *
+   * So what to do?  The is the best:
+   *
+   *   normalizeWheel.getEventType();
+   *
+   * In your event callback, use this code to get sane interpretation of the
+   * deltas.  This code will return an object with properties:
+   *
+   *   spinX   -- normalized spin speed (use for zoom) - x plane
+   *   spinY   -- " - y plane
+   *   pixelX  -- normalized distance (to pixels) - x plane
+   *   pixelY  -- " - y plane
+   *
+   * Wheel values are provided by the browser assuming you are using the wheel to
+   * scroll a web page by a number of lines or pixels (or pages).  Values can vary
+   * significantly on different platforms and browsers, forgetting that you can
+   * scroll at different speeds.  Some devices (like trackpads) emit more events
+   * at smaller increments with fine granularity, and some emit massive jumps with
+   * linear speed or acceleration.
+   *
+   * This code does its best to normalize the deltas for you:
+   *
+   *   - spin is trying to normalize how far the wheel was spun (or trackpad
+   *     dragged).  This is super useful for zoom support where you want to
+   *     throw away the chunky scroll steps on the PC and make those equal to
+   *     the slow and smooth tiny steps on the Mac. Key data: This code tries to
+   *     resolve a single slow step on a wheel to 1.
+   *
+   *   - pixel is normalizing the desired scroll delta in pixel units.  You'll
+   *     get the crazy differences between browsers, but at least it'll be in
+   *     pixels!
+   *
+   *   - positive value indicates scrolling DOWN/RIGHT, negative UP/LEFT.  This
+   *     should translate to positive value zooming IN, negative zooming OUT.
+   *     This matches the newer 'wheel' event.
+   *
+   * Why are there spinX, spinY (or pixels)?
+   *
+   *   - spinX is a 2-finger side drag on the trackpad, and a shift + wheel turn
+   *     with a mouse.  It results in side-scrolling in the browser by default.
+   *
+   *   - spinY is what you expect -- it's the classic axis of a mouse wheel.
+   *
+   *   - I dropped spinZ/pixelZ.  It is supported by the DOM 3 'wheel' event and
+   *     probably is by browsers in conjunction with fancy 3D controllers .. but
+   *     you know.
+   *
+   * Implementation info:
+   *
+   * Examples of 'wheel' event if you scroll slowly (down) by one step with an
+   * average mouse:
+   *
+   *   OS X + Chrome  (mouse)     -    4   pixel delta  (wheelDelta -120)
+   *   OS X + Safari  (mouse)     -  N/A   pixel delta  (wheelDelta  -12)
+   *   OS X + Firefox (mouse)     -    0.1 line  delta  (wheelDelta  N/A)
+   *   Win8 + Chrome  (mouse)     -  100   pixel delta  (wheelDelta -120)
+   *   Win8 + Firefox (mouse)     -    3   line  delta  (wheelDelta -120)
+   *
+   * On the trackpad:
+   *
+   *   OS X + Chrome  (trackpad)  -    2   pixel delta  (wheelDelta   -6)
+   *   OS X + Firefox (trackpad)  -    1   pixel delta  (wheelDelta  N/A)
+   *
+   * On other/older browsers.. it's more complicated as there can be multiple and
+   * also missing delta values.
+   *
+   * The 'wheel' event is more standard:
+   *
+   * http://www.w3.org/TR/DOM-Level-3-Events/#events-wheelevents
+   *
+   * The basics is that it includes a unit, deltaMode (pixels, lines, pages), and
+   * deltaX, deltaY and deltaZ.  Some browsers provide other values to maintain
+   * backward compatibility with older events.  Those other values help us
+   * better normalize spin speed.  Example of what the browsers provide:
+   *
+   *                          | event.wheelDelta | event.detail
+   *        ------------------+------------------+--------------
+   *          Safari v5/OS X  |       -120       |       0
+   *          Safari v5/Win7  |       -120       |       0
+   *         Chrome v17/OS X  |       -120       |       0
+   *         Chrome v17/Win7  |       -120       |       0
+   *                IE9/Win7  |       -120       |   undefined
+   *         Firefox v4/OS X  |     undefined    |       1
+   *         Firefox v4/Win7  |     undefined    |       3
+   *
+   */
+  function normalizeWheel(/*object*/ event) /*object*/ {
+    var sX = 0, sY = 0,       // spinX, spinY
+        pX = 0, pY = 0;       // pixelX, pixelY
 
-// Reasonable defaults
-var PIXEL_STEP  = 10;
-var LINE_HEIGHT = 40;
-var PAGE_HEIGHT = 800;
+    // Reasonable defaults
+    var PIXEL_STEP  = 10 * (800 / cheight);
+    var LINE_HEIGHT = 40 * (800 / cheight);
+    var PAGE_HEIGHT = 800 * (800 / cheight);
 
-/**
- * Mouse wheel (and 2-finger trackpad) support on the web sucks.  It is
- * complicated, thus this doc is long and (hopefully) detailed enough to answer
- * your questions.
- *
- * If you need to react to the mouse wheel in a predictable way, this code is
- * like your bestest friend. * hugs *
- *
- * As of today, there are 4 DOM event types you can listen to:
- *
- *   'wheel'                -- Chrome(31+), FF(17+), IE(9+)
- *   'mousewheel'           -- Chrome, IE(6+), Opera, Safari
- *   'MozMousePixelScroll'  -- FF(3.5 only!) (2010-2013) -- don't bother!
- *   'DOMMouseScroll'       -- FF(0.9.7+) since 2003
- *
- * So what to do?  The is the best:
- *
- *   normalizeWheel.getEventType();
- *
- * In your event callback, use this code to get sane interpretation of the
- * deltas.  This code will return an object with properties:
- *
- *   spinX   -- normalized spin speed (use for zoom) - x plane
- *   spinY   -- " - y plane
- *   pixelX  -- normalized distance (to pixels) - x plane
- *   pixelY  -- " - y plane
- *
- * Wheel values are provided by the browser assuming you are using the wheel to
- * scroll a web page by a number of lines or pixels (or pages).  Values can vary
- * significantly on different platforms and browsers, forgetting that you can
- * scroll at different speeds.  Some devices (like trackpads) emit more events
- * at smaller increments with fine granularity, and some emit massive jumps with
- * linear speed or acceleration.
- *
- * This code does its best to normalize the deltas for you:
- *
- *   - spin is trying to normalize how far the wheel was spun (or trackpad
- *     dragged).  This is super useful for zoom support where you want to
- *     throw away the chunky scroll steps on the PC and make those equal to
- *     the slow and smooth tiny steps on the Mac. Key data: This code tries to
- *     resolve a single slow step on a wheel to 1.
- *
- *   - pixel is normalizing the desired scroll delta in pixel units.  You'll
- *     get the crazy differences between browsers, but at least it'll be in
- *     pixels!
- *
- *   - positive value indicates scrolling DOWN/RIGHT, negative UP/LEFT.  This
- *     should translate to positive value zooming IN, negative zooming OUT.
- *     This matches the newer 'wheel' event.
- *
- * Why are there spinX, spinY (or pixels)?
- *
- *   - spinX is a 2-finger side drag on the trackpad, and a shift + wheel turn
- *     with a mouse.  It results in side-scrolling in the browser by default.
- *
- *   - spinY is what you expect -- it's the classic axis of a mouse wheel.
- *
- *   - I dropped spinZ/pixelZ.  It is supported by the DOM 3 'wheel' event and
- *     probably is by browsers in conjunction with fancy 3D controllers .. but
- *     you know.
- *
- * Implementation info:
- *
- * Examples of 'wheel' event if you scroll slowly (down) by one step with an
- * average mouse:
- *
- *   OS X + Chrome  (mouse)     -    4   pixel delta  (wheelDelta -120)
- *   OS X + Safari  (mouse)     -  N/A   pixel delta  (wheelDelta  -12)
- *   OS X + Firefox (mouse)     -    0.1 line  delta  (wheelDelta  N/A)
- *   Win8 + Chrome  (mouse)     -  100   pixel delta  (wheelDelta -120)
- *   Win8 + Firefox (mouse)     -    3   line  delta  (wheelDelta -120)
- *
- * On the trackpad:
- *
- *   OS X + Chrome  (trackpad)  -    2   pixel delta  (wheelDelta   -6)
- *   OS X + Firefox (trackpad)  -    1   pixel delta  (wheelDelta  N/A)
- *
- * On other/older browsers.. it's more complicated as there can be multiple and
- * also missing delta values.
- *
- * The 'wheel' event is more standard:
- *
- * http://www.w3.org/TR/DOM-Level-3-Events/#events-wheelevents
- *
- * The basics is that it includes a unit, deltaMode (pixels, lines, pages), and
- * deltaX, deltaY and deltaZ.  Some browsers provide other values to maintain
- * backward compatibility with older events.  Those other values help us
- * better normalize spin speed.  Example of what the browsers provide:
- *
- *                          | event.wheelDelta | event.detail
- *        ------------------+------------------+--------------
- *          Safari v5/OS X  |       -120       |       0
- *          Safari v5/Win7  |       -120       |       0
- *         Chrome v17/OS X  |       -120       |       0
- *         Chrome v17/Win7  |       -120       |       0
- *                IE9/Win7  |       -120       |   undefined
- *         Firefox v4/OS X  |     undefined    |       1
- *         Firefox v4/Win7  |     undefined    |       3
- *
- */
-function normalizeWheel(/*object*/ event) /*object*/ {
-  var sX = 0, sY = 0,       // spinX, spinY
-      pX = 0, pY = 0;       // pixelX, pixelY
+    // Legacy
+    if ('detail'      in event) { sY = event.detail; }
+    if ('wheelDelta'  in event) { sY = -event.wheelDelta / 120; }
+    if ('wheelDeltaY' in event) { sY = -event.wheelDeltaY / 120; }
+    if ('wheelDeltaX' in event) { sX = -event.wheelDeltaX / 120; }
 
-  // Legacy
-  if ('detail'      in event) { sY = event.detail; }
-  if ('wheelDelta'  in event) { sY = -event.wheelDelta / 120; }
-  if ('wheelDeltaY' in event) { sY = -event.wheelDeltaY / 120; }
-  if ('wheelDeltaX' in event) { sX = -event.wheelDeltaX / 120; }
-
-  // side scrolling on FF with DOMMouseScroll
-  if ( 'axis' in event && event.axis === event.HORIZONTAL_AXIS ) {
-    sX = sY;
-    sY = 0;
-  }
-
-  pX = sX * PIXEL_STEP;
-  pY = sY * PIXEL_STEP;
-
-  if ('deltaY' in event) { pY = event.deltaY; }
-  if ('deltaX' in event) { pX = event.deltaX; }
-
-  if ((pX || pY) && event.deltaMode) {
-    if (event.deltaMode == 1) {          // delta in LINE units
-      pX *= LINE_HEIGHT;
-      pY *= LINE_HEIGHT;
-    } else {                             // delta in PAGE units
-      pX *= PAGE_HEIGHT;
-      pY *= PAGE_HEIGHT;
+    // side scrolling on FF with DOMMouseScroll
+    if ( 'axis' in event && event.axis === event.HORIZONTAL_AXIS ) {
+      sX = sY;
+      sY = 0;
     }
+
+    pX = sX * PIXEL_STEP;
+    pY = sY * PIXEL_STEP;
+
+    if ('deltaY' in event) { pY = event.deltaY; }
+    if ('deltaX' in event) { pX = event.deltaX; }
+
+    if ((pX || pY) && event.deltaMode) {
+      if (event.deltaMode == 1) {          // delta in LINE units
+        pX *= LINE_HEIGHT;
+        pY *= LINE_HEIGHT;
+      } else {                             // delta in PAGE units
+        pX *= PAGE_HEIGHT;
+        pY *= PAGE_HEIGHT;
+      }
+    }
+
+    // Fall-back if spin cannot be determined
+    if (pX && !sX) { sX = (pX < 1) ? -1 : 1; }
+    if (pY && !sY) { sY = (pY < 1) ? -1 : 1; }
+
+    return { spinX  : sX,
+             spinY  : sY,
+             pixelX : pX,
+             pixelY : pY };
   }
+  window.normalizeWheel = normalizeWheel;
+  })(window);
 
-  // Fall-back if spin cannot be determined
-  if (pX && !sX) { sX = (pX < 1) ? -1 : 1; }
-  if (pY && !sY) { sY = (pY < 1) ? -1 : 1; }
+  //-- 
+  
+  init0();
+  init1();
+  
+  setTimeout(function() {
+  
+    title0cd = performance.now();
+  
+    YagolsSetZeroTimeoutFunc(tick);
+    requestAnimationFrame(dspview);
 
-  return { spinX  : sX,
-           spinY  : sY,
-           pixelX : pX,
-           pixelY : pY };
+  }, 2000);
+  
 }
-window.normalizeWheel = normalizeWheel;
-})(window);
+
+function init0() {
+
+  var x;
 
   document.getElementById("patternt").value = patttxt;
   canvas0 = document.getElementById("canvas0");
@@ -740,9 +690,15 @@ window.normalizeWheel = normalizeWheel;
   canvas1 = document.getElementById("canvas1");
   canvas1.width = canvas0.offsetWidth;
   canvas1.height = canvas0.offsetHeight;
+  canvas1a = document.getElementById("canvas1a");
+  canvas1a.width = canvas0.offsetWidth;
+  canvas1a.height = canvas0.offsetHeight;
   canvas2 = document.getElementById("canvas2");
   canvas2.width = canvas0.offsetWidth;
   canvas2.height = canvas0.offsetHeight;
+  canvas3 = document.getElementById("canvas3");
+  canvas3.width = canvas0.offsetWidth;
+  canvas3.height = canvas0.offsetHeight;
   canvasos0 = document.createElement('canvas');
   canvasos0.width = canvas0.offsetWidth;
   canvasos0.height = canvas0.offsetHeight;
@@ -758,30 +714,34 @@ window.normalizeWheel = normalizeWheel;
   calcCellsz();
   ctx0 = canvas0.getContext("2d");
   ctx1 = canvas1.getContext("2d");
+  ctx1a = canvas1a.getContext("2d");
   ctx2 = canvas2.getContext("2d");
+  ctx3 = canvas3.getContext("2d");
   ctxos0 = canvasos0.getContext("2d");
   ctxos1 = canvasos1.getContext("2d");
   ctxos2 = canvasos2.getContext("2d");
+  ctx0.textBaseline = "bottom";
   ctx0.globalAlpha = 1;
+  ctx1.textBaseline = "bottom";
   ctx1.globalAlpha = 1;
+  ctx1a.textBaseline = "bottom";
+  ctx1a.globalAlpha = 1;
+  ctx2.textBaseline = "bottom";
   ctx2.globalAlpha = 1;
+  ctx3.textBaseline = "bottom";
+  ctx3.globalAlpha = 1;
+  ctxos0.textBaseline = "bottom";
   ctxos0.globalAlpha = 1;
+  ctxos1.textBaseline = "bottom";
   ctxos1.globalAlpha = 1;
+  ctxos2.textBaseline = "bottom";
   ctxos2.globalAlpha = 1;
   
-  ctx0.textBaseline = "bottom";
-  ctx0.font = "" + (x = Math.trunc(cwidth/1000 * 80)) +"px " + font;
-  ctx0.fillStyle = "rgba(0, 0, 0, 1)";
-  ctx0.fillRect(0, 0, cwidth, cheight);
-  ctx0.fillStyle = "rgba(170, 110, 110, 0.6)";
-  ctx0.fillText("Y a g o l s", (cwidth - ctx0.measureText("Y a g o l s").width) / 2, cheight / 2 + x / 2);
-
-  titlefd = Math.floor(titlefds/3);
-  titlefdt = performance.now();
-  titlecd = performance.now();
-  msgcd1 = performance.now();
-  msgcd2 = performance.now();
-  stmsgcd = performance.now();
+  ctx1a.font = "" + (x = Math.trunc(cwidth/1000 * 80)) +"px " + font;
+  ctx1a.fillStyle = "rgba(0, 0, 0, 1)";
+  ctx1a.fillRect(0, 0, cwidth, cheight);
+  ctx1a.fillStyle = "rgba(170, 110, 110, 0.6)";
+  ctx1a.fillText("Y a g o l s", (title0x = (cwidth - ctx1a.measureText("Y a g o l s").width) / 2), (title0y = cheight / 2 + x / 2));
 
   pstrimg("W-23-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAACRklEQVRIS9WVO2jUQRCH7wQbJYqFIpJCND5I5KKgjZVImqQIiDY+gkdCsFFRA1pYaCkKKXyUiUQhEUVBxDTRUiISEghqREERFVESLAwoiMbvJzMwt7dXXuEfPnZnd3ZuZnZ2rlio41eso+3C/298HelZBN9grkaqXOcX++9r6KxhfQn8gE9Ky1J4C6tgAHphITm8HPm16Uh3ixmIarL1CHbDSyhpQQxC2X4kd3Abe5PB0kbmbxIHViBPgCLsg36/0EMIN015k3kZz3ZbVL62l8m9xHh0YCd74258M8KMKe9nvBUOSmcIusLaFebHE+PuwFfWW2DWjSvvz6DZPIx5X8baFKyE29ADad5l5w4oogewB37HOr/MwjE72Mo4b55tNeNPGI/Ac1tfb7oS3QHl+yhc02I03ol83w4qLN24vjJcB6XiBDyFHRDzHvOtPV1shfG1yO/M4AHGEdv3fO9DvgsX4AxcgtOm7/n+iFwCvZcK44uRFbp+2eu9gbnyrXC9ijqYPwTP+0/m7oAK4SD8SY1LPg/n7KAutwmU43iBjcgf4DvoPr7AtDlwmPGGRVPVuNrYGLPNDRbFMONVUOnp5cYIFYVS6WWsB/iilvHVbHy2TeV9O5yCtPY9wrMWle5H0SkSRfTvS1uumtdj2OUKNqavtp31UTOkJpXtS7l+fhLl/mA816g879GHNLrsn4X6gqpG4alacp0y5t1/oKon5TxXd3tloepglUdmzfMuMduGc8bTRhVfa0xDrKyLbOhhVXx1/Q/9C+iIhRvc/zIHAAAAAElFTkSuQmCC");
   pstrimg("W-23-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAC5klEQVRIS9WUS2hTQRSGe5O0SB4rRYq1otIUK6LgwpWCi7rzgUGxXYhUcVUaEpPsFIIgtHls1E1EtHTV4qKouFF0ozvfm1bBJoJU0YLGklDUPPzOZW6YTNKVdOGFYWbOnP+fc/4591gda/hZa8jd8R+T1+t1K5vNHkMej2VZC7FY7LUple7DeiWRSDxoJ2c6nT4IxwZ8vuPzxBofH9/idrsLGF0AFkul0tZkMlnRwVzeX6vV5pVP1ePx9EQika+6DxiX3+//ic3P+NPV1RWwxOjz+T4B3ISxykW90Wj0iw7MZDJj7K86NnyHyHBG9yHqXdjfYHMznsXj8QP2gwK+w3RC1qQ0TErTBvl99oc12yTgkdUCgOMiHFcc8tM4TinyaQ6GHaDKbJGoujWyPJH3Yas7NgK0A4C4hn0fl7+0ydG0F+MCy05T91QqFXS5XPPY5U0+M3pEPl13FcA3SNdzVkTv7nA4/MsmV9XwgeV2AaJ7H7p/VBePcn6d9QrzGAQ3FSZEhrOy1gIQvR8T9aDYGz8RD3ID4HkFPAvwtqxJ9y7TUUY+EAjsWObDbx37hu7Gg8Mdz5rkRwDdUxrO4DCk603UU1x4hiDm8Btg/x6fAdHd0VuyZuzGPtdEPjExEUBb0U2isuvd6/VuU3q7nSqCSCQadXQvFotLlLL94PgslcvlzQT1u4lc6S5/5x4BQrqxWq0eVxo36h/yQ5w/lKdihCqVyiseN89aApglu5DKvrlxkXIWsgvq8CSz1P4pQAUi6pc/18jwGufPGXYZgz1Hid5qS05U+zl46ugO6V4AQeZG7esZsn4h/UgCkGzZB4m80JY8l8t1Ugw/APgcB5nNv5YgpBVIS+CIzrdKX2rp5wAlcsnA+Vr6DfINQvjICKDpz256UMcR4CWAl9WDyeUtndLQ3Ya260ktkUt3w/etSlVALREZlSXcbdtwC7nZqLhkhAqY1CWQtVFZ7/DZqTeytrKYJP+y/wucJZfkxKi2RQAAAABJRU5ErkJggg==");
@@ -843,12 +803,19 @@ window.normalizeWheel = normalizeWheel;
   pstrimg("\u29BB-35-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAACwklEQVRYR+2XW4hOURTHZx6USXmjlCclt4lxH/dpCjHl8kApU18pIl6NpLzI7UER0yh5FB5cIo3yhMK4TG6FxANNyIQkZSb5/WvvWu32/pwzx8OXzqlf3z7r7LX3f6+1b199XQ099TWkpa4Uk8pGGZkyMnlXajlnyjnzX82ZpYzmOfSZUY2i3ALNMNbZv/P7Am7DQxgw9edQ/gYvi0RmPc7n4D3Mhh+wG3b9pVEJa4fLsMAJlG0avM0jyC7t1TheSjir8f3QC8MciuLWRP1P2Ge6gWXWE+4zK/C8FngrYhJpU+GrjKGwBfYaHwlRSnNFRf6hGM2Jd0HDE3n/UmV40/n2yHy/RbkFfmcOiatoxah8GipBI34OfYg0PgObJnD4KMLdRcQ04vzUNbCY35Fw1b1L0Cz4aDqwQpSaebAZOuAVqL1YapMabWQOuoYU5lYYhDVwMSIoFKJV9BrGOyFymQ938kTHi9HvcdgGq+CKacQKeoN9D5xx3xURL0Qmm+rtvJ8YipjhON2DqdAEj4NGrCD/KRTi7TspHIJ/IkYdawMLnwsY1hqj9pkbkXqKrPyHLGYEzj0wORGZudjvBh0rZbJ/Duzad7qKiLFzZgMNnTUdWCFKjZa/PyJigk7xfVMRMer7GOwAdTAJfrmR+4jYORJOah8hHarPYDQsgZuRNCZNdmnbfWYlHtpT/IYWm6yhIO1DFTgCqj8lksKq2rLswKlVo4bXwflID7knr9rIcjZpxPa8Cvtuw+B3an1TmhXln3lSFBOji5H2G/ss50VLOHbwNWDXXeakcdDRob2qv4iYhTjrKIg9StU+0H1GtzidW4vgQKJ+atlX1WfTpItSJ6hjCfsKh6GSYYS6ER6FZeDPsgmUdWBmfsI5sxHPB6D7rX/GuU4UCd1tdEg+cXV0EbsO9nqhOaQB3c+swlWsqX+UfwDaQqAkz4jt5gAAAABJRU5ErkJggg==");
   pstrimg("\u29BB-35-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAADfUlEQVRYR+2XS0hUURjHnZGZWSj2sAILKdrVJjeNLZKgDIs2SlAZraKaMJtQx3FTNGFF6cxY2QMs24hgj0UoQfSkKFxItIighSEh4iqoQBcxd6bfd7l3OB7uNN2hhcRcOJxzvuf/fN93HtdTsog+zyLCUlIEkysbxcgUI+N2pxZrplgz/0/NxOPxpMfjGevo6HhlryqZTAYNwzjJvJa2VOjI/KL7Snvs9/uvh8Phn7Y8NqKMZyKRyHDBkent7R3GyUEMGOl0epvP55sFxBjzjXmMZuAPsoBjiUTiDONztAy2GqGNugGU3dqs6DaKR3Ioi8MJ2jgtkMlkAjjbznitkzz8NPSGzs7O5wWBESWi04+TVs3AMKloUVNh83t6euq8Xm8/8002TYBAa3IbFTP9qmPA1APmmWq4tLS0pr29/WOuFaLTio4AMj/AzM/NzS2LxWJSV66+LBiUvWVlZdMYXq1ZMGsoGo2+0y0DJIz8VZ0OoGuk6JQrJGpkqBmpF6kbWV03TioZtlgGDWh1OJCaMT8ViKQG+b30F+k30KcCgUClU2r/BNCMDMoewHyyDM1XVFSsDIVC89AGYR/WAelAqJED1MgD6Puwcc+yeRrwF9xExwQjKSovL//CcB1tgDMiZBvRAUF/SNtvOZRiNYHYdpRUv8BOvWswrGgVSlIvfvoTGLmpGtEAmSxr12SBKOAllVto/wTMHcAc1VcEoG/Qliv0BHIRXY6FDbAo0S8MDCdnNSuVNPmcIoODLhxc0hwbzGvB816L4hPmDQWDUWsGUCMUXrPtQAVi7ZrP8OwrYgEg2QgsbBr+GsYvsbPDdc1YRiZRXE8zOOhWtLW1fdeB2MXqUNRmhKxLdZwoerFzHprcVX/9qXdT9pxBux+Ak/aB5lSsDtu+Bvlb6G61IhjUU5gPVd4TONeuEcNEbggAhxycuC5esZH3bgLMbq6Cp7lWRYRuwLNPahGTNFeT5tl8kdD5C8BYD6PLqhBgrnDxdTldfH19fVWpVOou0dml6BjMN3MQfigYDCGPYeSskwGrBt7Qv4Y/g1wV/R5aMIdDx22fD5xawJKKndbDqBmHU4wfOdziTjYneBU2kp5umOZdhm4zW3skHwCVnwVjbe/7MEfZBUO2EBFrYnycJrtlCb289OSt8oO5PCvkJH5ry0sN8eSYos7iboCI7KL6o/wNnDDMMx5uy1kAAAAASUVORK5CYII=");
 
-  setTimeout(function() {
-  
-  requestAnimationFrame(dspview);
-  YagolsSetZeroTimeoutFunc(tick);
-  
-  addWheelListener(canvas2, function( e ) {
+}
+
+function init1() {
+  titlefd = Math.floor(titlefds/3);
+  titlefdt = performance.now();
+  titlecd = performance.now();
+  msgcd1 = performance.now();
+  msgcd2 = performance.now();
+  stmsgcd = performance.now();
+}
+
+function addel() {
+  addWheelListener(canvas3, function( e ) {
     var e2, x, y;
     e.preventDefault();
     if (swzmsw) {
@@ -872,7 +839,7 @@ window.normalizeWheel = normalizeWheel;
     posx = x * (cellsz+(cellsz>grb?1:cellsz/grb));
     posy = y * (cellsz+(cellsz>grb?1:cellsz/grb));
   });
-  canvas2.addEventListener("mousedown", function(e) {
+  canvas3.addEventListener("mousedown", function(e) {
     var x, y, f = false;
     x = 0;
     while (x < fbutt.length && !(e.pageX > fbutt[x][0] + 2 && e.pageX < fbutt[x][0]+fbutt[x][2]+6 && e.pageY > fbutt[x][1] && e.pageY < fbutt[x][1]+fbutt[x][3]+6)) {
@@ -1089,7 +1056,7 @@ window.normalizeWheel = normalizeWheel;
     }
     e.preventDefault();
   });
-  canvas2.addEventListener("mouseup", function(e) {
+  canvas3.addEventListener("mouseup", function(e) {
     var x;
     peMsMove(e.pageX, e.pageY);
     scl = false;
@@ -1111,11 +1078,11 @@ window.normalizeWheel = normalizeWheel;
     }
     e.preventDefault();
   });
-  canvas2.addEventListener("mousemove", function(e) {
+  canvas3.addEventListener("mousemove", function(e) {
     peMsMove(e.pageX, e.pageY);
     e.preventDefault();
   });
-  canvas2.addEventListener("dblclick", function(e) {
+  canvas3.addEventListener("dblclick", function(e) {
     var u, x, y, q;
     if ((!((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr+4 && e.pageY > scly-sclr && e.pageY < scly+sclr+5))
         && (!((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw && e.pageY > sclby && e.pageY < sclby+sclbh))
@@ -1170,7 +1137,7 @@ window.normalizeWheel = normalizeWheel;
       }
     }
   });
-  canvas2.addEventListener("click", function(e) {
+  canvas3.addEventListener("click", function(e) {
     e.preventDefault();
   });
   window.addEventListener("keydown", function(e) {
@@ -1201,11 +1168,6 @@ window.normalizeWheel = normalizeWheel;
   window.addEventListener("keyup", function(e) {
     keyesupp = false;
   });
-  
-  canvas2.style.opacity = "1";
-  
-  }, 3333);
-  
 }
 
 function peMsMove(px, py) {
@@ -1322,6 +1284,8 @@ function peKey(cc) {
         stpgn = i;
       }
     }
+  } else if (!crulem && cc === 32) {
+    swrun();
   } else if (!crulem && (cc === 80 || cc === 112)) {
     swpatt();
   } else if (!crulem && (cc === 87 || cc === 119)) {
@@ -1330,6 +1294,20 @@ function peKey(cc) {
     swdhlp();
   } else if (!crulem && cc === 35) {
     swdspgrd();
+  } else if (!crulem && (cc === 70 || cc === 102)) {
+    if (!genbbl) {
+      if (nextGen() && stpga) {
+        stpgcd2 = performance.now();
+        stpgsf = false;
+      }
+    }
+  } else if (!crulem && (cc === 82 || cc === 114)) {
+    if (!genbbl && histgp > 0) {
+      if (prevGen() && stpga) {
+        stpgcd2 = performance.now();
+        stpgsf = false;
+      }
+    }
   } else if (!crulem && (cc === 43 || cc === 45 || cc >= 48 && cc <= 57)) {
     f = true;
     if (ffw !== 0 && ffwstp) {
@@ -1925,19 +1903,26 @@ function dspview(ts) {
 
 function dspview0() {
   var x, y, q;
+
   chgcsz = chggsz = chgpos = false;
+
   if (!cwidth || canvas0.offsetWidth !== cwidth || !cheight || canvas0.offsetHeight !== cheight) {
     chgcsz = true;
     cwidth = canvas0.offsetWidth;
     cheight = canvas0.offsetHeight;
-    canvas2.width = cwidth;
-    canvas2.height = cheight;
-    canvas1.width = cwidth;
-    canvas1.height = cheight;
     canvas0.width = cwidth;
     canvas0.height = cheight;
+    canvas1.width = cwidth;
+    canvas1.height = cheight;
+    canvas1a.width = cwidth;
+    canvas1a.height = cheight;
+    canvas2.width = cwidth;
+    canvas2.height = cheight;
+    canvas3.width = cwidth;
+    canvas3.height = cheight;
     tmet = null;
   }
+
   if (mdown) {
     if (toncd > 0) {
       toncd--;
@@ -1961,6 +1946,20 @@ function dspview0() {
       tonx = x;
       tony = y;
     }
+  }
+
+  if (dhlpn === dhlpn2) {
+    if (dhlpn > 0) {
+      if (dhlpn === 2 && !stpge) {
+        dhlpn = 1;
+      }
+    }
+  } else if (dhlpn === 0) {
+    dhlpcd2 = null;
+    dhlpcd3 = null;
+  } else {
+    dhlpcd2 = gts;
+    dhlpcd3 = gts;
   }
   if (capcd && gts - capcd > capcdn) {
     capcd = null;
@@ -2220,18 +2219,22 @@ function dspview0() {
       }
     }
   }
+
   if (histgp < 1) {
     pgen = false;
   }
+
   if (cellsz !== prvgsz) {
     prvgsz = cellsz;
     chggsz = true;
   }
+ 
   if (posx !== prvposx || posy !== prvposy) {
     prvposx = posx;
     prvposy = posy;
     chgpos = true;
   }
+ 
   if (drawbackg || chgcsz || chggsz || chgpos) {
     drawbackg = false;
     ctx0.fillStyle = "rgba(0,0,0,1)";
@@ -2240,7 +2243,29 @@ function dspview0() {
       drawGrid();
     }
   }
+ 
   drawCells();
+
+  ctx1a.clearRect(0, 0, cwidth, cheight);
+ 
+  if (title0cd) {
+    if (gts - title0cd > title0cdn) {
+      title0cd = null;
+      canvas2.style.opacity = "1";
+      addel();
+    } else {
+      x = (gts - title0cd) / title0cdn;
+      ctx1a.fillStyle = "rgba(170, 110, 110, " + ((1 - x) * 0.6) + ")";
+      ctx1a.fillText("Y a g o l s", title0x, title0y);
+      canvas2.style.opacity = "" + x;
+    }
+  }
+ 
+  if (clrucd) {
+    ctx1a.fillStyle = "rgba(255, 255, 255, " + (0.7 * (gts - clrucd > clrucdn ? 0 : 1 - (gts - clrucd) / clrucdn)) + ")";
+    ctx1a.fillRect(0, 0, cwidth, cheight);
+  }
+
   ctx2.clearRect(0, 0, cwidth, cheight);
   if (titlemode >= 2 && cellsn === 0 && msgll === 0 && titlefd <= titlex) {
     titlefd += (gts-titlefdt)/1000*60;
@@ -2266,6 +2291,7 @@ function dspview0() {
   }
   
   drawInfo();
+  
   if (dwrld && cellsn > 0) {
     drawWrld();
   }
@@ -2284,12 +2310,11 @@ function dspview0() {
   drawStmsg();
   drawMsgs();
   drawStpg();
+  
+  ctx3.clearRect(0, 0, cwidth, cheight);
+  
   drawHelp();
   
-  if (clrucd) {
-    ctx2.fillStyle = "rgba(255, 255, 255, " + (0.7 * (gts - clrucd > clrucdn ? 0 : 1 - (gts - clrucd) / clrucdn)) + ")";
-    ctx2.fillRect(0, 0, cwidth, cheight);
-  }
 }
 
 function calcICellsz() {
@@ -2654,7 +2679,6 @@ function drawScale() {
   sclby = y;
   sclbw = w;
   sclbh = h;
-  ctx2.textBaseline = "bottom";
   if (swzmf || swzmcd2) {
     ctx2.strokeStyle = "rgba(120, 120, 120, " + (t*0.9) + ")";
     ctx2.setLineDash([]);
@@ -2758,7 +2782,6 @@ function drawSpeed() {
   spdx = x+w/2;
   spdy = y+h-h*sp/100;
   spdr = w*1.5;
-  ctx2.textBaseline = "bottom";
   drawStrImg(ctx2, "spd", (x-7)+0.5|0, (spdy+1+w/2)+0.5|0, 14, 200, 200, 200, t * 0.8, 2);
   ctx2.fillStyle = fs;
   ctx2.beginPath();
@@ -2776,7 +2799,6 @@ function drawSpeed() {
 function drawTitle() {
   var x, s, h, fs2, fs = Math.floor(cwidth/500*30), z;
   fs2 = fs;
-  ctx2.textBaseline = "bottom";
   ctx2.font = fs + "px " + font;
   x = titlemode === 0 ? 0 : Math.log(titlefds-(titlemode===2&&titlefd>titlex?titlex:titlefd)+1)/Math.log(titlefds+1);
   fs = fs2*(1-x);
@@ -2879,7 +2901,6 @@ function drawTitle() {
 
 function drawMsgs() {
   var i, x, s, h, fs2, fs = Math.floor(cwidth/500*22), y1, y2, y3;
-  ctx2.textBaseline = "bottom";
   ctx2.shadowBlur = 5;
   ctx2.shadowColor = "#EEEEEE";
   ctx2.font = fs + "px " + font;
@@ -2934,7 +2955,6 @@ function drawMsgsStm(s1, s2) {
 
 function drawStmsg() {
   var x;
-  ctx2.textBaseline = "bottom";
   ctx2.font = "25px " + font;
   if (!stmsgntm1) {
     stmsgntm1 = ctx2.measureText(stmsgn1);
@@ -2987,7 +3007,6 @@ function drawRunToggle() {
       b = 1 - a;
     }
   }
-  ctx2.textBaseline = "bottom";
   runtx = cwidth - 373;
   ctx2.setLineDash([]);
   ctx2.lineWidth = 1;
@@ -3045,7 +3064,6 @@ function drawRunToggle() {
 
 function drawNGenButton() {
   var s;
-  ctx2.textBaseline = "bottom";
   ngenbx = cwidth - 440;
   if (ngen) {
     drawStrImg(ctx2, "\u2AA2", ngenbx - 3, 138, 60, 170, 170, 255, 1);
@@ -3089,7 +3107,6 @@ function drawNGenButton() {
 
 function drawPGenButton() {
   var s;
-  ctx2.textBaseline = "bottom";
   pgenbx = cwidth - 532;
   if (pgen) {
     drawStrImg(ctx2, "\u2AA1", pgenbx - 4, 138, 60, 170, 170, 255, 1);
@@ -3134,7 +3151,6 @@ function drawPGenButton() {
 
 function drawCapButton() {
   var x, y, sl, sr, q, p0, pp, ss;
-  ctx2.textBaseline = "bottom";
   pp = 0;
   p0 = 0;
   if (histp > 0) {
@@ -3302,7 +3318,6 @@ function drawCapButton() {
 
 function drawInfo() {
   var s, x, z, n, n1, n2, q;
-  ctx2.textBaseline = "bottom";
   if (genbtcd) {
     z = gts - genbtcd > genbtcdn ? 1 : (gts - genbtcd) / genbtcdn;
     if (genbtl) {
@@ -3475,7 +3490,6 @@ function drawDiamond() {
     x = x2 = 110;
     y = y2 = 215;
     z = ddiamcd?0.7-0.6*(gts-ddiamcd>ddiamcdn?ddiamcdn:gts-ddiamcd)/ddiamcdn:0.7;
-    ctx2.textBaseline = "bottom";
     ctx2.fillStyle = "rgba(240, 240, 0,"+z+")";
     if (ddiama > 0 && ddiamb === 0) {
       x += 3;
@@ -3550,7 +3564,6 @@ function drawDiamond() {
 
 function drawFramesSec() {
   var s, z, x;
-  ctx2.textBaseline = "bottom";
   ctx2.font = "16px " + font;
   ctx2.fillStyle = "rgba(170, 200, 170, 1)";
   s = "" + frpsn;
@@ -3583,7 +3596,6 @@ function drawPos() {
   s1 = ""+(cellsn>0?cellsr-cellsl+1:0);
   s2 = ""+Math.floor(cwidth/(cellsz>grb?cellsz+1:cellsz));
   l = Math.max(s1.length * 12, s2.length * 8) + 5;
-  ctx2.textBaseline = "bottom";
   ctx2.font = "18px " + font;
   x2 = cwidth - 562;
   y2 = 37;
@@ -3653,7 +3665,6 @@ function drawPos() {
 
 function drawCRule() {
   var s1, s2, fs, x, y, w, h;
-  ctx2.textBaseline = "bottom";
   if (hist[histh][0][histi][1] && cruleb === histcr[0] && crules === histcr[1]) {
     s1 = "B"+hist[histh][0][histi][1][1][0]+" "+"S"+hist[histh][0][histi][1][1][1];
     s2 = "B"+hist[histh][0][histi][1][0][0]+" "+"S"+hist[histh][0][histi][1][0][1];
@@ -3725,7 +3736,6 @@ function drawStpg() {
   if (!stpge) {
     z = 1 - z;
   }
-  ctx2.textBaseline = "bottom";
   ctx2.font = "40px " + font;
   if (stpgax) {
     z1 = 1;
@@ -3789,31 +3799,47 @@ function drawStpg() {
 }
 
 function drawFButt() {
-  var x, px = cwidth - 8, y, i;
-  ctx2.textBaseline = "bottom";
+  var x, y, px = cwidth - 8, py = 106, i;
   x = px;
-  y = 106;
-  drawFButt0(x -= 51, y, 44, 32, 0, dhlpn > 0, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 0, dhlpn > 0, function(fb) {
     swdhlp();
   });
-  drawFButt0(x -= 51, y, 44, 32, 1, dwrld, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 1, dwrld, function(fb) {
     swdwrld();
   });
-  drawFButt0(x -= 51, y, 44, 32, 2, patt, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 2, patt, function(fb) {
     swpatt();
   });
-  drawFButt0(x -= 51, y, 44, 32, 3, dspgrd, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 3, dspgrd, function(fb) {
     swdspgrd();
   });
-  drawFButt0(x -= 51, y, 44, 32, 4, stpge, function(fb) {
-    swstpge();
-  });
-  x = px - 49;
-  drawFButt0(x, y -= 41, 44, 32, 5, null, function(fb) {
+  x = px;
+  x -= 51;
+  y = py;
+  drawFButt0(x, y -= 41, 44, 32, 4, null, function(fb) {
     swclru();
   });
-  drawFButt0(x, y -= 41, 44, 32, 6, !dmsgs, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 5, !dmsgs, function(fb) {
     swdmsgs();
+  });
+  x -= 51;
+  y = py;
+  drawFButt0(x, y -= 41, 44, 32, 6, null, function(fb) {
+  });
+  drawFButt0(x, y -= 41, 44, 32, 7, null, function(fb) {
+  });
+  x -= 51;
+  y = py;
+  drawFButt0(x, y -= 41, 44, 32, 8, null, function(fb) {
+  });
+  drawFButt0(x, y -= 41, 44, 32, 9, null, function(fb) {
+  });
+  x -= 51;
+  y = py;
+  drawFButt0(x, y -= 41, 44, 32, 10, stpge, function(fb) {
+    swstpge();
+  });
+  drawFButt0(x, y -= 41, 44, 32, 11, null, function(fb) {
   });
 }
 
@@ -3887,15 +3913,6 @@ function drawFButt0(x, y, w, h, i, t, f) {
       break;
     case 4: 
       if (fbutt[i][4] || fbutt[i][6]) {
-        drawStrImg(ctx2, "\u29B5", x + 9, y + 26, 31, 140, 140, 140, 0.7);
-      } else if (fbutt[i][5]) {
-        drawStrImg(ctx2, "\u29B5", x + 9, y + 26, 31, 190, 210, 190, 0.6);
-      } else {
-        drawStrImg(ctx2, "\u29B5", x + 9, y + 26, 31, 0, 0, 0, 1);
-      }
-      break;
-    case 5: 
-      if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "\u29BB", x + 9, y + 27, 35, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
         drawStrImg(ctx2, "\u29BB", x + 9, y + 27, 35, 190, 210, 190, 0.6);
@@ -3903,7 +3920,7 @@ function drawFButt0(x, y, w, h, i, t, f) {
         drawStrImg(ctx2, "\u29BB", x + 9, y + 27, 35, 0, 0, 0, 1);
       }
       break;
-    case 6: 
+    case 5: 
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "MSG", x + 5, y + 22, 15, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -3926,6 +3943,15 @@ function drawFButt0(x, y, w, h, i, t, f) {
       ctx2.moveTo(x+w-lw*4, y+lw*4);
       ctx2.lineTo(x+lw*4, y+h-lw*4);
       ctx2.stroke();
+      break;
+    case 10: 
+      if (fbutt[i][4] || fbutt[i][6]) {
+        drawStrImg(ctx2, "\u29B5", x + 9, y + 25, 31, 140, 140, 140, 0.7);
+      } else if (fbutt[i][5]) {
+        drawStrImg(ctx2, "\u29B5", x + 9, y + 25, 31, 190, 210, 190, 0.6);
+      } else {
+        drawStrImg(ctx2, "\u29B5", x + 9, y + 25, 31, 0, 0, 0, 1);
+      }
       break;
   }
 }
@@ -3985,13 +4011,6 @@ function drawGrid() {
 function drawHelp() {
   var a, i, j, z, x, y, k, n;
   if (dhlpn !== dhlpn2) {
-    if (dhlpn === 0) {
-      dhlpcd2 = null;
-      dhlpcd3 = null;
-    } else {
-      dhlpcd2 = gts;
-      dhlpcd3 = gts;
-    }
     if (dhlpql > 0) {
       if (!dhlpq[dhlpql-1][5]) {
         dhlpq[dhlpql-1][5] = gts;
@@ -4015,7 +4034,6 @@ function drawHelp() {
   if (dhlpn > 0 && dhlpql > 0 && dhlpq[dhlpql-1][5]) {
     dhlpq[dhlpql-1][6] = gts - dhlpq[dhlpql-1][5] > dhlpcdn ? 1 : (gts - dhlpq[dhlpql-1][5]) / dhlpcdn;
   }
-  ctx2.textBaseline = "bottom";
   i = 0;
   j = 0;
   while (i < dhlpql) {
@@ -4027,32 +4045,32 @@ function drawHelp() {
       }
       x = (cwidth - a[3]) / 2 + a[1];
       y = (cheight - a[4]) / 2 + a[2];
-      ctx2.globalAlpha = z;
+      ctx3.globalAlpha = z;
       if (a[6] >= 1) {
-        ctx2.fillStyle = "rgba(0, 80, 0, 0.25)";
-        fillrr(ctx2, x+0.5|0, y+0.5|0, a[3]+0.5|0, a[4]+0.5|0, a[4] / 5);
-        ctx2.drawImage(a[0], x+0.5|0, y+0.5|0);
+        ctx3.fillStyle = "rgba(0, 80, 0, 0.25)";
+        fillrr(ctx3, x+0.5|0, y+0.5|0, a[3]+0.5|0, a[4]+0.5|0, a[4] / 5);
+        ctx3.drawImage(a[0], x+0.5|0, y+0.5|0);
       } else {
         z = Math.pow(2, 9+3*a[6]) / 4096;
-        ctx2.drawImage(a[0], 0, 0, a[3] / 2, a[4] / 2, 0 - a[3] / 2 + (x + a[3] / 2) * z, y, a[3] / 2, a[4] / 2);
-        ctx2.drawImage(a[0], a[3] / 2, 0, a[3] / 2, a[4] / 2, x + a[3] / 2, 0 - a[4] / 2 + (y + a[4] / 2) * z, a[3] / 2, a[4] / 2);
-        ctx2.drawImage(a[0], a[3] / 2, a[4] / 2, a[3] / 2, a[4] / 2, cwidth - (cwidth - x - a[3] / 2) * z, y + a[4] / 2, a[3] / 2, a[4] / 2);
-        ctx2.drawImage(a[0], 0, a[4] / 2, a[3] / 2, a[4] / 2, x, cheight - (cheight - y - a[4] / 2) * z, a[3] / 2, a[4] / 2);
+        ctx3.drawImage(a[0], 0, 0, a[3] / 2, a[4] / 2, 0 - a[3] / 2 + (x + a[3] / 2) * z, y, a[3] / 2, a[4] / 2);
+        ctx3.drawImage(a[0], a[3] / 2, 0, a[3] / 2, a[4] / 2, x + a[3] / 2, 0 - a[4] / 2 + (y + a[4] / 2) * z, a[3] / 2, a[4] / 2);
+        ctx3.drawImage(a[0], a[3] / 2, a[4] / 2, a[3] / 2, a[4] / 2, cwidth - (cwidth - x - a[3] / 2) * z, y + a[4] / 2, a[3] / 2, a[4] / 2);
+        ctx3.drawImage(a[0], 0, a[4] / 2, a[3] / 2, a[4] / 2, x, cheight - (cheight - y - a[4] / 2) * z, a[3] / 2, a[4] / 2);
       }
-      ctx2.globalAlpha = 1;
+      ctx3.globalAlpha = 1;
       if (dhlpn > 0 && a[6] >= 1 && i === dhlpql - 1) {
         n = 1;
         for (k = 0; k < a[7][0].length; k++) {
-          drawHelp1(ctx2, x + (k + 1) * (a[3] / (a[7][0].length + 1)), y, a[7][0][k][0], a[7][0][k][1], n++);
+          drawHelp1(ctx3, x + (k + 1) * (a[3] / (a[7][0].length + 1)), y, a[7][0][k][0], a[7][0][k][1], n++);
         }
         for (k = 0; k < a[7][1].length; k++) {
-          drawHelp1(ctx2, x + a[3], y + (k + 1) * (a[4] / (a[7][1].length + 1)), y, a[7][1][k][0], a[7][1][k][1], n++);
+          drawHelp1(ctx3, x + a[3], y + (k + 1) * (a[4] / (a[7][1].length + 1)), y, a[7][1][k][0], a[7][1][k][1], n++);
         }
         for (k = 0; k < a[7][2].length; k++) {
-          drawHelp1(ctx2, x + a[3] - (k + 1) * (a[3] / (a[7][2].length + 1)), y + a[4], a[7][2][k][0], a[7][2][k][1], n++);
+          drawHelp1(ctx3, x + a[3] - (k + 1) * (a[3] / (a[7][2].length + 1)), y + a[4], a[7][2][k][0], a[7][2][k][1], n++);
         }
         for (k = 0; k < a[7][3].length; k++) {
-          drawHelp1(ctx2, x, y + a[4] - (k + 1) * (a[4] / (a[7][3].length + 1)), y, a[7][3][k][0], a[7][3][k][1], n++);
+          drawHelp1(ctx3, x, y + a[4] - (k + 1) * (a[4] / (a[7][3].length + 1)), y, a[7][3][k][0], a[7][3][k][1], n++);
         }
       }
     }
@@ -4078,7 +4096,6 @@ function drawHelp0(n) {
   canvasos1.width = cwidth;
   canvasos1.height = cheight;
   ctxos1.clearRect(0, 0, cwidth, cheight);
-  ctxos1.textBaseline = "bottom";
   x = 0;
   y = 0;
   dx = 0;
@@ -4177,7 +4194,7 @@ function drawHelp0(n) {
       l[0][0] = [stpgssx2 + 20, stpgssy2 + 20];
       l[0][1] = [stpgssx + 20, stpgssy + 20];
       l[0][2] = [stpgdx + 20, stpgdy + 15];
-      l[0][3] = [fbutt[4][0] + 10, fbutt[4][1] + 25];
+      l[0][3] = [fbutt[10][0] + 10, fbutt[10][1] + 25];
       ctxos1.font = "13px " + font;
       ctxos1.fillStyle = "rgba(210, 210, 210, 1)";
       drw(ctxos1, "\u22C5  Set a stop at an absolute or relative generation number (> 0) \u22C5 Just start typing \u22C5", x, y + 15);
