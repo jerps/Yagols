@@ -50,7 +50,7 @@
 <br>
 <br>
 
-## [To Yagols . . .](http://erps.me/Yagols.html)
+## [To Yagols . . .](http://erps.me/Yagols/Yagols.html)
 
 <br>
 
