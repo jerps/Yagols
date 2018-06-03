@@ -91,6 +91,10 @@
 
 <br>
 
+* V3.1b
+
+<br>
+
 * V3.1a (june 2018)
   
   * Misc. improvements.
