@@ -8,44 +8,49 @@
 
   * A browser (canvas) implementation of the well-known simulation "Conway's Game of Life" (cellular automaton).
   
-  * One big .html page with JavaScript and a bit of HTML/CSS. No further dependencies.
+  * One .html page with mainly JavaScript and a bit of HTML/CSS. No further dependencies.
   
-  * A bit of a hack... Clean code was not an objective of this project (learning JavaScript/Canvas was). 
-    So lots of good ol' procedural code, globals with funny names, functions which do multiple things,
-    same code copied all over the place, etc.
+  * A work in progress . . .
+  
+  * And a bit of a hack... Clean code was not an objective of this project. So, lots of good ol' procedural
+    code, Globals Galore, funny names, code fragments copied all over the place, etc. However, it works.
 
 <br>
 
 ### Features:
 
-  * Smooth, intuitive real-time user interface.
+  * Intuitive and Fluid user interface.
+  
+  * Ideal for beginning enthusiasts to easily explore and experiment GoL.
 
-  * Keeps history of generations; works like a tape recorder (fast-forward, rewind).
+  * Generations are recorded. Works like a tape recorder (play / fast-forward / rewind).
   
-  * Generations can be easily changed with other "on"/"off" cells. With unlimited undo option.
+  * Switch cells "on" or "off" and change the GoL rule on the fly.
   
-  * Generations that got a new rule or were cells where changed are marked and can be easiliy found back.
+  * The cells of a generation can be changed multiple times with unlimited undo.
+
+  * Changed generations are marked and can be easiliy located to explore different evolutions.
   
-  * "Infinite" universe in theory, in practice it's a toroidal plane 19,999,999 x 19,999,999.
-    
-  * Change GoL rule and change cells on the fly.
+  * Infinite universe, in theory, in practice a 19,999,999 x 19,999,999 toroidal plane.
   
-  * Paste RLE formatted text to add patterns.
+  * Copy/paste RLE formatted text to add patterns.
   
-  * Recognizes when the pattern evolves into an oscillator or spaceship.
+  * If the pattern evolves into an oscillator or spaceship it is automatically detected.
   
   * Helicopter view of all "on" cells in the universe fitted within the viewing area.
   
-  * Older cells get a darker color.
+  * Older cells get a darker color; number of colors (shades) is variable.
   
-  * Drag sliders to zoom in/out or to change simulation speed.
+  * Change speed, zoom, number of colors/shaded and cellsize with sliders.
   
-  * Drag universe to change viewing area position.
+  * Advanced help system to easily explore and discover Yagols.
+  
+  * Many functions.
 
 <br>
 <br>
 
-## [To Yagols . . .](http://erps.me/Yagols.html)
+## [To Yagols . . .](http://erps.me/Yagols/Yagols.html)
 
 <br>
 
@@ -77,6 +82,12 @@
 <br>
 
 ## Changes
+
+<br>
+
+* V3.1a (june 2018)
+  
+  * Misc. improvements.
 
 <br>
 
