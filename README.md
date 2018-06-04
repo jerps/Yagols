@@ -13,13 +13,30 @@
   * A work in progress . . .
   
   * And a bit of a hack... Clean code was not an objective of this project. So, lots of good ol' procedural
-    code, Globals Galore, funny names, code fragments copied all over the place, etc. However, it works.
+    code, globals and magic numbers galore, funny names, code fragments copied all over the place, etc.
+    But it works.
+    
+<br>
+
+## [To Yagols . . .](http://erps.me/Yagols/Yagols.html)
+
+<br>
+
+<p align="center">
+  <img src="Screenshot1.png"/>
+</p>
+
+<br>
+
+<p align="center">
+  <img src="Screenshot2.png"/>
+</p>
 
 <br>
 
 ### Features:
 
-  * Intuitive and Fluid user interface.
+  * Intuitive and fluid user interface.
   
   * Ideal for beginning enthusiasts to easily explore and experiment GoL.
 
@@ -29,7 +46,7 @@
   
   * The cells of a generation can be changed multiple times with unlimited undo.
 
-  * Changed generations are marked and can be easiliy located to explore different evolutions.
+  * Changed generations are marked and can be easiliy located.
   
   * Infinite universe, in theory, in practice a 19,999,999 x 19,999,999 toroidal plane.
   
@@ -44,28 +61,8 @@
   * Change speed, zoom, number of colors/shaded and cellsize with sliders.
   
   * Advanced help system to easily explore and discover Yagols.
-  
-  * Many functions.
-
-<br>
-<br>
-
-## [To Yagols . . .](http://erps.me/Yagols/Yagols.html)
-
-<br>
-
-<p align="center">
-  <img src="Screenshot.png"/>
-</p>
-
-<br>
-
-<p align="center">
-  <img src="Screenshot.png"/>
-</p>
 
 <br> 
-<br>
 
 ### About Conway's Game of Life :
 
@@ -77,7 +74,6 @@
 >#### [youtube](https://youtu.be/C2vgICfQawE)
 >#### [google](https://www.google.nl/search?q=conway+game+of+life)
 
-<br>
 <br>
 
 ## INSTRUCTIONS

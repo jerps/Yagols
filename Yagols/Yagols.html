@@ -255,6 +255,7 @@ table {
 <script>
 var title = [ "Yet another", "Game\u22C5of\u22C5Life", "simulator", "Conway\u22C5s", "\u22C5  Enjoy  \u22C5", "\u22C5   With Yagols   \u22C5", "\u22C5        \u22C5       Click  ?  For Help       \u22C5        \u22C5"];
 var font = "Verdana";
+var maxl = -9999999, maxt = 9999999, maxr = 9999999, maxb = -9999999;
 var gennum = 0, gennumc = 0, speed = 20, run = false, runcd = null, runcdn = 500, runcdc = 0, runbc = 0, runcd2 = null, runcdn2 = 100, runcd3 = null, runcdn3 = 800, runcd4 = null, runcdn4 = 1400, runcd5 = null, runcdn5 = 800;
 var posx = 0, posy = 0, posx2 = 0, posy2 = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80, cells = [], rmvcellsf = false, rmvcellsn = 0;
 var canvas0, canvas1, canvas1a, canvas2, canvas3, canvasos0, canvasos1, canvasos2, canvasosci, ctx0, ctx1, ctx1a, ctx2, ctx3, ctxos0, ctxos1, ctxos2, ctxosci, mingen = 0;
@@ -291,10 +292,10 @@ var osctlx = 0, osctly = 0, osctlw = 0, osctlh = 0, osctrx = 0, osctry = 0, osct
 var orulex = 0, oruley = 0, orulew = 0, oruleh = 0;
 var tfs3 = 0;
 var slidh = 0.45;
-var cidxb = [[[null],-1,-1,0]], cidxbi = 0, cidxbx1 = 0, cidxbx2 = 0, cidxby1 = 0, cidxby2 = 0, cidxbb = null;
+var cidxb = [[[null],-1,-1,0]], cidxbi = 0, cidxbx1 = maxr + 1, cidxbx2 = maxl - 1, cidxby1 = maxt + 1, cidxby2 = maxb - 1, cidxbb = null;
 var cellslen = 0, cellsa = [], cellsan = 0, cellsfs = [], cellsfsl = 0, cellsx = [], cellsxl = 0, cellsx2 = [], cellsx2l = 0, cellsf = false, cellsxf = false;
 var cinfl = [], cinfll = 0, cinflfs = [], cinflfsl = 0;
-var frl = [], frll = 0, frlfs = [], frlfsl = 0;
+var cibl = [], cibll = 0, ciblfl = [], ciblfll = 0;
 var ddiama = 0, ddiamb = 0, ddiamcd = null, ddiamcdn = 800, ddiamx = 0, ddiamy = 0, ddiamw = 0, ddiamh = 0, ddiamcd2 = null, ddiamcdn2 = 1200, ddiamf = 0;
 var swzmt = false, swzmtx = 0, swzmty = 0, swzmtw = 0, swzmth = 0, swzmcd = null, swzmcdn = 200, swzmcd2 = null, swzmcdn2 = 300, swzmf = true, swzmsw = true;
 var hbcksl = null, hbcksll = 0, hbckslf = 0, hbcksm = null;
@@ -312,12 +313,12 @@ var dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcdn = 2000, dhlpcd2 = nul
 var cimg = [], cimgc = 0;
 var cwidth = 0, cheight = 0;
 var divl = [-1,-2], divv = false, dive = [];
-var histmax = 500;
-var maxl = -9999999, maxt = 9999999, maxr = 9999999, maxb = -9999999;
+var histmax = 800;
 var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
 var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", stmsgn2 = "Yet \u22C5 another \u22C5 GoL \u22C5 simulator     ", stmsgo1 = "", stmsgo2 = "", stmsgcd = null, stmsgcdn = 1000, stmsgcd2, stmsgcdn2 = 1300, stmsgntm1 = null, stmsgntm2 = null, stmsgotm1 = null, stmsgotm2 = null;
 
 function clrvars() {
+  var l = cidxb[cidxbi][0].length;
   gennum = 0, gennumc = 0, run = false, runcd = null, runcdc = 0, runbc = 0, runcd2 = null, runcd3 = null, runcd4 = null, runcd5 = null;
   posx = 0, posy = 0, posx2 = 0, posy2 = 0, cells = [], rmvcellsf = false, rmvcellsn = 0;
   mingen = 0;
@@ -327,15 +328,15 @@ function clrvars() {
   ngen = false, ngencd = null, ngencd2 = null, ngencd3 = 0, ngencd4 = null, ngencd5 = null, ngenb = false, ngenbx = 0, ngenby = 0, ngenbw = 0, ngenbh = 0;
   pgen = false, pgencd = null, pgencd2 = null, pgencd3 = 0, pgencd4 = null, pgencd5 = null, pgenb = false, pgenbx = 0, pgenby = 0, pgenbw = 0, pgenbh = 0;
   genbbl = false;
-  hist = [[[[[],null,0,[0,0],false,0,0,0,0,0,0,[0,0,0,0],0,0]],0,-1,-1]], histh = 0, histhm = 0, histod = 0, histcr = [cruleb,crules], histi = 0, histp = 0, tarr = [], tidx = {}, histgp = 0, histgn = 0, hupdc = 0;
+  hist = [[[[[],null,0,[0,0],false,0,0,0,0,0,0,[0,0,0,0],0,0]],0,-1,-1]], histh = 0, histod = 0, histcr = [cruleb,crules], histi = 0, histp = 0, tarr = [], tidx = {}, histgp = 0, histgn = 0, hupdc = 0;
   cellsn = 0;
   ffw = 0, ffwm = 0, ffwstp = false, ffwstpc0 = 0, ffwstpc1 = 0, ffwstpc2 = 0, ngenfx = 0, ngenfy = 0, ngenfw = 0, ngenfh = 0, ngenfcd = null, ngenfcd2 = null, pgenfx = 0, pgenfy = 0, pgenfw = 0, pgenfh = 0, pgenfcd = null, pgenfcd2 = null;
   ffwsbcd = null, ffwsbcdn = 500, ffwsbf = false, ffwsbm = 0;
   osctlx = 0, osctly = 0, osctlw = 0, osctlh = 0, osctrx = 0, osctry = 0, osctrw = 0, osctrh = 0;
-  cidxb = [[[null,null,null],-1,-1,0]], cidxbi = 0, cidxbx1 = 0, cidxbx2 = 0, cidxby1 = 0, cidxby2 = 0, cidxbb = null;
+  cidxb = [[[null,null,null],-1,-1,0]], cidxbi = 0, cidxbx1 = maxr + 1, cidxbx2 = maxl - 1, cidxby1 = maxt + 1, cidxby2 = maxb - 1, cidxbb = null;
   cellslen = 0, cellsa = [], cellsan = 0, cellsfs = [], cellsfsl = 0, cellsx = [], cellsxl = 0, cellsx2 = [], cellsx2l = 0, cellsf = false, cellsxf = false;
   cinfl = [], cinfll = 0, cinflfs = [], cinflfsl = 0;
-  frl = [], frll = 0, frlfs = [], frlfsl = 0;
+  cibl = [], cibll = 0, ciblfl = [], ciblfll = 0;
   hbcksl = null, hbcksll = 0, hbckslf = 0, hbcksm = null;
   stpgsf = false;
   msgl = [], msgll = 0, msgf1 = 0, msgl1 = "", msgl2 = "", msgl3 = "";
@@ -345,6 +346,9 @@ function clrvars() {
   clrucd = performance.now();
   dspmsg(["Universe      ","\u22C5      \u22C5","      Cleared"]);
   msgf1 = 0;
+  while (l-- > 0) {
+    fcidxinc1();
+  } 
 }
 
 var patttxt =
@@ -1900,26 +1904,6 @@ function tick() {
         cinfl[cells[i][4]][2] = i + 1;
       }
     }
-  }
-  
-  i = 0;
-  while (i < frll) {
-    if (frl[i]) {
-      if (frl[i][1] === 2 && frl[i][4]) {
-        if (gts - frl[i][2] > frl[i][0].length * 1.3 * 1000) {
-          frl[i][1] = 3;
-          frl[i][4][1][0][frl[i][4][0]] = null;
-          frl[i][4][1][1]--;
-          frl[i] = null;
-        }
-      } else {
-        frl[i] = null;
-      }
-      if (!frl[i]) {
-       frlfs[frlfsl++] = i;
-      }
-    }
-    i++;
   }
   
   //--
@@ -3673,17 +3657,16 @@ function drawInfo() {
     n = -100;
   }
   ctx2.fillStyle = "rgba(" + (150 - n) + ", " + (150 + n) + ", 0, 1)";
-  s = "" + gennum;
-  ctx2.fillText(s, x, 67);
-  x += 32 * s.length + 15;
+  ctx2.fillText("" + gennum, x, 67);
+  x = 34;
   ctx2.font = "13px " + font;
   ctx2.fillStyle = "rgba(170, 170, 170, 0.7)";
-  ctx2.fillText("pop", x - 2, 46);
+  ctx2.fillText("pop", x - 2, 114);
   x += 28;
   s = "" + cellsn;
   ctx2.font = "30px " + font;
   ctx2.fillStyle = "rgba(170, 200, 170, 1)";
-  ctx2.fillText(s, x, 52);
+  ctx2.fillText(s, x, 120);
   if (histp > 0) {
     q = rlHist(histh, histi, histp);
     n1 = hist[q[2][0]][0][q[2][1]][12];
@@ -3696,7 +3679,7 @@ function drawInfo() {
   if (gennum === 0) {
     q[1]++;
   }
-  n = 72;
+  n = 140;
   if (n1 === n2) {
     if (q[1] > 0) {
       drawStrImg(ctx2, "\uFF0B", x - 14, n - 4, 16, 170, 170, 170, 0.3);
@@ -3736,7 +3719,7 @@ function drawInfo() {
         ctx2.fillStyle = "rgba(160, 160, 160, 1)";
       }
       ctx2.fillText(""+n1, x + 8, n);
-      n = 93;
+      n = 161;
     }
     if (n2 > 0) {
       if (n1 === 0) {
@@ -3764,11 +3747,11 @@ function drawInfo() {
     }
   }
   if (fpattf === 2) {
-    x += 20 * s.length + 15;
+    x += 40 * s.length + 15;
     s = "\u21FD" + fpattn;
     ctx2.font = "25px " + font;
     ctx2.fillStyle = "rgba(170, 200, 170, 0.8)";
-    ctx2.fillText(s, x, 70);
+    ctx2.fillText(s, x, 138);
   }
   ctx2.font = "14px " + font;
   if (dsppxct || dsppxccd) {
@@ -3779,24 +3762,24 @@ function drawInfo() {
   dsppxctx = 36;
   s = "" + (Math.floor(cellsz*100)/100) + "\u00B2";
   dsppxctw = 8 * s.length + 4;
-  ctx2.fillText(s, dsppxctx, 274);
+  ctx2.fillText(s, dsppxctx, 354);
   ctx2.fillStyle = "rgba(170, 170, 170, 0.6)";
-  ctx2.fillText("px/c", dsppxctx + s.length * 8 + 7, 274);
-  dsppxcty = 261;
+  ctx2.fillText("px/c", dsppxctx + s.length * 8 + 7, 354);
+  dsppxcty = 341;
   dsppxctw = 8 * s.length;
   dsppxcth = 16;
   if (fpattf !== 0) {
     ctx2.font = "30px " + font;
     ctx2.fillStyle = "rgba(170, 0, 0, 1)";
-    ctx2.fillText("w,h / c : "+fpattw+","+fpatth+" / "+(fpattf===1?fpattn:fpattnx), 90, 330);
+    ctx2.fillText("w,h / c : "+fpattw+","+fpatth+" / "+(fpattf===1?fpattn:fpattnx), 190, 330);
   }
   if (fpattf === 1) {
     ctx2.fillStyle = "rgba(170, 0, 0, 1)";
-    ctx2.fillText("char : "+fpattpos+" / "+(fpatt?fpatt.length:0), 130, 380);
+    ctx2.fillText("char : "+fpattpos+" / "+(fpatt?fpatt.length:0), 230, 380);
   }
   if (fpattf === 2) {
     ctx2.fillStyle = "rgba(170, 0, 0, 1)";
-    ctx2.fillText("pos : "+fpattzxp+","+fpattzyp, 140, 380);
+    ctx2.fillText("pos : "+fpattzxp+","+fpattzyp, 240, 380);
     ctx2.fillText("on<>off : "+fpattnt, 70, 430);
   }
 }
@@ -3820,7 +3803,7 @@ function drawDiamond() {
       ddiamcd = null;
     }
     x = x2 = 110;
-    y = y2 = 215;
+    y = y2 = 295;
     z = ddiamcd?0.7-0.6*(gts-ddiamcd>ddiamcdn?ddiamcdn:gts-ddiamcd)/ddiamcdn:0.7;
     ctx2.fillStyle = "rgba(240, 240, 0,"+z+")";
     if (ddiama > 0 && ddiamb === 0) {
@@ -3900,10 +3883,10 @@ function drawFramesSec() {
   ctx2.fillStyle = "rgba(170, 200, 170, 1)";
   s = "" + frpsn;
   x = 37;
-  ctx2.fillText(s, x, 183);
+  ctx2.fillText(s, x, 263);
   ctx2.fillStyle = "rgba(170, 170, 170, 0.6)";
   x += 10 * s.length + 6;
-  ctx2.fillText("f/s", x + 1, 183);
+  ctx2.fillText("f/s", x + 1, 263);
   if (gnpsd || gnpscd) {
     if (gnpscd) {
       z = gts - gnpscd > gnpscdn ? 1 : (gts - gnpscd) / gnpscdn;
@@ -3916,10 +3899,10 @@ function drawFramesSec() {
     ctx2.fillStyle = "rgba(170, 200, 170, " + z + ")";
     s = "" + gnpsn;
     x = 37;
-    ctx2.fillText(s, x, 140);
+    ctx2.fillText(s, x, 220);
     ctx2.fillStyle = "rgba(170, 170, 170, " + (z*0.6) + ")";
     x += 10 * s.length + 4;
-    ctx2.fillText("g/s", x + 2, 140);
+    ctx2.fillText("g/s", x + 2, 220);
   }
 }
 
@@ -3971,26 +3954,26 @@ function drawPos() {
   } else {
     ctx2.fillStyle = "rgba(0, 120, 240, 0.6)";
   }
-  ctx2.fillText("x", dsppostx, 235);
+  ctx2.fillText("x", dsppostx, 315);
   if (dsppost || dspposcd) {
     ctx2.fillStyle = "rgba(0, 170, 255, 1)";
   } else {
     ctx2.fillStyle = "rgba(0, 120, 240, 1)";
   }
-  ctx2.fillText(s1, dsppostx-2 + 17, 235);
+  ctx2.fillText(s1, dsppostx-2 + 17, 315);
   if (dsppost || dspposcd) {
     ctx2.fillStyle = "rgba(0, 170, 255, 0.6)";
   } else {
     ctx2.fillStyle = "rgba(0, 120, 240, 0.6)";
   }
-  ctx2.fillText("y", dsppostx-2 + 26 + 11 * s1.length, 235);
+  ctx2.fillText("y", dsppostx-2 + 26 + 11 * s1.length, 315);
   if (dsppost || dspposcd) {
     ctx2.fillStyle = "rgba(0, 170, 255, 1)";
   } else {
     ctx2.fillStyle = "rgba(0, 120, 240, 1)";
   }
-  ctx2.fillText(s2, dsppostx-2 + 26 + 11 * s1.length + 15, 235);
-  dspposty = 217;
+  ctx2.fillText(s2, dsppostx-2 + 26 + 11 * s1.length + 15, 315);
+  dspposty = 297;
   dsppostw = 11 * (s1.length+s2.length+4) - 4;
   dspposth = 19;
 }
@@ -5949,17 +5932,16 @@ function fcidx(c, r, v, vx, e, f, g, h) {
   if (r0 > maxt) {
     r0 = maxb + r0 - maxt - 1;
   }
-  if (!cidxbb || cidxbb[1] === 3 || c0 < cidxbx1 || c0 > cidxbx2 || r0 < cidxby1 || r0 > cidxby2) {
-    cidxbb = fcidxb(cidxbi, cidxb[cidxbi][0].length-1, (c2 = Math.floor(c0/n)), (r2 = Math.floor(r0/n)));
+  c2 = Math.floor(c0/n);
+  r2 = Math.floor(r0/n);
+  if (v && !cidxbb || c0 < cidxbx1 || c0 > cidxbx2 || r0 < cidxby1 || r0 > cidxby2) {
+    cidxbb = fcidxb(cidxbi, cidxb[cidxbi][0].length-1, c2, r2, v?true:false);
     cidxbx1 = c2 * n;
     cidxby1 = r2 * n;
     cidxbx2 = cidxbx1 + n - 1;
     cidxby2 = cidxby1 + n - 1;
   }
-  if (cidxbb[1] === 2) {
-    cidxbb[2] = performance.now();
-  }
-  if ((v2i = cidxbb[1] === 1 ? cidxbb[0][(c0-cidxbx1)*n+r0-cidxby1] : 0) > 0) {
+  if ((v2i = cidxbb ? cidxbb[(c0-cidxbx1)*n+r0-cidxby1+2] : 0) > 0) {
     v2 = cinfl[v2i - 1];
   } else {
     v2 = null;
@@ -6016,15 +5998,16 @@ function fcidx(c, r, v, vx, e, f, g, h) {
   if (v2i > 0 && v2i !== vi) {
     rmvCInfo(v2i - 1);
   }
-  cidxbb[0][(c0-cidxbx1)*n+r0-cidxby1] = vi;
+  if (vi !== v2i) {
+    cidxbb[(c0-cidxbx1)*n+r0-cidxby1+2] = vi;
+  }
   if ((d = (v2i === 0 ? vi === 0 ? 0 : 1 : vi === 0 ? -1 : 0)) !== 0) {
-    cidxbb[2] = (cidxbb[1] === 1 ? cidxbb[2] + d : d);
-    if (cidxbb[1] === 1 && cidxbb[2] === 0) {
-      fcidxafrl(cidxbb);
-    } else if (cidxbb[1] === 2 && cidxbb[2] > 0) {
-      frl[cidxbb[3]] = null;
-      frlfs[frlfsl++] = cidxbb[3];
-      cidxbb[1] = 1;
+    cidxbb[1] += d;
+    if (cidxbb[1] === 0) {
+      freeCib(cidxbb);
+      cidxb[cidxbi][0][cidxb[cidxbi][0].length-1][0][crkey(c2,r2)] = null;
+      cidxb[cidxbi][0][cidxb[cidxbi][0].length-1][0][1]--;
+      cidxbb = null;
     }
   }
   if (cellsxf) {
@@ -6033,8 +6016,8 @@ function fcidx(c, r, v, vx, e, f, g, h) {
   return vi;
 }
 
-function fcidxb(bi, l, c, r) {
-  var b, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, l2, c3, r3, k3;
+function fcidxb(bi, l, c, r, q) {
+  var b, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, l2, c3, r3, k3, bb;
   t = l === cidxb[bi][0].length - 1 && cidxb[bi][2] === -1;
   if (!t && (!cidxb[bi][0][l] || cidxb[bi][0][l][1] < 1)) {
     if (l === 0 && cidxb[bi][1] === -1) {
@@ -6051,30 +6034,22 @@ function fcidxb(bi, l, c, r) {
   }
   k = crkey(c,r);
   if (b = (cidxb[bi][0][l] && cidxb[bi][0][l] !== true ? cidxb[bi][0][l][0][k] : null)) {
-    if (t) {
-      return b;
-    }
-    cidxb[bi][0][l][0][k] = null;
-    cidxb[bi][0][l][1]--;
-    if (b[2] === 2) {
-      frl[b[3]] = null;
-      frlfs[frlfsl++] = b[3];
-    }
-    if (cidxb[bi][0][l][1] < 1) {
-      if (l === 0 && cidxb[bi][1] === -1) {
-        cidxb[bi][0][l] = true;
-      } else if (l > 0) {
-        if (cidxb[bi][0][l-1] === true) {
+    if (!t) {
+      cidxb[bi][0][l][0][k] = null;
+      cidxb[bi][0][l][1]--;
+      if (cidxb[bi][0][l][1] < 1) {
+        if (l === 0 && cidxb[bi][1] === -1) {
           cidxb[bi][0][l] = true;
-        } else {
-          cidxb[bi][0][l] = null;
+        } else if (l > 0) {
+          if (cidxb[bi][0][l-1] === true) {
+            cidxb[bi][0][l] = true;
+          } else {
+            cidxb[bi][0][l] = null;
+          }
         }
       }
     }
-    if (b[1] === 1) {
-      return b;
-    }
-    b = null;
+    return b;
   }
   if (cidxb[bi][0][l] === true) {
     return null;
@@ -6083,6 +6058,7 @@ function fcidxb(bi, l, c, r) {
     if (cidxb[bi][1] > -1) {
       l2 = cidxb[cidxb[bi][1]][0].length-1;
       if (cidxb[cidxb[bi][1]][0][l2] === true) {
+        cidxb[cidxb[bi][1]][2] = -2;
         cidxb[bi][1] = -1;
         cidxb[bi][3] = null;
       } else {
@@ -6095,25 +6071,29 @@ function fcidxb(bi, l, c, r) {
         k2 = crkey(c2,r2);
         if (!cidxb[bi][3][k2]) {
           cidxb[bi][3][k2] = true;
-          if (b1 = fcidxb(cidxb[bi][1],l2,c2,r2)) {
+          if (b1 = fcidxb(cidxb[bi][1],l2,c2,r2,q)) {
             i = 0;
             while (i < n2) {
               j = 0;
               while (j < n2) {
                 if (  t
-                      || b1[0][(i+0)*n2+j+0] || b1[0][(i+0)*n2+j+1] || b1[0][(i+0)*n2+j+2] || b1[0][(i+0)*n2+j+3] || b1[0][(i+0)*n2+j+4] || b1[0][(i+0)*n2+j+5] || b1[0][(i+0)*n2+j+6] || b1[0][(i+0)*n2+j+7]
-                      || b1[0][(i+1)*n2+j+0] || b1[0][(i+1)*n2+j+1] || b1[0][(i+1)*n2+j+2] || b1[0][(i+1)*n2+j+3] || b1[0][(i+1)*n2+j+4] || b1[0][(i+1)*n2+j+5] || b1[0][(i+1)*n2+j+6] || b1[0][(i+1)*n2+j+7]
-                      || b1[0][(i+2)*n2+j+0] || b1[0][(i+2)*n2+j+1] || b1[0][(i+2)*n2+j+2] || b1[0][(i+2)*n2+j+3] || b1[0][(i+2)*n2+j+4] || b1[0][(i+2)*n2+j+5] || b1[0][(i+2)*n2+j+6] || b1[0][(i+2)*n2+j+7]
-                      || b1[0][(i+3)*n2+j+0] || b1[0][(i+3)*n2+j+1] || b1[0][(i+3)*n2+j+2] || b1[0][(i+3)*n2+j+3] || b1[0][(i+3)*n2+j+4] || b1[0][(i+3)*n2+j+5] || b1[0][(i+3)*n2+j+6] || b1[0][(i+3)*n2+j+7]
-                      || b1[0][(i+4)*n2+j+0] || b1[0][(i+4)*n2+j+1] || b1[0][(i+4)*n2+j+2] || b1[0][(i+4)*n2+j+3] || b1[0][(i+4)*n2+j+4] || b1[0][(i+4)*n2+j+5] || b1[0][(i+4)*n2+j+6] || b1[0][(i+4)*n2+j+7]
-                      || b1[0][(i+5)*n2+j+0] || b1[0][(i+5)*n2+j+1] || b1[0][(i+5)*n2+j+2] || b1[0][(i+5)*n2+j+3] || b1[0][(i+5)*n2+j+4] || b1[0][(i+5)*n2+j+5] || b1[0][(i+5)*n2+j+6] || b1[0][(i+5)*n2+j+7]
-                      || b1[0][(i+6)*n2+j+0] || b1[0][(i+6)*n2+j+1] || b1[0][(i+6)*n2+j+2] || b1[0][(i+6)*n2+j+3] || b1[0][(i+6)*n2+j+4] || b1[0][(i+6)*n2+j+5] || b1[0][(i+6)*n2+j+6] || b1[0][(i+6)*n2+j+7]
-                      || b1[0][(i+7)*n2+j+0] || b1[0][(i+7)*n2+j+1] || b1[0][(i+7)*n2+j+2] || b1[0][(i+7)*n2+j+3] || b1[0][(i+7)*n2+j+4] || b1[0][(i+7)*n2+j+5] || b1[0][(i+7)*n2+j+6] || b1[0][(i+7)*n2+j+7]
+                      || b1[(i+0)*n2+j+0+2] || b1[(i+0)*n2+j+1+2] || b1[(i+0)*n2+j+2+2] || b1[(i+0)*n2+j+3+2] || b1[(i+0)*n2+j+4+2] || b1[(i+0)*n2+j+5+2] || b1[(i+0)*n2+j+6+2] || b1[(i+0)*n2+j+7]
+                      || b1[(i+1)*n2+j+0+2] || b1[(i+1)*n2+j+1+2] || b1[(i+1)*n2+j+2+2] || b1[(i+1)*n2+j+3+2] || b1[(i+1)*n2+j+4+2] || b1[(i+1)*n2+j+5+2] || b1[(i+1)*n2+j+6+2] || b1[(i+1)*n2+j+7]
+                      || b1[(i+2)*n2+j+0+2] || b1[(i+2)*n2+j+1+2] || b1[(i+2)*n2+j+2+2] || b1[(i+2)*n2+j+3+2] || b1[(i+2)*n2+j+4+2] || b1[(i+2)*n2+j+5+2] || b1[(i+2)*n2+j+6+2] || b1[(i+2)*n2+j+7]
+                      || b1[(i+3)*n2+j+0+2] || b1[(i+3)*n2+j+1+2] || b1[(i+3)*n2+j+2+2] || b1[(i+3)*n2+j+3+2] || b1[(i+3)*n2+j+4+2] || b1[(i+3)*n2+j+5+2] || b1[(i+3)*n2+j+6+2] || b1[(i+3)*n2+j+7]
+                      || b1[(i+4)*n2+j+0+2] || b1[(i+4)*n2+j+1+2] || b1[(i+4)*n2+j+2+2] || b1[(i+4)*n2+j+3+2] || b1[(i+4)*n2+j+4+2] || b1[(i+4)*n2+j+5+2] || b1[(i+4)*n2+j+6+2] || b1[(i+4)*n2+j+7]
+                      || b1[(i+5)*n2+j+0+2] || b1[(i+5)*n2+j+1+2] || b1[(i+5)*n2+j+2+2] || b1[(i+5)*n2+j+3+2] || b1[(i+5)*n2+j+4+2] || b1[(i+5)*n2+j+5+2] || b1[(i+5)*n2+j+6+2] || b1[(i+5)*n2+j+7]
+                      || b1[(i+6)*n2+j+0+2] || b1[(i+6)*n2+j+1+2] || b1[(i+6)*n2+j+2+2] || b1[(i+6)*n2+j+3+2] || b1[(i+6)*n2+j+4+2] || b1[(i+6)*n2+j+5+2] || b1[(i+6)*n2+j+6+2] || b1[(i+6)*n2+j+7]
+                      || b1[(i+7)*n2+j+0+2] || b1[(i+7)*n2+j+1+2] || b1[(i+7)*n2+j+2+2] || b1[(i+7)*n2+j+3+2] || b1[(i+7)*n2+j+4+2] || b1[(i+7)*n2+j+5+2] || b1[(i+7)*n2+j+6+2] || b1[(i+7)*n2+j+7]
                     ) {
                   c3 = c2*n2/8+i;
                   r3 = r2*n2/8+j;
                   k3 = crkey(c3,r3);
-                  b2 = [new Int32Array(64), 1, 0, -1, 0];
+                  if (t) {
+                    b2 = getCib(8);
+                  } else {
+                    b2 = new Int32Array(66);
+                  }
                   fcidxbc2(n2,8,b1,b2,i,j);
                   if (t || c3 !== c || r3 !== r) {
                     if (!cidxb[bi][0][l]) {
@@ -6121,9 +6101,6 @@ function fcidxb(bi, l, c, r) {
                     }
                     cidxb[bi][0][l][0][k3] = b2;
                     cidxb[bi][0][l][1]++;
-                  }
-                  if (t) {
-                    b2[4] = [k3,cidxb[bi][0][l]];
                   }
                   if (c3 === c && r3 === r) {
                     b = b2;
@@ -6137,13 +6114,12 @@ function fcidxb(bi, l, c, r) {
         }
       }
     }
-    if (t && !b) {
+    if (t && q && !b) {
       if (!cidxb[bi][0][l]) {
         cidxb[bi][0][l] = [{},0];
       }
-      cidxb[bi][0][l][0][k] = (b = [new Int32Array(64),1,0,-1,[k,cidxb[bi][0][l]]]);
+      cidxb[bi][0][l][0][k] = (b = getCib(8));
       cidxb[bi][0][l][1]++;
-      fcidxafrl(b);
     }
   } else {
     n = Math.pow(2, l+3);
@@ -6158,34 +6134,34 @@ function fcidxb(bi, l, c, r) {
       } else {
         r2 = r*2;
       }
-      b1 = fcidxb(bi,l-1,c2,r2);
-      b2 = fcidxb(bi,l-1,c2,r2+1);
-      b3 = fcidxb(bi,l-1,c2+1,r2+1);
-      b4 = fcidxb(bi,l-1,c2+1,r2);
+      b1 = fcidxb(bi,l-1,c2,r2,q);
+      b2 = fcidxb(bi,l-1,c2,r2+1,q);
+      b3 = fcidxb(bi,l-1,c2+1,r2+1,q);
+      b4 = fcidxb(bi,l-1,c2+1,r2,q);
       if (b1 || b2 || b3 || b4) {
-        b = [new Int32Array(n*n),1,0,-1,0];
+        if (t) {
+          b = getCib(n);
+        } else {
+          b = new Int32Array(n*n+2);
+        }
         fcidxbc(n/2,b1,b,0,0);
         fcidxbc(n/2,b2,b,0,n/2);
         fcidxbc(n/2,b4,b,n/2,0);
         fcidxbc(n/2,b3,b,n/2,n/2);
       }
-      if (!t && b && b[2] === 0) {
+      if (!t && b && b[1] === 0) {
         b = null;
       }
     }
-    if (t) {
+    if (t && b || t && q) {
       if (!b) {
-        b = [new Int32Array(n*n),1,0,-1,0];
+        b = getCib(n);
       }
       if (!cidxb[bi][0][l]) {
         cidxb[bi][0][l] = [{},0];
       }
       cidxb[bi][0][l][0][k] = b;
       cidxb[bi][0][l][1]++;
-      b[4] = [k,cidxb[bi][0][l]];
-      if (b[2] === 0) {
-        fcidxafrl(b);
-      }
     } else if (cidxb[bi][0][l-1] === true) {
       cidxb[bi][0][l] = true;
     }
@@ -6199,12 +6175,12 @@ function fcidxbc(n, s, t, c, r) {
   while (i < n) {
     j = 0;
     while (j < n) {
-      t[0][(c+i)*n+r+j] = s[0][i*n+j];
+      t[(c+i)*n+r+j+2] = s[i*n+j+2];
       j++;
     }
     i++;
   }
-  t[2] += s[2];
+  t[1] += s[1];
 }
 
 function fcidxbc2(n1, n2, s, t, c, r) {
@@ -6213,8 +6189,8 @@ function fcidxbc2(n1, n2, s, t, c, r) {
   while (i < n2) {
     j = 0;
     while (j < n2) {
-      if (t[0][i*n2+j] = s[0][(c+i)*n1+r+j]) {
-        t[2]++;
+      if (t[i*n2+j+2] = s[(c+i)*n1+r+j]+2) {
+        t[1]++;
       }
       j++;
     }
@@ -6222,11 +6198,29 @@ function fcidxbc2(n1, n2, s, t, c, r) {
   }
 }
 
-function fcidxafrl(b) {
-  b[1] = 2;
-  b[2] = performance.now();
-  b[3] = (frlfsl === 0 ? frll++ : frlfs[--frlfsl]);
-  frl[b[3]] = b;
+function fcidxinc1() {
+  cidxb[cidxbi][0][cidxb[cidxbi][0].length] = null;
+  clrCib();
+  cidxbx1 = maxr + 1, cidxbx2 = maxl - 1, cidxby1 = maxt + 1, cidxby2 = maxb - 1, cidxbb = null;
+}
+
+function fcidxinc2() {
+  var i;
+  i = 0;
+  while (i < cidxb.length) {
+    if (cidxb[i][2] === -2) {
+      cidxb[cidxbi][2] = i;
+      cidxb[i] = [[],cidxbi,-1,0];
+      cidxbi = i;
+      fcidxinc1();
+      return;
+    }
+    i++;
+  }   
+  cidxb[cidxb.length] = [[],cidxbi,-1,0];
+  cidxb[cidxbi][2] = cidxb.length - 1;
+  cidxbi = cidxb.length - 1;
+  fcidxinc1();
 }
 
 function crkey(c, r) {
@@ -6362,6 +6356,10 @@ function nextHist() {
   }
 }
 
+function incHist() {
+  histhm += histhm + 1;
+}
+
 function prevHist(h, i) {
   var h2, i2;
   h2 = h;
@@ -6467,6 +6465,27 @@ function addCInfo(e, f, g, h) {
     cinfl[i][3] = h;
   }
   return i;
+}
+
+function getCib(n) {
+  var i;
+  if (ciblfll === 0) {
+    cibl[i = cibll++] = new Int32Array(n*n+2);
+    cibl[i][0] = i;
+  } else {
+    cibl[i = ciblfl[--ciblfll]][1] = 0;
+  }
+  return cibl[i];
+}
+
+function freeCib(b) {
+  ciblfl[ciblfll++] = b[0];
+}
+
+function clrCib() {
+  cibl = [];
+  cibll = 0;
+  ciblfll = 0;
 }
 
 function revert() {
