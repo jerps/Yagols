@@ -87,7 +87,9 @@
 
 <br>
 
-* V3.1b
+* V3.1b (june 2018)
+
+  * Misc. improvements.
 
 <br>
 
