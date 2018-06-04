@@ -23,13 +23,13 @@
 <br>
 
 <p align="center">
-  <img src="Screenshot1.png"/>
+  <img src="Screenshot01.png"/>
 </p>
 
 <br>
 
 <p align="center">
-  <img src="Screenshot2.png"/>
+  <img src="Screenshot02.png"/>
 </p>
 
 <br>
