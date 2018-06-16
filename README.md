@@ -57,10 +57,6 @@
   * Helicopter view of all "on" cells in the universe fitted within the viewing area.
   
   * Older cells get a darker color; number of colors (shades) is variable.
-  
-  * Change speed, zoom, number of colors/shaded and cellsize with sliders.
-  
-  * Advanced help system to easily explore and discover Yagols.
 
 <br> 
 
@@ -84,6 +80,12 @@
 <br>
 
 ## Changes
+
+<br>
+
+* V3.1c (june 2018)
+
+  * Misc. improvements.
 
 <br>
 
