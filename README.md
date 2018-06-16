@@ -28,12 +28,6 @@
 
 <br>
 
-<p align="center">
-  <img src="Screenshot02.png"/>
-</p>
-
-<br>
-
 ### Features:
 
   * Intuitive and fluid user interface.
