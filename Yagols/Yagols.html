@@ -227,7 +227,7 @@ table {
   </canvas>
   <canvas id="canvas1b" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 1;">
   </canvas>
-  <canvas id="canvas1" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 2; opacity: 0.8;">
+  <canvas id="canvas1" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 2; opacity: 1;">
   </canvas>
   <canvas id="canvas1a" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%; z-index: 3;">
   </canvas>
@@ -2478,21 +2478,18 @@ function dspview0() {
     }
   }
   
-  if (cellsz < 1.5) {
-    x = 0.8 - 0.5 + cellsz / 1.5 * 0.5 + 0.2 - 0.2 * csize / 100;
-  } else {
-    x = 0.8 + 0.2 - 0.2 * csize / 100;
-  }
   if (frzc || frzccd) {
     if (frzccd) {
       if (frzc) {
-        x *= 0.3 + 0.7 * (1 - (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn));
+        x = 0.4 + 0.6 * (1 - (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn));
       } else {
-        x *= 0.3 + 0.7 * (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn);
+        x = 0.4 + 0.6 * (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn);
       }
     } else {
-      x *= 0.3;
+      x = 0.4;
     }
+  } else {
+    x = 1;
   }
   canvas1.style.opacity = "" + x;
    
@@ -2681,8 +2678,8 @@ function drawCells() {
         cellsfs[cellsfsl++] = i;
         ci[3] = 0 - cellsfsl + 1;
         ci[5] = 0;
-        px = Math.round(cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx);
-        py = Math.round(cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1);
+        px = cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx;
+        py = cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1;
         if (px >= 0 - cellsz && px < cwidth + cellsz && py >= 0 - cellsz && py < cheight + cellsz) {
           ctx1.clearRect(Math.round(px-1), Math.round(py-1), Math.round(cellsz+2), Math.round(cellsz+2));
         }
@@ -2722,8 +2719,8 @@ function drawCells() {
             cellImg(c);
             x = Math.trunc(canvasosci.width / cs);
             py2 = Math.trunc(c / x);
-            px2 = Math.round((c - py2 * x) * cs);
-            py2 = Math.round(py2 * cs);
+            px2 = Math.trunc((c - py2 * x) * cs);
+            py2 = Math.trunc(py2 * cs);
             ctx1.drawImage(canvasosci, px2, py2, cs, cs, px, py, cs, cs);
           }
         }
@@ -2743,8 +2740,8 @@ function cellImg(c) {
   cs = cellsz - cd;
   x = Math.trunc(canvasosci.width / cs);
   py = Math.trunc(c / x);
-  px = Math.round((c - py * x) * cs);
-  py = Math.round(py * cs);
+  px = Math.trunc((c - py * x) * cs);
+  py = Math.trunc(py * cs);
   if (cimg[c] < cimgc) {
     cimg[c] = cimgc;
     ctxosci.clearRect(px, py, cs, cs);
@@ -3886,11 +3883,11 @@ function drawInfo() {
     }
   }
   if (fpattf === 2) {
-    x += 40 * s.length + 15;
+    x += 75 * s.length + 15;
     s = "\u21FD" + fpattn;
     ctx2.font = "25px " + font;
     ctx2.fillStyle = "rgba(170, 200, 170, 0.8)";
-    ctx2.fillText(s, x, 138);
+    ctx2.fillText(s, x, 108);
   }
   ctx2.font = "14px " + font;
   if (dsppxct || dsppxccd) {
@@ -4578,6 +4575,18 @@ function drawFxa() {
 function drawFxb() {
   if (stopscd) {
     ctx1b.fillStyle = "rgba(70, 70, 110, " + (0.5 * (gts - stopscd > stopscdn ? 0 : 1 - (gts - stopscd) / stopscdn)) + ")";
+    ctx1b.fillRect(0, 0, cwidth, cheight);
+  }  
+  if (frzc || frzccd) {
+    if (frzccd) {
+      x = gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn;
+      if (!frzc) {
+        x = 1 - x;
+      }
+    } else {
+      x = 1;
+    }
+    ctx1b.fillStyle = "rgba(140, 140, 140, " + (0.3*x) + ")";
     ctx1b.fillRect(0, 0, cwidth, cheight);
   }
 }
@@ -6377,8 +6386,7 @@ function fcidx(c, r, v, vx, e, f, g, h) {
     cidxbb[1] += d;
     if (cidxbb[1] === 0) {
       freeCib(cidxbb);
-      cidxb[cidxbi][0][cidxb[cidxbi][0].length-1][0][crkey(c2,r2)] = null;
-      cidxb[cidxbi][0][cidxb[cidxbi][0].length-1][0][1]--;
+      cidxb[cidxbi][0][cidxb[cidxbi][0].length-1].delete(crkey(c2,r2));
       cidxbb = null;
     }
   }
@@ -6391,7 +6399,7 @@ function fcidx(c, r, v, vx, e, f, g, h) {
 function fcidxb(bi, l, c, r, q) {
   var b, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, l2, c3, r3, k3, bb;
   t = l === cidxb[bi][0].length - 1 && cidxb[bi][2] === -1;
-  if (!t && (!cidxb[bi][0][l] || cidxb[bi][0][l][1] < 1)) {
+  if (!t && (!cidxb[bi][0][l] || cidxb[bi][0][l].size < 1)) {
     if (l === 0 && cidxb[bi][1] === -1) {
       cidxb[bi][0][l] = true;
       return null;
@@ -6405,11 +6413,10 @@ function fcidxb(bi, l, c, r, q) {
     }
   }
   k = crkey(c,r);
-  if (b = (cidxb[bi][0][l] && cidxb[bi][0][l] !== true ? cidxb[bi][0][l][0][k] : null)) {
+  if (b = (cidxb[bi][0][l] && cidxb[bi][0][l] !== true ? cidxb[bi][0][l].get(k) : null)) {
     if (!t) {
-      cidxb[bi][0][l][0][k] = null;
-      cidxb[bi][0][l][1]--;
-      if (cidxb[bi][0][l][1] < 1) {
+      cidxb[bi][0][l].delete(k);
+      if (cidxb[bi][0][l].size < 1) {
         if (l === 0 && cidxb[bi][1] === -1) {
           cidxb[bi][0][l] = true;
         } else if (l > 0) {
@@ -6426,6 +6433,7 @@ function fcidxb(bi, l, c, r, q) {
   if (cidxb[bi][0][l] === true) {
     return null;
   }
+  b = null;
   if (l === 0) {
     if (cidxb[bi][1] > -1) {
       l2 = cidxb[cidxb[bi][1]][0].length-1;
@@ -6436,13 +6444,13 @@ function fcidxb(bi, l, c, r, q) {
       } else {
         n2 = Math.pow(2, l2+3);
         if (!cidxb[bi][3]) {
-          cidxb[bi][3] = {};
+          cidxb[bi][3] = new Map();
         }
         c2 = Math.floor(c/(n2/8));
         r2 = Math.floor(r/(n2/8));
         k2 = crkey(c2,r2);
-        if (!cidxb[bi][3][k2]) {
-          cidxb[bi][3][k2] = true;
+        if (!cidxb[bi][3].has(k2)) {
+          cidxb[bi][3].set(k2, true);
           if (b1 = fcidxb(cidxb[bi][1],l2,c2,r2,q)) {
             i = 0;
             while (i < n2) {
@@ -6469,10 +6477,9 @@ function fcidxb(bi, l, c, r, q) {
                   fcidxbc2(n2,8,b1,b2,i,j);
                   if (t || c3 !== c || r3 !== r) {
                     if (!cidxb[bi][0][l]) {
-                      cidxb[bi][0][l] = [{},0];
+                      cidxb[bi][0][l] = new Map();
                     }
-                    cidxb[bi][0][l][0][k3] = b2;
-                    cidxb[bi][0][l][1]++;
+                    cidxb[bi][0][l].set(k3, b2);
                   }
                   if (c3 === c && r3 === r) {
                     b = b2;
@@ -6488,10 +6495,9 @@ function fcidxb(bi, l, c, r, q) {
     }
     if (t && q && !b) {
       if (!cidxb[bi][0][l]) {
-        cidxb[bi][0][l] = [{},0];
+        cidxb[bi][0][l] = new Map();
       }
-      cidxb[bi][0][l][0][k] = (b = getCib(8));
-      cidxb[bi][0][l][1]++;
+      cidxb[bi][0][l].set(k, (b = getCib(8)));
     }
   } else {
     n = Math.pow(2, l+3);
@@ -6530,10 +6536,9 @@ function fcidxb(bi, l, c, r, q) {
         b = getCib(n);
       }
       if (!cidxb[bi][0][l]) {
-        cidxb[bi][0][l] = [{},0];
+        cidxb[bi][0][l] = new Map();
       }
-      cidxb[bi][0][l][0][k] = b;
-      cidxb[bi][0][l][1]++;
+      cidxb[bi][0][l].set(k, b);
     } else if (cidxb[bi][0][l-1] === true) {
       cidxb[bi][0][l] = true;
     }
@@ -6969,10 +6974,10 @@ function hbckcheck(hi0) {
     }
   }
   if (p < hbcksll) {
-    x = {};
+    x = new Map();
     for (i = 0; i < cellslen; i++) {
       if ((ci = cells[i])[3] === 1) {
-        x[crkey(ci[0],ci[1])] = true;
+        x.set(crkey(ci[0],ci[1]), true);
       }
     }
     p0 = 0;
@@ -7016,15 +7021,15 @@ function hbckcheck(hi0) {
           }
           g = hi[0][i][2];
           k = crkey(c,r);
-          z = x[k];
+          z = x.get(k);
           if (g >= 0) {
             if (!z) {
-              x[k] = true;
+              x.set(k, true);
               n++;
             }
           } else if (g === -1) {
             if (z) {
-              x[k] = false;
+              x.delete(k);
               n--;
             }
           }
@@ -7036,7 +7041,7 @@ function hbckcheck(hi0) {
       dx = cellsl - hi[9];
       dy = cellsb - hi[8];
       i = 0;
-      while (i < cellslen && ((ci = cells[i])[3] !== 1 || x[crkey(ci[0]-dx,ci[1]-dy)])) {
+      while (i < cellslen && ((ci = cells[i])[3] !== 1 || x.get(crkey(ci[0]-dx,ci[1]-dy)))) {
         i++;
       }
       if (i < cellslen) {

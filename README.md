@@ -28,11 +28,23 @@
 
 <br>
 
+<p align="center">
+  <img src="Screenshot02.png"/>
+</p>
+
+<br>
+
+<p align="center">
+  <img src="Screenshot03.png"/>
+</p>
+
+<br>
+
 ### Features:
 
   * Intuitive and fluid user interface.
   
-  * Ideal for beginning enthusiasts to easily explore and experiment GoL.
+  * Ideal for beginning enthusiasts to easily explore and experiment with GoL.
 
   * Generations are recorded. Works like a tape recorder (play / fast-forward / rewind).
   
