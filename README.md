@@ -18,7 +18,7 @@
     
 <br>
 
-## [To Yagols . . .](http://erps.me/Yagols/Yagols.html)
+## [To Yagols . . .](http://johnerps.net/Yagols/Yagols.html)
 
 <br>
 
