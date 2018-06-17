@@ -259,7 +259,7 @@ var title = [ "Yet another", "Game\u22C5of\u22C5Life", "simulator", "Conway\u22C
 var font = "Verdana";
 var maxl = -9999999, maxt = 9999999, maxr = 9999999, maxb = -9999999;
 var gennum = 0, gennumc = 0, speed = 20, run = false, runcd = null, runcdn = 500, runcdc = 0, runbc = 0, runcd2 = null, runcdn2 = 100, runcd3 = null, runcdn3 = 800, runcd4 = null, runcdn4 = 1400, runcd5 = null, runcdn5 = 800;
-var posx = 0, posy = 0, posx2 = 0, posy2 = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80, cells = [], rmvcellsf = false, rmvcellsn = 0;
+var posx = 0, posy = 0, posx2 = 0, posy2 = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80, scalem = false, scalemn = 0, scalemcd = null, scalemcdn = 2000, cells = [], rmvcellsf = false, rmvcellsm = new Map(), rmvcellsn = 0, posm = false, posmx = 0, posmy = 0, posmcd = null, posmcdn = 2000;
 var canvas0, canvas1, canvas1a, canvas1b, canvas2, canvas3, canvasos0, canvasos1, canvasos2, canvasosci, ctx0, ctx1, ctx1a, ctx1b, ctx2, ctx3, ctxos0, ctxos1, ctxos2, ctxosci, mingen = 0;
 var titlefd = 0, titlefdt = null, titlefds = 1000, titlemode = 0, tmet = null, titlex = 625, titleh = true, titlecd = null, titlecdn = 32000, titlecd2 = null, titlecdn2 = 7000, titlecd3 = null, titlecdn3 = 1200, titlemf = false, title0cd = null, title0cdn = 2000, title0x = 0, title0y = 0;
 var mdown = false, ton = false, toncd = 0, tonx = 0, tony = 0, tonw = 0;
@@ -299,7 +299,9 @@ var cellslen = 0, cellsa = [], cellsan = 0, cellsfs = [], cellsfsl = 0, cellsx =
 var cinfl = [], cinfll = 0, cinflfs = [], cinflfsl = 0;
 var cibl = [], cibll = 0, ciblfl = [], ciblfll = 0;
 var ddiama = 0, ddiamb = 0, ddiamcd = null, ddiamcdn = 800, ddiamx = 0, ddiamy = 0, ddiamw = 0, ddiamh = 0, ddiamcd2 = null, ddiamcdn2 = 1200, ddiamf = 0;
+var vwcrs = false;
 var swzmt = false, swzmtx = 0, swzmty = 0, swzmtw = 0, swzmth = 0, swzmcd = null, swzmcdn = 200, swzmcd2 = null, swzmcdn2 = 300, swzmf = true, swzmsw = true;
+var trkw = false;
 var hbcksl = null, hbcksll = 0, hbckslf = 0, hbcksm = null;
 var stpgn = 0, stpgn2 = 0, stpgnm = 0, stpgnm2 = 0, stpge = false, stpga = false, stpgax = false, stpgcd = null, stpgcdn = 500, stpgcd2 = null, stpgcdn2 = 500, stpgcd3 = null, stpgcdn3 = 1000, stpgsf = false, stpgnc = 0, stpgnc2 = 0, stpgssx = 0, stpgssy = 0, stpgssw = 0, stpgssh = 0, stpgssx2 = 0, stpgssy2 = 0, stpgssw2 = 0, stpgssh2 = 0, stpgdx = 0, stpgdy = 0, stpgdw = 0, stpgdh = 0;
 var tickc = 0, tickc2 = 0, tickct = null, tickcr = 0, tickcm1 = 0, tickcm2 = 0, tickcmf1 = 0, tickcmf2 = 0, tickcmf3 = 0, tickclp = 0;
@@ -316,6 +318,7 @@ var clrucd = null, clrucdn = 1000;
 var dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcdn = 2000, dhlpcd2 = null, dhlpcdn2 = 300000, dhlplf = 1, dhlpcd3 = null, dhlpcdn3 = 400;
 var frzc = false, frzcp = false, frzccd = null, frzccdn = 1000;
 var htgen = 0, htgen2 = -1, httot = 0, httot2 = 0, htgent = false, htgencd = null, htgencdn = 200, htgentx = 0, htgenty = 0, htgentw = 0, htgenth = 0;
+var lastcc = 0;
 var cimg = [], cimgc = 0;
 var cwidth = 0, cheight = 0;
 var divl = [-1,-2], divv = false, dive = [];
@@ -326,7 +329,8 @@ var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", 
 function clrvars() {
   var l = cidxb[cidxbi][0].length;
   gennum = 0, gennumc = 0, run = false, runcd = null, runcdc = 0, runbc = 0, runcd2 = null, runcd3 = null, runcd4 = null, runcd5 = null;
-  posx = 0, posy = 0, posx2 = 0, posy2 = 0, cells = [], rmvcellsf = false, rmvcellsn = 0;
+  posx = 0, posy = 0, posx2 = 0, posy2 = 0, cells = [], rmvcellsf = false, rmvcellsm = new Map(), rmvcellsn = 0, posm = false, posmx = 0, posmy = 0, posmcd = null, posmcdn = 2000;
+  scalem = false, scalemn = 0, scalemcd = null,  scalemcdn = 2000;
   mingen = 0;
   runt = false, runtx = 0, runty = 0, runtw = 0, runth = 0;
   chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, prvcolrs = null, prvcsize = null, drawbackg = true, drawallcells = true;
@@ -347,6 +351,7 @@ function clrvars() {
   hbcksl = null, hbcksll = 0, hbckslf = 0, hbcksm = null;
   stpgsf = false;
   msgl = [], msgll = 0, msgf1 = 0, msgl1 = "", msgl2 = "", msgl3 = "";
+  trkw = false;
   vwax = 0, vway = 0, vwaw = 0, vwah = 0;
   dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcd2 = null, dhlplf = 1, dhlpcd3 = null;
   frzc = false, frzcp = false, frzccd = null;
@@ -757,24 +762,34 @@ function init0() {
   ctxosci = canvasosci.getContext("2d");
   ctx0.textBaseline = "bottom";
   ctx0.globalAlpha = 1;
+  ctx0.imageSmoothingEnabled = false;
   ctx1.textBaseline = "bottom";
   ctx1.globalAlpha = 1;
+  ctx1.imageSmoothingEnabled = false;
   ctx1a.textBaseline = "bottom";
   ctx1a.globalAlpha = 1;
+  ctx1a.imageSmoothingEnabled = false;
   ctx1b.textBaseline = "bottom";
   ctx1b.globalAlpha = 1;
+  ctx1b.imageSmoothingEnabled = false;
   ctx2.textBaseline = "bottom";
   ctx2.globalAlpha = 1;
+  ctx2.imageSmoothingEnabled = false;
   ctx3.textBaseline = "bottom";
   ctx3.globalAlpha = 1;
+  ctx3.imageSmoothingEnabled = false;
   ctxos0.textBaseline = "bottom";
   ctxos0.globalAlpha = 1;
+  ctxos0.imageSmoothingEnabled = false;
   ctxos1.textBaseline = "bottom";
   ctxos1.globalAlpha = 1;
+  ctxos1.imageSmoothingEnabled = false;
   ctxos2.textBaseline = "bottom";
   ctxos2.globalAlpha = 1;
+  ctxos2.imageSmoothingEnabled = false;
   ctxosci.textBaseline = "bottom";
   ctxosci.globalAlpha = 1;
+  ctxosci.imageSmoothingEnabled = false;
   
   dive[0] = document.getElementById("pattern");
   dive[1] = document.getElementById("crule");
@@ -852,6 +867,12 @@ function init0() {
   pstrimg("\u203B-31-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAB4klEQVRYR+2WyytFURTGXcmzZGCiUAYeAyl5JP4DA2UsJQYGlBkZMVSGiolHMTORZGbGxCOZeiTFhJIiGSB+q9ap1ensu+91bu7knPrar7XXt/a399r7pAry+KXyyF2QkOdF/UT2RPZqJPgBzyEpSmiPgHqwA84ipGqk7zobCe2Bq2HiAagEneDROBLiDW0/UQrRqxkfo74KJsCKLsAbhyUfwHpXZzyEApinPWfIW6i/aDsgluYtaAUfXmYMwqlmHdkA2rE9V4fblEPgC4yCNUfAXv6oPHcFUI63IiN3LGKJzHXJuAIIVhObOB25jLkCyAlxmFwk7VY1Tig/IwLYom82Yo/r6GsGN+DOu9lqYGVfoG9G+xcpp7VuFQj8yqnuBZKOteDeEDZRzyjfA/JSJhyDNnWyRzkIvlWJQ8o+Q9BFPbho+qnvm7Ee9eUVwLXyJWZOAbntsl25yH/lZdZVBXbFVDqA5O8FCO+53GyS01F73kB/FXgDsu8Zfenec9ep9qVhRsRi5CL3pVNOAogidxGXEWwheNelxQ4gTD6M40117rrb1xkf17MRKwBLblPm3181ec+PgJz6v77nk8xdBpKi3i8su+tPRl402ZIKIBfOaYRnye9LL6MxSH6ds1ErZ7a/qv2NIF9nit0AAAAASUVORK5CYII=");
   pstrimg("\u203B-31-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAACeklEQVRYR2NkGEDAOIB2M4xaPiChPxrsIzzYu7q6jJiZmf8XFxefRw6KtrY2YTY2tqVAMRkgnl9SUtKLLP///3/Gvr6+sKKiolWMjIz/iQ1GeIIDarb/9+/fbqBGJqBhtqWlpcdhhvT09GwEsv1AfKDcP6AD1YEW3YHJd3d3bwFa6g2U2/P161fPhoaGP8Q4AG450IBZQANSoZr+whwA8lVvby8oJPSRLDcAWn4ZxIdZDNMHdJhsYWHhc5Isx2YQzAFAn+cC5SdBLX/Nx8enkJ6e/g0ovhko5oPuYGIsBqnByOfoPoE5ABgt0n/+/OECRscdULxSajFWy/GFAFIaoMjHMHNwlnC4QoAaPsawfObMmVyfP38uAgYpMysra39eXt4ndAcANd0EYi30OAY6yB0YPW5A8QPAaAGFClEA7HNQigYacBVosSaUfxOYlzVBcYvmAJih8NwA1OcKFNwF9w0jYwSwnFhJjO1gy4EGiAAd8BRoGRtU0wdgoSIB9P1PYJ5l4uHh+QIU50QyEOg2SEED1DsFSGUjyVUC5TqIthzd50CN9758+aIOKixI9TnQrEhg0K8g2nKQwvb2dkEWFpYsIPMXOzv7TPQ4B5VswJC5gS3OgYWQH1BeHij3HOjrNcRYDFKDM7XjStW4cgGxFiKrw2o5oexELQdgWI7L4v7+fsmfP3+ylpeXP8aSC+Cpn5QQQLEcaPFaoOYgqAFwA4E+zQFaOBkq/pSXl1cNVLZTGgJwy9GyDH1rNWh9vhdayJBbn+8D1ufuJNfnIEtxtWQ6OzulgPX0PKASbmCDY2NZWVkPctxCy4lIYDZbTlZLhpSEQi21I7fdDgDYts0vB5Q+nAAAAABJRU5ErkJggg==");
   pstrimg("\u203B-31-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAACjklEQVRYR+1WTWvUUBR9LzNIVm7c+VHQpdPJWAWxjIUm6ULwD7gRBAUL7sSFUNFBsHTjQhdWEBcWuvEPVMFJpihIRYVJZzaCiCAWdSFScePMu56kL/GZSTSZDs6iDQSS93HPPffec9/jbIgPHyI22wYfSvS3w77Fw15frZ/WSBOmYS6qoXBaToUELTBiuzjjj6yKdU6dd8ktipaoaaNazeRmJ2sYo4JzPfeCIHELyvfHpm3DvhcacTznJb6PyH8iRicxvxTO15v115zzMTjX4kU+bpbM71kciMAB8AQbbH8TjIvQgYDVqngLn0ZCcLh3yipbD/3/CFjuK7DC8Ulj8nku8CRDoQNw7C6+z0uD65z4QbNifgDwKzA+HHc4C7C/pkfncSahA41mY0JoYicf5Y/9vG4WOBH8bxFQcrwpxqGd1A6XFoFBMO4Bd5vuXuI0R0Qa3trUoak3PQ4QW0OO98RzjHWXMD6BSl2BDGdz5TyoaE+8h4HdcuMaL/MRmdsNGSmPqgYU40VM3QynQeCGXbavZHEgCPtye3ms2+m+QPkVA1ZEP3Sm769Wqp/dd64u1sU3SG1HZJDY/bDROE1nCftOKGAPLMM6kxm8hzmxL2gWB/xmoYY+Yqf0gThzhH4Wjs1kBvcXOm2nRF26DIY/hRBz8ZxvBIQ+JuUc9TKDcO/Dmk9gfS0LcKrUpNwS5ZSmgqyA6rpEqf1LToNyIKnDJTJueI3xjtbRC6XC07gK1OrPE4E/wMFoBTk9mqDjeYxPS8Nf0dsN2dsjGfbjwO9TTZHMfz/VgvOciduSXb/neRsSPZb7PA8qPP0mU8VN5g40rCP8zyCns2pu/T5BHl3nBr/a100mT6EMau3Wvbf/AhIZsy8tlbEeAAAAAElFTkSuQmCC");
+  pstrimg("vwcrs-0-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAAAR0lEQVRIS2NkIA3UA5UzAnEDsdpAikkBoxYQDK3RIBqiQQSKOGKBPTSjHSBWA0m5EmgoWRYQ6xiQutFkSjC0RoNoNIgwQwAAy9AVFIDShB4AAAAASUVORK5CYII=");
+  pstrimg("vwcrs-0-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAAAYElEQVRIS2NkIAH09vbW//v3j7G0tLSBWG2MxCoEqRu1gGBojQbREA0iUMQRdDpUwf///x2AmJGJiWk/sXoYu7u7ic+VjIz2IAuAhh8g2gJiFY7mZKJCajQnEwymkRlEAENOjVwUyCd0AAAAAElFTkSuQmCC");
+  pstrimg("vwcrs-0-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAAAXklEQVRIS2NkIAHsv7y//t+/f4zO+s4NxGpjJFYhSN2oBQRDazSIhmgQgSKOoNMRChz+///PCAT7idXDuPfiXuJzJSOjPcgCoOEHiLaAWIWjOZmokBrNyQSDaWQGEQDxp4uw6V34IAAAAABJRU5ErkJggg==");
+  pstrimg("Tw-22-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAWCAYAAAC7ZX7KAAACNUlEQVRYR+2XP0hVURzHfYODKIKDW4MEkYaaDgZCmNrmlKCD6SDaaItSkotuhoKg4CS0OBiJOIibiCCBiCgGKTgkgkIoIljQkubnK+fA6fKe3nvPdXjggQ/n//l9zzm/87vvpXKyLKWyTG/OveC7vjGdcDtcRDR0zPjliHMSGS7B/2KstMqchhgbjWHq/ykS/B0OnObflFud+jfKRwFL29QHYm7WS3SmR9fCqrOgq38E515WEpwcRnAp9s7S2HxGm/pOYTHQX0G9GvZB7uOm51QeZui7dWs+gvtZ/SP8gHL4Y6xpzSnoztC3RHsjjML7WxUGBvgI1glumvUek++ZchH5hjlFNVWBfF6pELZM30vyyJHGR7BrXD4/Z0S9IF9xDuYDZd2EUhnsgN7GU/jpjAtV9BGsuZ+gE9zrnaD+1rHuuox9zPJrucXfUCqdQT6CtUwHTIPcQX6cB7ryAlCcnoFKsG5hN9NH21hUsRrvK1hRYhd+gfz4AazDZ3gNw6DH2QvjsAY1UAfB6BFKv6/gfCPwCXk91BqR1qetP0vcG0ekbuMklMLAIF/BWs5esx6dIofcwT4o+zCLadOHqAsWoBmi/n65lp6E4FesM+8cxBfKbXBp2kbI3zn9PZQn45xuUoJLWEhfNJvcEKe2YJiTDytOx0pJnHAulr+ChKSLr268PmSMoka6T32oDWQS3MRs/T5QDFVIUhS4KQ3SOQRBd7Bz9OFQtFD00O9v6y6hRLqDsu4v0hXCvYwXSKZTwwAAAABJRU5ErkJggg==");
+  pstrimg("Tw-22-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAWCAYAAAC7ZX7KAAACvUlEQVRYR+2XSWgTURiAO5OYCFkQF5TWXoRSBa09VT2IKHrw4M2Lh+KhSA7BkFXFgwahh2wXEUXwIAVB9ObdWw7Sg4hbERShiiuiSBJj6CR+v8yUxzDFTJoOBBwY3vK/ef/3L+9/iTY0YI82YLxD/4HXOmJauVy+1+l0DDeKNE1bzGQyF2g7br7rx1oBdq0UAxvBYHBjIpH43Q8IN3sIcIsPfikfyXizNQauhSebtk3f12q1vfl8fsmNsn6sdTx0GDHH5tPAtn0+33g6nX7dD2X92KMb4EmAn9mVYdQ5DNrP/KdsNhtX87lUKp1h/jjv81wud0n9Flme8YSTrBuD/gkMyB6AXto3Q/EjZPuYN4jCaCqV+ihrSBM9HA4v0h0Rmd/vH0kmk59NmR/Zd/phjH2FMTu7gVTX9AyMh8+y0VXZDOWnUH5X+hiyG0Oe0PWZiuIYfF36xWJxTNf1BVNWZP68Z8CqcoDnAD4tyjFkluaiAjIPmERCZLLmtpwNjDrEfNUzYAl9KBR6h+JhCS/Kd4nySqUiB3SHArKcFsphbkSj0S2xWKzhGbDpsfu0JwFeoi5vajabWyXkjDXamXa7fRODAqyJc9HcUIypYuBBt7CyvuccNoGnaaUEdgA8bBjGFIBFgL/W6/VhIvCUsXi+GolEjvzkYbye8RWAL3sOjMdGgXuD4nW0s8Acoz9l5bSVz3IzMj/De0cgqSoHKJXzngNL6K0w0/8G8AaZsw6UcjB14D7wSqn7EQgEtvV6ra8qJcRDlLFbAIr3/j5mOmznULYEHi8vIB9XvPmQdDjai3dXncMm8AmAHijAyyXOzHN7mYM3W1kzYPLN8Wq2FBYKhQgH7oscJqf6arss5GfshNPN2a0BK6XENTaI8xpAjHEpvF1pQzPsjwGeVNNB8bikxQupFk7ybkGtdQP3F+kP1pS0JhaAzAIAAAAASUVORK5CYII=");
+  pstrimg("Tw-22-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAWCAYAAAC7ZX7KAAAC8ElEQVRYR+2XTWgTQRTH5+2mGLQHe/BgQaGkUrT5AD1UqWh2twclN6m1V1EQFOlFhOpZQRTBi3gRj1JFBC8FYXfpqYKnJFaoWIoiFr+omOChJjP+Z5pdlnRLs12jBFxYstk38+b33vvPm4RYh13UYbzsP3C7K0ZOyZkVTPCIC33SMtqYQUYt4rzYwyWwiOoFAa4kRXLXcG74c9S5cceTXbRrxGjFd0Ssjudu/7tgMou/ggsBeFlLaAPGoFGNCxB1fuims0v2DII4AmcCcAUra01Hddyu8RsCo4+MmxnzUTMAgnqAd4MIbJkyVAjq2Sk6dwSJQ7AtmlnzVHAuKvoQPlNhtlaC3BhYsJNmznzS7Azaf4t3KblhdaYfzmfzs3KMu+gmRUV8xGOPsmn6wXw6/1LZ5txuXudfAbsFX5cQTG8rkMExcYDvwdE55Uyw6wjqqoIquqOc+BSgNGUjdhcVuiAfnbJTEEI8kzYE8xRSO/H3gAOLY9EZZCsvF4dUHgNoNACyAFu/shXtm0R0SYYIyZy3MpYMOtK16Qyr0v8QS8jgdlle6Hi3SnYJciC2w6MIysLbzLItakJLGTnjQyRaVbCQK9glUO5QDasSF50X8DCEMtdx79N0bU+j5ITP28j0BOwJKQtK04QXDGxvrJw1EBV2VWFxgEvODUy/LBMLuIvI3AE8n8ZdIZ16eY3PQwJyY83Xt9WH9Kr+BSt2IQlT0Pz4vwA+imzZgNIBK7W7HxAp3ErTnp6lBEjQLcBOKtkwcQYbTrbFyFesDLvCTQQ0WwXIVkCDbXVDBbqCXOc77h4E+DPJkn2bPdZjATd0bCNzZiBVFd7F+0b2jnxTAZXFe9h2+nbB5iCHdOTUNib8CeArAL4WAPBbnHy3ps0Jdh/AZ9sHvM7R7C3ovnL70SNeq80U0l+bDgsOvYyFnZytBhCaYbSraQAcU7+TiR2HHp+v51CWnZf5ArQr+7AvBz8gaS/xd41uscbeKqg3ruP+Iv0GTCWdJuoLlLcAAAAASUVORK5CYII=");
 }
 
 function init1() {
@@ -865,7 +886,7 @@ function init1() {
 }
 
 function dspdiv(n) {
-  var i, j;
+  var i, j, f;
   divv = false;
   if (n) {
     i = 0;
@@ -903,7 +924,7 @@ function dspdiv(n) {
       }
     }
   }
-  if (divv && dhlpn > 0)  {
+  if (divv && dhlpql > 0)  {
     canvas3.style.zIndex = "300";
   } else {
     canvas3.style.zIndex = "100";
@@ -921,6 +942,8 @@ function addel() {
         swzmcd2 = performance.now();
       }
     }
+    lastcc = 0;
+    scalem = false;
     e2 = normalizeWheel(e);
     x = cellX(posx);
     y = cellY(posy);
@@ -937,6 +960,7 @@ function addel() {
   });
   canvas3.addEventListener("mousedown", function(e) {
     var x, y, f = false;
+    lastcc = 0;
     x = 0;
     while (x < fbutt.length && !(e.pageX > fbutt[x][0] + 2 && e.pageX < fbutt[x][0]+fbutt[x][2]+6 && e.pageY > fbutt[x][1] && e.pageY < fbutt[x][1]+fbutt[x][3]+6)) {
       x++;
@@ -949,6 +973,8 @@ function addel() {
       fbutt[x][4] = true;
     } else if ((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr+4 && e.pageY > scly-sclr && e.pageY < scly+sclr+5) {
       if (!scl) {
+        posm = false;
+        scalem = false;
         diffx = e.pageX;
         diffy = e.pageY;
         scld = e.pageY - scly;
@@ -979,6 +1005,8 @@ function addel() {
       }
       csiz = true;
     } else if ((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw && e.pageY > sclby && e.pageY < sclby+sclbh) {
+      posm = false;
+      scalem = false;
       sclpx = cellX(posx);
       sclpy = cellY(posy);
       scale = 100*(e.pageY-sclby)/sclbh;
@@ -1005,7 +1033,9 @@ function addel() {
       }
     } else if (e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth) {
       if (!dsppost) {
-        posx = posy = 0;
+        posmx = posmy = 0;
+        posm = true;
+        posmcd = performance.now();
         dspposcd = performance.now();
       }
       dsppost = true;
@@ -1028,6 +1058,7 @@ function addel() {
       htgent = true;
     } else if (e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth) {
       if (!dsppxct) {
+        posm = false;
         x = cellX(posx);
         y = cellY(posy);
         calcICellsz();
@@ -1168,6 +1199,8 @@ function addel() {
       }
     } else if (dwrld && cellsn > 0 && wrldw > wrldm && wrldh > wrldm && wrldax > 0 - wrldaw && wrldax < cwidth && wrlday > 0 - wrldah && wrlday < cheight && e.pageX >= wrldax && e.pageX < wrldax+wrldaw && e.pageY > wrlday && e.pageY < wrlday+wrldah) {
       if (!wrlda) {
+        posm = false;
+        scalem = false;
         posx2 = posx;
         posy2 = posy;
         diffx = e.pageX;
@@ -1176,6 +1209,8 @@ function addel() {
       }
     } else {
       if (!mdown) {
+        posm = false;
+        scalem = false;
         toncd = 15;
         ton = false;
         posx2 = posx;
@@ -1217,6 +1252,7 @@ function addel() {
   });
   canvas3.addEventListener("dblclick", function(e) {
     var u, x, y, q;
+    lastcc = 0;
     if ((!((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr+4 && e.pageY > scly-sclr && e.pageY < scly+sclr+5))
         && (!((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw && e.pageY > sclby && e.pageY < sclby+sclbh))
         && (!(e.pageX > spdx-spdr && e.pageX < spdx+spdr+4 && e.pageY > spdy-spdr && e.pageY < spdy+spdr+5))
@@ -1252,6 +1288,8 @@ function addel() {
       }
       if (x >= fbutt.length) {
         if (dwrld && cellsn > 0 && wrldw > wrldm && wrldh > wrldm && e.pageX >= wrldx && e.pageX < wrldx+wrldw && e.pageY > wrldy && e.pageY < wrldy+wrldh) {
+          posm = false;
+          scalem = false;
           x = e.pageX;
           y = e.pageY;
           if (x < wrldx+wrldm/2-0.5) {
@@ -1269,6 +1307,8 @@ function addel() {
           posx = (cellsl + (x - wrldx-wrldm/2 + 0.5) / ((wrldw-wrldm) / (cellsr-cellsl+1))) * (cellsz+(cellsz>grb?1:cellsz/grb));
           posy = (cellst - (y - wrldy-wrldm/2 + 0.5) / ((wrldh-wrldm) / (cellst-cellsb+1)) + 1) * (cellsz+(cellsz>grb?1:cellsz/grb));
         } else {
+          posm = false;
+          scalem = false;
           toggleCell(e.pageX, e.pageY);
         }
         e.preventDefault();
@@ -1276,6 +1316,7 @@ function addel() {
     }
   });
   canvas3.addEventListener("click", function(e) {
+    lastcc = 0;
     e.preventDefault();
   });
   window.addEventListener("keydown", function(e) {
@@ -1295,7 +1336,11 @@ function addel() {
   });
   window.addEventListener("keypress", function(e) {
     var cc;
-    if (patt || keyesupp) {
+    if (patt) {
+      return;
+    }
+    if (keyesupp) {
+      e.preventDefault();
       return;
     }
     cc = e.which || e.keyCode;
@@ -1338,6 +1383,8 @@ function peMsMove(px, py) {
     speed = 100 - 100*(p-spdby)/spdbh;
   }
   if (scl) {
+    posm = false;
+    scalem = false;
     p = cury - scld;
     if (p < sclby) {
       p = sclby;
@@ -1371,6 +1418,7 @@ function peMsMove(px, py) {
     csize = 100 - 100*(p-csizby)/csizbh;
   }
   if (wrlda) {
+    posm = false;
     posx = posx2 - ((diffx - px) / ((wrldw-wrldm) / (cellsr-cellsl+1))) * (cellsz+(cellsz>grb?1:cellsz/grb));
     posy = posy2 + ((diffy - py) / ((wrldh-wrldm) / (cellst-cellsb+1))) * (cellsz+(cellsz>grb?1:cellsz/grb));
   }
@@ -1378,9 +1426,19 @@ function peMsMove(px, py) {
 
 function peKey(cc) {
   var s, p, i, q, f = false;
+  if ((lastcc === 84 || lastcc === 116) && (cc === 87 || cc === 119)) {
+    f = true;
+    swtrkw();
+  }
+  lastcc = cc;
+  if (f) {
+    return;
+  }
   if (dspgrd && cc === 35) {
+    f = true;
     swdspgrd();
   } else if (dwrld && (cc === 27 || cc === 87 || cc === 119)) {
+    f = true;
     swdwrld();
   } else if (stpge) {
     if (cc === 13) {
@@ -1443,18 +1501,25 @@ function peKey(cc) {
       }
     }
   } else if (!crulem && cc === 32) {
+    f = true;
     swrun();
   } else if (!crulem && (cc === 80 || cc === 112)) {
+    f = true;
     swpatt();
   } else if (!crulem && (cc === 87 || cc === 119)) {
+    f = true;
     swdwrld();
   } else if (!crulem && cc === 63) {
+    f = true;
     swdhlp();
   } else if (!crulem && cc === 35) {
+    f = true;
     swdspgrd();
   } else if (!crulem && (cc === 67 || cc === 99)) {
+    f = true;
     swclru();
   } else if (!crulem && !genbbl && (cc === 46 || cc === 62)) {
+    f = true;
     if (!genbbl) {
       if (nextGen() && stpga) {
         stpgcd2 = performance.now();
@@ -1462,6 +1527,7 @@ function peKey(cc) {
       }
     }
   } else if (!crulem && !genbbl && histgp > 0 && (cc === 44 || cc === 60)) {
+    f = true;
     if (!genbbl && histgp > 0) {
       if (prevGen() && stpga) {
         stpgcd2 = performance.now();
@@ -1469,9 +1535,11 @@ function peKey(cc) {
       }
     }
   } else if (!crulem && histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1] && (cc === 70 || cc === 102)) {
-      swffwn(false);
+    f = true;
+    swffwn(false);
   } else if (!crulem && histgp > 0 && (histgn === 0 || hupdc === 0) && (cc === 82 || cc === 114)) {
-      swffwp(false);
+    f = true;
+    swffwp(false);
   } else if (!crulem && (cc === 43 || cc === 45 || cc >= 48 && cc <= 57)) {
     f = true;
     if (ffw !== 0 && ffwstp) {
@@ -1804,6 +1872,14 @@ function swfrzc() {
   }
 }
 
+function swvwcrs() {
+  vwcrs = !vwcrs;
+}
+
+function swtrkw() {
+  trkw = !trkw;
+}
+
 function tick() {
   var x = performance.now(), r, i, n, tp, ff;
   
@@ -2071,12 +2147,59 @@ function dspview(ts) {
 }
 
 function dspview0() {
-  var x, y, q;
+  var x, y, q, x2, y2;
 
   if (histp > 0) {
     histq = rlHist(histh, histi, histp);
   }
-    
+  
+  if (posm && posmcd) {
+    x = Math.sin((gts - posmcd > posmcdn ? 1 : (gts - posmcd) / posmcdn) * Math.PI / 2);
+    posx += (posmx - posx) * x;
+    posy += (posmy - posy) * x;
+  }
+  
+  if (cellsn > 0 && trkw) {
+    x = cellX(posx - cwidth / 2 * 0.9);
+    y = cellY(posy + cheight / 2 * 0.9);
+    x2 = cellX(posx + cwidth / 2 * 0.9);
+    y2 = cellY(posy - cheight / 2 * 0.9);
+    if (x2 - x < cellsr - cellsl || y - y2 < cellst - cellsb) {
+      if (!scalem && scale > 0) {
+        scalemn = scale - 1 * ((cellsr - cellsl) * (cellst - cellsb)) / ((x2 - x) * (y - y2));
+        if (scalemn < 0) {
+          scalemn = 0;
+        }
+        scalem = true;
+        scalemcd = gts;
+        scalemcdn = 1000;
+      }
+    } else {
+      scalem = false;
+    }
+    posmx = (cellsl + (cellsr - cellsl) / 2) * (cellsz+(cellsz>grb?1:cellsz/grb));
+    posmy = (cellsb + (cellst - cellsb) / 2) * (cellsz+(cellsz>grb?1:cellsz/grb));
+    posm = true;
+    posmcd = gts;
+    posmcdn = 1200 - 1200 * speed / 100;
+  }
+  
+  if (scalem && scalemcd) {
+    x = Math.sin((gts - scalemcd > scalemcdn ? 1 : (gts - scalemcd) / scalemcdn) * Math.PI / 2);
+    x2 = cellX(posx);
+    y2 = cellY(posy);
+    scale += (scalemn - scale) * x;
+    if (scale < 0) {
+      scale = 0;
+    }
+    if (scale > 100) {
+      scale = 100;
+    }
+    calcCellsz();
+    posx = x2 * (cellsz+(cellsz>grb?1:cellsz/grb));
+    posy = y2 * (cellsz+(cellsz>grb?1:cellsz/grb));
+  }
+ 
   chgcanvsz = chgcellsz = chgpos = false;
 
   if (!cwidth || canvas0.offsetWidth !== cwidth || !cheight || canvas0.offsetHeight !== cheight) {
@@ -2150,7 +2273,9 @@ function dspview0() {
   } else if (dhlpn === 0) {
     dhlpcd2 = null;
     dhlpcd3 = null;
-    canvas3.style.zIndex = "100";
+    if (!divv) {
+      canvas3.style.zIndex = "100";
+    }
   } else {
     dhlpcd2 = gts;
     dhlpcd3 = gts;
@@ -2305,6 +2430,23 @@ function dspview0() {
   }
   if (htgencd && gts - htgencd > htgencdn) {
     htgencd = null;
+  }
+  if (posmcd && gts - posmcd > posmcdn && !trkw) {
+    posmcd = null;
+    posmcdn = 2000;
+    if (posm) {
+      posm = false;
+      posx = posmx;
+      posy = posmy;
+    }
+  }
+  if (scalemcd && gts - scalemcd > scalemcdn) {
+    scalemcd = null;
+    scalemcdn = 2000;
+    if (scalem) {
+      scalem = false;
+      scale = scalemn;
+    }
   }
   if (msgcd1 && gts - msgcd1 > msgcdn1) {
     msgcd1 = gts;
@@ -2481,12 +2623,12 @@ function dspview0() {
   if (frzc || frzccd) {
     if (frzccd) {
       if (frzc) {
-        x = 0.4 + 0.6 * (1 - (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn));
+        x = 0.3 + 0.7 * (1 - (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn));
       } else {
-        x = 0.4 + 0.6 * (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn);
+        x = 0.3 + 0.7 * (gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn);
       }
     } else {
-      x = 0.4;
+      x = 0.3;
     }
   } else {
     x = 1;
@@ -2578,7 +2720,7 @@ function calcICellsz() {
 }
 
 function calcCellsz() {
-  cellsz = cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
+  cellsz = cellisz*celliszm * Math.pow(2, 10*(0.3 + 0.7 * (scale/100))) / 1024;
 }
 
 function toggleCell(x, y) {
@@ -2668,7 +2810,7 @@ function cellY(y,r) {
 }
 
 function drawCells() {
-  var i, ci, px, py, cs, cd, x, px2, py2, c;
+  var i, ci, px, py, x, px2, py2, c;
   if (drawallcells) {
     ctx1.clearRect(0, 0, cwidth, cheight);
   } else if (rmvcellsf && !frzc) {
@@ -2678,10 +2820,10 @@ function drawCells() {
         cellsfs[cellsfsl++] = i;
         ci[3] = 0 - cellsfsl + 1;
         ci[5] = 0;
-        px = cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx;
-        py = cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1;
+        px = Math.floor(cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx - 0.5);
+        py = Math.floor(cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1 - 0.5);
         if (px >= 0 - cellsz && px < cwidth + cellsz && py >= 0 - cellsz && py < cheight + cellsz) {
-          ctx1.clearRect(Math.round(px-1), Math.round(py-1), Math.round(cellsz+2), Math.round(cellsz+2));
+          ctx1.clearRect(px, py, Math.ceil(cellsz+1), Math.ceil(cellsz+1));
         }
       }
     }
@@ -2697,6 +2839,7 @@ function drawCells() {
     }
   }
   rmvcellsn = 0;
+  rmvcellsm = new Map();
   if (!frzc || drawallcells) {
     for (i = 0; i < cellslen; i++) {
       if ((ci = cells[i])[3] === 1) {
@@ -2711,17 +2854,15 @@ function drawCells() {
         }
         if (drawallcells || ci[5] === -1 || ci[5] !== c) {
           ci[5] = c;
-          cd = cellsz * 0.9 * (1 - csize/100);
-          cs = cellsz - cd;
-          px = Math.round(cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx + cd / 2);
-          py = Math.round(cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1 + cd / 2);
-          if (px >= 0 - cs && px < cwidth + cs && py >= 0 - cs && py < cheight + cs) {
+          px = Math.round(cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx);
+          py = Math.round(cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1);
+          if (px >= 0 - cellsz && px < cwidth + cellsz && py >= 0 - cellsz && py < cheight + cellsz) {
             cellImg(c);
-            x = Math.trunc(canvasosci.width / cs);
+            x = Math.trunc(canvasosci.width / cellsz);
             py2 = Math.trunc(c / x);
-            px2 = Math.trunc((c - py2 * x) * cs);
-            py2 = Math.trunc(py2 * cs);
-            ctx1.drawImage(canvasosci, px2, py2, cs, cs, px, py, cs, cs);
+            px2 = Math.ceil((c - py2 * x) * cellsz);
+            py2 = Math.ceil(py2 * cellsz);
+            ctx1.drawImage(canvasosci, px2, py2, Math.round(cellsz), Math.round(cellsz), px, py, Math.round(cellsz), Math.round(cellsz));
           }
         }
       }
@@ -2736,18 +2877,18 @@ function cellImg(c) {
       cimg[i] = -1;
     }
   }
-  cd = cellsz * 0.9 * (1 - csize/100);
+  cd = cellsz * 0.1 + cellsz * 0.8 * (1 - csize/100);
   cs = cellsz - cd;
-  x = Math.trunc(canvasosci.width / cs);
+  x = Math.trunc(canvasosci.width / cellsz);
   py = Math.trunc(c / x);
-  px = Math.trunc((c - py * x) * cs);
-  py = Math.trunc(py * cs);
+  px = Math.ceil((c - py * x) * cellsz);
+  py = Math.ceil(py * cellsz);
   if (cimg[c] < cimgc) {
     cimg[c] = cimgc;
-    ctxosci.clearRect(px, py, cs, cs);
+    ctxosci.clearRect(px, py, Math.ceil(cellsz), Math.ceil(cellsz));
     x = (59 - c) / 59;
     ctxosci.fillStyle = "rgba(230, 160, "+(100+Math.floor(155*x))+", 1)";
-    fillrr(ctxosci, px, py, cs, cs, cs / 4);
+    fillrr(ctxosci, px + cd / 2, py + cd / 2, cs, cs, cs / 4);
   }
 }
 
@@ -3747,7 +3888,7 @@ function drawInfo() {
   }
   ctx2.fillStyle = "rgba(" + (150 - n) + ", " + (150 + n) + ", 0, 1)";
   ctx2.fillText("" + gennum, x, 67);
-  x = 34;
+  x = 30;
   ctx2.font = "13px " + font;
   ctx2.fillStyle = "rgba(170, 170, 170, 0.7)";
   ctx2.fillText("pop", x, 106);
@@ -3895,7 +4036,7 @@ function drawInfo() {
   } else {
     ctx2.fillStyle = "rgba(20, 90, 220, 1)";
   }
-  dsppxctx = 36;
+  dsppxctx = 38;
   s = "" + (Math.floor(cellsz*100)/100) + "\u00B2";
   dsppxctw = 8 * s.length + 4;
   ctx2.fillText(s, dsppxctx, 384);
@@ -4018,7 +4159,7 @@ function drawFramesSec() {
   ctx2.font = "16px " + font;
   ctx2.fillStyle = "rgba(170, 200, 170, 1)";
   s = "" + frpsn;
-  x = 37;
+  x = 38;
   ctx2.fillText(s, x, 293);
   ctx2.fillStyle = "rgba(170, 170, 170, 0.6)";
   x += 10 * s.length + 6;
@@ -4293,13 +4434,15 @@ function drawFButt() {
   drawFButt0(x, y -= 41, 44, 32, 10, stpge, function(fb) {
     swstpge();
   });
-  drawFButt0(x, y -= 41, 44, 32, 11, null, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 11, trkw, function(fb) {
+    swtrkw();
   });
   x = cwidth - 8, y = 145;
   x -= 51;
   drawFButt0(x, y -= 41, 44, 32, 12, null, function(fb) {
   });
-  drawFButt0(x, y -= 41, 44, 32, 13, null, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 13, vwcrs, function(fb) {
+    swvwcrs();
   });
   drawFButt0(x, y -= 41, 44, 32, 14, frzc, function(fb) {
     swfrzc();
@@ -4410,6 +4553,24 @@ function drawFButt0(x, y, w, h, i, t, f) {
         drawStrImg(ctx2, "\u29B5", x + 9, y + 26, 31, 0, 0, 0, 1);
       }
       break;
+    case 11: 
+      if (fbutt[i][4] || fbutt[i][6]) {
+        drawStrImg(ctx2, "Tw", x + 7, y + 24, 22, 140, 140, 140, 0.7);
+      } else if (fbutt[i][5]) {
+        drawStrImg(ctx2, "Tw", x + 7, y + 24, 22, 190, 210, 190, 0.6);
+      } else {
+        drawStrImg(ctx2, "Tw", x + 7, y + 24, 22, 0, 0, 0, 1);
+      }
+      break;
+    case 13: 
+      if (fbutt[i][4] || fbutt[i][6]) {
+        drawStrImg(ctx2, "vwcrs", x + 10, y + 5, 0, 140, 140, 140, 0.7);
+      } else if (fbutt[i][5]) {
+        drawStrImg(ctx2, "vwcrs", x + 10, y + 5, 0, 190, 210, 190, 0.6);
+      } else {
+        drawStrImg(ctx2, "vwcrs", x + 10, y + 5, 0, 0, 0, 0, 1);
+      }
+      break;
     case 14: 
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "\u203B", x + 11, y + 28, 31, 140, 140, 140, 0.7);
@@ -4435,20 +4596,20 @@ function drawGrid() {
       ctx0.lineTo(Math.round(p), h-1);
       if (p2 === 0) {
         ctx0.setLineDash([2,2]);
-        ctx0.strokeStyle = "rgba(200,200,200,0.9)";
+        ctx0.strokeStyle = "rgba(200, 200, 200, 0.9)";
       } else if (p2%10 === 0) {
         ctx0.setLineDash([]);
-        ctx0.strokeStyle = "rgba(70,70,120,1)";
+        ctx0.strokeStyle = "rgba(70, 70, 120, 1)";
       } else {
         ctx0.setLineDash([]);
-        ctx0.strokeStyle = "rgba(70,70,70,0.9)";
+        ctx0.strokeStyle = "rgba(70, 70, 70, 0.9)";
       }
       ctx0.stroke();
       if (p2 === maxl || p2 === maxr) {
         ctx0.beginPath();
         ctx0.lineWidth = 3;
         ctx0.setLineDash([2,1,4]);
-        ctx0.strokeStyle = "rgba(250,200,100,1)";
+        ctx0.strokeStyle = "rgba(250, 200, 100, 1)";
         if (p2 === maxr) {
           ctx0.moveTo(Math.round(p) + cellsz + 1, 0);
           ctx0.lineTo(Math.round(p) + cellsz + 1, h-1);
@@ -4469,30 +4630,30 @@ function drawGrid() {
     if (p < h) {
       ctx0.beginPath();
       ctx0.lineWidth = 1;
-      ctx0.moveTo(0, Math.round(p), 0);
-      ctx0.lineTo(w-1, Math.round(p), h);
+      ctx0.moveTo(0, Math.round(p));
+      ctx0.lineTo(w-1, Math.round(p));
       if (p2 === 0) {
         ctx0.setLineDash([2,2]);
-        ctx0.strokeStyle = "rgba(200,200,200,0.9)";
+        ctx0.strokeStyle = "rgba(200, 200, 200, 0.9)";
       } else if (p2%10 === 0) {
         ctx0.setLineDash([]);
-        ctx0.strokeStyle = "rgba(70,70,120,1)";
+        ctx0.strokeStyle = "rgba(70, 70, 120, 1)";
       } else {
         ctx0.setLineDash([]);
-        ctx0.strokeStyle = "rgba(70,70,70,0.9)";
+        ctx0.strokeStyle = "rgba(70, 70, 70, 0.9)";
       }
       ctx0.stroke();
       if (p2 === maxl || p2 === maxr) {
         ctx0.beginPath();
         ctx0.lineWidth = 3;
         ctx0.setLineDash([2,1,4]);
-        ctx0.strokeStyle = "rgba(250,200,100,1)";
+        ctx0.strokeStyle = "rgba(250, 200, 100, 1)";
         if (p2 === maxt) {
-          ctx0.moveTo(0, Math.round(p) - cellsz - 1, 0);
-          ctx0.lineTo(w-1, Math.round(p) - cellsz - 1, h);
+          ctx0.moveTo(0, Math.round(p) - cellsz - 1);
+          ctx0.lineTo(w-1, Math.round(p) - cellsz - 1);
         } else {
-          ctx0.moveTo(0, Math.round(p), 0);
-          ctx0.lineTo(w-1, Math.round(p), h);
+          ctx0.moveTo(0, Math.round(p));
+          ctx0.lineTo(w-1, Math.round(p));
         }
         ctx0.stroke();
       }
@@ -4570,6 +4731,17 @@ function drawFxa() {
     p2 += x;
     ctx1a.fillRect(p1, cheight - (maxt + dy/2 - vway) * x, p2 - p1, dy * x);
   }
+  if (vwcrs) {
+    ctx1a.beginPath();
+    ctx1a.lineWidth = 1;
+    ctx1a.moveTo(0, Math.round(cheight/2));
+    ctx1a.lineTo(cwidth, Math.round(cheight/2));
+    ctx1a.moveTo(Math.round(cwidth/2), 0);
+    ctx1a.lineTo(Math.round(cwidth/2), cheight);
+    ctx1a.setLineDash([2,2]);
+    ctx1a.strokeStyle = "rgba(240, 240, 180, 1)";
+    ctx1a.stroke();
+  }
 }
 
 function drawFxb() {
@@ -4586,7 +4758,7 @@ function drawFxb() {
     } else {
       x = 1;
     }
-    ctx1b.fillStyle = "rgba(140, 140, 140, " + (0.3*x) + ")";
+    ctx1b.fillStyle = "rgba(180, 220, 180, " + (0.1*x) + ")";
     ctx1b.fillRect(0, 0, cwidth, cheight);
   }
 }
@@ -4971,12 +5143,14 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q) {
     k += "-"+q;
   }
   if (!(i = strimgt[k])) {
-    canvasos0.width = (w = s.length * fs);
-    canvasos0.height = (h = fs);
-    ctxos0.clearRect(0, 0, w, h);
-    ctxos0.font = fs + "px " + font;
-    ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
-    ctxos0.fillText(s, 0, canvasos0.height - 1 - (q?q:0));
+    if (fs > 0) {
+      canvasos0.width = (w = s.length * fs);
+      canvasos0.height = (h = fs);
+      ctxos0.clearRect(0, 0, w, h);
+      ctxos0.font = fs + "px " + font;
+      ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
+      ctxos0.fillText(s, 0, canvasos0.height - 1 - (q?q:0));
+    };
     switch (s) {
       case "MSG":
   	    ctxos0.beginPath();
@@ -4993,6 +5167,20 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q) {
   	    fillrr(ctxos0, 6, 10, 4, 6, 1);
   	    fillrr(ctxos0, 6, 17, 4, 6, 1);
   	    fillrr(ctxos0, 6, 24, 4, 6, 1);
+      case "vwcrs":
+        canvasos0.width = (w = 24);
+        canvasos0.height = (h = 20);
+        ctxos0.clearRect(0, 0, w, h);
+  	    ctxos0.beginPath();
+        ctxos0.lineWidth = 1;
+        ctxos0.setLineDash([]);
+        ctxos0.strokeStyle = "rgba("+r+","+g+","+b+",1)";
+        ctxos0.moveTo(12,0);
+        ctxos0.lineTo(12,20);
+        ctxos0.moveTo(0, 10);
+        ctxos0.lineTo(24, 10);
+        ctxos0.stroke();
+        break;
     }
     d = canvasos0.toDataURL("image/png");
     console.log("pstrimg(\"" + k + "\", \"" + d + "\");");
@@ -6781,12 +6969,20 @@ function rlHist(h, i, p, qx) {
 }
 
 function rmvCell(i) {
-  rmvcellsf = true;
-  if (cells[i][3] === 1 && cells[i][5] !== -2) {
-    rmvcellsn++;
+  var ci = cells[i], k = crkey(ci[0], ci[1]);
+  if (rmvcellsm.has(k)) {
+    cellsfs[cellsfsl++] = i;
+    ci[3] = 0 - cellsfsl + 1;
+    ci[5] = 0;
+  } else {
+    rmvcellsm.set(k, true);
+    rmvcellsf = true;
+    if (cells[i][3] === 1 && cells[i][5] !== -2) {
+      rmvcellsn++;
+    }
+    cells[i][3] = 0;
+    cells[i][5] = -2;
   }
-  cells[i][3] = 0;
-  cells[i][5] = -2;
 }
 
 function addCell(c, r) {
