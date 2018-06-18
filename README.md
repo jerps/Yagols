@@ -10,10 +10,8 @@
   
   * One .html page with mainly JavaScript and a bit of HTML/CSS. No further dependencies.
   
-  * A work in progress . . .
-  
-  * And a bit of a hack... Clean code was not an objective of this project. So, lots of good ol' procedural
-    code, globals and magic numbers galore, funny names, code fragments copied all over the place, etc.
+  * A bit of a hack... Clean code was not an objective of this project. So, lots of good ol' procedural
+    code, globals, magic numbers, funny names, code fragments copied all over the place, etc.
     But it works.
     
 <br>
@@ -34,17 +32,11 @@
 
 <br>
 
-<p align="center">
-  <img src="Screenshot03.png"/>
-</p>
-
-<br>
-
 ### Features:
 
   * Intuitive and fluid user interface.
   
-  * Ideal for beginning enthusiasts to easily explore and experiment with GoL.
+  * For beginning enthusiasts to easily explore and experiment with GoL.
 
   * Generations are recorded. Works like a tape recorder (play / fast-forward / rewind).
   
@@ -52,7 +44,7 @@
   
   * The cells of a generation can be changed multiple times with unlimited undo.
 
-  * Changed generations are marked and can be easiliy located.
+  * Changed generations are marked and can be easiliy found back to try something else.
   
   * Infinite universe, in theory, in practice a 19,999,999 x 19,999,999 toroidal plane.
   
@@ -86,6 +78,12 @@
 <br>
 
 ## Changes
+
+<br>
+
+* V3.2 (june 2018)
+
+  * Misc. improvements.
 
 <br>
 
