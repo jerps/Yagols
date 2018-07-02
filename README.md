@@ -26,12 +26,6 @@
 
 <br>
 
-<p align="center">
-  <img src="Screenshot02.png"/>
-</p>
-
-<br>
-
 ### Features:
 
   * Intuitive and fluid user interface.
@@ -78,6 +72,12 @@
 <br>
 
 ## Changes
+
+<br>
+
+* V3.3 (july 2018)
+
+  * Misc. improvements.
 
 <br>
 
