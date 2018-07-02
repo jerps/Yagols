@@ -324,6 +324,7 @@ var frzc = false, frzcp = false, frzccd = null, frzccdn = 1000;
 var htgen = 0, htgen2 = -1, htgen2x = 0, httot = 0, httot2 = 0, htgent = false, htgencd = null, htgencdn = 200, htgentx = 0, htgenty = 0, htgentw = 0, htgenth = 0;
 var lastcc = 0;
 var acccd = null, acccdn = 500;
+var bmem = new Map();
 var cimg = [], cimgc = 0;
 var cwidth = 0, cheight = 0;
 var divl = [-1,-2], divv = false, dive = [];
@@ -362,6 +363,7 @@ function clrvars() {
   dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcd2 = null, dhlplf = 1, dhlpcd3 = null;
   frzc = false, frzcp = false, frzccd = null;
   htgen = 0, htgen2 = -1, htgen2x = 0, httot = 0, httot2 = 0;
+  bmem = new Map();
   cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
   calcWrld();
   crulecomp();
@@ -5431,6 +5433,7 @@ function drawHelp0(n) {
       x2 = drw(ctxos1, " to de-activate generation stop (", x2, y + 271);
       drawStrImg(ctxos1, "\u29B5", x2 + 1, y + 273, 20, 200, 200, 200, 0.8);
       drw(ctxos1, ")  \u22C5", x2 + 20, y + 271);
+      x2 = drw(ctxos1, "\u22C5  Cursor keys to move the universe  \u22C5", x + 78, y + 291);
       break;
     case 2:
       dx = 150;
@@ -5484,6 +5487,9 @@ function drawHelp0(n) {
       ctxos1.fillStyle = "rgba(220, 220, 220, 0.9)";
       x2 = drw(ctxos1, "Esc", x2, y + 107);
       ctxos1.fillStyle = "rgba(200, 200, 200, 0.8)";
+      x2 = drw(ctxos1, " or ", x2, y + 107);
+      ctxos1.fillStyle = "rgba(220, 220, 220, 0.9)";
+      x2 = drw(ctxos1, "\\", x2, y + 107);
       x2 = drw(ctxos1, " to de-activate the stop  \u22C5", x2, y + 107);
       ctxos1.fillText("\u22C5", x + 61, y + 127);
       x2 = drw(ctxos1, "\u22C5  ", x + 78, y + 127);
