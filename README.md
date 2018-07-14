@@ -10,13 +10,11 @@
   
   * One .html page with mainly JavaScript and a bit of HTML/CSS. No further dependencies.
   
-  * A bit of a hack... Clean code was not an objective of this project. So, lots of good ol' procedural
-    code, globals, magic numbers, funny names, code fragments copied all over the place, etc.
-    But it works.
+  * A bit of a hack...
     
 <br>
 
-## [To Yagols . . .](http://johnerps.net/Yagols/Yagols.html)
+## [To Yagols . . .](http://johnerps.com/Yagols/Yagols.html)
 
 <br>
 
@@ -72,6 +70,12 @@
 <br>
 
 ## Changes
+
+<br>
+
+* v3.3a (july 2018)
+
+  * Misc. improvements.
 
 <br>
 

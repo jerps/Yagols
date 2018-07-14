@@ -1,6 +1,6 @@
 <!--
 
-Yagols V3.3
+Yagols v3.3a
 
 (c) 2018 John Erps
 
@@ -236,7 +236,7 @@ table {
   <canvas id="canvas3" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%;">
   </canvas>
   <div id="cpyr">
-    <a style="color: #444466; user-select: none; outline: none;" href="http://johnerps.net" target="_blank" tabindex="-1">&#x00A9 2018 John Erps</a>
+    <a style="color: #444466; user-select: none; outline: none;" href="http://johnerps.com" target="_blank" tabindex="-1">&#x00A9 2018 John Erps</a>
   </div>
   <div id="crule">
   <div id="crulet"></div>
@@ -259,7 +259,7 @@ var title = [ "Yet another", "Game\u22C5of\u22C5Life", "simulator", "Conway\u22C
 var font = "Verdana";
 var maxl = -9999999, maxt = 9999999, maxr = 9999999, maxb = -9999999;
 var gennum = 0, gennumc = 0, speed = 20, run = false, runcd = null, runcdn = 500, runcdc = 0, runbc = 0, runcd2 = null, runcdn2 = 100, runcd3 = null, runcdn3 = 800, runcd4 = null, runcdn4 = 1400, runcd5 = null, runcdn5 = 800;
-var posx = 0, posy = 0, posx2 = 0, posy2 = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80, scalem = false, scalemn = 0, scalemcd = null, scalemcdn = 2000, cells = [], rmvcellsf = false, rmvcellsm = new Map(), rmvcellsn = 0, posm = false, posmx = 0, posmy = 0, posmcd = null, posmcdn = 2000;
+var posx = 0, posy = 0, posx2 = 0, posy2 = 0, cellisz = 0, celliszm = 5, cellsz = 0, scale = 80, scalem = false, scalemn = 0, scalemcd = null, scalemcdn = 2000, rmvcellsf = false, rmvcellsm = new Map(), rmvcellsn = 0, posm = false, posmx = 0, posmy = 0, posmcd = null, posmcdn = 2000, posml = [], posmlp = 0, posmltx = 0, posmlty = 0;
 var canvas0, canvas1, canvas1a, canvas1b, canvas2, canvas3, canvasos0, canvasos1, canvasos2, canvasosci, ctx0, ctx1, ctx1a, ctx1b, ctx2, ctx3, ctxos0, ctxos1, ctxos2, ctxosci, mingen = 0;
 var titlefd = 0, titlefdt = null, titlefds = 1000, titlemode = 0, tmet = null, titlex = 625, titleh = true, titlecd = null, titlecdn = 32000, titlecd2 = null, titlecdn2 = 7000, titlecd3 = null, titlecdn3 = 1200, titlemf = false, title0cd = null, title0cdn = 2000, title0x = 0, title0y = 0;
 var mdown = false, ton = false, toncd = 0, tonx = 0, tony = 0, tonw = 0;
@@ -297,8 +297,7 @@ var orulex = 0, oruley = 0, orulew = 0, oruleh = 0;
 var tfs3 = 0;
 var slidh = 0.45;
 var cidxb = [[[null],-1,-1,0]], cidxbi = 0, cidxbx1 = maxr + 1, cidxbx2 = maxl - 1, cidxby1 = maxt + 1, cidxby2 = maxb - 1, cidxbb = null;
-var cellslen = 0, cellsa = [], cellsan = 0, cellsfs = [], cellsfsl = 0, cellsx = [], cellsxl = 0, cellsx2 = [], cellsx2l = 0, cellsf = false, cellsxf = false;
-var cinfl = [], cinfll = 0, cinflfs = [], cinflfsl = 0;
+var cellslen = 0, cellsan = 0, cellsfs = [], cellsfsl = 0, cellsxl = 0, cellsx2l = 0, cellsf = false, cellsxf = false;
 var cibl = [], cibll = 0, ciblfl = [], ciblfll = 0;
 var ddiama = 0, ddiamb = 0, ddiamcd = null, ddiamcdn = 800, ddiamx = 0, ddiamy = 0, ddiamw = 0, ddiamh = 0, ddiamcd2 = null, ddiamcdn2 = 1200, ddiamf = 0;
 var vwcrs = false;
@@ -324,18 +323,18 @@ var frzc = false, frzcp = false, frzccd = null, frzccdn = 1000;
 var htgen = 0, htgen2 = -1, htgen2x = 0, httot = 0, httot2 = 0, htgent = false, htgencd = null, htgencdn = 200, htgentx = 0, htgenty = 0, htgentw = 0, htgenth = 0;
 var lastcc = 0;
 var acccd = null, acccdn = 500;
-var bmem = new Map();
+var bmem = new Map(), bmemm = null, bmemmi = 0, bmemb = null, bmembi = 0, bmemn = 0, bmemn2 = 0, bmemvi = -1, bmemv0 = 0, bmemv1 = 0, bmemv2 = 0, bmemv3 = 0, bmemv4 = 0;
 var cimg = [], cimgc = 0;
 var cwidth = 0, cheight = 0;
 var divl = [-1,-2], divv = false, dive = [];
-var histmax = 800;
+var histmax = 10;
 var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
 var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", stmsgn2 = "Yet \u22C5 another \u22C5 GoL \u22C5 simulator     ", stmsgo1 = "", stmsgo2 = "", stmsgcd = null, stmsgcdn = 1000, stmsgcd2, stmsgcdn2 = 1300, stmsgntm1 = null, stmsgntm2 = null, stmsgotm1 = null, stmsgotm2 = null;
 
 function clrvars() {
   var l = cidxb[cidxbi][0].length;
   gennum = 0, gennumc = 0, run = false, runcd = null, runcdc = 0, runbc = 0, runcd2 = null, runcd3 = null, runcd4 = null, runcd5 = null;
-  cells = [], rmvcellsf = false, rmvcellsm = new Map(), rmvcellsn = 0, posm = false, posmx = 0, posmy = 0, posmcd = null, posmcdn = 2000;
+  rmvcellsf = false, rmvcellsm = new Map(), rmvcellsn = 0, posm = false, posmx = 0, posmy = 0, posmcd = null, posmcdn = 2000, posml = [], posmlp = 0, posmltx = 0, posmlty = 0;
   scalem = false, scalemn = 0, scalemcd = null,  scalemcdn = 2000;
   mingen = 0;
   runt = false, runtx = 0, runty = 0, runtw = 0, runth = 0;
@@ -351,8 +350,7 @@ function clrvars() {
   ffwsbcd = null, ffwsbcdn = 500, ffwsbf = false, ffwsbm = 0;
   osctlx = 0, osctly = 0, osctlw = 0, osctlh = 0, osctrx = 0, osctry = 0, osctrw = 0, osctrh = 0;
   cidxb = [[[],-1,-1,0]], cidxbi = 0, cidxbx1 = maxr + 1, cidxbx2 = maxl - 1, cidxby1 = maxt + 1, cidxby2 = maxb - 1, cidxbb = null;
-  cellslen = 0, cellsa = [], cellsan = 0, cellsfs = [], cellsfsl = 0, cellsx = [], cellsxl = 0, cellsx2 = [], cellsx2l = 0, cellsf = false, cellsxf = false;
-  cinfl = [], cinfll = 0, cinflfs = [], cinflfsl = 0;
+  cellslen = 0, cellsan = 0, cellsfs = [], cellsfsl = 0, cellsxl = 0, cellsx2l = 0, cellsf = false, cellsxf = false;
   cibl = [], cibll = 0, ciblfl = [], ciblfll = 0;
   hbcksl = null, hbcksll = 0, hbckslf = 0, hbcksm = null;
   stpgsf = false;
@@ -363,7 +361,7 @@ function clrvars() {
   dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcd2 = null, dhlplf = 1, dhlpcd3 = null;
   frzc = false, frzcp = false, frzccd = null;
   htgen = 0, htgen2 = -1, htgen2x = 0, httot = 0, httot2 = 0;
-  bmem = new Map();
+  bmem = new Map(), bmemm = null, bmemmi = 0, bmemb = null, bmembi = 0, bmemn = 0, bmemn2 = 0, bmemvi = -1, bmemv0 = 0, bmemv1 = 0, bmemv2 = 0, bmemv3 = 0, bmemv4 = 0;
   cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
   calcWrld();
   crulecomp();
@@ -903,10 +901,10 @@ function init0() {
   pstrimg("RS2-0-140-160-140", "data:image/png;base64,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");
   pstrimg("\u2715-29-190-20-20", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABpUlEQVRIS+3WP0vDQBQA8PdMAx2EQnIdHBwEURxc1FUkth/Az+Lu5qyDH0VwrYo4qFBQUVwcxKWQpFUsLZrceYlJSdL8vVQ6aNYk98t79+69IEzhwimY8I/+atb/WHpvAOR3RTniYe9rpvkqkttWvT7LGDugg8Fes9/vpK2BLYAqU9VjQGzyBz+Q0pWisLsGIRf8/XUOv7HhcDkNxnNC5iyAZ/5C1fu6QnAQ9KOTLGttq9drJ0XrFtJZrbZgVSptRKwVgeNAvqCm6fppanr9m0VhUdDxQkcmL1wGHEPzpLosGIsmwRWAJVXXjQ4hl06V+tuSZw+j+5vYkWJSPVYbImBipCnFNYJFwUzUeaBFyAYDuA6FSenutmkeinSuTNQpGqqqJ/z8ahGgUAPJvadxVTopOLaQYo+FbW/KAC+fkvQk2jIDFR/+/qxz6FS1LcsPZeBQpFlgsKrLwCM0LzgJ2EWLgmVh9Ca+M/sWRVqbyB67Q/yLsUd/lop0miiMtr2qdbv3Sc3jZ4gryryFeDeDuJM1gJMW8uBb/rvSaBjGVVq3msov6DetuiAtTeGmeAAAAABJRU5ErkJggg==");
   pstrimg("rule-0-75-75-130", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAACSUlEQVRIS+2VQUgUURzG338cU3bzoOQpKA+ReRQR6hB4U2eRQCivEpSgFGglZLA77RzEg0h0KQm6dfHqzrIeYlWKxRAPCgqBtxQS9rZ7aeY9v7ezw245i832WDq4sDuzM2/+v/f9v++9IdaADzWAwS4gobrcqHYJisWSbxijQ87dnKZpszhvcxw+lsmY+VBTrjEYSiTEWsf9u94YcYSfK46jd2Uyr46VQoRgXfjeS6fjOyoKV9coK0nmcHEzlUo8Vw2Q9aogtJVKxZ80CFLy6J0Q4sC2E0tln8gwkjinFtvmU4yZPMxkApSUILsIwAbaN+lDkMCc9K1YFFezWdOpA2J9wUPbXrtKkYZH1e0rgT/j3rVIpOfmysoDNyTkz+H/DeQ+99RK9X5La2sL2FY8JUJQ3rbjwxVPrG9oV7vXLh/yd4msAbFWUdyA0S9R+Dv8WSRi13F+WCiI7mw24Z71LZQSxgYHEzd0XcPKp8vlRzcB6AX0IBrtua1AiVe2r+99c0fHUaeut/xKp+dOfp9nUDhCKjk/nsEJNAxrGooXiEjHYpZr6TEW9Mc63ydnIbHY62W09xEKLwNg4zgB2DCRGFUCGRkxb3Gu7UPFU0T6bWUrsvYRmGMlkKGh5J2mJvY1qM1Q9VMVpB+QLaTvGdbXnqaxVgnEf07k5v8BUtnvoKQMEXMwer5a0cCA2VonJGi/817hmP0HmP1JCC3KGJ+B+T8UQRiD+RGYL01/6E9BxhjQcWUQv7CEOc6lqOs2F9fWXhTkdeWQoISdAgrfT+4gbbcQAAAAAElFTkSuQmCC");
-  pstrimg("GoL-0-75-75-130", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAAC2ElEQVRIS+2UTUhUURTH730zMjbaB0RR+UEtSqRoUWkYBIKG4xuslW5q08ZNEPRlks3MS0kykqBNm4rAVrqL3vUpGVNUi4KKIG1hERTWRkhwdBrnvdP/PueFX+NMT5lFNHB5c9879/zuOed/Dmc5+PEcMFjuIcFgRzlj1EzEKjhn03iOElF0epr0aFSbdBt1KhLiAFyHk/PSERwP4+HnnG+fdUyJeDxv29DQpXE3IBuiqldOwuE9/B03TeuAYWhf5Pva2mvrfb5ECyCtyaS3eGCg7bsrSGNjrycW+4jDtBZrhxDaj4WOAoHI3nicDyNlSVeQVB1ketp0PdzpxkmmMzwQaK/weNgrxvgRXQ89lgfq67V1isL2OIdRo4QQ/A1jmpXJ4VLfJaQKkJemyYOGERLSKBjUDjGmvJgDSZqmt9R1TRoatFIAPiGSXiHCx6Xj6mrN6/PlbWJs5pfXy1sg5XOoV8lS9comMqjLlu9rGO8n4vVChIy5B1W1/TRsuqemqMTvV06hfy7boib2lTHrBMDPMoFsCcviE1nvIWMv8t9DpNzn3PJgvxv7izDZjNWPfRDO78gGVRTehXdFkPxhSP75cqA/Y0VVtS2cK3dhrM4/QBAFe4B03sL9u3Q90ppKaWFBgTKGdyO6TlXLiWLR7HLqYVkJXLxwYnDwQsxR4PxbE1fVjoeIqhLR3TAM6k4HympAOhDLYvv6+8NvnUhRrx7UqAmgn6hZUbpm/SsInJ0VInJTQuSkmJwc+QbIBqwxv798V19fk7lkn2RSxux3OzUjnNNObJpRn3d4hpGmowB8wPc1qwBhrKamc2N+/gyalVc6F0P6zmAyHAOkdFUgjuO6uqtbMWXMRIJPRaORGOT/ZNUhC+QtG/nfghSjIctW1CfpFWjPvaeoyUGpNojC49hC7hNC0G0JzqpPMkAeLR5Ftuw/x2JUJht0hZDsuuw/JLs8paxykq7fcExXLqpI7L0AAAAASUVORK5CYII=");
-  pstrimg("GoL-0-240-240-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAACc0lEQVRIS+2WT0hUURTGz5sZclB0ZiIsigRdBW5E21QE4kZrIYIo4sYWFUSrLBFBEGoTpQQtQlBp5yJo0aIWEtgqEhGJWglKLlIqbNQJGdOZ8Xce98lLnenNjMxCfHC495457/vO3/vGkgI8VgE4pPAk0ah0E9kNy5KzrNvIb+QL58FQSKZzjdqOJJWSwNqaDVJjzjFWP+DFBjjJei0clolciGwSIngDYDPbLeQOYGOqX1+Xq8mkPGNbi3Sgf5UTCVGEiOInLweQdoBe7wVaXZU+v1/GSkttu6wfS+tAFEOQfYxE5ErWCB5eUJJHkPRj+4Io7po0XSJNLc77OBDnt6fY/fGAuc/EIhWP0fYiowDdUgt0T1h6XNapvGpCcbvw+iUg3yCpUuBYTMoTCalnqy2shNp1bQfVy0tkFqkIUvhljMPICEC33S8S1XvODaSqE9v77C+a3+Pohpmfe/8jclpYiz+IsZ7nAXvHWbvtAnIZOYFuBd0p9nPIV+Q6EkSGcOxBJqLdawWPWwF6bqbd/U4U/QL6OpSzAOrMaN30/EmzSzQVmZpi393lqoemco62nnV14K7XektAtAj4afZTkDemI/J0QTokgAzg9UMnTEg0tVXo/zKs59MNa1YkgE/icYOSmJviB2sRxw1IKsrKZOWg2ngi0Q7E6194XML+LUAzyE3O51g30SXyJlHvaPMmwMbZRlzefmBfjb7kUEhcdWj3+STOAH+nPp8hXzp0EnfOzXfoaJEU03Vn8pqTdFeGSZfeeyf1e8Tqc2yVkJq16uqphTORmKnXPx7/PJBuBAJSqQOaF0k68r36YxKvmbLtCpKuHa5L9R9bNYkRAAAAAElFTkSuQmCC");
   pstrimg("s-0-75-75-130", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAz0lEQVQ4T2NkoAAwUqCXYVQziaEHDLD/jF5ezU2MjAw1EL3/T/3+zeW0a1fpV0JmgTT6MDD8W83CwqLw6dPvn5ycjMmsrCxLNm2qfklQs6dnkzUTE8OR////rwUq3vjzJ+u2vXur3hLSCJIHx7O3d7Pm//8MYUAnBwOdr8vI+Nd8y5bGU4QMADq7EaiB6ePWrbV7QkMb2L5+ZXry/z9j2vbttRuI0RzJyMi4DKYQ6IIdL1+K+509m/6boGaYAheXDn4Qe8+eio+ENMHkKUrbAE3gRhBXwGuLAAAAAElFTkSuQmCC");
   pstrimg("s-0-190-20-20", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAA1klEQVQ4T2NkoAAwUqCXYVQziaHH+J+BgXG/sHAuAyPjRJBeIH8L55s3YVYMDN8JmcW4T0TE/v///xs5f/9W+sfG9vvn///B/3/92uzy+fNbgpr3CwgY/GdhOc/w///U/4yMO//9/XvI9f37j4Q0guTB8XyQn1/xHwuLF9DJgUDnOzP+/avr+P79FUIGgPzrArT1i+O7dyfOMDCwfhIRuQb0Rrrz27f7CGreKyjoycjMvA2u8P//hYxv36Y4MjD8IagZpmC/qCgPiO34+vUXQppg8hSlbQDAyE4QASmTTAAAAABJRU5ErkJggg==");
+  pstrimg("GoL-0-75-75-130", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAACzUlEQVRIS+1VT0gUURh/b2ZsZNW6aFia1KHEig6VRYLgwXB3BruEdahLF49B/0ww13Gl0CDqGlQE3vRUOLOrREl/yQ5FQXaoCIoKrIPYruzszHz93q4ry+raiiZEPhjmzXvf9/2+9/t+3zzOVmDwFcBg/xZIINB9DKyUh8N0lTHDy2RomU5CXNd73hBRWSxGFaOjhvO3QO4zRlU+X822wcEj7irIAmpP1uR/owtHroFCWolYLedsGu/3kOXo9DSZkOUv7HFN6wlh74LgDvufGfOOW1bXoxm6Kk2TqnP0SZLTy/A7m3Kmt3j5OOebU4Uge2KiYGNpaeI61g4j+A0BLkm8D5sV8bhXr6rSJdjtx3eQMS6nCwi7yWQzalr3CTjfwvSn63p7IxHjk1hvbOxdp6p2G5zbHYc3KAp7iHmfaXa1i/2GBqO4qEj6ikDj8P8hQs1VB33kLS0DcjT67hucS/BssSzje7ah39+1y3GYT1XlZ0iiHkk8njmhoO8u57Q9GqXq7E5PxxE0iToIejpMM4gjzz/8/lCtLLMxz2O7w+Hgy7SVrof64V83X6fPgqSdweNB0+y8JzYCAWOtJLGdGbzarsskRZGfg5rTKDR+goylWBj/AiHE/gRyABk+dV2uRyKdlnDWdaOOMelJBogzNaVUlZS4D0DNVqy3IqlXqSKzQxDCUcsKDuRigTc3G1UA+ACnARiK37UoqKKqBWWMJeKKwtsQ5Awo2RSPr0kUFiaQCN+XEfAUaL6WC0CsQ11J+b7AfA8RD1hWZyTTQdNCJ2FzRYCkRdHUdHEDke3aNo+l+mfhkZSwKD6R9xoyVMB5P5F0m3NPxvcOfJ8H5+sdR6kcHu6AChc/Zi8tTTPKOZduIkSW1mkMIL1DQ3Qnu5PzhZtzM6br4Xk2DlI8OTJyLppvsJyFX2qAfPyX6Y7Po/D5ZLMUm9WTLIq9FaHrN53gVqKaD94IAAAAAElFTkSuQmCC");
+  pstrimg("GoL-0-240-240-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAACW0lEQVRIS+2VT0iTcRjHn3cbOhy6rSS0SNCTx7AuKYJ0rBAhNrxkHVQQb5KIEAR2EdGEDqKYeAiCgh081CnoEIQwxEOdBKEOJQo6dRpCbfPzyO8db6+bG2hC5uDZ83ue3/M839/zj9eSU/hZp4Ah/xbI5qbEMhm5GArJXcuSHWeFTiQTgvsA2SB4qdcrV8vLZe2vgGxtyQ/AAoDUVFTI+jlI3mnXnvyH5UokpI+aPGQUL8N/QxvQZ+TRYFDilMVPWT6iu2Fqt8fdJNPUb8pVxp5U5dwTU9M4jtfUGTkJ82JcZoKlOd9Jp2UKXoNuCfoC3Yb86J7h08H5AvwT3GM3UAEPlpEM5hBaOf6CenjNjOq3t6WZwOMcG3B+iY0GWuS+Qe9ZwOuweSjJvWZV7Z4O9D8t/oKkqhvqg6IEiLkNCTZIgEpstZxj2DwyGeumf+Mc8vmk1r3p2Wy0DwQY0zTDYWlyA9gydk+xeww9oT9Dth6QZXyrcm26E+TAGcUEL+w1ZbpJmdpsI1OKUuQB6AN2t0wmWoVV7lNHgvCSYeP8AucuU+sReL8jqwwPuQ/wJDxA0LfcLUCdyFfgr/Ftz1cFi+Y+wHkWg68Y1qlhMimXUilp4agjrIA6dREC7gLwinPYETCbWV4QM/sr2jxoGqBupzGZvkfW8kTsoUAX9Xhkj8d9R6cZHfmzR1ibP4qlytrId8g6bfVQI1QCtRPwTaGAue6zHy1ed4/gz822O20T2gMAetybXCzgoS+jox+6Q0uM9WKxwfL25LgBivE/kW98IaBzkEIV+uP+7JRrHwtUAJriBoqKAAAAAElFTkSuQmCC");
 }
 
 function init1() {
@@ -979,6 +977,7 @@ function addel() {
     }
     lastcc = 0;
     scalem = false;
+    posm = false;
     e2 = normalizeWheel(e);
     x = cellX(posx);
     y = cellY(posy);
@@ -1156,6 +1155,7 @@ function addel() {
       if (!dsppost) {
         posmx = posmy = 0;
         posm = true;
+        posml = [];
         posmcd = performance.now();
         dspposcd = performance.now();
       }
@@ -1613,15 +1613,6 @@ function peKey(cc) {
   }
   lastcc = cc;
 
-  if (f) {  
-  } else if (dspgrd && cc === 35) {
-    f = true;
-    swdspgrd();
-  } else if (dwrld && (cc === 27 || cc === 87 || cc === 119)) {
-    f = true;
-    swdwrld();
-  }
-
   if (f) {
   } else if (cc === 92 && (stpge || stpga)) {
     f = true;
@@ -1878,6 +1869,15 @@ function peKey(cc) {
     if (dhlpn > 0) {
       dhlpn = 2;
     }
+  }
+
+  if (f) {  
+  } else if (dspgrd && cc === 35) {
+    f = true;
+    swdspgrd();
+  } else if (dwrld && (cc === 27 || cc === 87 || cc === 119)) {
+    f = true;
+    swdwrld();
   }
   
   if (f) {
@@ -2255,31 +2255,37 @@ function tick() {
     wts1 = gts;
     if (run) {
       calcGen();
-    } else {
+    }
+    if (ffw != 0) {
       doffw();
     }
   }
   
   i = 0;
   while (cellsn + rmvcellsn < cellslen/3) {
-    while (i < cellslen && (cells[i][3] === 1 || cells[i][5] === -2)) {
+    while (i < cellslen) {
+      bmemg(10001,i);
+      if (bmemv3 !== 1 && bmemv4 !== -2) {
+        break;
+      }
       i++;
     }
-    while (i < cellslen && cellslen > 0 && cells[cellslen-1][3] !== 1 && cells[cellslen-1][5] !== -2) {
+    while (i < cellslen && cellslen > 0) {
+      bmemg(10001,cellslen-1);
+      if (bmemv3 === 1 || bmemv4 === -2) {
+        break;
+      }
       cellslen--;
-      cellsfs[0-cells[cellslen][3]] = -1;
+      cellsfs[0-bmemv3] = -1;
     }
     if (i < cellslen) {
       cellslen--;
-      cellsfs[0-cells[i][3]] = -1;
-      cells[i][0] = cells[cellslen][0];
-      cells[i][1] = cells[cellslen][1];
-      cells[i][2] = cells[cellslen][2];
-      cells[i][3] = cells[cellslen][3];
-      cells[i][4] = cells[cellslen][4];
-      cells[i][5] = cells[cellslen][5];
-      if (cells[i][5] !== -2) {
-        cinfl[cells[i][4]][2] = i + 1;
+      bmemg(10001,i);
+      cellsfs[0-bmemv3] = -1;
+      bmemg(10001,cellslen);
+      bmems(10001,i,bmemv0,bmemv1,bmemv2,bmemv3,bmemv4);
+      if (bmemv4 !== -2) {
+        fcidxs2(bmemv0, bmemv1, i + 1);
       }
     }
   }
@@ -2398,6 +2404,30 @@ function dspview0() {
     histq0 = prevHist(histh, histi);
   }
   
+  if (scalem && scalemcd) {
+    x = cellX(posx);
+    y = cellY(posy);
+    if (posm) {
+      x2 = cellX(posmx);
+      y2 = cellY(posmy);
+    }
+    scale += (scalemn - scale) * Math.sin((gts - scalemcd > scalemcdn ? 1 : (gts - scalemcd) / scalemcdn) * Math.PI / 2);
+    if (scale < 0) {
+      scale = 0;
+    }
+    if (scale > 100) {
+      scale = 100;
+    }
+    calcCellsz();
+    posx = x * (cellsz+(cellsz>grb?1:cellsz/grb));
+    posy = y * (cellsz+(cellsz>grb?1:cellsz/grb));
+    if (posm) {
+      posmx = x2 * (cellsz+(cellsz>grb?1:cellsz/grb));
+      posmy = y2 * (cellsz+(cellsz>grb?1:cellsz/grb));
+    }
+    posml = [];
+  }
+  
   if (posm && posmcd) {
     x = Math.sin((gts - posmcd > posmcdn ? 1 : (gts - posmcd) / posmcdn) * Math.PI / 2);
     posx += (posmx - posx) * x;
@@ -2424,11 +2454,12 @@ function dspview0() {
         break;
     }    
     posm = true;
+    posml = [];
     posmcd = gts;
     posmcdn = 400;
   }
   
-  if (cellsn > 0 && trkw && !mdown) {
+  if (cellsn > 0 && trkw) {
     x = cellX(posx - cwidth / 2 * 0.9);
     y = cellY(posy + cheight / 2 * 0.9);
     x2 = cellX(posx + cwidth / 2 * 0.9);
@@ -2449,30 +2480,41 @@ function dspview0() {
       scalemcd = gts;
       scalemcdn = 400;
     }
-    posmx = (cellsl + (cellsr - cellsl) / 2 + 0.5 - trkwdx) * (cellsz+(cellsz>grb?1:cellsz/grb));
-    posmy = (cellsb + (cellst - cellsb) / 2 + 0.5 - trkwdy) * (cellsz+(cellsz>grb?1:cellsz/grb));
+    x = (cellsl + (cellsr - cellsl) / 2 + 0.5 - trkwdx) * (cellsz+(cellsz>grb?1:cellsz/grb)) - posx;
+    y = (cellsb + (cellst - cellsb) / 2 + 0.5 - trkwdy) * (cellsz+(cellsz>grb?1:cellsz/grb)) - posy;
+    if (posml.length < 10) {
+      if (posml.length === 0) {
+        posmltx = 0;
+        posmlty = 0;
+        posmlp = 0;
+      }
+      posml[posml.length] = [x,y];
+      posmltx += x;
+      posmlty += y;
+    } else {
+      posmltx -= posml[posmlp][0];
+      posmlty -= posml[posmlp][1];
+      posmltx += x;
+      posmlty += y;
+      posml[posmlp][0] = x;
+      posml[posmlp][1] = y;
+      if (posmlp < posml.length - 1) {
+        posmlp++;
+      } else {
+        posmlp = 0;
+      }
+    }
+    posmx = posx + posmltx / posml.length;
+    posmy = posy + posmlty / posml.length;
+    if (!posm) {
+      posml = [];
+    }
     posm = true;
     posmcd = gts;
-    posmcdn = 1201 - 1200 * speed / 100;
+    posmcdn = 1501 - 1500 * speed / 100;
     curskcc = 0;
   }
-  
-  if (scalem && scalemcd) {
-    x = Math.sin((gts - scalemcd > scalemcdn ? 1 : (gts - scalemcd) / scalemcdn) * Math.PI / 2);
-    x2 = cellX(posx);
-    y2 = cellY(posy);
-    scale += (scalemn - scale) * x;
-    if (scale < 0) {
-      scale = 0;
-    }
-    if (scale > 100) {
-      scale = 100;
-    }
-    calcCellsz();
-    posx = x2 * (cellsz+(cellsz>grb?1:cellsz/grb));
-    posy = y2 * (cellsz+(cellsz>grb?1:cellsz/grb));
-  }
- 
+   
   chgcanvsz = chgcellsz = chgpos = false;
 
   if (!cwidth || canvas0.offsetWidth !== cwidth || !cheight || canvas0.offsetHeight !== cheight) {
@@ -2678,7 +2720,7 @@ function dspview0() {
   if (htgencd && gts - htgencd > htgencdn) {
     htgencd = null;
   }
-  if (posmcd && gts - posmcd > posmcdn && !trkw) {
+  if (posmcd && gts - posmcd > posmcdn) {
     posmcd = null;
     posmcdn = 2000;
     if (posm) {
@@ -2962,6 +3004,8 @@ function dspview0() {
   drawStmsg();
   drawMsgs();
   drawStpg();
+  drawHistPnl();
+  drawFcidxPnl();
   
   ctx3.clearRect(0, 0, cwidth, cheight);
   
@@ -2977,7 +3021,7 @@ function calcICellsz() {
 }
 
 function calcCellsz() {
-  cellsz = cellisz*celliszm * Math.pow(2, 10*(0.3 + 0.7 * (scale/100))) / 1024;
+  cellsz = cellisz*celliszm * Math.pow(2, 10*scale/100) / 1024;
 }
 
 function toggleCell(x, y) {
@@ -3005,12 +3049,13 @@ function toggleCellCR(c, r, x) {
   if (x) {
     i = x - 1;
   } else {
-    i = ((a = fcidx(c,r)) ? cinfl[a-1][0] === 1 ? cinfl[a-1][2]-1 : cellslen : cellslen);
+    i = fcidxg0(c,r) === 1 ? fcidxg2(c,r) - 1 : cellslen;
   }
   n = tidx[crkey(c0,r0)];
   n2 = n?n<0?n-1:n+1:1;
   if (i < cellslen) {
-    g = cells[i][2];
+    bmemg(10001,i);
+    g = bmemv2;
     if (g === 0) {
       if (Math.abs(n2%2) === 1) {
         hupdc++;
@@ -3037,7 +3082,7 @@ function toggleCellCR(c, r, x) {
       tarr.push([c0,r0,-1]);
     }
     z = addCell(c0,r0);
-    cells[z][4] = fcidx(c,r,4,0,1,0,z+1,0) - 1;
+    fcidx(c,r,4,0,1,0,z+1,0);
     cellsn++;
   }
   tidx[crkey(c0,r0)] = n2;
@@ -3067,20 +3112,21 @@ function cellY(y,r) {
 }
 
 function drawCells() {
-  var i, ci, px, py, x, px2, py2, c;
+  var i, px, py, x, px2, py2, c, cx;
   if (drawallcells) {
     ctx1.clearRect(0, 0, cwidth, cheight);
   } else if (rmvcellsf && !frzc) {
     rmvcellsf = false;
     for (i = 0; i < cellslen; i++) {
-      if ((ci = cells[i])[5] === -2) {    
+      bmemg(10001,i);
+      if (bmemv4 === -2) {    
         cellsfs[cellsfsl++] = i;
-        ci[3] = 0 - cellsfsl + 1;
-        ci[5] = 0;
-        px = Math.floor(cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx - 0.5);
-        py = Math.floor(cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1 - 0.5);
+        bmems(10001,i,bmemv0,bmemv1,bmemv2,0-cellsfsl+1,0);
+        px = cwidth / 2 + (bmemv0 * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx;
+        py = cheight / 2 - (bmemv1 * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1;
         if (px >= 0 - cellsz && px < cwidth + cellsz && py >= 0 - cellsz && py < cheight + cellsz) {
-          ctx1.clearRect(px, py, Math.ceil(cellsz+1), Math.ceil(cellsz+1));
+          cx = cellsz < 2 ? 2 - cellsz : 0;
+          ctx1.clearRect(px - cx/2, py - cx/2, cellsz + cx, cellsz + cx);
         }
       }
     }
@@ -3088,10 +3134,10 @@ function drawCells() {
   if (rmvcellsf) {
     rmvcellsf = false;
     for (i = 0; i < cellslen; i++) {
-      if ((ci = cells[i])[5] === -2) {    
+      bmemg(10001,i);
+      if (bmemv4 === -2) {    
         cellsfs[cellsfsl++] = i;
-        ci[3] = 0 - cellsfsl + 1;
-        ci[5] = 0;
+        bmems(10001,i,bmemv0,bmemv1,bmemv2,0-cellsfsl+1,0);
       }
     }
   }
@@ -3099,27 +3145,29 @@ function drawCells() {
   rmvcellsm = new Map();
   if (!frzc || drawallcells) {
     for (i = 0; i < cellslen; i++) {
-      if ((ci = cells[i])[3] === 1) {
+      bmemg(10001,i);
+      if (bmemv3 === 1) {
         x = Math.trunc(60 * Math.pow(2, 3+7*colrs/100) / 1024);
         if (x < 1) {
           x = 1;
         }
-        c = Math.trunc((1 - ((ci[2]>0?ci[2]:gennum)-mingen+1) / (gennum-mingen+1)) * 59 / (60 / x));
+        c = Math.trunc((1 - ((bmemv2>0?bmemv2:gennum)-mingen+1) / (gennum-mingen+1)) * 59 / (60 / x));
         c = Math.round(c * 60 / x * 2);
         if (c > 59) {
           c = 59;
         }
-        if (drawallcells || ci[5] === -1 || ci[5] !== c) {
-          ci[5] = c;
-          px = Math.round(cwidth / 2 + (ci[0] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx);
-          py = Math.round(cheight / 2 - (ci[1] * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1);
+        if (drawallcells || bmemv4 === -1 || bmemv4 !== c) {
+          bmems(10001,i,bmemv0,bmemv1,bmemv2,bmemv3,c);
+          px = cwidth / 2 + (bmemv0 * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx;
+          py = cheight / 2 - (bmemv1 * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) + posy - cellsz + 1;
           if (px >= 0 - cellsz && px < cwidth + cellsz && py >= 0 - cellsz && py < cheight + cellsz) {
             cellImg(c);
-            x = Math.trunc(canvasosci.width / cellsz);
+            cx = cellsz < 2 ? 2 - cellsz : 0;
+            x = Math.trunc(canvasosci.width / (cellsz+cx));
             py2 = Math.trunc(c / x);
-            px2 = Math.ceil((c - py2 * x) * cellsz);
-            py2 = Math.ceil(py2 * cellsz);
-            ctx1.drawImage(canvasosci, px2, py2, Math.round(cellsz), Math.round(cellsz), px, py, Math.round(cellsz), Math.round(cellsz));
+            px2 = Math.ceil((c - py2 * x) * (cellsz+cx));
+            py2 = Math.ceil(py2 * (cellsz+cx));
+            ctx1.drawImage(canvasosci, px2, py2, cellsz+cx, cellsz+cx, px-cx/2, py-cx/2, cellsz+cx, cellsz+cx);
           }
         }
       }
@@ -3128,21 +3176,22 @@ function drawCells() {
 }
 
 function cellImg(c) {
-  var i, x, px, py, cs, cd;
+  var i, x, px, py, cs, cd, cx;
   if (cimg.length === 0) {
     for (i = 0; i < 60; i++) {
       cimg[i] = -1;
     }
   }
-  cd = cellsz * 0.1 + cellsz * 0.8 * (1 - csize/100);
-  cs = cellsz - cd;
-  x = Math.trunc(canvasosci.width / cellsz);
-  py = Math.trunc(c / x);
-  px = Math.ceil((c - py * x) * cellsz);
-  py = Math.ceil(py * cellsz);
   if (cimg[c] < cimgc) {
     cimg[c] = cimgc;
-    ctxosci.clearRect(px, py, Math.ceil(cellsz), Math.ceil(cellsz));
+    cx = cellsz < 2 ? 2 - cellsz : 0;
+    cd = (cellsz+cx) * 0.1 + (cellsz+cx)* 0.8 * (1 - csize/100);
+    cs = (cellsz+cx) - cd;
+    x = Math.trunc(canvasosci.width / (cellsz+cx));
+    py = Math.trunc(c / x);
+    px = Math.ceil((c - py * x) * (cellsz+cx));
+    py = Math.ceil(py * (cellsz+cx));
+    ctxosci.clearRect(px, py, cellsz+cx, cellsz+cx);
     x = (59 - c) / 59;
     ctxosci.fillStyle = "rgba(230, 160, "+(100+Math.floor(155*x))+", 1)";
     fillrr(ctxosci, px + cd / 2, py + cd / 2, cs, cs, cs / 4);
@@ -3150,26 +3199,27 @@ function cellImg(c) {
 }
 
 function calcWrld() {
-  var i, ci;
+  var i;
   mingen = gennum;
   cellsl = maxr + 1;
   cellsr = maxl - 1;
   cellst = maxb - 1;
   cellsb = maxt + 1;
   for (i = 0; i < cellslen; i++) {
-    if ((ci = cells[i])[3] === 1) {
-      mingen = ci[2] > 0 ? mingen === 0 ? ci[2] : mingen > ci[2] ? ci[2] : mingen : mingen === 0 ? gennum : mingen;
-      if (ci[0] < cellsl) {
-        cellsl = ci[0];
+    bmemg(10001,i);
+    if (bmemv3 === 1) {
+      mingen = bmemv2 > 0 ? mingen === 0 ? bmemv2 : mingen > bmemv2 ? bmemv2 : mingen : mingen === 0 ? gennum : mingen;
+      if (bmemv0 < cellsl) {
+        cellsl = bmemv0;
       }
-      if (ci[0] > cellsr) {
-        cellsr = ci[0];
+      if (bmemv0 > cellsr) {
+        cellsr = bmemv0;
       }
-      if (ci[1] > cellst) {
-        cellst = ci[1];
+      if (bmemv1 > cellst) {
+        cellst = bmemv1;
       }
-      if (ci[1] < cellsb) {
-        cellsb = ci[1];
+      if (bmemv1 < cellsb) {
+        cellsb = bmemv1;
       }
     }
   }
@@ -3198,17 +3248,18 @@ function calcWrld2() {
 }
 
 function calcWrld3() {
-  var i, ci;
+  var i;
   mingen = gennum;
   for (i = 0; i < cellslen; i++) {
-    if ((ci = cells[i])[3] === 1) {
-      mingen = ci[2] > 0 ? mingen === 0 ? ci[2] : mingen > ci[2] ? ci[2] : mingen : mingen === 0 ? gennum : mingen;
+    bmemg(10001,i);
+    if (bmemv3 === 1) {
+      mingen = bmemv2 > 0 ? mingen === 0 ? bmemv2 : mingen > bmemv2 ? bmemv2 : mingen : mingen === 0 ? gennum : mingen;
     }
   }
 }
 
 function drawWrld() {
-  var i, ulw, w, h, d, x, y, x2, y2, ci, wlw;
+  var i, ulw, w, h, d, x, y, x2, y2, wlw;
   if (cellsn === 0) {
     return;
   }
@@ -3229,13 +3280,14 @@ function drawWrld() {
   h = (wrldh-wrldm) / (cellst-cellsb+1);
   d = (wrldw*wrldh)/(500*300)*0.4;
   for (i = 0; i < cellslen; i++) {
-    if ((ci = cells[i])[3] === 1) {
-      if (ci[2] > 0) {
+    bmemg(10001,i);
+    if (bmemv3 === 1) {
+      if (bmemv2 > 0) {
         ctx2.fillStyle = "rgba(60, 170, 60, 0.7";
       } else {
         ctx2.fillStyle = "rgba(220, 30, 30, 0.7";
       }
-      ctx2.fillRect(Math.round(wrldx - d * 2 + (wrldm/2+0.5) + w * (ci[0] - cellsl)), Math.round(wrldy - d * 2 + (wrldm/2+0.5) + h * (cellst - ci[1])), Math.round((w<1?1:w)+d*4), Math.round((h<1?1:h)+d*4));
+      ctx2.fillRect(Math.round(wrldx - d * 2 + (wrldm/2+0.5) + w * (bmemv0 - cellsl)), Math.round(wrldy - d * 2 + (wrldm/2+0.5) + h * (cellst - bmemv1)), Math.round((w<1?1:w)+d*4), Math.round((h<1?1:h)+d*4));
     }
   }
   ctx2.lineWidth = 1+d*2;
@@ -3814,11 +3866,6 @@ function drawRunToggle() {
         runcdc = 1;
       }
     }
-    ctx2.font = "12px " + font;
-    ctx2.lineWidth = 2;
-    ctx2.strokeStyle = "rgba(100,120,170,"+(1*b)+")";
-    ctx2.strokeText("\u25B7", runtx-5, 127);
-    ctx2.strokeText("\u25B7", runtx+23, 127);
     ctx2.font = "32px " + font;
     ctx2.fillStyle = "rgba(100,150,250,"+(0.7*b)+")";
     ctx2.fillText("\u25B7", runtx-13, 139);
@@ -4156,12 +4203,12 @@ function drawInfo() {
   }
   q = updc();
   if (gennum === 0) {
-    q[1]++;
+    q[0]++;
   }
   n1 = -1;
-  if (q[1] === 0) {
+  if (q[0] === 0 && q[1] === 0) {
     if (histp > 0) {
-      if ((htgen2 < 0 || htgen2 > hist[histq[2][0]][0][histq[2][1]][15]) && (n2 = htgen2 < 0 ? hist[histq[2][0]][0][histq[2][1]][15] : htgen2) < gennum) {
+      if ((htgen2 < 0 || htgen2 >= hist[histq[2][0]][0][histq[2][1]][15]) && (n2 = htgen2 < 0 ? hist[histq[2][0]][0][histq[2][1]][15] : htgen2) < gennum) {
         n1 = hist[histq[2][0]][0][histq[2][1]][14] + Math.ceil(histp/hist[histq0[0]][0][histq0[1]][11][0]) * hist[histq0[0]][0][histq0[1]][16];
         if (htgen2 >= 0) {
           n1 -= httot2;
@@ -4169,7 +4216,7 @@ function drawInfo() {
         n1 = Math.floor(n1 / (gennum - n2) * 100) / 100;
       }
     } else {
-      if ((htgen2 < 0 || htgen2 > hist[histh][0][histi][15]) && (n2 = htgen2 < 0 ? hist[histh][0][histi][15] : htgen2) < gennum) {
+      if ((htgen2 < 0 || htgen2 >= hist[histh][0][histi][15]) && (n2 = htgen2 < 0 ? hist[histh][0][histi][15] : htgen2) < gennum) {
         n1 = hist[histh][0][histi][14];
         if (htgen2 >= 0) {
           n1 -= httot2;
@@ -4579,7 +4626,7 @@ function drawCRule() {
   if (crulem !== 0) {
     drawStrImg(ctx2, "rule", 28, cheight - 69, 0, 75, 75, 130, 0.8 * (1-z));
     drawStrImg(ctx2, "s", 54, cheight - 55, 0, 75, 75, 130, 0.8 * (1-z));
-    drawStrImg(ctx2, "GoL", 9, cheight - 91, 0, 75, 75, 130, 0.8);
+    drawStrImg(ctx2, "GoL", 5, cheight - 65, 0, 75, 75, 130, 0.8);
     drawStrImg(ctx2, "???", 30, cheight - 67, 0, 75, 75, 75, 0.8 * z);
     if (crulem === 1) {
       drawStrImg(ctx2, "RB2", 51, cheight - 75, 0, 140, 160, 140, 1 * z);
@@ -4607,7 +4654,7 @@ function drawCRule() {
     drawStrImg(ctx2, "rule", 28, cheight - 69, 0, 75, 75, 130, 0.8);
     drawStrImg(ctx2, "s", 54, cheight - 55, 0, 190, 20, 20, 0.8 * (1-z2));
     drawStrImg(ctx2, "s", 54, cheight - 55, 0, 75, 75, 130, 0.8 * z2);
-    drawStrImg(ctx2, "GoL", 9, cheight - 91, 0, 240, 240, 0, 0.8 * (1-z2));
+    drawStrImg(ctx2, "GoL", 5, cheight - 65, 0, 240, 240, 0, 0.8 * (1-z2));
     drawStrImg(ctx2, "RB", 51, cheight - 75, 0, 240, 240, 0, 0.8 * (1-z2));
     drawStrImg(ctx2, "RS", 51, cheight - 43, 0, 240, 240, 0, 0.8 * (1-z2));
     drawStrImg(ctx2, "RB", 51, cheight - 75, 0, 110, 110, 110, 0.8 * z2);
@@ -4615,13 +4662,13 @@ function drawCRule() {
   } else if (!hlcrcd4 && (cruleb !== histcr[0] || crules !== histcr[1])) {
     drawStrImg(ctx2, "rule", 28, cheight - 69, 0, 75, 75, 130, 0.8);
     drawStrImg(ctx2, "s", 54, cheight - 55, 0, 75, 75, 130, 0.8);
-    drawStrImg(ctx2, "GoL", 9, cheight - 91, 0, 75, 75, 130, 0.8);
+    drawStrImg(ctx2, "GoL", 5, cheight - 65, 0, 75, 75, 130, 0.8);
     drawStrImg(ctx2, "RB", 51, cheight - 75, 0, 190, 20, 20, 0.8);
     drawStrImg(ctx2, "RS", 51, cheight - 43, 0, 190, 20, 20, 0.8);
   } else if (hlcrcd2) {
     drawStrImg(ctx2, "rule", 28, cheight - 69, 0, 75, 75, 130, 0.8);
     drawStrImg(ctx2, "s", 54, cheight - 55, 0, 75, 75, 130, 0.8);
-    drawStrImg(ctx2, "GoL", 9, cheight - 91, 0, 75, 75, 130, 0.8);
+    drawStrImg(ctx2, "GoL", 5, cheight - 65, 0, 75, 75, 130, 0.8);
     drawStrImg(ctx2, "RB", 51, cheight - 75, 0, 190, 20, 20, 0.8 * (1-z2));
     drawStrImg(ctx2, "RS", 51, cheight - 43, 0, 190, 20, 20, 0.8 * (1-z2));
     drawStrImg(ctx2, "RB", 51, cheight - 75, 0, 110, 110, 110, 0.8 * z2);
@@ -4629,7 +4676,7 @@ function drawCRule() {
   } else {
     drawStrImg(ctx2, "rule", 28, cheight - 69, 0, 75, 75, 130, 0.8 * z);
     drawStrImg(ctx2, "s", 54, cheight - 55, 0, 75, 75, 130, 0.8 * z);
-    drawStrImg(ctx2, "GoL", 9, cheight - 91, 0, 75, 75, 130, 0.8);
+    drawStrImg(ctx2, "GoL", 5, cheight - 65, 0, 75, 75, 130, 0.8);
     drawStrImg(ctx2, "???", 30, cheight - 67, 0, 75, 75, 75, 0.8 * (1-z));
     if (cruleb !== histcr[0] || crules !== histcr[1]) {
       drawStrImg(ctx2, "RB", 51, cheight - 75, 0, 190, 20, 20, 0.8 * (hlcrcd4&&crulem3===1?z:1));
@@ -4797,6 +4844,20 @@ function drawStpg() {
     ctx2.fillStyle = "rgba(140, 140, 140, " + ((!stpge&&!stpgax?z:1-z)*0.8) + ")";
     ctx2.fillText((n > 0 ? "+" : "-") + Math.abs(n), x + 70 + 15 + 16 * s.length, y - 5);
   }
+}
+
+function drawHistPnl() {
+  ctx2.lineWidth = 1;
+  ctx2.setLineDash([2,2]);
+  ctx2.strokeStyle = "rgba(240, 240, 240, 0.8)";
+  strokerr(ctx2, cwidth - 285, cheight - 100, 130, 70, 20);
+}
+
+function drawFcidxPnl() {
+  ctx2.lineWidth = 1;
+  ctx2.setLineDash([2,2]);
+  ctx2.strokeStyle = "rgba(240, 240, 240, 0.8)";
+  strokerr(ctx2, cwidth - 145, cheight - 100, 130, 70, 20);
 }
 
 function drawFButt() {
@@ -5806,9 +5867,9 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         canvasos0.height = (h = 30);
         ctxos0.font = "14px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
-        ctxos0.fillText("G", 0, 14);
-        ctxos0.fillText("o", 9, 19);
-        ctxos0.fillText("L", 15, 25);
+        ctxos0.fillText("G", 0, 22);
+        ctxos0.fillText("o", 10, 19);
+        ctxos0.fillText("L", 17, 14);
         break;        
       case "???":
         canvasos0.width = (w = 25);
@@ -5865,7 +5926,7 @@ function hupdates() {
 }
 
 function calcGen(u) {
-  var i, u2, q, hi = hist[histh][0][histi], ci, cxi, z, c, hf = false, q1, q2, p, s, pp, dx, dy, cp, cm, cxv, cv;
+  var i, u2, q, hi = hist[histh][0][histi], z, c, hf = false, q1, q2, p, s, pp, dx, dy, cp, cm, cxv, cv, x, v0, v1, v2, v3, v4;
   c = cellsn;
   cp = 0;
   cm = 0;
@@ -5963,131 +6024,130 @@ function calcGen(u) {
     cellsan = 0;
     if (cellsxf) {
       for (i = 0; i < cellsxl; i++) {
-        if ((cxv = cinfl[(cxi = cellsx[i])[0]])[0] === 1 && ccrulesx && !ccrules[cxv[3]]) {
-          cells[cxv[2]-1][3] = 9;
+        bmemg(11,i);
+        v0 = bmemv0;
+        v1 = bmemv1;
+        if (fcidxg0(v0, v1) === 1 && ccrulesx && !ccrules[fcidxg3(v0, v1)]) {
+          x = fcidxg2(v0, v1) - 1;
+          bmemg(10001,x);
+          bmems(10001,x,bmemv0,bmemv1,bmemv2,9,bmemv4);
+          hi[0].push([v0,v1,bmemv2,0,0]);
           cellsf = true;
+          bmems(1001,cellsan,1,v0,v1,x);
           cellsan++;
-          if (cellsan > cellsa.length) {
-            cellsa[cellsan-1] = [1,cxi[1],cxi[2],cxv[2]-1];
-          } else {
-            cellsa[cellsan-1][0] = 1;
-            cellsa[cellsan-1][1] = cxi[1];
-            cellsa[cellsan-1][2] = cxi[2];
-            cellsa[cellsan-1][3] = cxv[2]-1;
-          }
-          hi[0].push([cxi[1],cxi[2],cells[cxv[2]-1][2],0,0]);
         }
       }
       for (i = 0; i < cellslen; i++) {
-        if ((ci = cells[i])[3] === 9) {
-          ci[3] = 1;
-        } else if (ci[3] === 1) {
-          mingen = ci[2] > 0 ? mingen === 0 ? ci[2] : mingen > ci[2] ? ci[2] : mingen : mingen === 0 ? gennum : mingen;
-          if (ci[2] === 0) {
+        bmemg(10001,i);
+        if (bmemv3 === 9) {
+          bmems(10001,i,bmemv0,bmemv1,bmemv2,1,bmemv4);
+        } else if (bmemv3 === 1) {
+          mingen = bmemv2 > 0 ? mingen === 0 ? bmemv2 : mingen > bmemv2 ? bmemv2 : mingen : mingen === 0 ? gennum : mingen;
+          if (bmemv2 === 0) {
             cellsf = true;
-            hi[0].push([ci[0],ci[1],-2,0,0]);
-            ci[2] = gennum;
+            hi[0].push([bmemv0,bmemv1,-2,0,0]);
+            bmems(10001,i,bmemv0,bmemv1,gennum,bmemv3,bmemv4);
           }
-          if (ci[0] < cellsl) {
-            cellsl = ci[0];
+          if (bmemv0 < cellsl) {
+            cellsl = bmemv0;
           }
-          if (ci[0] > cellsr) {
-            cellsr = ci[0];
+          if (bmemv0 > cellsr) {
+            cellsr = bmemv0;
           }
-          if (ci[1] > cellst) {
-            cellst = ci[1];
+          if (bmemv1 > cellst) {
+            cellst = bmemv1;
           }
-          if (ci[1] < cellsb) {
-            cellsb = ci[1];
+          if (bmemv1 < cellsb) {
+            cellsb = bmemv1;
           }
         }
       }
       for (i = 0; i < cellsxl; i++) {
-        if ((cxv = cinfl[(cxi = cellsx[i])[0]])[0] !== 1 && ccrulebx && ccruleb[cxv[3]]) {
+        bmemg(11,i);
+        v0 = bmemv0;
+        v1 = bmemv1;
+        if (fcidxg0(v0, v1) !== 1 && ccrulebx && ccruleb[fcidxg3(v0, v1)]) {
           cellsf = true;
-          hi[0].push([cxi[1],cxi[2],-1,0,0]);
+          hi[0].push([v0,v1,-1,0,0]);
+          bmems(1001,cellsan,0,v0,v1,0);
           cellsan++;
-          if (cellsan > cellsa.length) {
-            cellsa[cellsan-1] = [0, cxi[1], cxi[2], 0];
-          } else {
-            cellsa[cellsan-1][0] = 0;
-            cellsa[cellsan-1][1] = cxi[1];
-            cellsa[cellsan-1][2] = cxi[2];
-            cellsa[cellsan-1][3] = 0;
+          if (v0 < cellsl) {
+            cellsl = v0;
           }
-          if (cxi[1] < cellsl) {
-            cellsl = cxi[1];
+          if (v0 > cellsr) {
+            cellsr = v0;
           }
-          if (cxi[1] > cellsr) {
-            cellsr = cxi[1];
+          if (v1 > cellst) {
+            cellst = v1;
           }
-          if (cxi[2] > cellst) {
-            cellst = cxi[2];
-          }
-          if (cxi[2] < cellsb) {
-            cellsb = cxi[2];
+          if (v1 < cellsb) {
+            cellsb = v1;
           }
         }
       }
       clrcellsx(true);
     } else {
       for (i = 0; i < cellslen; i++) {
-        if ((ci = cells[i])[3] === 1) {
-          if (ccrules[cinfl[fcidx(ci[0],ci[1])-1][3] = neighbours(ci[0], ci[1], true)] && ccrulesx) {
-            mingen = ci[2] > 0 ? mingen === 0 ? ci[2] : mingen > ci[2] ? ci[2] : mingen : mingen === 0 ? gennum : mingen;
-            if (ci[2] === 0) {
+        bmemg(10001,i);
+        if (bmemv3 === 1) {
+          v0 = bmemv0;
+          v1 = bmemv1;
+          v2 = bmemv2;
+          v3 = bmemv3;
+          v4 = bmemv4;
+          fcidxs3(v0, v1, x = neighbours(v0, v1, true));
+          if (ccrulesx && ccrules[x]) {
+            mingen = v2 > 0 ? mingen === 0 ? v2 : mingen > v2 ? v2 : mingen : mingen === 0 ? gennum : mingen;
+            if (v2 === 0) {
               cellsf = true;
-              hi[0].push([ci[0],ci[1],-2,0,0]);
-              ci[2] = gennum;
+              hi[0].push([v0,v1,-2,0,0]);
+              bmems(10001,i,v0,v1,gennum,v3,v4);
             }
-            if (ci[0] < cellsl) {
-              cellsl = ci[0];
+            if (v0 < cellsl) {
+              cellsl = v0;
             }
-            if (ci[0] > cellsr) {
-              cellsr = ci[0];
+            if (v0 > cellsr) {
+              cellsr = v0;
             }
-            if (ci[1] > cellst) {
-              cellst = ci[1];
+            if (v1 > cellst) {
+              cellst = v1;
             }
-            if (ci[1] < cellsb) {
-              cellsb = ci[1];
+            if (v1 < cellsb) {
+              cellsb = v1;
             }
           } else {
             cellsf = true;
-            cellsan++;
-            if (cellsan > cellsa.length) {
-              cellsa[cellsan-1] = [1,ci[0],ci[1],i];
-            } else {
-              cellsa[cellsan-1][0] = 1;
-              cellsa[cellsan-1][1] = ci[0];
-              cellsa[cellsan-1][2] = ci[1];
-              cellsa[cellsan-1][3] = i;
-            }
-            hi[0].push([ci[0],ci[1],ci[2],0,0]);
+            bmems(1001,cellsan++,1,v0,v1,i);
+            hi[0].push([v0,v1,v2,0,0]);
           }
         }
       }
     }
     cellsxf = true;
     for (i = 0; i < cellsan; i++) {
-      if (cellsa[i][0] !== 1 && cellsa[i][3]) {
-        if (cinfl[cellsa[i][3]-1][1] === 1) {
-          cinfl[cellsa[i][3]-1][1] = 0;
+      bmemg(1001,i);
+      v0 = bmemv0;
+      v1 = bmemv1;
+      v2 = bmemv2;
+      v3 = bmemv3;
+      if (v0 !== 1 && v3) {
+        if (fcidxg1(v1,v2) === 1) {
+          fcidxs1(v1,v2,0);
         }
-        cellsa[i][3] = 0;
+        bmems(1001,i,v0,v1,v2,0)
       }
-      if (cellsa[i][0] === 0) {
-        z = addCell(cellsa[i][1],cellsa[i][2]);
-        cells[z][4] = fcidx(cellsa[i][1],cellsa[i][2],2,z+1) - 1;
+      if (v0 === 0) {
+        z = addCell(v1,v2);
+        fcidx(v1,v2,2,z+1);
         cellsn++;
         cp++;
       } else {
-        if (cellsa[i][0] === 1) {
-          rmvCell(cellsa[i][3]);
+        if (v0 === 1) {
+          rmvCell(v3);
           cellsn--;
           cm++;
         }
-        fcidx(cellsa[i][1],cellsa[i][2],1);
+        fcidx(v1,v2,1);
       }
     }
     calcWrld2();
@@ -6130,10 +6190,10 @@ function calcGen(u) {
     if (histp === 1) {
       q = prevHist(histh, histi);
       for (i = 0; i < cellslen; i++) {
-        ci = cells[i];
-        if (ci[3] === 1 && ci[2] === 0) {
-          hist[q[0]][0][q[1]][0].push([ci[0],ci[1],-2,0,0]);
-          ci[2] = gennum;
+        bmemg(10001,i);
+        if (bmemv3 === 1 && bmemv2 === 0) {
+          hist[q[0]][0][q[1]][0].push([bmemv0,bmemv1,-2,0,0]);
+          bmems(10001,i,bmemv0,bmemv1,gennum,bmemv3,bmemv4);
         }
       }
     }
@@ -6207,42 +6267,42 @@ function calcGen(u) {
 
 function neighbours(x, y, f) {
   var n = 0, v;
-  if ((v = fcidx(x,y+1)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x,y+1)) === 1) {
     n++;
   } else if (f) {
     newnb(x,y+1,v);
   }
-  if ((v = fcidx(x+1,y+1)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x+1,y+1)) === 1) {
     n++;
   } else if (f) {
     newnb(x+1,y+1,v);
   }
-  if ((v = fcidx(x+1,y)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x+1,y)) === 1) {
     n++;
   } else if (f) {
     newnb(x+1,y,v);
   }
-  if ((v = fcidx(x+1,y-1)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x+1,y-1)) === 1) {
     n++;
   } else if (f) {
     newnb(x+1,y-1,v);
   }
-  if ((v = fcidx(x,y-1)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x,y-1)) === 1) {
     n++;
   } else if (f) {
     newnb(x,y-1,v);
   }
-  if ((v = fcidx(x-1,y-1)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x-1,y-1)) === 1) {
     n++;
   } else if (f) {
     newnb(x-1,y-1,v);
   }
-  if ((v = fcidx(x-1,y)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x-1,y)) === 1) {
     n++;
   } else if (f) {
     newnb(x-1,y,v);
   }
-  if ((v = fcidx(x-1,y+1)) && cinfl[v-1][0] === 1) {
+  if ((v = fcidxg0(x-1,y+1)) === 1) {
     n++;
   } else if (f) {
     newnb(x-1,y+1,v);
@@ -6251,16 +6311,14 @@ function neighbours(x, y, f) {
 }
 
 function newnb(x, y, v) {
-  var v0, x0 = x, y0 = y, vi;
-  if ((v0 = (v ? cinfl[v-1] : null)) && v0[1] === 1) {
+  var x0 = x, y0 = y, n;
+  if (v && fcidxg1(x,y) === 1) {
     return;
   }
-  if (!v0) {
-    vi = fcidx(x, y, 4, 0, 0, 1, 0, 0);
-    v0 = cinfl[vi-1];
+  if (!v) {
+    fcidx(x, y, 4, 0, 2, 1, 0, 0);
   } else {
-    vi = v;
-    v0[1] = 1;
+    fcidxs1(x, y, 1);
   }
   if (x0 < maxl) {
     x0 = maxr - maxl + x0 + 1;
@@ -6274,19 +6332,14 @@ function newnb(x, y, v) {
   if (y0 > maxt) {
     y0 = maxb + y0 - maxt - 1;
   }
+  bmems(1001,cellsan,2,x0,y0,1);
   cellsan++;
-  if (cellsan > cellsa.length) {
-    cellsa[cellsan-1] = [2, x0, y0, vi];
-  } else {
-    cellsa[cellsan-1][0] = 2;
-    cellsa[cellsan-1][1] = x0;
-    cellsa[cellsan-1][2] = y0;
-    cellsa[cellsan-1][3] = vi;
-  }
-  if (ccruleb[(v0[3] = neighbours(x0, y0, false))] && ccrulebx) {
+  fcidxs3(x0, y0, n = neighbours(x0, y0, false));
+  if (ccrulebx && ccruleb[n]) {
     cellsf = true;
     hist[histh][0][histi][0].push([x0,y0,-1,0,0]);
-    cellsa[cellsan-1][0] = 0;
+    bmemg(1001,cellsan-1);
+    bmems(1001,cellsan-1,0,bmemv1,bmemv2,bmemv3);
     if (x0 < cellsl) {
       cellsl = x0;
     }
@@ -6411,7 +6464,7 @@ function pattf1() {
 }
 
 function pattf2() {
-  var zx = 0, zy = 0, v;
+  var zx = 0, zy = 0;
   if (fpattz2 >= fpatta.length) {
     fpattf = 0;
     var d = new Date();
@@ -6429,9 +6482,10 @@ function pattf2() {
     return;
   }
   if (fpattm === 2 && fpattz < cellslen) {
-    if (cells[fpattz][3] === 1) {
-      zx = cells[fpattz][0] - fpattzxp;
-      zy = fpattzyp - cells[fpattz][1];
+    bmemg(10001,fpattz);
+    if (bmemv3 === 1) {
+      zx = bmemv0 - fpattzxp;
+      zy = fpattzyp - bmemv1;
       if (   fpattzx+zx >= 0 && fpattzx+zx < fpattw && fpattzy+zy >= 0 && fpattzy+zy < fpatth
           && !fpattd[""+(fpattzx+zx)+"-"+(fpattzy+zy)]) {
         toggleCellCR(fpattzxp+zx, fpattzyp-zy, fpattz+1);
@@ -6442,7 +6496,7 @@ function pattf2() {
   } else if (fpattz2 < fpatta.length) {
     zx = fpatta[fpattz2][0] - fpattzx;
     zy = fpatta[fpattz2][1] - fpattzy;
-    if (!((v = fcidx(fpattzxp+zx,fpattzyp-zy)) && cinfl[v-1][0] === 1)) {
+    if (fcidxg0(fpattzxp+zx,fpattzyp-zy) !== 1) {
       toggleCellCR(fpattzxp+zx, fpattzyp-zy);
       fpattnt++;
     }
@@ -6544,7 +6598,7 @@ function capHist() {
 }
 
 function prevGen() {
-  var i, c, r, g, z, u, q, hi, v, p0, q0, pp, s, dx, dy, pg, x;
+  var i, c, r, g, z, u, q, hi, p0, q0, pp, s, dx, dy, pg, x, v0, v1, v2, v3, c0, c1, c2, c3, c4;
   if (histgp > 0) {
     clrcellsx();
     pg = gennum;
@@ -6589,32 +6643,30 @@ function prevGen() {
           c = hi[0][i][0];
           r = hi[0][i][1];
           g = hi[0][i][2];
-          z = ((v = fcidx(c,r)) ? cinfl[v-1][0] === 1 ? cinfl[v-1][2] : null : null);
+          z = fcidxg0(c,r) === 1 ? fcidxg2(c,r) : null;
           if (g >= 0) {
+            if (histp > 0 && pp && g > 0) {
+              g += Math.ceil(histp/pp) * pp;
+            }
             if (z) {
               z--;
             } else {
               z = addCell(c,r);
-              cells[z][3] = 0;
-              v = fcidx(c,r,4,0,1,0,z+1,0);
+              bmemg(10001,z);
+              bmems(10001,z,bmemv0,bmemv1,bmemv2,0,bmemv4);
+              fcidx(c,r,4,0,1,0,z+1,0);
             }
-            if (!cells[z] || cells[z][3] !== 1) {
+            bmemg(10001,z);
+            if (bmemv3 !== 1) {
               cellsn++;
             }
-            if (cells[z]) {
-              cells[z][0] = c;
-              cells[z][1] = r;
-              cells[z][2] = g;
-              cells[z][3] = 1;
-              cells[z][4] = v - 1;
-            } else {
-              cells[z] = [c,r,g,1,v-1];
-            }
+            bmems(10001,z,c,r,g,1,-1);
           } else if (g === -1) {
             if (z) {
               z--;
               fcidx(c,r,1);
-              if (cells[z] && cells[z][3] === 1) {
+              bmemg(10001,z);
+              if (bmemv3 === 1) {
                 cellsn--;
               }
               rmvCell(z);
@@ -6622,7 +6674,8 @@ function prevGen() {
           } else if (g === -2) {
             if (z) {
               z--;
-              cells[z][2] = 0;
+              bmemg(10001,z);
+              bmems(10001,z,bmemv0,bmemv1,0,bmemv3,bmemv4);
             }
           }
         }
@@ -6634,24 +6687,34 @@ function prevGen() {
       z = x >= 0 && x < gennum && gennum - x <= i * pp ? Math.floor((gennum - x - 1) / pp) : i;
       if (z > 0 && (dx || dy)) {
         for (i = 0; i < cellslen; i++) {
-          if ((ci = cells[i])[3] === 1) {
-            v = cinfl[fcidx(ci[0], ci[1]) - 1];
-            fcidx(ci[0], ci[1], 1);
-            ci[0] -= dx * z;
-            ci[1] -= dy * z;
-            if (ci[0] < maxl) {
-              ci[0] = maxr - maxl + ci[0] + 1;
+          bmemg(10001,i);
+          if (bmemv3 === 1) {
+            c0 = bmemv0;
+            c1 = bmemv1;
+            c2 = bmemv2;
+            c3 = bmemv3;
+            c4 = bmemv4;
+            v0 = fcidxg0(c0, c1);
+            v1 = fcidxg1(c0, c1);
+            v2 = fcidxg2(c0, c1);
+            v3 = fcidxg3(c0, c1);
+            fcidx(c0, c1, 1);
+            c0 -= dx * z;
+            c1 -= dy * z;
+            if (c0 < maxl) {
+              c0 = maxr - maxl + c0 + 1;
             }
-            if (ci[0] > maxr) {
-              ci[0] = maxl + ci[0] - maxr - 1;
+            if (c0 > maxr) {
+              c0 = maxl + c0 - maxr - 1;
             }
-            if (ci[1] < maxb) {
-              ci[1] = maxt - maxb + ci[1] + 1;
+            if (c1 < maxb) {
+              c1 = maxt - maxb + c1 + 1;
             }
-            if (ci[1] > maxt) {
-              ci[1] = maxb + ci[1] - maxt - 1;
+            if (c1 > maxt) {
+              c1 = maxb + c1 - maxt - 1;
             }
-            fcidx(ci[0], ci[1], 4, 0, v[0], v[1], v[2], v[3]);
+            bmems(10001,i,c0,c1,c2,c3,c4);
+            fcidx(c0, c1, 4, 0, v0, v1, v2, v3);
           }
         }
       }
@@ -6746,7 +6809,7 @@ function prevGen() {
 }
 
 function prevGen2(hi, s, pp, dx, dy) {
-  var i, c, r, g, z, v, x;
+  var i, c, r, g, z, x;
   i = hi[0].length - 1;
   while (i >= 0) {
     if (hi[0][i][4] !== 1) {
@@ -6765,35 +6828,30 @@ function prevGen2(hi, s, pp, dx, dy) {
         r = maxb + r - maxt - 1;
       }
       g = hi[0][i][2];
-      z = ((v = fcidx(c,r)) ? cinfl[v-1][0] === 1 ? cinfl[v-1][2] : null : null);
+      z = fcidxg0(c,r) === 1 ? fcidxg2(c,r) : null;
       if (g >= 0) {
-        if (histp > 0 && pp && g > gennum - histp) {
-          g += Math.ceil(histp/pp);
+        if (histp > 0 && pp && g > 0) {
+          g += Math.ceil(histp/pp) * pp;
         }
         if (z) {
           z--;
         } else {
           z = addCell(c,r);
-          cells[z][3] = 0;
-          v = fcidx(c,r,4,0,1,0,z+1,0);
+          bmemg(10001,z);
+          bmems(10001,z,bmemv0,bmemv1,bmemv2,0,bmemv4);
+          fcidx(c,r,4,0,1,0,z+1,0);
         }
-        if (!cells[z] || cells[z][3] !== 1) {
+        bmemg(10001,z);
+        if (bmemv3 !== 1) {
           cellsn++;
         }
-        if (cells[z]) {
-          cells[z][0] = c;
-          cells[z][1] = r;
-          cells[z][2] = g;
-          cells[z][3] = 1;
-          cells[z][4] = v - 1;
-        } else {
-          cells[z] = [c,r,g,1,v-1];
-        }
+        bmems(10001,z,c,r,g,1,-1);
       } else if (g === -1) {
         if (z) {
           z--;
           fcidx(c,r,1);
-          if (cells[z] && cells[z][3] === 1) {
+          bmemg(10001,z);
+          if (bmemv3 === 1) {
             cellsn--;
           }
           rmvCell(z);
@@ -6801,7 +6859,8 @@ function prevGen2(hi, s, pp, dx, dy) {
       } else if (g === -2 && !s) {
         if (z) {
           z--;
-          cells[z][2] = 0;
+          bmemg(10001,z);
+          bmems(10001,z,bmemv0,bmemv1,0,bmemv3,bmemv4);
         }
       }
     }
@@ -6810,7 +6869,7 @@ function prevGen2(hi, s, pp, dx, dy) {
 }
 
 function nextGen() {
-  var i, c, r, g, z, u, q, hi, v, p0, pp, s, dx, dy, pg, x;
+  var i, c, r, g, z, u, q, hi, p0, pp, s, dx, dy, pg, x, v0, v1, v2, v3, c0, c1, c2, c3, c4;
   u = null;
   if ((u = hupdates()).length > 0
       || histgn < 1
@@ -6883,24 +6942,34 @@ function nextGen() {
       z = x >= 0 && x > gennum && x - gennum <= i * pp ? Math.floor((x - gennum - 1) / pp) : i;
       if (z > 0 && (dx || dy)) {
         for (i = 0; i < cellslen; i++) {
-          if ((ci = cells[i])[3] === 1) {
-            v = cinfl[fcidx(ci[0], ci[1]) - 1];
-            fcidx(ci[0], ci[1], 1);
-            ci[0] += dx * z;
-            ci[1] += dy * z;
-            if (ci[0] < maxl) {
-              ci[0] = maxr - maxl + ci[0] + 1;
+          bmemg(10001,i);
+          if (bmemv3 === 1) {
+            c0 = bmemv0;
+            c1 = bmemv1;
+            c2 = bmemv2;
+            c3 = bmemv3;
+            c4 = bmemv4;
+            v0 = fcidxg0(c0, c1);
+            v1 = fcidxg1(c0, c1);
+            v2 = fcidxg2(c0, c1);
+            v3 = fcidxg3(c0, c1);
+            fcidx(c0, c1, 1);
+            c0 -= dx * z;
+            c1 -= dy * z;
+            if (c0 < maxl) {
+              c0 = maxr - maxl + c0 + 1;
             }
-            if (ci[0] > maxr) {
-              ci[0] = maxl + ci[0] - maxr - 1;
+            if (c0 > maxr) {
+              c0 = maxl + c0 - maxr - 1;
             }
-            if (ci[1] < maxb) {
-              ci[1] = maxt - maxb + ci[1] + 1;
+            if (c1 < maxb) {
+              c1 = maxt - maxb + c1 + 1;
             }
-            if (ci[1] > maxt) {
-              ci[1] = maxb + ci[1] - maxt - 1;
+            if (c1 > maxt) {
+              c1 = maxb + c1 - maxt - 1;
             }
-            fcidx(ci[0], ci[1], 4, 0, v[0], v[1], v[2], v[3]);
+            bmems(10001,i,c0,c1,c2,c3,c4);
+            fcidx(c0, c1, 4, 0, v0, v1, v2, v3);
           }
         }
       }
@@ -6932,12 +7001,13 @@ function nextGen() {
           c = hi[0][i][0];
           r = hi[0][i][1];
           g = hi[0][i][2];
-          z = ((v = fcidx(c,r)) ? cinfl[v-1][0] === 1 ? cinfl[v-1][2] : null : null);
+          z = fcidxg0(c,r) === 1 ? fcidxg2(c,r) : null;
           if (g >= 0) {
             if (z) {
               z--;
               fcidx(c,r,1);
-              if (cells[z] && cells[z][3] === 1) {
+              bmemg(10001,z);
+              if (bmemv3 === 1) {
                 cellsn--;
               }
               rmvCell(z);
@@ -6947,25 +7017,20 @@ function nextGen() {
               z--;
             } else {
               z = addCell(c,r);
-              cells[z][3] = 0;
-              v = fcidx(c,r,4,0,1,0,z+1,0);
+              bmemg(10001,z);
+              bmems(10001,z,bmemv0,bmemv1,bmemv2,0,bmemv4);
+              fcidx(c,r,4,0,1,0,z+1,0);
             }
-            if (!cells[z] || !cells[z][3] !== 1) {
+            bmemg(10001,z);
+            if (bmemv3 !== 1) {
               cellsn++;
             }
-            if (cells[z]) {
-              cells[z][0] = c;
-              cells[z][1] = r;
-              cells[z][2] = 0;
-              cells[z][3] = 1;
-              cells[z][4] = v - 1;
-            } else {
-              cells[z] = [c,r,0,1,v-1];
-            }
+            bmems(10001,z,c,r,0,1,-1);
           } else if (g === -2) {
             if (z) {
               z--;
-              cells[z][2] = gennum;
+              bmemg(10001,z);
+              bmems(10001,z,bmemv0,bmemv1,gennum,bmemv3,bmemv4);
             }
           }
         }
@@ -7011,12 +7076,13 @@ function nextGen2(hi, s, pp, dx, dy) {
         r = maxb + r - maxt - 1;
       }
       g = hi[0][i][2];
-      z = ((v = fcidx(c,r)) ? cinfl[v-1][0] === 1 ? cinfl[v-1][2] : null : null);
+      z = fcidxg0(c,r) === 1 ? fcidxg2(c,r) : null;
       if (g >= 0) {
         if (z) {
           z--;
           fcidx(c,r,1);
-          if (cells[z] && cells[z][3] === 1) {
+          bmemg(10001,z);
+          if (bmemv3 === 1) {
             cellsn--;
           }
           rmvCell(z);
@@ -7026,25 +7092,20 @@ function nextGen2(hi, s, pp, dx, dy) {
           z--;
         } else {
           z = addCell(c,r);
-          cells[z][3] = 0;
-          v = fcidx(c,r,4,0,1,0,z+1,0);
+          bmemg(10001,z);
+          bmems(10001,z,bmemv0,bmemv1,bmemv2,0,bmemv4);
+          fcidx(c,r,4,0,1,0,z+1,0);
         }
-        if (!cells[z] || cells[z][3] !== 1) {
+        bmemg(10001,z);
+        if (bmemv3 !== 1) {
           cellsn++;
         }
-        if (cells[z]) {
-          cells[z][0] = c;
-          cells[z][1] = r;
-          cells[z][2] = 0;
-          cells[z][3] = 1;
-          cells[z][4] = v - 1;
-        } else {
-          cells[z] = [c,r,0,1,v-1];
-        }
+        bmems(10001,z,c,r,0,1,-1);
       } else if (g === -2 && !s) {
         if (z) {
           z--;
-          cells[z][2] = gennum;
+          bmemg(10001,z);
+          bmems(10001,z,bmemv0,bmemv1,gennum,bmemv3,bmemv4);
         }
       }
     }
@@ -7060,7 +7121,7 @@ function revert() {
       return false;
     }
   }
-  var u = hupdates(), i, a, hi = hist[histh][0][histi], v, f;
+  var u = hupdates(), i, a, hi = hist[histh][0][histi], f;
   if ((f = u.length === 0) && hi[3][1] > 0) {
     hi[3][1]--;
     a = [];
@@ -7085,32 +7146,27 @@ function revert() {
     c = u[i][0];
     r = u[i][1];
     g = u[i][2];
-    z = ((v = fcidx(c,r)) ? cinfl[v-1][0] === 1 ? cinfl[v-1][2] : null : null);
+    z = fcidxg0(c,r) === 1 ? fcidxg2(c,r) : null;
     if (g >= 0) {
       if (z) {
         z--;
       } else {
         z = addCell(c,r);
-        cells[z][3] = 0;
-        v = fcidx(c,r,4,0,1,0,z+1,0);
+        bmemg(10001,z);
+        bmems(10001,z,bmemv0,bmemv1,bmemv2,0,bmemv4);
+        fcidx(c,r,4,0,1,0,z+1,0);
       }
-      if (!cells[z] || cells[z][3] !== 1) {
+      bmemg(10001,z);
+      if (bmemv3 !== 1) {
         cellsn++;
       }
-      if (cells[z]) {
-        cells[z][0] = c;
-        cells[z][1] = r;
-        cells[z][2] = g;
-        cells[z][3] = 1;
-        cells[z][4] = v - 1;
-      } else {
-        cells[z] = [c,r,g,1,v-1];
-      }
+      bmems(10001,z,c,r,g,1,-1);
     } else if (g === -1) {
       if (z) {
         z--;
         fcidx(c,r,1);
-        if (cells[z] && cells[z][3] === 1) {
+        bmemg(10001,z);
+        if (bmemv3 === 1) {
           cellsn--;
         }
         rmvCell(z);
@@ -7118,7 +7174,8 @@ function revert() {
     } else if (g === -2) {
       if (z) {
         z--;
-        cells[z][2] = 0;
+        bmemg(10001,z);
+        bmems(10001,z,bmemv0,bmemv1,0,bmemv3,bmemv4);
       }
     }
     i--;
@@ -7134,8 +7191,33 @@ function appendHUpd(a, b, c) {
   }
 }
 
+function fcidxg0(c, r) {
+  return fcidx(c, r, 20);
+}
+function fcidxg1(c, r) {
+  return fcidx(c, r, 21);
+}
+function fcidxg2(c, r) {
+  return fcidx(c, r, 22);
+}
+function fcidxg3(c, r) {
+  return fcidx(c, r, 23);
+}
+function fcidxs0(c, r, v) {
+  fcidx(c, r, 10, v);
+}
+function fcidxs1(c, r, v) {
+  fcidx(c, r, 11, v);
+}
+function fcidxs2(c, r, v) {
+  fcidx(c, r, 12, v);
+}
+function fcidxs3(c, r, v) {
+  fcidx(c, r, 13, v);
+}
+
 function fcidx(c, r, v, vx, e, f, g, h) {
-  var n = Math.pow(2,cidxb[cidxbi][0].length+2), c2, r2, v2, d, c0 = c, r0 = r, u, v2i, vi;
+  var n = Math.pow(2,cidxb[cidxbi][0].length+5), c2, r2, v2, d, c0 = c, r0 = r, u, v20, v21, v22, v23, v0, v1, v2, v3;
   if (c0 < maxl) {
     c0 = maxr - maxl + c0 + 1;
   }
@@ -7150,74 +7232,118 @@ function fcidx(c, r, v, vx, e, f, g, h) {
   }
   c2 = Math.floor(c0/n);
   r2 = Math.floor(r0/n);
-  if (v && !cidxbb || c0 < cidxbx1 || c0 > cidxbx2 || r0 < cidxby1 || r0 > cidxby2) {
-    cidxbb = fcidxb(cidxbi, cidxb[cidxbi][0].length-1, c2, r2, v?true:false);
+  if (v&&v>0&&v<20 && !cidxbb || c0 < cidxbx1 || c0 > cidxbx2 || r0 < cidxby1 || r0 > cidxby2) {
+    cidxbb = fcidxb(cidxbi, cidxb[cidxbi][0].length-1, c2, r2, v&&v>0&&v<20?true:false);
     cidxbx1 = c2 * n;
     cidxby1 = r2 * n;
     cidxbx2 = cidxbx1 + n - 1;
     cidxby2 = cidxby1 + n - 1;
   }
-  if ((v2i = cidxbb ? cidxbb[(c0-cidxbx1)*n+r0-cidxby1+2] : 0) > 0) {
-    v2 = cinfl[v2i - 1];
+  v21 = 0;
+  v22 = 0;
+  v23 = 0;
+  if ((v20 = cidxbb ? cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+2] : 0) > 0) {
+    v21 = cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+1+2];
+    v22 = cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+2+2];
+    v23 = cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+3+2];
+  }
+  if (v >= 20) {
+    switch (v) {
+      case 20:
+        return v20;
+        break;
+      case 21:
+        return v21;
+        break;
+      case 22:
+        return v22;
+        break;
+      case 23:
+        return v23;
+        break;
+      default:
+        return 0;
+    }
+  } else if (v >= 10) {
+    v0 = v20;
+    v1 = v21;
+    v2 = v22;
+    v3 = v23;
+    switch (v) {
+      case 10:
+        v0 = vx;
+        break;
+      case 11:
+        v1 = vx;
+        break;
+      case 12:
+        v2 = vx;
+        break;
+      case 13:
+        v3 = vx;
+        break;
+    }
   } else {
-    v2 = null;
+    v0 = 0;
   }
-  if (!v) {
-    return v2i;
-  }
-  vi = 0;
   if (v === 4) {
-    vi = addCInfo(e, f, g, h) + 1;
+    v0 = e;
+    v1 = f;
+    v2 = g;
+    v3 = h;
   } else if (v === 3) {
-    if (v2 && v2[0] === 1) {
-      v2[1] = 0;
-      v2[3] = 0;
-      vi = v2i;
+    if (v20 === 1) {
+      v21 = 0;
+      v23 = 0;
+      v0 = v20;
+      v1 = v21;
+      v2 = v22;
+      v3 = v23;
     } else {
-      vi = 0;
+      v0 = 0;
     }
   }
   if (cellsxf) {
     u = 0;
     if (v === 1) {
-      if (v2) {
-        u = v2[0] === 1 ? -1 : 0;
-        v2[0] = 0;
-        v2[2] = 0;
-        vi = v2i;
-        if (v2[3] === 0 && v2[1] !== 2 && v2[1] !== 3) {
-          v2[1] = 3;
-          cellsx2l++;
-          if (cellsx2l > cellsx2.length) {
-            cellsx2[cellsx2l-1] = [vi - 1, c0, r0];
-          } else {
-            cellsx2[cellsx2l-1][0] = vi - 1;
-            cellsx2[cellsx2l-1][1] = c0;
-            cellsx2[cellsx2l-1][2] = r0;
-          }
+      if (v20) {
+        u = v20 === 1 ? -1 : 0;
+        v20 = 2;
+        v22 = 0;
+        if (v23 === 0 && v21 !== 2 && v21 !== 3) {
+          v21 = 3;
+          bmems(12,cellsx2l++,c0,r0);
         }
+        v0 = v20;
+        v1 = v21;
+        v2 = v22;
+        v3 = v23;
       } else {
-        vi = 0;
+        v0 = 0;
       }
     } else if (v === 2) {
-      if (v2) {
-        u = v2[0] === 1 ? 0 : 1;
-        v2[0] = 1;
-        v2[2] = vx;
-        vi = v2i;
+      if (v20) {
+        u = v20 === 1 ? 0 : 1;
+        v20 = 1;
+        v22 = vx;
+        v0 = v20;
+        v1 = v21;
+        v2 = v22;
+        v3 = v23;
       } else {
         u = 1;
-        vi = addCInfo(1, 0, vx, 0) + 1;
+        v0 = 1;
+        v1 = 0;
+        v2 = vx;
+        v3 = 0;
       }
     }
   }
-  if (v2i > 0 && v2i !== vi) {
-    rmvCInfo(v2i - 1);
-  }
-  if (vi !== v2i) {
-    cidxbb[(c0-cidxbx1)*n+r0-cidxby1+2] = vi;
-  }
-  if ((d = (v2i === 0 ? vi === 0 ? 0 : 1 : vi === 0 ? -1 : 0)) !== 0) {
+  cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+0+2] = v0;
+  cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+1+2] = v1;
+  cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+2+2] = v2;
+  cidxbb[(c0-cidxbx1)*n*4+(r0-cidxby1)*4+3+2] = v3;
+  if ((d = (v20 === 0 ? v0 === 0 ? 0 : 1 : v0 === 0 ? -1 : 0)) !== 0) {
     cidxbb[1] += d;
     if (cidxbb[1] === 0) {
       freeCib(cidxbb);
@@ -7225,14 +7351,13 @@ function fcidx(c, r, v, vx, e, f, g, h) {
       cidxbb = null;
     }
   }
-  if (cellsxf) {
+  if (cellsxf && u !== 0) {
     updnb(c0, r0, u);
   }
-  return vi;
 }
 
 function fcidxb(bi, l, c, r, q) {
-  var b, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, l2, c3, r3, k3, bb;
+  var b, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, l2, c3, r3, k3, bb, f, i2, j2;
   t = l === cidxb[bi][0].length - 1 && cidxb[bi][2] === -1;
   if (!t && (!cidxb[bi][0][l] || cidxb[bi][0][l].size < 1)) {
     if (l === 0 && cidxb[bi][1] === -1) {
@@ -7269,6 +7394,7 @@ function fcidxb(bi, l, c, r, q) {
     return null;
   }
   b = null;
+  n = Math.pow(2, l+6);
   if (l === 0) {
     if (cidxb[bi][1] > -1) {
       l2 = cidxb[cidxb[bi][1]][0].length-1;
@@ -7277,7 +7403,7 @@ function fcidxb(bi, l, c, r, q) {
         cidxb[bi][1] = -1;
         cidxb[bi][3] = null;
       } else {
-        n2 = Math.pow(2, l2+3);
+        n2 = Math.pow(2, l2+6);
         if (!cidxb[bi][3]) {
           cidxb[bi][3] = new Map();
         }
@@ -7291,25 +7417,32 @@ function fcidxb(bi, l, c, r, q) {
             while (i < n2) {
               j = 0;
               while (j < n2) {
-                if (  t
-                      || b1[(i+0)*n2+j+0+2] || b1[(i+0)*n2+j+1+2] || b1[(i+0)*n2+j+2+2] || b1[(i+0)*n2+j+3+2] || b1[(i+0)*n2+j+4+2] || b1[(i+0)*n2+j+5+2] || b1[(i+0)*n2+j+6+2] || b1[(i+0)*n2+j+7]
-                      || b1[(i+1)*n2+j+0+2] || b1[(i+1)*n2+j+1+2] || b1[(i+1)*n2+j+2+2] || b1[(i+1)*n2+j+3+2] || b1[(i+1)*n2+j+4+2] || b1[(i+1)*n2+j+5+2] || b1[(i+1)*n2+j+6+2] || b1[(i+1)*n2+j+7]
-                      || b1[(i+2)*n2+j+0+2] || b1[(i+2)*n2+j+1+2] || b1[(i+2)*n2+j+2+2] || b1[(i+2)*n2+j+3+2] || b1[(i+2)*n2+j+4+2] || b1[(i+2)*n2+j+5+2] || b1[(i+2)*n2+j+6+2] || b1[(i+2)*n2+j+7]
-                      || b1[(i+3)*n2+j+0+2] || b1[(i+3)*n2+j+1+2] || b1[(i+3)*n2+j+2+2] || b1[(i+3)*n2+j+3+2] || b1[(i+3)*n2+j+4+2] || b1[(i+3)*n2+j+5+2] || b1[(i+3)*n2+j+6+2] || b1[(i+3)*n2+j+7]
-                      || b1[(i+4)*n2+j+0+2] || b1[(i+4)*n2+j+1+2] || b1[(i+4)*n2+j+2+2] || b1[(i+4)*n2+j+3+2] || b1[(i+4)*n2+j+4+2] || b1[(i+4)*n2+j+5+2] || b1[(i+4)*n2+j+6+2] || b1[(i+4)*n2+j+7]
-                      || b1[(i+5)*n2+j+0+2] || b1[(i+5)*n2+j+1+2] || b1[(i+5)*n2+j+2+2] || b1[(i+5)*n2+j+3+2] || b1[(i+5)*n2+j+4+2] || b1[(i+5)*n2+j+5+2] || b1[(i+5)*n2+j+6+2] || b1[(i+5)*n2+j+7]
-                      || b1[(i+6)*n2+j+0+2] || b1[(i+6)*n2+j+1+2] || b1[(i+6)*n2+j+2+2] || b1[(i+6)*n2+j+3+2] || b1[(i+6)*n2+j+4+2] || b1[(i+6)*n2+j+5+2] || b1[(i+6)*n2+j+6+2] || b1[(i+6)*n2+j+7]
-                      || b1[(i+7)*n2+j+0+2] || b1[(i+7)*n2+j+1+2] || b1[(i+7)*n2+j+2+2] || b1[(i+7)*n2+j+3+2] || b1[(i+7)*n2+j+4+2] || b1[(i+7)*n2+j+5+2] || b1[(i+7)*n2+j+6+2] || b1[(i+7)*n2+j+7]
-                    ) {
-                  c3 = c2*n2/8+i;
-                  r3 = r2*n2/8+j;
+                f = false;
+                if (t) {
+                  f = true
+                } else {
+                  i2 = 0;
+                  while (!f && i2 < n) {
+                    j2 = 0;
+                    while (!f && j2 < n) {
+                      if (b1[(i+i2)*n2*4+(j+j2)*4+2]) {
+                        f = true;
+                      }
+                      j2++;
+                    }
+                    i2++;
+                  }
+                }
+                if (f) {
+                  c3 = c2*n2/n+i;
+                  r3 = r2*n2/n+j;
                   k3 = crkey(c3,r3);
                   if (t) {
-                    b2 = getCib(8);
+                    b2 = getCib(n);
                   } else {
-                    b2 = new Int32Array(66);
+                    b2 = new Int32Array(n*n*4+2);
                   }
-                  fcidxbc2(n2,8,b1,b2,i,j);
+                  fcidxbc2(n2,n,b1,b2,i,j);
                   if (t || c3 !== c || r3 !== r) {
                     if (!cidxb[bi][0][l]) {
                       cidxb[bi][0][l] = new Map();
@@ -7320,9 +7453,9 @@ function fcidxb(bi, l, c, r, q) {
                     b = b2;
                   }
                 }
-                j += 8;
+                j += n;
               }
-              i += 8;
+              i += n;
             }
           }
         }
@@ -7332,10 +7465,9 @@ function fcidxb(bi, l, c, r, q) {
       if (!cidxb[bi][0][l]) {
         cidxb[bi][0][l] = new Map();
       }
-      cidxb[bi][0][l].set(k, (b = getCib(8)));
+      cidxb[bi][0][l].set(k, (b = getCib(n)));
     }
   } else {
-    n = Math.pow(2, l+3);
     if (cidxb[bi][0][l-1] !== true) {
       if (c < 0) {
         c2 = (c+1)*2-2;
@@ -7355,7 +7487,7 @@ function fcidxb(bi, l, c, r, q) {
         if (t) {
           b = getCib(n);
         } else {
-          b = new Int32Array(n*n+2);
+          b = new Int32Array(n*n*4+2);
         }
         fcidxbc(n/2,b1,b,0,0);
         fcidxbc(n/2,b2,b,0,n/2);
@@ -7387,7 +7519,10 @@ function fcidxbc(n, s, t, c, r) {
   while (i < n) {
     j = 0;
     while (j < n) {
-      t[(c+i)*n+r+j+2] = s[i*n+j+2];
+      t[(c+i)*n*4+(r+j)*4+0+2] = s[i*n*4+j*4+0+2];
+      t[(c+i)*n*4+(r+j)*4+1+2] = s[i*n*4+j*4+1+2];
+      t[(c+i)*n*4+(r+j)*4+2+2] = s[i*n*4+j*4+2+2];
+      t[(c+i)*n*4+(r+j)*4+3+2] = s[i*n*4+j*4+3+2];
       j++;
     }
     i++;
@@ -7401,12 +7536,105 @@ function fcidxbc2(n1, n2, s, t, c, r) {
   while (i < n2) {
     j = 0;
     while (j < n2) {
-      if (t[i*n2+j+2] = s[(c+i)*n1+r+j]+2) {
+      if (t[i*n2*4+j*4+2] = s[(c+i)*n1*4+(r+j)*4+2]) {
         t[1]++;
+        t[i*n2*4+j*4+1+2] = s[(c+i)*n1*4+(r+j)*4+1+2];
+        t[i*n2*4+j*4+2+2] = s[(c+i)*n1*4+(r+j)*4+2+2];
+        t[i*n2*4+j*4+3+2] = s[(c+i)*n1*4+(r+j)*4+3+2];
       }
       j++;
     }
     i++;
+  }
+}
+
+function crkey(c, r) {
+  return (c-maxl) * 100000000 + r-maxb;
+}
+
+function updnb(c, r, n) {
+  if (n !== 0) {
+    updnb0(c-1,r+1,n);
+    updnb0(c,r+1,n);
+    updnb0(c+1,r+1,n);
+    updnb0(c+1,r,n);
+    updnb0(c+1,r-1,n);
+    updnb0(c,r-1,n);
+    updnb0(c-1,r-1,n);
+    updnb0(c-1,r,n);
+  }
+}
+
+function updnb0(c, r, n) {
+  var c0 = c, r0 = r;
+  if (c0 < maxl) {
+    c0 = maxr - maxl + c0 + 1;
+  }
+  if (c0 > maxr) {
+    c0 = maxl + c0 - maxr - 1;
+  }
+  if (r0 < maxb) {
+    r0 = maxt - maxb + r0 + 1;
+  }
+  if (r0 > maxt) {
+    r0 = maxb + r0 - maxt - 1;
+  }
+  if (!fcidxg0(c0, r0)) {
+    fcidx(c0, r0, 4, 0, 2, 2, 0, 0);
+    bmems(11,cellsxl++,c0,r0);
+  } else if (fcidxg1(c0, r0) !== 2) {
+    fcidxs1(c0, r0, 2);
+    bmems(11,cellsxl++,c0,r0);
+  }
+  fcidxs3(c0, r0, n + fcidxg3(c0, r0));
+}
+
+function clrcellsx(f) {
+  var i, v, v0, v1;
+  if (!f) {
+    hbcksll = 0;
+  }
+  if (!cellsxf) {
+    return;
+  }
+  cellsxf = false;
+  for (i = 0; i < cellsxl; i++) {
+    bmemg(11,i);
+    if (fcidxg0(bmemv0, bmemv1) !== 1 && fcidxg3(bmemv0, bmemv1) === 0) {
+      fcidx(bmemv0, bmemv1, 1);
+    } else {
+      fcidxs1(bmemv0, bmemv1, 0);
+    }
+  }
+  cellsxl = 0;
+  for (i = 0; i < cellsx2l; i++) {
+    bmemg(12,i);
+    if (fcidxg1(bmemv0, bmemv1) === 3) {
+      if (fcidxg0(bmemv0, bmemv1) !== 1 && fcidxg3(bmemv0, bmemv1) === 0) {
+        fcidx(bmemv0, bmemv1, 1);
+      } else {
+        fcidxs1(bmemv0, bmemv1, 0);
+      }
+    }
+  }
+  cellsx2l = 0;
+  if (!f) {
+    for (i = 0; i < cellslen; i++) {
+      bmemg(10001,i);
+      if (bmemv3 === 1) {
+        v0 = bmemv0;
+        v1 = bmemv1;
+        fcidx(v0,v1,3);
+        fcidx(v0-1,v1+1,3);
+        fcidx(v0,v1+1,3);
+        fcidx(v0+1,v1+1,3);
+        fcidx(v0+1,v1,3);
+        fcidx(v0+1,v1-1,3);
+        fcidx(v0,v1-1,3);
+        fcidx(v0-1,v1-1,3);
+        fcidx(v0-1,v1,3);
+      }
+    }
   }
 }
 
@@ -7435,103 +7663,25 @@ function fcidxinc2() {
   fcidxinc1();
 }
 
-function crkey(c, r) {
-  return (c-maxl) * 100000000 + r-maxb;
+function getCib(n) {
+  var i;
+  if (ciblfll === 0) {
+    cibl[i = cibll++] = new Int32Array(n*n*4+2);
+    cibl[i][0] = i;
+  } else {
+    cibl[i = ciblfl[--ciblfll]][1] = 0;
+  }
+  return cibl[i];
 }
 
-function updnb(c, r, n) {
-  if (n !== 0) {
-    updnb0(c-1,r+1,n);
-    updnb0(c,r+1,n);
-    updnb0(c+1,r+1,n);
-    updnb0(c+1,r,n);
-    updnb0(c+1,r-1,n);
-    updnb0(c,r-1,n);
-    updnb0(c-1,r-1,n);
-    updnb0(c-1,r,n);
-  }
+function freeCib(b) {
+  ciblfl[ciblfll++] = b[0];
 }
 
-function updnb0(c, r, n) {
-  var c0 = c, r0 = r, v;
-  if (c0 < maxl) {
-    c0 = maxr - maxl + c0 + 1;
-  }
-  if (c0 > maxr) {
-    c0 = maxl + c0 - maxr - 1;
-  }
-  if (r0 < maxb) {
-    r0 = maxt - maxb + r0 + 1;
-  }
-  if (r0 > maxt) {
-    r0 = maxb + r0 - maxt - 1;
-  }
-  if (!(v = fcidx(c0, r0))) {
-    v = fcidx(c0, r0, 4, 0, 0, 2, 0, 0);
-    cellsxl++;
-    if (cellsxl > cellsx.length) {
-      cellsx[cellsxl-1] = [v-1, c0, r0];
-    } else {
-      cellsx[cellsxl-1][0] = v - 1;
-      cellsx[cellsxl-1][1] = c0;
-      cellsx[cellsxl-1][2] = r0;
-    }
-  } else if (cinfl[v-1][1] !== 2) {
-    cinfl[v-1][1] = 2;
-    cellsxl++;
-    if (cellsxl > cellsx.length) {
-      cellsx[cellsxl-1] = [v-1, c0, r0];
-    } else {
-      cellsx[cellsxl-1][0] = v - 1;
-      cellsx[cellsxl-1][1] = c0;
-      cellsx[cellsxl-1][2] = r0;
-    }
-  }
-  cinfl[v-1][3] += n;
-}
-
-function clrcellsx(f) {
-  var i, v, cxi, ci, cxv;
-  if (!f) {
-    hbcksll = 0;
-  }
-  if (!cellsxf) {
-    return;
-  }
-  cellsxf = false;
-  for (i = 0; i < cellsxl; i++) {
-    if ((cxv = cinfl[(cxi = cellsx[i])[0]])[0] !== 1 && cxv[3] === 0) {
-      fcidx(cxi[1], cxi[2], 1);
-    } else {
-      cxv[1] = 0;
-    }
-  }
-  cellsxl = 0;
-  for (i = 0; i < cellsx2l; i++) {
-    if ((cxv = cinfl[(cxi = cellsx2[i])[0]])[1] === 3) {
-      if (cxv[0] !== 1 && cxv[3] === 0) {
-        fcidx(cxi[1], cxi[2], 1);
-      } else {
-        cxv[1] = 0;
-      }
-    }
-  }
-  cellsx2l = 0;
-  if (!f) {
-    for (i = 0; i < cellslen; i++) {
-      if ((ci = cells[i])[3] === 1) {
-        fcidx(ci[0],ci[1],3);
-        fcidx(ci[0]-1,ci[1]+1,3);
-        fcidx(ci[0],ci[1]+1,3);
-        fcidx(ci[0]+1,ci[1]+1,3);
-        fcidx(ci[0]+1,ci[1],3);
-        fcidx(ci[0]+1,ci[1]-1,3);
-        fcidx(ci[0],ci[1]-1,3);
-        fcidx(ci[0]-1,ci[1]-1,3);
-        fcidx(ci[0]-1,ci[1],3);
-      }
-    }
-  }
+function clrCib() {
+  cibl = [];
+  cibll = 0;
+  ciblfll = 0;
 }
 
 function nextHist() {
@@ -7616,20 +7766,23 @@ function rlHist(h, i, p, qx) {
 }
 
 function rmvCell(i) {
-  var ci = cells[i], k = crkey(ci[0], ci[1]);
+  var k;
+  bmemg(10001,i);
+  k = crkey(bmemv0, bmemv1);
   if (rmvcellsm.has(k)) {
     cellsfs[cellsfsl++] = i;
-    ci[3] = 0 - cellsfsl + 1;
-    ci[5] = 0;
+    bmemv3 = 0 - cellsfsl + 1;
+    bmemv4 = 0;
   } else {
     rmvcellsm.set(k, true);
     rmvcellsf = true;
-    if (cells[i][3] === 1 && cells[i][5] !== -2) {
+    if (bmemv3 === 1 && bmemv4 !== -2) {
       rmvcellsn++;
     }
-    cells[i][3] = 0;
-    cells[i][5] = -2;
+    bmemv3 = 0;
+    bmemv4 = -2;
   }
+  bmems(10001,i,bmemv0,bmemv1,bmemv2,bmemv3,bmemv4);
 }
 
 function addCell(c, r) {
@@ -7638,74 +7791,12 @@ function addCell(c, r) {
     cellsfsl--;
   }
   if (cellsfsl === 0) {
-    i=cellslen++;
-    if (cellslen > cells.length) {
-      cells[i] = [c,r,0,1,0,-1];
-    } else {
-      cells[i][0] = c;
-      cells[i][1] = r;
-      cells[i][2] = 0;
-      cells[i][3] = 1;
-      cells[i][4] = 0;
-      cells[i][5] = -1;
-    }
+    bmems(10001,cellslen++,c,r,0,1,-1);
+    return cellslen-1;
   } else {
-    i=cellsfs[--cellsfsl];
-    cells[i][0] = c;
-    cells[i][1] = r;
-    cells[i][2] = 0;
-    cells[i][3] = 1;
-    cells[i][4] = 0;
-    cells[i][5] = -1;
+    bmems(10001,(i=cellsfs[--cellsfsl]),c,r,0,1,-1);
+    return i;
   }
-  return i;
-}
-
-function rmvCInfo(i) {
-  cinflfs[cinflfsl++] = i;
-}
-
-function addCInfo(e, f, g, h) {
-  var i;
-  if (cinflfsl === 0) {
-    i = cinfll++;
-    if (cinfll > cinfl.length) {
-      cinfl[i] = [e, f, g, h];
-    } else {
-      cinfl[i][0] = e;
-      cinfl[i][1] = f;
-      cinfl[i][2] = g;
-      cinfl[i][3] = h;
-    }
-  } else {
-    i=cinflfs[--cinflfsl];
-    cinfl[i][0] = e;
-    cinfl[i][1] = f;
-    cinfl[i][2] = g;
-    cinfl[i][3] = h;
-  }
-  return i;
-}
-
-function getCib(n) {
-  var i;
-  if (ciblfll === 0) {
-    cibl[i = cibll++] = new Int32Array(n*n+2);
-    cibl[i][0] = i;
-  } else {
-    cibl[i = ciblfl[--ciblfll]][1] = 0;
-  }
-  return cibl[i];
-}
-
-function freeCib(b) {
-  ciblfl[ciblfll++] = b[0];
-}
-
-function clrCib() {
-  cibl = [];
-  cibll = 0;
-  ciblfll = 0;
 }
 
 function dspmsg(m, d, f) {
@@ -7769,8 +7860,9 @@ function hbckhac() {
     hb[i] = 0;
   }
   for (i = 0; i < cellslen; i++) {
-    if ((ci = cells[i])[3] === 1) {
-      k = crkey(ci[0]-cellsl,ci[1]-cellsb);
+    bmemg(10001,i);
+    if (bmemv3 === 1) {
+      k = crkey(bmemv0-cellsl,bmemv1-cellsb);
       h = 0;
       h = ((h<<5)-h) + (k & 0xFF);
       h = h & h;
@@ -7802,7 +7894,7 @@ function hbckhac() {
 }
 
 function hbckcheck(hi0) {
-  var p, i, h, x, ci, n, hi, q, j, c, r, g, z, k, p0, q1, pp, dx, dy, pn, px;
+  var p, i, h, x, n, hi, q, j, c, r, g, z, k, p0, q1, pp, dx, dy, pn, px;
   if (!hbcksl || hbcksll < 3 || hbcksm && !hbcksm.has(hbcksl[hbckslf])) {
     return;
   }
@@ -7819,8 +7911,9 @@ function hbckcheck(hi0) {
   if (p < hbcksll) {
     x = new Map();
     for (i = 0; i < cellslen; i++) {
-      if ((ci = cells[i])[3] === 1) {
-        x.set(crkey(ci[0],ci[1]), true);
+      bmemg(10001,i);
+      if (bmemv3 === 1) {
+        x.set(crkey(bmemv0,bmemv1), true);
       }
     }
     p0 = 0;
@@ -7884,7 +7977,11 @@ function hbckcheck(hi0) {
       dx = cellsl - hi[9];
       dy = cellsb - hi[8];
       i = 0;
-      while (i < cellslen && ((ci = cells[i])[3] !== 1 || x.get(crkey(ci[0]-dx,ci[1]-dy)))) {
+      while (i < cellslen) {
+        bmemg(10001,i);
+        if (bmemv3 === 1 && !x.get(crkey(bmemv0-dx,bmemv1-dy))) {
+          break;
+        }
         i++;
       }
       if (i < cellslen) {
@@ -7947,7 +8044,7 @@ function swstmsg(s1, s2) {
         s2 += "   ";
       }
     }
-    s2 += "  \u22C5";
+    s2 += "v3.3a  \u22C5";
   }
   stmsgn1 = s1;
   stmsgn2 = s2;
@@ -7978,6 +8075,85 @@ function updc() {
   }
   return [a,b];
 }
+
+function bmemx(mi, i) {
+  var x;
+  if (!bmemm || mi !== bmemmi) {
+    if (!(bmemm = bmem.get(mi))) {
+      bmemm = new Map();
+      bmem.set(mi, bmemm);
+    }
+    bmemmi = mi;
+    bmemb = null;
+    bmemvi = -1;
+    if (mi < 10) {
+      bmemn = 1;
+    } else if (mi < 100) {
+      bmemn = 2;
+    } else if (mi < 1000) {
+      bmemn = 3;
+    } else if (mi < 10000) {
+      bmemn = 4;
+    } else if (mi < 100000) {
+      bmemn = 5;
+    }
+    bmemn2 = Math.trunc(70000/bmemn);
+  }
+  if ((x = Math.trunc(i/bmemn2)) !== bmembi || !bmemb) {
+    if (!(bmemb = bmemm.get(x))) {
+      bmemb = new Int32Array(70000);
+      bmemm.set(x, bmemb);
+    }
+    bmembi = x;
+    bmemvi = -1;
+  }
+}
+
+function bmems(mi, i, v0, v1, v2, v3, v4) {
+  bmemx(mi, i);
+  bmemvi = -1;
+  switch (bmemn) {
+    case 5: bmemb[(i-bmembi*bmemn2)*bmemn+4] = v4;
+    case 4: bmemb[(i-bmembi*bmemn2)*bmemn+3] = v3;
+    case 3: bmemb[(i-bmembi*bmemn2)*bmemn+2] = v2;
+    case 2: bmemb[(i-bmembi*bmemn2)*bmemn+1] = v1;
+    case 1: bmemb[(i-bmembi*bmemn2)*bmemn+0] = v0;
+  }
+} 
+
+function bmemg(mi, i) {
+  bmemx(mi, i);
+  if (i !== bmemvi) {
+    bmemvi = i;
+    switch (bmemn) {
+      case 1:
+        bmemv0 = bmemb[(i-bmembi*bmemn2)*bmemn+0];
+        break;
+      case 2:
+        bmemv0 = bmemb[(i-bmembi*bmemn2)*bmemn+0];
+        bmemv1 = bmemb[(i-bmembi*bmemn2)*bmemn+1];
+        break;
+      case 3:
+        bmemv0 = bmemb[(i-bmembi*bmemn2)*bmemn+0];
+        bmemv1 = bmemb[(i-bmembi*bmemn2)*bmemn+1];
+        bmemv2 = bmemb[(i-bmembi*bmemn2)*bmemn+2];
+        break;
+      case 4:
+        bmemv0 = bmemb[(i-bmembi*bmemn2)*bmemn+0];
+        bmemv1 = bmemb[(i-bmembi*bmemn2)*bmemn+1];
+        bmemv2 = bmemb[(i-bmembi*bmemn2)*bmemn+2];
+        bmemv3 = bmemb[(i-bmembi*bmemn2)*bmemn+3];
+        break;
+      case 5:
+        bmemv0 = bmemb[(i-bmembi*bmemn2)*bmemn+0];
+        bmemv1 = bmemb[(i-bmembi*bmemn2)*bmemn+1];
+        bmemv2 = bmemb[(i-bmembi*bmemn2)*bmemn+2];
+        bmemv3 = bmemb[(i-bmembi*bmemn2)*bmemn+3];
+        bmemv4 = bmemb[(i-bmembi*bmemn2)*bmemn+4];
+        break;
+    }
+  }
+} 
 
 </script>
 </html>
