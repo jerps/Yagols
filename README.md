@@ -73,7 +73,7 @@
 
 <br>
 
-* v3.3a (july 2018)
+* v3.4a (july 2018)
 
   * Misc. improvements.
 
