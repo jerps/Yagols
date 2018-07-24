@@ -24,7 +24,7 @@
 
 <br>
 
-### Features:
+## Features:
 
   * Intuitive and fluid user interface.
   
@@ -62,7 +62,7 @@
 
 <br>
 
-## INSTRUCTIONS
+## Instructions
 
   * Press the ? button and explore.
     
@@ -70,6 +70,12 @@
 <br>
 
 ## Changes
+
+<br>
+
+* v3.4b (july 2018)
+
+  * Misc. improvements.
 
 <br>
 
