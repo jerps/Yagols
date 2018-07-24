@@ -73,15 +73,21 @@
 
 <br>
 
-* v3.4b (july 2018)
+* v3.4c (july 2018)
 
   * Misc. improvements.
 
 <br>
 
+* v3.4b (july 2018)
+
+  * Misc. improvements. HAS BUGS
+
+<br>
+
 * v3.4a (july 2018)
 
-  * Misc. improvements.
+  * Misc. improvements. HAS BUGS
 
 <br>
 
