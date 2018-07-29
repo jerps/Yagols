@@ -73,6 +73,12 @@
 
 <br>
 
+* v3.4d (july 2018)
+
+  * Misc. improvements.
+
+<br>
+
 * v3.4c (july 2018)
 
   * Misc. improvements.
