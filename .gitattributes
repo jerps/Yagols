@@ -1,3 +1,4 @@
+* txt eol=lf
 * text eol=lf
 *.bin binary
 *.zip binary
