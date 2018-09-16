@@ -1,4 +1,4 @@
-# Yagols V3.5 - Yet another Game of Life simulator
+# Yagols v3.5 - Yet another Game of Life simulator
 
 <br>
 
@@ -10,7 +10,7 @@
   
   * One .html page with mainly JavaScript and a bit of HTML/CSS. No further dependencies.
   
-  * A WIP. And a hack . . .
+  * A WIP . . . And a hack . . .
 
 <br>
 
