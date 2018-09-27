@@ -440,8 +440,8 @@ var patttxt =
       "#  (Run Length Encoding) which encodes a cell pattern.\r\n" +
       "#  See http://golly.sourceforge.net/Help/formats.html#rle.\r\n" +
       "\r\n" +
-      "#  This preloaded text is already in Extended RLE format. Just click\r\n" +
-      "#  \"Run!\" to start decoding the text and, when decoded, add the pattern,\r\n" +
+      "#  This preloaded text is already in Extended RLE format. Click a \"Patt\"\r\n" +
+      "#  button to start decoding the text and, when decoded, add the pattern,\r\n" +
       "#  named \"Gosper glider gun\", to the part of the universe that is in the\r\n" +
       "#  center of the current viewing area, by switching cells on and/or off.\r\n" +
       "\r\n" +
@@ -450,21 +450,21 @@ var patttxt =
       "#  pattern data is relevant, which is decoded into a grid width and height,\r\n" +
       "#  and the \"on\" cell positions in the grid which constitute the pattern.\r\n" +
       "\r\n" +
-      "#  The decoder is very forgiving. Blank lines and lines where the\r\n" +
-      "#  first non-whitespace character(s) begin with \"#\", \g=\" or \"x \"\r\n" +
-      "#  are ignored. All other lines are considered to contain run-length\r\n" +
-      "#  encoded pattern data. Only characters \"b\" / \".\" (\"off\" cell), \"o\" / \"A\"\r\n" +
-      "#  (\"on\" cell), \"0\"..\"9\", \"$\" and \"!\" are processed. Any other character\r\n" +
-      "#  and whitespace is ignored.\r\n" +
+      "#  The decoder is forgiving. Blank lines and lines where the first\r\n" +
+      "#  non-whitespace character(s) begin with \"#\", \"=\" or \"x\" are ignored.\r\n" +
+      "#  All other lines are considered to contain run-length encoded pattern\r\n" +
+      "#  data.\ Only characters \"b\" / \".\" (\"off\" cell), \"o\" / \"A\" (\"on\" cell),\r\n" +
+      "#  \"0\"..\"9\", \"$\" and \"!\" are processed. Any other character and\r\n" +
+      "#  whitespace is ignored.\r\n" +
       "\r\n" +
-      "#  Clicking one of the \"Run!\" buttons starts the process. It can be\r\n" +
-      "#  stopped or restarted any time by clicking \"Run!\" again with an\r\n" +
+      "#  Clicking one of the \"Patt\" buttons starts the process. It can be\r\n" +
+      "#  stopped or restarted any time by clicking \"Patt\" again with an\r\n" +
       "#  empty text or a different text. As long as the P at the top-right\r\n" +
       "#  of the screen is red the process is still running. When finished\r\n" +
       "#  a completion message is added to the beginning of the text in\r\n" +
       "#  this text box.\r\n" +
       "\r\n" +
-      "#  There are three \"Run!\" buttons. When the \"/Add\" button is clicked,\r\n" +
+      "#  There are three \"Patt\" buttons. When the \"/Add\" button is clicked,\r\n" +
       "#  the process just adds the \"on\" cells of the pattern to the universe,\r\n" +
       "#  centered in the current viewing area. When the \"/Replace\" button\r\n" +
       "#  is clicked, all the cells in the target grid are first set off. That is the\r\n" +
@@ -473,8 +473,8 @@ var patttxt =
       "#  cells of the pattern are added. The \"/Reset\" button first resets the\r\n" +
       "#  universe.\r\n" +
       "\r\n" +
-      "#  Although allowed, a concurrently running simulation interferes with\r\n" +
-      "#  the process. You might want to stop it first before clicking \"Run!\".\r\n" +
+      "#  Although allowed, a concurrently playing simulation interferes with\r\n" +
+      "#  the process. You might want to stop it first before clicking \"Patt\".\r\n" +
       "\r\n" +
       "\r\n" +
       "#  ----------\r\n" +
@@ -8395,7 +8395,7 @@ function swstmsg(s1, s2) {
       }
     } else {
       dstmsgje = false;
-      s2 = "by John Erps";
+      s2 = "\u22C5  \u22C5  \u22C5  \u22C5  \u22C5  \u22C5  \u22C5  \u22C5";
     }
     s2 += "  \u22C5";
   }
