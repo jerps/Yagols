@@ -73,6 +73,12 @@
 
 <br>
 
+* v3.6 (okt 2018)
+
+  * Bug fix
+
+<br>
+
 * v3.5 (sept 2018)
 
   * Bug fixes & misc. improvements.
