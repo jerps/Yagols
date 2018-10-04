@@ -62,13 +62,6 @@
 
 <br>
 
-## Instructions
-
-  * Press the ? button and explore.
-    
-<br>
-<br>
-
 ## Changes
 
 <br>
