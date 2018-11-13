@@ -50,8 +50,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -61,7 +61,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -115,7 +115,7 @@ table {
   width: 100%;
   color: #505070;
   user-select: none;
-  outline: none;  
+  outline: none;
 }
 @keyframes showdiv {
   0% {
@@ -229,7 +229,7 @@ table {
   color: #44AA44;
   background-color: #444444;
   user-select: none;
-}	
+}
 </style>
 <body style="overflow:hidden;">
   <noscript><p>.&nbsp;.&nbsp;.&nbsp;&nbsp;Need&nbsp;JavaScript&nbsp;&nbsp;.&nbsp;.&nbsp;.</p></noscript>
@@ -321,7 +321,7 @@ var tickct = null, tickcr1 = 0, tickcr2 = 0, tickcr3 = 0;
 var msgl = [], msgll = 0, msgf1 = 0, msgcd1 = null, msgcdn1 = 30000, msgcd2 = null, msgcdn2 = 2000, msgl1 = "", msgl2 = "", msgl3 = "";
 var genbtcd = null, genbtcdn = 250, genbtl = false;
 var curskcc = 0, curskd = 0, curskcd = null, curskcdn = 300;
-var vwax = 0, vway = 0, vwaw = 0, vwah = 0; 
+var vwax = 0, vway = 0, vwaw = 0, vwah = 0;
 var fbutt = [], fbuttcdn = 200;
 var strimgt = {};
 var keyesupp = false;
@@ -566,7 +566,7 @@ window.onload = function(e) {
     }
   })(window,document);
 
-  (function(window) {  
+  (function(window) {
   /**
    * (c) 2015, Facebook, Inc.
    * All rights reserved.
@@ -727,22 +727,22 @@ window.onload = function(e) {
   window.normalizeWheel = normalizeWheel;
   })(window);
 
-  //-- 
-  
+  //--
+
   init0();
   init1();
-  
+
   setTimeout(function() {
-  
+
     addel();
-  
+
     title0cd = performance.now();
-  
+
     YagolsSetZeroTimeoutFunc(tick);
     requestAnimationFrame(dspview);
 
   }, 1500);
-  
+
 }
 
 function init0() {
@@ -787,7 +787,7 @@ function init0() {
   }
   if (cheight < 1000) {
     canvasosci.height = 1000;
-  }  
+  }
   calcICellsz();
   calcCellsz();
   ctx0 = canvas0.getContext("2d");
@@ -830,10 +830,10 @@ function init0() {
   ctxosci.textBaseline = "bottom";
   ctxosci.globalAlpha = 1;
   ctxosci.imageSmoothingEnabled = false;
-  
+
   dive[0] = document.getElementById("pattern");
   dive[1] = document.getElementById("crule");
-  
+
   ctx1a.font = "" + (x = Math.trunc(cwidth/1000 * 80)) +"px " + font;
   ctx1a.fillStyle = "rgba(0, 0, 0, 1)";
   ctx1a.fillRect(0, 0, cwidth, cheight);
@@ -845,7 +845,7 @@ function init0() {
   pstrimg("W-23-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAADCklEQVRIS9WVPWgUQRTHZ3YveGAgWgQhRSBBCWJyEQU/EsHb24gGxUosBEFEUMHCLwQ/IBCIYJEIFtHGRrRQsNDCgLndVRAjRIu7jSKBkEqjHsGQxBRyN8//zO2cu3trmcKFsNzM//33vd+8eeFsFR++it7sPzb3yEuRT1eBJ8UZn7Yy1qM4qphmBZpbSTidonMOHs3gMZ/ryt3h+am8ZQjDgVgi+slN3mptsZbDwZ7vHSKi51JDjIRpmLuyndnJiGbWS4slsQDzNdBW0izdwj0s0iLNwXqdCmTmnmwmOxEOdIvuPfw+rdeI05DdZd+ImBe8I4KLxzA3YD5td9sd6kDdgvsO5juVmNjNXHfuejjQKTgfOOfbQmuvcpmc9a8EkORDO2Mfr5oXXcnwStWb3mKjVwfKysSi+AbzppoZsRLP8BaLW2W9FkoAFuwEEnygzfeiFAcGZpy767sHJW+UK7UL+Fsf567QLlEJe43QroB3W2937w9lrrqhSF+BplkGGszYj47IB8hGsX4W67/xexQfOR9kOwA0g0rzNwEDWX9E1p1yvXaJgEaa2UHgCAIvBcje470dQaVKY2WTuWyWENWAtRr3yIETuw/zU1HzgnsNQUMB9wlw74nxfo0PZsH2C/C1QDfHu9C24K55y6o58aMwfxox96a8jVShT0FWqt9JkDwLyVuWq7oInTUGzQHNndaSHzrwJdEg2vo2981HzcFd+GIGRq0yMMVSW8usfFIyDvc/EFxE4LBqLMYGhCHecMHzqr8ZTaLiHbqDIoMLgc+wcTjYHIR4H4J2S948xdvlzQ1XiP0x7PvQqzbGcxvo5MfVEzF3fOcMmN3V3PFuR/CGcO/LztIV4qOzuK1z0PTI6uDWj5v7MtF8fGa8yfhlfJfzQQvUO3ZrMaBeQNMfoNFJ1s2lunkONJ+h7tDmSfMGmgvYHwknEL/ZdVjkAgLlyD0WZJU4KWOdVf1Gwkyqy9zDdAPHJ/o8kjKKcFe+yWO43jw2qNDnwxiflyNnUK0w3Fm1CxXWrer/0D/OWK2YUJT5+wAAAABJRU5ErkJggg==");
   pstrimg("P-23-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAABF0lEQVRIS2NkoCFgpKHZDMPDcFlgELGjBdNvIP8HEH8A4p+kBiEsWDiAGq8CsRIeAyYB5TqB+BmxliAbfhKoSY8IjfpANZeIUAePUJDLYYZXAtlTgJgNiFmAWB6IS4E4FGrgPSANsuALIQuwuTwHqGkqmkaQuoVAHAsVNwXSZ6hlOMgceyA+ADXQAEhfpKbhhkDDztHK8AagwfWUBksq0IA5aF4OB/JXIEWoDpD9nZxg2Q3UtAeIQRlKCoiDgFgMySBnIHsfIYNB8qSk889A9f5AvJ8Yg3EZDoq0nVADQJa/hUbkcWKCAtlibC7HFubEOhZFHbGZaIQazg309ykg1gJibGULRcECStOHgRhUIFE9QslyGSFNAJAGPBivRcqNAAAAAElFTkSuQmCC");
   pstrimg("P-23-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAABYElEQVRIS2NkoCFgpKHZDMPA8J6eHndgEPEiB9P///+/MzExvf/58+fNqqqqt6QGIThYuru7xRgZGZ8Bmcx4DLgHVJNSXFy8n1hL4IYDNTwGamYjQmNmSUnJDCLUQSIU5HIkw08xMzOH//v3jx+IOYBBYwsMmnKgvAjUwL9AeZXCwsIHhCzAZvheoMtckDU2NDSwcHNzg3wmARUvAqrpp4rhIEOAEd4KpKqgBmYDDZ9GNcOBQZcDdPlkqhsODHfG3t7e80CD9aGGAx1e0kuOy7cDNXrBNEINXgrkR8IilIWFRbqgoOAlyYYDDfsM9P5VIA1KlqAUIgPkMyEZ1AW0HJR6CAJS0vl/oGmdQIMrCZoKVYDN8J9AubtIBnwAso8Ag6KPmKBAthib4ShhTqwrsakjKhORa8EQNxyYQWSBSQ8UiaxAjFG2UBQsbW1twqysrE+A6ZkDaBB1I5RclxHSBwCJ/58YCIx7rwAAAABJRU5ErkJggg==");
-  pstrimg("P-23-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAABeElEQVRIS92UsUrDUBSGz03iIi2COPsEaYO4CA62N4O7ik+gUBA3H0HwARRd9Akc+gImcVS7mNiObl3q4qQ41Bz/G1qJNCFpTAcN3Cn3/85//3PuFTTDT8yQTf8A7vjOkRCiGo9JkHhn4lfS6F6a0p82wigWN3BXAXkATEsDMPMLihzbNfs0b5FvODHdoQNGlhAmzuy6fZi1T/1Pgj/jBC24XILbeRRdx75drIoSAB5qpG02682brAKTcKaetKQZF3o9rxIOwz56shAVYL60LXu/FLiCOIFzjRPtREBB57ImD8qD+84FnLdKh3vsGeFTqHqxHMGZrhDdXhHnjxCujIUKzAHfIgrV2KihuqavNcxGZ3o40QdEfVAMFlyF28XxVI3gbYziVhY4bRTTdDBNbZxqOw84Gc40BGUwAqhRfUMkXURxkieKeOGkOf+ReV6XSftyXaKiBf4+fAPvhYMbqGMiJt6W38XSdS36pA6mYg7wchta1FmW7gsn8MUY5XCRLgAAAABJRU5ErkJggg==");  
+  pstrimg("P-23-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAABeElEQVRIS92UsUrDUBSGz03iIi2COPsEaYO4CA62N4O7ik+gUBA3H0HwARRd9Akc+gImcVS7mNiObl3q4qQ41Bz/G1qJNCFpTAcN3Cn3/85//3PuFTTDT8yQTf8A7vjOkRCiGo9JkHhn4lfS6F6a0p82wigWN3BXAXkATEsDMPMLihzbNfs0b5FvODHdoQNGlhAmzuy6fZi1T/1Pgj/jBC24XILbeRRdx75drIoSAB5qpG02682brAKTcKaetKQZF3o9rxIOwz56shAVYL60LXu/FLiCOIFzjRPtREBB57ImD8qD+84FnLdKh3vsGeFTqHqxHMGZrhDdXhHnjxCujIUKzAHfIgrV2KihuqavNcxGZ3o40QdEfVAMFlyF28XxVI3gbYziVhY4bRTTdDBNbZxqOw84Gc40BGUwAqhRfUMkXURxkieKeOGkOf+ReV6XSftyXaKiBf4+fAPvhYMbqGMiJt6W38XSdS36pA6mYg7wchta1FmW7gsn8MUY5XCRLgAAAABJRU5ErkJggg==");
   pstrimg("\u2317-29-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABUklEQVRIS2NkGADAOAB2MoxaStNQHw3e0eClSggMqoRUBPRSNhAbAPFnJO/JANkHgbgSiFeR621cPp0KNDAEiDWA+D2S4apA9i0gzgFikBqyAC5LJwFNCx8RluIKXhWg729TI3hBiSYeiH9CI+gvkLaAsi8B6adALA7EL4HYGIjFoHI7gbQQlC0PpHOJTVygOO0A4nKyUgSqplQgdw4x5sASEjtQMciHIACi5wGxFxDrA/FrIAap+wPEukAM8n0xEPcBMQtUDxOQ/kWMhSA1o6kXFM/RQKwOxN+Qgk0ByL4PxETHH7YgBwWvJhDLAvFvJAVToGKgVA0qkUDqQPJGQDwRiFcDMagAYYXqAcXtHaiDCEYtyLAdQOxOUCVhBTVAJa2ElUF8MCA+xea4LqAgKGgVgZgmcYrN0pFT4K8Eet8BiNHrUxD/OhCXAHEvMYkGmxoA31hUHoCbefIAAAAASUVORK5CYII=");
   pstrimg("\u2317-29-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABuElEQVRIS+2VvUvDUBTF+xJpIhUHXZyqSwUHQUEEQaqDLuIoLqKbnUvT/hP92hzsJE4WJ3Ho5ODXppNYF9FBpAoudajVwfh7JYFSCz5qS8W2EN59Nzf35Jx7Xio8bfiJNmB6uqAtVb0rb1fepijwN4xk27ZIpVInUJohDsRisXuXXjKZXCTOkc+SX2uU9jemDugdq1/X9YlIJHLlNk8kEqtCiCz7o2g0utBs0FtARwAYp3n+X4NW5K1lykxXYL3/a3lpdArANI0+XRkBM2VM/oO4TGhwvbPvY685da/svU4s1z1VcwnMkafRWKOmqHoux/yXVPpU3JtOpwd8Pp9k5CkUCmXiB8IhmARN07wwDEMPhUJvHKVN8ttcZ5ZlBTOZTK98plQqecPhcJGXt5VBqwudI9Mh7sVc10g1qmnaMB+HR1cJ5F1GiUP5VVKdXz25RTwe3wBgUrpTFjhzsQh7ANhhfeKSjpUzn+f+HOsL97ZYKy4n52V/jHsPlGYKqyKF/SrFP9Rcwn5KpU97mNa+mXQv7G/IB/jg+1sy03qgGKZzjswzCgzW/p8i+zr5XUZwjlNnVUxTr+YLnhgoLXRnWhoAAAAASUVORK5CYII=");
   pstrimg("\u2317-29-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABxElEQVRIS+1VO0vDUBQ+N33gUHTQoTiKIEXT4A8Q22ZychL8Cw4uDoIggiiCCv4QQVychKQW0cFJEzoogij4GERBBCWVHL+bmg61JaUPKrYXbnJfOd893/nOiaA2NNEGTOqCtpT1Lr1depvCwN8QUpazYddy8ygbw+hTuqof+u6ZlrnAxNuCxWlGy0zU6/YvTyUoW/wIwH702Yya2fWNG5axJkgsE1MeoGPNBn0A4ACMz8D43r8GLdJb5iliugqvVxqm17gwLhGnIRjjUowERbwx0xeeBXQ5L+AiPXj7OvjEfsg7JyiM8Umt4hIAvRdCDNYritJ3TOcAHa/FjnfrnJVTXXZfvQ966ZnfPPX2gYG5KEf3HXKilKQntnkHJ+aZ+UpJKqNkUfzH0xipdJ0WaclMYKuWMh2iXlSkW9AbD3EoldJSx6WKZJtLEMwGes3xq8S1MG1zi11OIH6OfwClbhriUhC7I6y/SH1izcFFNMwTmL9j7wDjaFHkHMHemZ7U1wMDKo0h9z7wlqnQWGO6gXpl6gW29nhafi2v4Nt8h/W4wspkS2JaEdTiDkkZ0CsVGyv/n0J0m1hflBVJ1/SRQMVUOfAN/GIgLfqdcIwAAAAASUVORK5CYII=");
@@ -858,9 +858,9 @@ function init0() {
   pstrimg("\u2AA1-60-120-120-120", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAERUlEQVRoQ+2YTWgTQRiGu2ltU6og6qWeVDx4kCKoeBEULxX0ICr+0pMVrLWUpEk2aa2mtvlpUtu0CHqRepAiRtCDl+JBwZ+D4sHepNBaBPVS0ENtCk3iO2UWks3sdBM76XY7gSVhZ3b2e+b95pt3olSss4+yzngrJLDdFZcKS4VtNgMypW0maAGOVFgqbLMZkCltM0Fl0ZIpLVPaZjMgU9pmgsoqLVNaprTNZkCmtM0EtXaV9vl8ZxVFuY8o3/f3958SMflWSGnF7/dfyWazccBuJpD4/RTA520F3NbWVlNXV3cDcCGA1uTC2QoYabsJgDdxeQDpMFBxJBqNtq9phQG63eFw9ACi2QgEyo5XVlb6wuHwhAhYMqbwNezxeHZWVVXF8a4zHNAnUDwAVb+JAtXGFQbs9Xr3Qa0hvOgoCwJqZklFTqfTvfF4/JdoUGHAqqoeBsgAXnDIACID1mhtbW0oGAz+LRfoigMHAoGTACGK7jZQdA4TcdvpdA4DdFHfh1btqxhjAP2akN5JEZPxvymtQNHLCDCG4OoNApzNZDLq9PT0o2Qymdb36ezsrEdad2GMFq1qA7oJ+/BjKwETs9BK1cjbQ3OC/A5QdywWe8YKHFX7ACD7cDXq2y0DjFTcOD8/70WAAQS6wUCBCYB6APqK0U4m6gLu9+HaZfD8IoCPQOEPq6Yw1udWBBFEANe1tGME85aCftS3uVyuLdXV1S7c9+pdVU7fn6Qda3cM31kRsGRM7hqGGjuo9btkFADaX+DyQ9Gv+j6YqD2YBGIdT3MAeBmx4txMYBIorbjHWW+ke+goYLoB+kPfB4XsBCDDuN/AmahxtKlI3S8rTsUZMA8Yiu5HX3I8O2gEivvBhYWFkUQi8VvXh6xPPybDp5169GNoZgOGJBYKhWbKCaq9Kw+YVE743VE07uUEcxfbyIDeHaGgOVKp1BCgWowKGgXuxvc9KPtn1YG1ALA3NiBdiYk4xgnqOdrcDP9LlCZr/g4uo0pMzrxjmJiucvjnXIZlixY6E5vIM/6v0e5irUXqpyNoZ9YCGsgbYkxQCwqqu4gMMOW0zBztENwnqOYG+Dt9oB0dHdtwYiL7t4u3f5P1j+dJMRP2MQWsvd3M4R1BT6IOuCORyEtG1GbSfRbPNSLVP4ugLgpYC4AafTfgejiKcY0ELZC9rHRHijcjxR9aBjgnEKJYCzUnS3/A6T9om8M9dWpq6gHn8OBGn3Zt8izjpTkzTk5NF+k52OjUlMHzt3A8HDI4By+dvNBnGONcs+rxsGAOqMtKoIF5LsZ98gfAIMxLiGFeRGRx3pglrWEzUS33z8dy9tTMO0rpIwxYC8asiYF7U+HeJkuBKOYZ4cBaMOTkhd8lm5hioHh9ywasBWHSxJxbM0XLrBI8E7MWtiWznAX9WCbG1sAMEzMI4FarOq2SleU9CGPixJUSMXjZi5YIiGLG/AehF/BMvz1vRQAAAABJRU5ErkJggg==");
   pstrimg("\u2AA1-60-40-110-240", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAEvUlEQVRoQ+1YS2hcVRj+z8mUKI0zE+um4qJKmxlRilDFjaC4qaALUfFREQQrmGYmk4x5tNRqahuVNjaZmWilIO1CilhBF26CCwUfC6WLduPcBEqk0MeidObayOQx5/e7UwfTuY+5zuSmk9s7kE3uOef+3/995zvfuYJusZ+4xfBSANjvjAcMBwz7rAOBpH1GqAlOwHDAsM86EEjaZ4QGphVIOpC0zzoQSNpnhAYuHUg6kLTPOhBI2meEtrZLx5KFF/Cl/CgR/6JlO5/1ovktIGkWXb3FN1DIYfxFDZBM9JWWjb7kK8Cbk9weokKCSYwKQe3LwfkKcGyI76BS8R0AHACj0opFZs5quc7UmmY4lpi7m+TifoDcaQeEmaZIhoa0TMdZL8Aaa3q+h2OJwr1C0mG863kHEF+S5D35ic5Zr4BW1/UM8Ja+qw+1lcU4WvqEtWzhTXDk+aXQgdlPOy55DdQzwF0p/THJagwveNQSKJGCdD+6Nh8ZvXBM/L1aQFcccDylP0NKGYxutgbBc+D0vfyGaIZGxFLtmOuurb/JxGMY95o2GT3lRTOalDSLWEJ/VUh1CHaw0bJApitgdFi7HDlBp0S5dsz9fXMbWS3shb67q67NSgBw5IsWAswintR7DDZqz9BqkThazqMJaS0X/dqqcJjZw1DDQczfXvu8ZQA/sIs7ym2FQQDZg2LXWe9RPquEGJjJRL83P6806mUWfBBs3mfDIOQuH89nw7/eNIbjPfoGkuURFmKXQ1j4iUkOTOciv9UWek9/8c71S6ofjRq0UwQC5UVmOajlwicxDmHLm5/jHo73Xd0EeY1i0A6712N/fktS7tYyYa12TFdCj0uhRqGG52znk5MiVh60JWCjUBjROB4+ZXuGEh0nXrdPm1x/oXbMlmTxaQD9QJDY6tCoKabQ8HSu48zKw7Jf8QbA8d7CNmjpKP75iB1QuOnIQpvKzk50Fm4cg/3ZW9yN+UPVW4/JjOByRtiQ5fZDf3xy+5+rCdTyHDacU0g+jj30oG0xTB+XyqExUzoaYRm7UoAqRLetoV0HvG+xFJk8d0wUbzrgagGx1LWtpJbGYTBPOhT1DfJv2px/cTYn9R3wnfcdnNi4855Ec/euRn5ejqGuaZESRky0Df4o/AfmUL/VXjTytFTiQzsvqBTC9KMigb1sdncvFOAqabm62hH9zkKmpzPhn01u/bZ+l1hUgzhs+p3Ob6HkUH4yMuUFUMs9XO9Fbi7vWGOGADyfCX9nXs+F3BFF0ZTt+Wz0dL16GnnuiuHahStBXxTTkON+O8bqBYlKtJR0wErurGgnLg+fNwKo3pyGAP+3KD7AJfRumI8RTiof4CxYnVMkh6cvhj+zuzwotZiG3FPV5rVMlrbvnnEG66/gqguDs741wdwU5r/7Vykybn0Prt68OAOG32rR66G5BUbKaiOesLsX/wv8yDxUYQ4v9QTZ/PMmJW1fQN0vH0YIcYinzUOzXsEzwNXXuQ0xCziLz2UjM14BbehYaqYY4+bVTIhp5t3L53rOcG2hrkKMohfXjGm5ZcIpxKyBY8ktTPM4qxDja8CmECP4CPy7p0WTVuPMOs3c9DrfNntClLxYfdVNywsQ/2fNfwAlbehMM/mV+QAAAABJRU5ErkJggg==");
   pstrimg("S-20-170-200-170", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACB0lEQVQ4T7VTS0gbURS9b0ZiMGC7ULRauhAKNYqgaIyuXHbbWN9UArq0FLoRF26EgAuXLkRcacAugi8KrtwGpJgYSpAaB6FQKZUgBHGjBSOZ55k4aoqTmQg68Mhn7jn3vHPPZfTED3tiPnp+QpEWzcxgn6SUDZLJS8bYGU5mJDCyU81t7hSKHdFKCm0C1GsHlCSvGLFM0VMMjfaM5iqRlwhFRjTSJf2FAbV3hZLOoZCBxFcGllKRQ1pA23YmTIoNkIWsou+qqo4P9w3/Nn/HMrEWtaCOkaTPqHnjShiREcW/6z8G9hVAf/Sg3hZhEcNOwVpqbcbwGMuOV04kEjV5bz6H7o0gzFM9veYdvFDNAOxqSh6icxJeBa2CX7BuuuArJMJd4bPHEt8MJS3ek0Fb+PpfLjHZC6g+wr9pprAFHuB7bg3uY7MrPgAcBeCFAyjOg5w7kT7YlHgyHjKYMQgLugH04zSVK0fg57UBbdIxNk4dzRS0p9oXsS0TFvEeVJrNbJ+qdtmK1ikYXuIcgLCzIqFVfIgBfNOC2qxdYfQo6q07qTN32ov3zgrLgw1/cgCtKqTEsv3ZrEmO0IcxrDlMurXUTNISH+Bf3BTeXsctFT/1fr270iaZ4JscpsRHfEzhmGZ7bFj/QdkKlH116/hgKOs/1t8Vr4pvFab4YAGsJZ0P8n03otv31/KEvRU9PPQmAAAAAElFTkSuQmCC");
-  pstrimg("O-21-170-200-170", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAACWUlEQVQ4T71UPWgUQRidmd3zByWVFkfAFGnMXiWE2ztNCgVFLGN2llgIIhaiEBQCphAunQoSSEQsgoXYZO6ClYg2h825qxgQNQQsFJEoJ6k8BOPdfr5dN4t3t7tJirjN7s68ed9735sZzrbh4dvAyf4vqXqv9oqGOMg8pnnk/ZSH5dvNuupSqhw1zohdgYe+f0mI0W/8v9Z07dzo4OhyWoGItEQlYbjGc4CHNlBEnPEJq2DdTsJFpPPO/GOAT0VAYk+gdloIsUJEQ+TRdfz3hvOE79PSlI/iiAPSilsZ9DzPAVCDTQ9DF+yCfb9zQVthYp9lUba1aB0fkKKPz/A67n9D1bRdtK/GKQha5BgfUfxAAGV0FsUfdmJ5CPwG4H4E9EsXeu+IObKa1C/lqgngbgUCON20TftaF2m1WtXru+tf0c99UPkKKvNpQS0sLvQ115ofgM9A6VMoPdlFCusGKr+BUn0zpJWXlZzX8ny8loTnWyVVNZVngrlh/2OdcZycHfSDvsNODxTXkOiRLdivwv6x+KBc4wsmsiBtsB6WlTnZSAnqPHBzqUGFW8rB2wyJJmVB3kgkddQ7zOVC++MIdqZLqT9Qdson/CTDyTUu+FErb9U6weqFmkVAl4NxYvWlwlK2xEv+YWl7omOKBYtYcCicRbB0JyMyU/6e9U9ci1qz6HthfTX26EXs0XtxjiLSYL/uqi9zzvvTgvorku4ioEtJuLarzz9dA+7AHCd+Bqp3di6C+hVcMJOWaT1IK5x485fd8jBupn7Y3COYWG1S0xkrjn3ayIU//wefZA0lt/5qgQAAAABJRU5ErkJggg==");  
+  pstrimg("O-21-170-200-170", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAACWUlEQVQ4T71UPWgUQRidmd3zByWVFkfAFGnMXiWE2ztNCgVFLGN2llgIIhaiEBQCphAunQoSSEQsgoXYZO6ClYg2h825qxgQNQQsFJEoJ6k8BOPdfr5dN4t3t7tJirjN7s68ed9735sZzrbh4dvAyf4vqXqv9oqGOMg8pnnk/ZSH5dvNuupSqhw1zohdgYe+f0mI0W/8v9Z07dzo4OhyWoGItEQlYbjGc4CHNlBEnPEJq2DdTsJFpPPO/GOAT0VAYk+gdloIsUJEQ+TRdfz3hvOE79PSlI/iiAPSilsZ9DzPAVCDTQ9DF+yCfb9zQVthYp9lUba1aB0fkKKPz/A67n9D1bRdtK/GKQha5BgfUfxAAGV0FsUfdmJ5CPwG4H4E9EsXeu+IObKa1C/lqgngbgUCON20TftaF2m1WtXru+tf0c99UPkKKvNpQS0sLvQ115ofgM9A6VMoPdlFCusGKr+BUn0zpJWXlZzX8ny8loTnWyVVNZVngrlh/2OdcZycHfSDvsNODxTXkOiRLdivwv6x+KBc4wsmsiBtsB6WlTnZSAnqPHBzqUGFW8rB2wyJJmVB3kgkddQ7zOVC++MIdqZLqT9Qdson/CTDyTUu+FErb9U6weqFmkVAl4NxYvWlwlK2xEv+YWl7omOKBYtYcCicRbB0JyMyU/6e9U9ci1qz6HthfTX26EXs0XtxjiLSYL/uqi9zzvvTgvorku4ioEtJuLarzz9dA+7AHCd+Bqp3di6C+hVcMJOWaT1IK5x485fd8jBupn7Y3COYWG1S0xkrjn3ayIU//wefZA0lt/5qgQAAAABJRU5ErkJggg==");
   pstrimg("\u29BB-49-240-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAExUlEQVRoQ+2YS2gWVxTHT6IBaX1i8UG1gihU3ahpfSBJkErVheLCQBDcdFHdRFJMpBDsokoVX5FWEcVGdOELQUEEFyJGJEJtaqshRnFlFz5A2lSx0cbH74Q74c733Zn58s2NFZkLwzdzv3v+5/zPufecM1Mi78EoeQ84SEbiXYliFoksEh49kG0nj85MBZVFIpX7PApnkfDozFRQWSRSuc+jcBYJj85MBZVFIpX7PArnReIfkdGvRb4cLnKcP7kNj79FJjO/hD8WcX3O/Th+H+gq7m9zf2WQyIVhIr/w/CJXHvyPVBb8Ey78YriFSPwlMhKQP5j8hOu7ESKbAtAukTko383z/AIV9YBRh7EH+X2uMga/g+fxYNWPEtlZIFbssj4SgJZg6FFW11gSDRA5wPx25r4uUmE3csu42tDxuzrIwinHa78VidsnFhmJBODmUpFDGNWBp9khMlgvbnRrVXH/A9eYBIy1ENifloDZxmEYjBiG51uYneVQcKhMpPFDkftxyjWqT/D+S5EjeIlghgdz65j8yQcBJwmdhMQ8DLlqK+H5Pp77uD+H8ZnIRE72PQfOBHBeDRgJjC2FRCsK5jqUNEJEt0riAGcoOJddEWUrVrANrySCFLggL8WSQVYweTpGPpGIIXAdjCkROHfYTjPQ01OgnbHLQiRQXob3OizlG1C2l9pwKyerNBCRHS5kFwE9A3j+MDj3gjNCNJYzd9Y7CQ5jFYfxkgJjTBeGTkJpl10/LKV5RFwE7HoATh14TQbDWzRyU+yPTNQaJRsgofWhdyQRSSKgGFqtOc1/cjtEn4nGNKLRmTYadrHTrXQDwE+5ukmlk3NTqYuIehqy+5BtM7K9Nrkqsimo2/i73hhejewpnyS0PtwFcAzKngKuaZCp8IiISGhRXEuB/Ffg/qwCua1NsWTsSHzAwbtr+poWSHzBPUckf8QRgcB6eqJdUQah4zP+u2ZIbCRxbC7W+EDOSUKVAD4/ioQKE6KpGHwnx4BOkzojCxnJYwaeaf/fSZjWRBu3vDqQFAmiOBPnaA3R7eQ9EqEzgY6JbAuiHx5KgMn2nLrxzpyJULuBsbMh0euxYEQQaIBQM/vnuk0s6nDjgG/B22Iw/WYnBUWB1oUg/Z1kf9cEDV8Egb4WxH7hsUiHXnzMNuzNgLqGN8DpvAHe8nawzWENda9BMUoiEBjhImK33SSD1WAdMesf46Tx/P+fVxKODvYEc2tRpCnRPsSRTWAEkVrtnYI6ZIxeQxo/kJaASRBhGFJgJSmwJQY8sYvVjw1g3NSa48Kx+7IBIWFag5OAr3QoSCQQyMQRgdwqttIxHwSckdBJojENT2pLbo9HZg8X/EYWgaNnYWxcIe0vuVAXq8K6p5m8yG3eOzZROkdGqU/qPDWaRGIxbPXb1dt9xy6kuTNeOs9vM9evWPiYX/1IVobhYyFQxX3i1w47a/XX87nr7d7J9d2pESN3YNxWjPumSGU9yFbzTaeVd1H97mQf9oH57mSl09AhNo2bFsOlhZLB+O9Z2xS0L3b61ZcvHLSnUKy4dc4zgcBCcviZoFrbAP/yBY+9U4mBC5gv57fPs6x/yPNViuQ5zs1lnvlqEx4ma1VA7IwPApHZyRf428J5A/T7dEFmoYFbAAAAAElFTkSuQmCC");
-  pstrimg("\u25C9-29-40-110-240", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAAE0klEQVRIS81Wa2gcVRS+Z3brpmmSmVSNEdG2MWbTprRWhIKKLRZKrWKDpv5SiQi+kl1NtbVQtMFnY8F0H61YREtREGJqKNSCVSqaP5JfNqA7mxhjrTFimsxsQrOJO3P87uzObtK8U6QuJMPMved+53znnO9cElfhR1cBU/z/Qf17uNAaTVR5iG4gYV9gIW4Vthj4x+Pr7gktPT9f1uYRKZM/aNQSi5cF0ZoZD2ZxkUk068vVJtFIqdkcmBX0toD5gCL4cyKRxywYzzb8bxHEcWFzoWDPmK3YaxUhapCorRII0dvM9GQ8oh6fCXh60EZW/IPmZ1jcmQFrSiTVN/qO0qWZDpLUi1HzVTi22wFnPqlfqz0yXdRTQXeyx19qdsF4FYL7w2La1B3RfpkIVvFS4jp7HDvw644UDAiE7q6vrhtdAQK+xftK/HUlE+q63mOUnGh/GShTZcA4i9xtgqffw9P7XE/9L4ysE5xqgvFWGIHR9E8ygcdZVpT98VBRe+Yr+QNGGxE9JIFjy9U1EyOeBIqCeRYf3sc57fqf2mbRQhaOlY4cgyNPzFWd0lFLaA92Rygh7XDedyToHjh2UI9oe1z7LGjZ06wu8Zn9+OBJerik91CxsbKW83yF5k+S6rkAs5ELHh5TxC3SvjwwfL1HWOdh72V7yQo9uqxP7suCwqsP8fKUbfOueLS4OROhQ/V8AXOUc6fer22QTPkDZpCIQ1g7Ggtrz+RAUTyVpSaanfNBTwnoGasImtvRLqcWCujut22qi0fVI6h/j/9GE8WG8kpoJbKonEgrGi7dpKTGf2XiA3q4+DWBlqm8aOrgoXyxoMjv7yjEMllAlcGhKHr3eVZoYzykdqRBg8YWlOPXWHhMj6ifZvL7F3LhWzSoFAlbqYpHi2L+oLmNBJ92z3dAUd67EdUBspTVscNFcX994m5S7Ez5LxYWhNr0uB5VP8kyKcRHqGLZIQANGgfx2KVYvrKfDy/9zY188XCZbs2AuswhsJN6WHs0TW/AeAtU7nVBXTr+W1DkFEJ2hti7PhYt6PTXG3eSIjquBFQKP9ne29PnpdPl0j2pkCBo+2IR7W23zLGoXQFwKpny3tx7pKAf6duHs94EvTWxkNbqgJYHuMhLRh/kqsdtalnm0I66xYI6UyZSvMMRmaBxTqriiJdKLzSrg1lFwsIJgFZDuO+Vwi0d8QhTtk3eQoEltdn6cKkVokMPqxvlRMrJYCaP8DArYRX15v2Kwl8uGJS5AVEeckRm0PgRQGstDPmukHZmkvamW2eoDVNhR05/hagMDNVCfz+eD7Az8IV4DnXxQbr/h17EeGtG5Nkop4Dmckv5tuCarkjxCbnJGczKGMab2DwTOPDOYeA/7A78ivqhakWhL7A/RZavXPa/azvl5iDbBSP6Bzmobab9uOu87m6WyiJS49uR5ztQIMvQZgwWYsJSWqWSZffVG3sVRbzjvGcqdqKz096RpCJh4SsJLHPMXqqON2s9c1EMh1fBoVYAbXAuaLhlxMPaN5fbTX8xkyqFqCg1dgo5WS+NkK/TOOS98WG1feKdp6qRr7EGjLswQV7BYdvSe7nTEt4t3ZHCv6dzdEbQHFWygu13ZQW63+BAEtGMEHM+6M3PfsdFDjrUoEe1ltlY+RfyF2A8mL240wAAAABJRU5ErkJggg==");  
+  pstrimg("\u25C9-29-40-110-240", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAAE0klEQVRIS81Wa2gcVRS+Z3brpmmSmVSNEdG2MWbTprRWhIKKLRZKrWKDpv5SiQi+kl1NtbVQtMFnY8F0H61YREtREGJqKNSCVSqaP5JfNqA7mxhjrTFimsxsQrOJO3P87uzObtK8U6QuJMPMved+53znnO9cElfhR1cBU/z/Qf17uNAaTVR5iG4gYV9gIW4Vthj4x+Pr7gktPT9f1uYRKZM/aNQSi5cF0ZoZD2ZxkUk068vVJtFIqdkcmBX0toD5gCL4cyKRxywYzzb8bxHEcWFzoWDPmK3YaxUhapCorRII0dvM9GQ8oh6fCXh60EZW/IPmZ1jcmQFrSiTVN/qO0qWZDpLUi1HzVTi22wFnPqlfqz0yXdRTQXeyx19qdsF4FYL7w2La1B3RfpkIVvFS4jp7HDvw644UDAiE7q6vrhtdAQK+xftK/HUlE+q63mOUnGh/GShTZcA4i9xtgqffw9P7XE/9L4ysE5xqgvFWGIHR9E8ygcdZVpT98VBRe+Yr+QNGGxE9JIFjy9U1EyOeBIqCeRYf3sc57fqf2mbRQhaOlY4cgyNPzFWd0lFLaA92Rygh7XDedyToHjh2UI9oe1z7LGjZ06wu8Zn9+OBJerik91CxsbKW83yF5k+S6rkAs5ELHh5TxC3SvjwwfL1HWOdh72V7yQo9uqxP7suCwqsP8fKUbfOueLS4OROhQ/V8AXOUc6fer22QTPkDZpCIQ1g7Ggtrz+RAUTyVpSaanfNBTwnoGasImtvRLqcWCujut22qi0fVI6h/j/9GE8WG8kpoJbKonEgrGi7dpKTGf2XiA3q4+DWBlqm8aOrgoXyxoMjv7yjEMllAlcGhKHr3eVZoYzykdqRBg8YWlOPXWHhMj6ifZvL7F3LhWzSoFAlbqYpHi2L+oLmNBJ92z3dAUd67EdUBspTVscNFcX994m5S7Ez5LxYWhNr0uB5VP8kyKcRHqGLZIQANGgfx2KVYvrKfDy/9zY188XCZbs2AuswhsJN6WHs0TW/AeAtU7nVBXTr+W1DkFEJ2hti7PhYt6PTXG3eSIjquBFQKP9ne29PnpdPl0j2pkCBo+2IR7W23zLGoXQFwKpny3tx7pKAf6duHs94EvTWxkNbqgJYHuMhLRh/kqsdtalnm0I66xYI6UyZSvMMRmaBxTqriiJdKLzSrg1lFwsIJgFZDuO+Vwi0d8QhTtk3eQoEltdn6cKkVokMPqxvlRMrJYCaP8DArYRX15v2Kwl8uGJS5AVEeckRm0PgRQGstDPmukHZmkvamW2eoDVNhR05/hagMDNVCfz+eD7Az8IV4DnXxQbr/h17EeGtG5Nkop4Dmckv5tuCarkjxCbnJGczKGMab2DwTOPDOYeA/7A78ivqhakWhL7A/RZavXPa/azvl5iDbBSP6Bzmobab9uOu87m6WyiJS49uR5ztQIMvQZgwWYsJSWqWSZffVG3sVRbzjvGcqdqKz096RpCJh4SsJLHPMXqqON2s9c1EMh1fBoVYAbXAuaLhlxMPaN5fbTX8xkyqFqCg1dgo5WS+NkK/TOOS98WG1feKdp6qRr7EGjLswQV7BYdvSe7nTEt4t3ZHCv6dzdEbQHFWygu13ZQW63+BAEtGMEHM+6M3PfsdFDjrUoEe1ltlY+RfyF2A8mL240wAAAABJRU5ErkJggg==");
   pstrimg("zm-15-200-200-200", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAPCAYAAADzun+cAAABqElEQVRIS+2TTyiDcRjH94Z6t/VmtOTkolzm5LKtJY2LCycuXBTJQcrVUP4d3cRBkhO1HFxFI2lbkavbWw40pRTZi7XX59Fv9RbNezC7WD09+31/z/N8fr/n97yap0o/rUpczz/4zzqvZbPZadu2E5hVomqa9s5/A23NsqxlXdfPWTeiX+D7MD97T/gEWhN+EgugFVgnI5HI0E83EPBMsVhcJPCNJFsl+MRTaAPwlNfrvWMZVNorcQWBO4oTaj+iN0iaHAT4ejn4l+HKZDIHJPRjZj6fb5NkbnxL0SDFd6PR6HAqlapFu0ZrRbvi4L2xWOye3CThA2g7xI24BpMoN5/DXijaHg6HTQURsM8wjOZQKPQsBYk9xsXRu4g7U9oCfh7wFuAxV2AKxUk4pFANCaO0alsSHWA/ey1AHhTkFN+JDRK7r7Ql/KxrsGmaei6Xk3cMYJsUGi+dtqLgdDp9yW06gJ0AjTtbVDEwLZaWfg6CDApOPiXOodWx3mOqV9VU+3611dz2iII93w2CvBXgCcA37Nc7wSqv2/nG8mmSs+L6jctNX6X2PgDupPwQ1IdWLAAAAABJRU5ErkJggg==");
   pstrimg("spd-15-200-200-200-2", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAPCAYAAABwfkanAAACt0lEQVRIS7WVTWgTURCA3WSVxJII0lPBSkQoGg8WE5IYLzkUBKEoelAP9aCIiJdKVbRCRTFoRUFRitSeetGDghd70iDF/DQHEX+IQo30YEkEK0RMxGziN/A2rKHSQncDw7yf2ZnvzZs30VY5+MvlcoONRmNU07Tb0Wh0yK5Qml2OFvMD9LVms3kOmYjFYsfsiuUodDabPQ9o0hFonO/H+SiygQBykApXWjAMY6+u6x1c8TTzInsGeif7qxmXGR/k2lNmBsnsBdYHmXeia+wbjDtsh06n05tdLtd7nK9B5pHfSDfiQg6xNw/8cwDcCu4Heq2y/8VeIB6PlzOZzGlsbooNkAuimK9Xc3vLg2DXcX6WQDPUXUSCpFIp3ePxPAL4Mus6kmO5igxjc6dYLHpKpdIndTPJWq02gv0sfuSwk2R/QPxwgzdQQ7ZnGscncXwP+YM8I/CU2+2eCoVCcyrwDoFm/S0wvZZSaD0y9sbUwb77/f5NwWDwp/r2Cvqi7dCSVa/X+w7nPSaQ0lmfz9dXqVR6FHQB6G2mDTc0BuwJATKh2w9GQpyBtmTuCA+uj8DbWduKaAAlmT9ZDNrazriZSVX35Wq12p1IJOril4Nd4vsR2zNN8H3ABqjVW5YsPiDYUebjyP12aHU7n1VNX6X2J7ApyEE5QCQcDr9W5fEU3W87NFcore4MjucAfclYOsNupU+hcwrahZ5l/kXdhrS1bzzCLsksfqbZ2yWtDv0K2YJdl8DbDk2mB8j0XQL4LDXdZPyQGj4MjDzELPu6teblkGS4PxKJvJF11VE+MAwoO0yaC6rtjePruPX7lYxb/4jAxwiyUSKRvcdmXSroVvfAbg+wX80SaA+O/QFA17H+ggMVVwL3v2+X/Bu3QP/TPZyAWa7PJaHz+XxvvV6fIXsfrS1vuQGcsPsLRY6oH5COeiUAAAAASUVORK5CYII=");
   pstrimg("clr-16-200-200-200", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAByElEQVRIS+2Uv0sCYRjHPenAQ7SlhjAEt+BoCITTHGxutaWIIGgIgoiIggiEIqg9rIYK6m9oCUJo8E6RqLGhpaCgqAab4tQ+r9yFmIWDnB108PD+uPfe5/u554fkcfkjuVy/pyUAwzBSgC5gh7FY7OgvQbcEoOv6tiRJywg/AWDKdQBEYAPRa9Vq9SAej8/8A7TxD3ylEGmySJoscXefuJ+//cb6IhAITJZKpZX6CGSz2S6fz3cpznm93jRnVzHx3WswGBxWVfW9jRp/vaoGgPhdxM5awp8ZP1iHBAc2gamNAIqiPLLXU387EGalUgklEoknxwCKxWK3aZrCoYyAHXJ8XjjP5XKDQOwxTTMmm0Tggf1evrklCuu8v8b6NU07dUq88CPl83kR/k3m93SYcDPnjUVspZAA8GNhRL84Kbrel2SLY/MKgCHXARCBLSIgivQGgAHXARQKhWS5XD4nFcQzTToc2xBEZ5+9DIBjP9RA51NIiEWowaBZXSfPaGIinfzYOPatC9FGazUAfMTJrtOYIbU2KoqStnjGdEQUtn3I6jApOwLsZ0izObuIWfvoQJGOFnE9kSVslD1FlmU9Go3edaq7tOr3E9qc8RGk1VQGAAAAAElFTkSuQmCC");
@@ -880,7 +880,7 @@ function init0() {
   pstrimg("\u2A01-30-40-110-240-3", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAELElEQVRIS+1WbWhbVRg+70mydqzNvVW2OVCZozQpylCGiEwQ5vADiv2jFlGZnThRmrsO534NGfSHk6GzSasydHU6xA+EqjimiPszkPrxww0xN1XQqQO3udyk3dqluef1OWmTpsm9yZWB++P5k9zz8T7v+7zved5D4goNukK44n/g/4z5wFR3DeTjQvKtUnC3UnyWSF5PpHJKyYnCdPTYr2/R7L/xuiFwbBe3ixlnFyphOwlq9zPMLBhrYxfC9Nwf+43zQRzwBY5b+S0s1EFskNoQLB8TzIeJ6IeyYcV0Ixh4BI7dvbBHkZBb08nooWbgnsCxRG4/EQ+WDrP4gjnSb4+sOK0/sbYba0PM9IqdMnbouc7E1MowFQ8KQT0LDozZSeMJfGsmPEcdcMxyRjH5jKYPeeyv9R7r+7C+ExY/sJNmX7XVeCL3MLDeXQD/EOsPBQLuGnD6pBTvwShYlHdmhqPHaw82AtZ745azASx9DfojSognM0nzDS/wxYgf5FBsjZPVRYRgt9rJjjGvA82AS+mw8r0k1Dj+FvKzRsfpA3Sx1lYFGLmzkLthRPst8nObX36CAM/XgnOUSNyDIIYQxPPewKVoc+ewGCUVvjk90nbSLzdBgeOD2bXCpQwoP5+eNa4TB2iu2mYp4nXb2Ii05P5CCZ+xrzbXiT1UvFxg2KKYlZuAnQ3kyu70aDRTBxwbyG8kqY6D5oaVOJ8//6qudTaeyKYE0QAresweMQ7XAXdZzl1QiS+RV4uZN4KGzUwlNfIaV1WJik6P5yDmH3EfX8Xe95sCs5K9gtSLKIq4n8Gg8/DaEUr2lJhsFrESnBIceVNwMQ5PFQ6X5LIyJE0hkmfh2CbMTSpBg9jlreEh+adw1R3QhRd8gSs5ZvG5nTLvbRRVLJEdgl7vhm6/nU51bGm413K01ve7TD2TKeOzuhxfu4OXt7nOWcik6wpz1c8punTZVb2HZexv53cI0srpMF1T27UWBcTKjmNTrxct1U4EreqyevkJUgW4pLFCfAelmbqUN1f5NfZAwAuCBOOmF806kCXdCTJ3BIVzH67UJ3aqo9eL7iDA2FPKbSP5XQKs+2pIuKcA3grlOZROmv21mt0MOG7lXsZZ3aeL5LZ0/jS6/DevAOr6saYcnn6jRQKRn+RloU2Zl6IVoVjs1/wpWLm/bHT+mZQb11dN93KIR08maRzxFRhPOrdPrxeqOKEjn38QiL0X58S+U6+Z2W5r6ibFxc1CRr6yh9tOrN7JK4yC85Rk2qt7MPRuDr+3g63vG1013zfX2se5taU99w5AH6gyMIn/J+DMObTQVri0HiC3lNfh48cum32NrmN5b9PnbffghTVKFZ4GyKNw4obaKOAEnrX8kZChIXs4ageV1KbASwxt40hny8xqGS4s0/PuTGj6l9fbzwQFq973DyXQCj1kttGKAAAAAElFTkSuQmCC");
   pstrimg("\u25C6-27-240-240-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAA7klEQVRIS+3VPw6CMBQG8NfVBTiCJ3A1UY/gYFw8o4Nx9ALC4KBX8AaEsBGCXxMlRUr7aE3jABN/3suPvn4EQQEPEdCiCfvJtKcxTmM0TuC/ApLnNMfr3pqGsiShrc/mGVcGIAL2FIKiN3KOY9q5goOYBvoYzqAWM0BeYA9jQM5gBxsBOYEtJlMH7K6EgZuDE0Kz5xSrWIaGJafpq6bB9QHg0dbbYkVBm7qmC1Y2szWpzzGNK76/Naens2dlSYuqopQLAkoBrTiQrOmlkQuOhbSYvGkDXaBBzAS6QkZMB/pAVkwFcf4YEwZdaIL+z16K9WUcTbIElgAAAABJRU5ErkJggg==");
   pstrimg("\u25B7\u25B7-13-40-110-240", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAANCAYAAAC3mX7tAAABcklEQVQ4T2NkgAKFrC8SDN+4PzxYwPgDJkaIJkUPI8wwjbz3UxgYGNOBfIsbkwTOErIEJE+KHhSL/v9nkANa5srIyDABaFklIctAFhGrB2FR7odZ//8zHropwrdM/e2HA0BLFP6zMRvd6uV7g8tCDRL0oFj0j4Hh9K3JArPBwZL7PuE/A+M8RgbG6BuT+ZdjswxkEbF6cFoEMliz4Kvkv7+/LwAVXbghzO/N0MD4B9lCdIvw6cFrETyh5H7oAbLzGP4x6dyYyncLSRzFR2iOQNFD0CKN7E/C/5n/HWb4//8Ny18Br6vTGL8QsgibHrwWqeW8D2BiYlzP8J8h48ZkgZno8YQt6HDpwWHRf0b13I/LGRj/e/39z651ZzLXE8KJAb8e1OTNyLCH4R/rEUamX6B4WAPMS4nAfPUfb/ImUg+SRe8nAw0NARoq/J+R0e/mJP4dBDNsLvF64Bap532YDeTY//nPr3tnMuNPQpaA5EnRAwDaoxQdZXwF8gAAAABJRU5ErkJggg==");
-  pstrimg("\u21FE-22-220-220-220", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAA7UlEQVRIS2NkoBFgpJG5DKMGw0N2NCiGc1DcuXPHE+g/TxUVlTxSMhPBVAE0uBNoYBkQzwYankas4QQNvnv3bvn///87oAbOAhqeTozhjLdv384CeZWRkfEXFg2/gIbqA+U0gXI/gJiDWJczAr16GqjYhIAr/gEtsAFasAeojhPIjlBVVV2FTw/IxauAGnyBin9jUwiU4waJA+WPANl2QPoePz+/vpiY2Be8BhMKL6DFVUADW6GG3wWGsQaQ/4eQPoKRBzS4A2gQKALvAl1qQMilMAuJMRjk4lQ+Pj5dYg0FGU7QYEJexiU/9AwGACmdURegIv+UAAAAAElFTkSuQmCC");  
+  pstrimg("\u21FE-22-220-220-220", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAA7UlEQVRIS2NkoBFgpJG5DKMGw0N2NCiGc1DcuXPHE+g/TxUVlTxSMhPBVAE0uBNoYBkQzwYankas4QQNvnv3bvn///87oAbOAhqeTozhjLdv384CeZWRkfEXFg2/gIbqA+U0gXI/gJiDWJczAr16GqjYhIAr/gEtsAFasAeojhPIjlBVVV2FTw/IxauAGnyBin9jUwiU4waJA+WPANl2QPoePz+/vpiY2Be8BhMKL6DFVUADW6GG3wWGsQaQ/4eQPoKRBzS4A2gQKALvAl1qQMilMAuJMRjk4lQ+Pj5dYg0FGU7QYEJexiU/9AwGACmdURegIv+UAAAAAElFTkSuQmCC");
   pstrimg("\uFF0B-16-160-160-160", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAvElEQVQ4T2NkoBAwUqifgbYGzJ8/3wPoQoHExMQVuFyK1wVAA44yMjIKJSQkaJJlwIIFC3YDNYoBDdAfMAM2A22WALrAlKALli5dKvjr16+DQD/zgBT/////D5CtBKR/ArlPgWwWqCHMQLZvfHz8JRAfHohAA+SBBpwGSv6H2QbUzA9kMwHF3iO5gA0o7giMmQsoBmBzIjAWdgA1CxPlBWwGDIpYOAhNB+QlJGAYRAENEAYG2GSC0UhurgQALb5JEfvzXqwAAAAASUVORK5CYII=");
   pstrimg("\uFF0D-16-160-160-160", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAUElEQVQ4T2NkoBAwUqifYdQAhsEUBvPmzZNlYmI6BIzW/wSilpmRkdE3Pj7+EkgdPBpBBgAlzgIxIQPY/v//75iYmHgBxQByE9RoQqJCQgIARoYPEcWVER4AAAAASUVORK5CYII=");
   pstrimg("MSG-15-0-0-0-2", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAPCAYAAABwfkanAAAC+klEQVRIS7WWWciOQRTHP7uIG2WPkj1ryJqQrNniRpYLW7KUEIUba9a4sGSrL3splCXccSFJUUjWQrInW5L196uZGo/v9T7C1K953nlmzvyfM+ececuVlJRUgEmwAJqC7SVsgs3wBppDeXgAH8Mcu8rQHhrAF3gN9+FJMid91P4MGAt1w4u79MthP3wtsO6n4XLh1zj6ffAUHkOnMP6W/jBMDr+7018Mzx3pT0PtMjbazdg0+Bbe1ac/Al0LiBrG+Ik8gp0TRY/g+VhYpIEPsAj6ZwwN5fcpqAlX4BXMgWvBVj36UTAE+sJ3mA5bEjuexMpgpwP9BjgQxnLpjqLHMFuP2m5DG/gMI+FoYskQ2AuH4AwsKbBZDcYHwzJoEdY/CvOzYVCR8cZwL5diJqWi1/B7NpyE4XAcVkMP2Ager8dtbMf+LM8T4HnYUHujYSm0DmN+/DkYBLlitpj4VLTC2sFOME6nwC3wqD1+PaXn9aCJWykx7rwb0BkahXETbAeshamwq5iYvO9T0cZdkyD8QjBg/LUKQu7Qd4HLYGLNh1kZ8XHf7TzMhGZwM8xL49oPiMntGu2k73+rPyu6JbMtceehJ0wEY9jNjfUoWqOG0LbwAekmxr2J7BrbdTDMPMnYFKyDqsC8fyHaWmvV0Ftm97uMaOurddV3NsPAmm7yWUnqhHFPaRXMBauNMa6ttBliV2Er/JWnFZ1t0dPGbqwGL3heCHsgJlhVnk1Yky6eomWxFpSC5e9TYvy/iVaAydQ2bKZnjUmPXM+tB2u2pctKYp3Wa5fAWh8/0uXvwdPwFBrCABgP5of1OlfLVo/0CDXoJWBFiM26rNhq4HXs0WdvRBPQ0NL7lkc/YjF4g2abpdI9vCMKXf2/LIqi0xfGszHbLQwW+29QnXkmlM1r30Qsqw1kUM/3Di/1uh+3Dp4VWFPmcCq6X/jqvGL/ZJ90bq8g3npvM8ZLwaR9mMeoovuAntWYrZhn89jNM8fqo+e9QQ0jw+kgrAATvmD7AancsRBgeY38AAAAAElFTkSuQmCC");
@@ -904,7 +904,7 @@ function init0() {
   pstrimg("\u29B5-40-240-240-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAADmklEQVRYR+2XTUhVQRTH5+nr4UfPj3JjVGARUqB9LSKo0BZhVJsKo0UPF7UKCmoR9gFRQZsCobaRGC0KisBSiCRaRQVFEBWCRSWVij01FXvqs9+RuXG7vXfv3HdbuLgDw8y7c85//vM/M2fmRdQcL5E5zk+FBINGKFQwVDCoAkH9wz0YKhhUgaD+4R4MFcykwNCQ2jMzow5EIqqatph2Wuzoj9N/Q/daWZl6GFQ98fe1B4eH1eF0Wp2ExCKvySH7CbsTEL3lZes2bkSQyaKQE0XqnWBatQnaAggVZRi/X16uduVK0pMgE88npN1MXmmbJMnv1lhMtRQWqs/W99FRVTM1pY7gs5/xYpt9T2mpWsO3Ub9EXQmKKpD7YCM3w7c2FGlym0gr/gCbbTa7bsJd/V8JQq4TwAYNmoZoAiVumk6STKrz+Jyy7XU5PAdN/V0PCXtuO0q0Y5QvB5SJmiDX5gdcbCHZgu9R7Tedl6dWlZSoblOcrCFGvS5AtmqgDla+wxTUaQfWe75Z4b0N1j5TrIwEZe+h4DdAyqgpDsPyoiLVawrqtAMrAWarhJr2CwSXoeqUCV5Ggqx4Pc7PdHhfAbjOBCybjV7wV8bL/S74D8GxMVWZSqmG/Hw1SDLeCdAhPWEn++aiBvfNE6wCnH5Qr+owSya4AKYIEGe8j6zwOBvwLEFJC6jWg+xLfTMI7uCafiyCku/6IRgPPp9vBG+CAgnBSyhZAclf/KyhbtTqyp3awdg/15iTCnaxLPTkBtlNXSgBo0pI+6gxcN8R4jOuIXYOkrvqmewR3/MEjENipRvf8lgOCPCW/kqqvHxWgPnRBCxbmpH797vcp/IYiEZVVTyu+k0AM9mw4LVgPWcsSh0g4UuaMbqXsyZqQF8DUqvDfIMwJHIlaL8yWfATsOpMsdwIHoPgZQ2UJi1s4op6agps2ekkfV1vlzRtI+G9Y4rj+ppxXFFJbpRaPzfKyIjaTJ6TvTx7ePyqJz6uBHnfreZ99wK7eXrFk6h6nD10xUsBlDsNobPYyWNDyP3kEqgiCoNevvZxzwcrKjbiIE8s2eBWeUmnOdP/Duz3MnaOKid2tshBY4vUsTBZrK/iSVDQdKju0V3gQE/K5Y+qY7QljC2hL629DPBjg2lacbI3Img5cbLbISDPLhM/Sch3ISaK5lxMJvoLfHxcLeZRIad7C7WCaoV+EhUnWEAvbRfEmk1znRt73wRzliJHx98pRCk4U2hXzgAAAABJRU5ErkJggg==");
   pstrimg(" \u29B5-31-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAAfCAYAAAC/MX7XAAACnElEQVRYR+2XTYiNURjHZ4p8ZUGymc1djIVJQyMLNBmzm3xMk4mMyEYiNqJkNWU2WJBBVgqJTCllSk1xTZQSQjMLQoksSApFjY/ffzpXb7f33jnnvOfOK+976tc595zznPP83+d83fq6jKb6jOquy4VnLfJ5xPOIZ+QL5Es9I4H+KzOPeEzEi9StMvUqr/6fVkW1iP8uE+qyOmZiuwAaYAymwnt4BZ//hQ8YWvhsRO2CI1XEqe0ofErzA4QU3oKQhxExjyifhw8wFzbDykh7O+XbaYkPJbwtIuIt5bXwJEZUE3WXodm0rSO/kYb4asKLOFQ63O5Qlri4pH0ssUr9sA+0ryulKTRouaufUiO8nGzxLgdWJd9O0rAXrkIP/LQQoXkHYANcgS3wy8IuWBfbiBeZMe46m0f9CMyARfDGwbMCfV/DFw9bh2niuybd4ysY9h6cMlF3cUhzn4Pt0AE3XYyT9vUVrjtaaSP0gZbrAZgO2sM26Qed9sNuOAZnjP07cq2CmiYf4TqMXtTQq+WMfb+G448P7SO8gN1h+AhLodU4eYJ8loPD3+mrQ1HpKTyA+XAQRh3G8epqe7hVus7WM+t10NV03MODndichW1w0cPe2yTpdaa9/hz0Bl8CLntT73cdjMuMbdyDx1vYRIa2ES8yUNx1psNs2Di/h/z0RBNG2nXnXzIfbTH5VwfbxF199nj5pKXlrnrt97sWXkXf9XrD61aY1BRCePQ+lvNbTSTL/9aWhHVRuGZ+uLz2gn6YEMLl0DTQO32H8U4n9CF4ZpawTvuF0Attps8g+Sb4FlSR5WChhJemU7QvWMytW0BvfJt3vcVw7l1sD7dq/87KZ51DRSd0wxrTqP/mj+EWDIH+o6eakl5nqTqfZPI/nFl0IBlJid0AAAAASUVORK5CYII=");
   pstrimg(" \u29B5-31-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAAfCAYAAAC/MX7XAAADRElEQVRYR+2XT2gTQRSHu4lJ1BAUqodqBYn2IurFix6kigVBLIKVWr15kCBCNOQPERGiYLA0SVVQiih4ESxqDp4UFCpEED0oXlRQK+qhtF4KRmxjsn4jW4khm8xmN00xCSyzOzO/mffNe/NmorQ16U9pUu62Fnizeb7l8ZbHm2QFWqHeJI7+i9nyeKnHh4aGxhRF6dbqx0Kh0M7/KSp0PZ5IJNRiUMCloyOVSq0uFAr70G9QVTVH6WIR31E+ZJy3C2EBLQUfHh725vP5W4Bt1YNjId7QNhAOh183cgEsAydCTgBysQhmBshneHqCciXlNtqWFLVfwPunGgVvCTj5IA7YHEQeGD9QV8vkjSPUjdDXqbWN0O9YI+B1wYuTGx57QmjuKGdgMpncRfsjre2jx+PZ5PP5fujBMK6btpfAd2l9+oBPzze8dMIqZxjACuDvafPyPuVyudb4/f6ZahCxWGyR2+2eAL5d6LLZbCd1s9V0VrZLeZwJyx5n7OstGP4cAIUsvicSiTyQNQ7P9yK7T3/VqFZ2jkr9TO1xjD+D8eeAHydc1/H+zxFYaWI8bMPrX9CsQn+ZrSSS47z9agInvA/iJRWjI1gqvD5FeZjv5SWZWxeEvtPoLtFhLaU448NCz3uGRRiv9woYBie8D2DUnToadproiddx/D9DGwbH23vxynWe7+g78NJSMRDfHyhcsgajE8nMq2ln+RZR46YMBIPBm7Lj1NpPKrnpHWfs8WsYepTJM3hpu1EjiB6RDHfzpNH3GdWb6W/qOAO8H/BRDMizOF1G9ubg4KDHZrNNol+M/ni5C48ZsGpaKY8ziN5xtgJgkZmF8Y8xvqfahHPtLNooun6xaHa7fX0gEPgkq7Win+E9XjppUbiLfX4Wr8eqGYbGD7TI6EJzG82hahqr202DF5/HGsg9bmID1P8qNVbc9NjXN4AWd3YBLX3bW3DgwqB4PN7ucDheAdSpAf3k/QpPOpfLfSWUO6jv5TlJnbirC+hp/sJujkajn62GkhnPtMfnJtHu7Xf53i8xccbpdPbI3Oslxqqpi1Ryq/TvrMye34hXz6PpplymtYs/Lt+oe0pdgiT4oiZrLRSZOs4stGPeh/oNFOiEL2IPVLoAAAAASUVORK5CYII=");
-  pstrimg(" \u29B5-31-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAAfCAYAAAC/MX7XAAADZ0lEQVRYR+1XTWgTQRSeWVtTpKiIIngQKhUstgl6UCH4s9lAK4oXPfgDvelFkFIEq4g/qCcRD4pWT4oICiKecijubgpVMbekjVB6EEFaaBGkFbGY7PObdFNC3HRns2tbTBYWZnfee/N9872ZN8NZjT68RnmzOvFaU76ueF3xGpmBeqrXiNDzNOuKlytuZIwk/u23/ydj4Zj6P2VFRcVBnEqJgrh0diTTyb2WYh1nFttCjHKc85WI9YUznlDD6pvlMIGBEjfTZhdxugdirZXIEdG4oii9aof6ciknIDDiyJDHIHJ6ngyxHCZhDN/fOfHVaG+F4kL5uYfY61gkdnSpyAdC3Egbr3DqL5BAaltI7f5YR+ysw75xBwbnYNtg9w1gCXUuBfmFiJduboMAeMAJoJ7We0D0rq3iFFTdqUbUr5XIDGWHNs/mZ1Ow2yhs4HsNaX99sclLb1hOwEwyGyhD41BwA/pnQhRqjUaik24kzKzZTHmagF2z8LMarZZ4W/ybm1+Q/bKKO5YzpHg3SD+x1b6ANXtbFhx8L8H31tzqYJ58ZcdYyM7XGseG9hzBTwL4FA/zTSpXc7KgzM9mE01Ddc7WwieBpXRI1jcIu6qI68P6TaETdutTAN4i0hXvVbyCRJMMMPhOI0QP/NfDfgLx7qO9BkF1rUMbkInhx8YzcagsNqIrfgZdyBd1/pkW0br/VfxiXO/Eh42LANcHhX6JNC3WZvybLClTrriheN7eFMUqz6E9gxghOD4E8fOuAXwayG5ujuUM6r/F+BreUazRbV6x6Bk9jYkLg3AKZHd79fdj76ucAfgNAL8sDi1Q7KCXtWmOmK0oaZ/g14j3gdOBxw8xN19ZxR3L2WB2cEc+l/9YAE8si3LW7jZgsR/Z8gHtPWLSFKZ04vIismfRHs9rvBxZSbozpOwLpOwJN/TweQSbM8IOxN9rYS3q5hN0v2/iZfVYkE8pDYqmbld/lIMVJz0rYw3gmFq820uf9pYdcQHIGDEiZJGB9b6uAJDYb6R/Aq0E7uVjCiktmJAufB+Bjdi5xQT9pBV0ON4eN4MmJRPPt+LFQWw130HNXRIDj+Jcv0/mXC8RqyoT2c2t4u3sr3ROm8dw+uqDom2YhFV2BhTqNNqjqN/9uL09rQptgE6+ylmAOBY91B+YlngvDnUcCgAAAABJRU5ErkJggg=="); 
+  pstrimg(" \u29B5-31-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAAfCAYAAAC/MX7XAAADZ0lEQVRYR+1XTWgTQRSeWVtTpKiIIngQKhUstgl6UCH4s9lAK4oXPfgDvelFkFIEq4g/qCcRD4pWT4oICiKecijubgpVMbekjVB6EEFaaBGkFbGY7PObdFNC3HRns2tbTBYWZnfee/N9872ZN8NZjT68RnmzOvFaU76ueF3xGpmBeqrXiNDzNOuKlytuZIwk/u23/ydj4Zj6P2VFRcVBnEqJgrh0diTTyb2WYh1nFttCjHKc85WI9YUznlDD6pvlMIGBEjfTZhdxugdirZXIEdG4oii9aof6ciknIDDiyJDHIHJ6ngyxHCZhDN/fOfHVaG+F4kL5uYfY61gkdnSpyAdC3Egbr3DqL5BAaltI7f5YR+ysw75xBwbnYNtg9w1gCXUuBfmFiJduboMAeMAJoJ7We0D0rq3iFFTdqUbUr5XIDGWHNs/mZ1Ow2yhs4HsNaX99sclLb1hOwEwyGyhD41BwA/pnQhRqjUaik24kzKzZTHmagF2z8LMarZZ4W/ybm1+Q/bKKO5YzpHg3SD+x1b6ANXtbFhx8L8H31tzqYJ58ZcdYyM7XGseG9hzBTwL4FA/zTSpXc7KgzM9mE01Ddc7WwieBpXRI1jcIu6qI68P6TaETdutTAN4i0hXvVbyCRJMMMPhOI0QP/NfDfgLx7qO9BkF1rUMbkInhx8YzcagsNqIrfgZdyBd1/pkW0br/VfxiXO/Eh42LANcHhX6JNC3WZvybLClTrriheN7eFMUqz6E9gxghOD4E8fOuAXwayG5ujuUM6r/F+BreUazRbV6x6Bk9jYkLg3AKZHd79fdj76ucAfgNAL8sDi1Q7KCXtWmOmK0oaZ/g14j3gdOBxw8xN19ZxR3L2WB2cEc+l/9YAE8si3LW7jZgsR/Z8gHtPWLSFKZ04vIismfRHs9rvBxZSbozpOwLpOwJN/TweQSbM8IOxN9rYS3q5hN0v2/iZfVYkE8pDYqmbld/lIMVJz0rYw3gmFq820uf9pYdcQHIGDEiZJGB9b6uAJDYb6R/Aq0E7uVjCiktmJAufB+Bjdi5xQT9pBV0ON4eN4MmJRPPt+LFQWw130HNXRIDj+Jcv0/mXC8RqyoT2c2t4u3sr3ROm8dw+uqDom2YhFV2BhTqNNqjqN/9uL09rQptgE6+ylmAOBY91B+YlngvDnUcCgAAAABJRU5ErkJggg==");
   pstrimg("\u25C7-85-240-240-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFUAAABVCAYAAAA49ahaAAADF0lEQVR4Xu3bP2/TQBgG8EvLgKDqn4mhYmBDqqp+AioxMfINQGxMTHwOJBAbYkHq3qmqulQMZUdMIPERUKsqRUKlCa8lEiWO7dzZ72PfvX6yREmc586/vPKdz87A8aEuMFBPZKAjKqAIiEpUgAAgkpVKVIAAIJKVSlSAACCSlUpUgAAgkpVKVIAAIJKVSlSAACCSlUpUgAAgkpVKVIAAIJKVSlSAACCSlUpUgAAgkpVKVIAAIJKVSlSAACCSlUpUgAAgkpVKVIAAIJKVSlSAACCylUodj92tqyu3s7bmvgL2IbpIOKqA3r64cD8GA7cte/9yc9N9iE5BuUNQ1BnQ+//7PeoDLAy1AHRSD+ZhIagVoL2AVUf1ADUPq4paAfpdJE+z42luTDB5KFBDrQD9ubHhHsro//f83L2V51d5WHnvhWzzSXkQ7ixOBdUHdLKHfYBtjBoC2hfYRqh1QPsAWxu1Cah12FqoGqCWYYNRNUGtwgahIkAtwnqjIkGtwXqhtgHqAftMThAOOpvRBzS8FLVNUCuwlahdgFqALUXtEjR12ELUGEBThl1AjQk0Vdg51BhBU4SdosYMmhrsFFXWOT/LYvH+7HRMoH/LJeV78v4wYJoG3VT6eSj9eZpr5M/KitteX3e/oI17hk9RLy/do5sbdywdvpP77onAPvHMg24mfXw+GrmP0sjqTENj+fHfb20tXFGA9qUqfO6YOhy6vetr9yVG2DJQ2bk38qO/7kywoOGF0T9G2JRAM+PCeWpMsKmBlqJmH8QAmyJoJWrXsKmCLkXtCjZlUC/UtmFTB/VGnYE9k+nWXdQ81gJoECoa1gpoMCoK1hJoLVRtWGugtVG1YC2CNkJtCmsVtDFqXVjLoCqoobDWQdVQfWH7AKqKmoXJn9AeyILxt4IThCP5OLv9PLvDZG6BWV5Htx6aO7kJfrn0DpXQxArYfNTYIqh6pU7UPGDNgsJQlxwKTINCUUtgzYPCUXOw2VVac4NS0ZijPlAVNSKXZnbl8vdjub/0XejAl+L2raCmCNOkz0RtolfyXaICUP8Bc94XdKwLPJAAAAAASUVORK5CYII=");
   pstrimg("???-0-75-75-75", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAeCAYAAADZ7LXbAAABcUlEQVRIS2NkoANgpIMdDKOWkBTKoOBi9PT0DGNkZHQBspVAuoHsRVu3bl0EZP4nyTQcihkdHBwEuLi4XgMNZgGquQHEGiC1////n7pt27YcqlgSGhrK9vXr18T3798vOn78+HdfX1+uv3//XgVaKgYUFz5w4MAPSi3Cmrq8vLxmAA2O//btmyjQki9UtwToEw2gT84DfXIJGC+WQAv+UdMSRm9v7ySggXOA+Nfv3781du3adZ9SC8AJCWYI0AIrIPsoEC/59+9f9vbt2z9RwwKsljAxMYlu3rz5DZIFFCdxuE+MjY1ZxcTEdIA+uIgcD9RI4nBLoBG+ARjhScAIPwbzCTWSONwSDw8PU2Zm5lPATOgJzIQ78MUHqUmc5FKYnCROiiVkJ3GiLaEkiZNsCTlJnGhLKEniRFtCSRIn2hJKkjjRlhBbjmFL4tS0BGcSp5ol+JI41S3BksSp17jDlcRR6hNiIxaXOlxJnKqW4EviAN4gJi5DWNr1AAAAAElFTkSuQmCC");
   pstrimg("0-20-100-150-220", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACAklEQVQ4T72UTUgUYRjHn2fHXULQS7mIIm06Qgc9CuUhhAzC8BCdAglxV8VRwU5CIITYpVOwzazZrhcvepLqEAiFgeDBUxBEzLsKfoIeRPArdef1P7OtuuruzMF8LwPPw//3/p+PeZmu+PAV8+j/A9v1ZJ0k+VgyH7C0mCz/RLw3tOC1klOHUnI4lvyCwJPzYinpbaJb7fcCPQFGdHOKmB/ZIjg8QGKJJN9BU3xOzCPUAYZjooYt+umIJc2Jjar66dd89OL98k0/7/9iplLE9wJUHDS6g9v5nDrAiCHe4PNKEqUUpaBipDO0lhGF9flmZuszctLH9OxjlzrpAWjOEvE9aFbEuhqy3WVEbYmNIv67tY6bb3gpm9EcexjzEITg4mtCU5uyHDh5IZi4EvHvcU19mN/hGQEcfMM0G3MBL82fo/9zmHbgCiQaRwXPr99hJCaWMJTy3D1M99hbD+091M0fzPzgsil3fFi9lUrtrKAlAVw4hJIH3NdGFwNY6kF7D7HAdzEYkRFFDLMF7sfsPWRLPo33VH9yBbYOJ6sVS/5GWQqEfwLkvx/Tbm+2RpO1is+agftiQHZ9SmHJSGfZrisw/beYY3ACN7kOv4xrVe/ywexc1nsYNkwDverK3kOy8Ij1jWpq1A12AWgH2qKLZawcNmAnF/HMBANUNOX2IJy96BhFYPAV0vBZJQAAAABJRU5ErkJggg==");
@@ -963,7 +963,7 @@ function init1() {
   msgcd1 = performance.now();
   msgcd2 = performance.now();
   stmsgcd = performance.now();
-  acccd = performance.now();  
+  acccd = performance.now();
   dspdiv();
 }
 
@@ -1083,7 +1083,7 @@ function addel() {
           if (dhlpn > 0) {
             dhlpn = 3;
           }
-        } else {  
+        } else {
           if (crulem === 0) {
             crulebn = cruleb;
             crulesn = crules;
@@ -1124,7 +1124,7 @@ function addel() {
           if (dhlpn > 0) {
             dhlpn = 3;
           }
-        } else {  
+        } else {
           if (crulem === 0) {
             crulebn = cruleb;
             crulesn = crules;
@@ -1724,7 +1724,7 @@ function peKey(cc) {
     stpgcd2 = null;
     stpgsf = false;
   }
-  
+
   if (f) {
   } else if (crulem && cc === 13) {
     f = true;
@@ -1797,7 +1797,7 @@ function peKey(cc) {
     rulebut(1);
   }
 
-  if (f) {  
+  if (f) {
   } else if (stpge) {
     if (cc === 13) {
       f = true;
@@ -1892,7 +1892,7 @@ function peKey(cc) {
     }
   }
 
-  if (f) {  
+  if (f) {
   } else if (dspgrd && cc === 35) {
     f = true;
     swdspgrd();
@@ -1900,7 +1900,7 @@ function peKey(cc) {
     f = true;
     swdwrld();
   }
-  
+
   if (f) {
   } else if (cc === 32) {
     f = true;
@@ -1965,7 +1965,7 @@ function peKey(cc) {
     f = true;
     swffwp(false);
   }
-  
+
   if (f) {
     q = updc();
     if (q[0] > 0 || q[1] > 0) {
@@ -1974,7 +1974,7 @@ function peKey(cc) {
       ddiamcd = null;
     }
   }
-  
+
   return f;
 }
 
@@ -2236,7 +2236,7 @@ function swtrkw() {
 
 function tick() {
   var gts = performance.now(), i, n, k;
-  
+
   if (!tickct) {
     tickct = gts;
   }
@@ -2248,7 +2248,7 @@ function tick() {
     tickcr2 = 1;
     tickct = gts;
   }
-  
+
   if (chgcql > 0 && chgcqp >= chgcql) {
     chgcql = 0;
     chgcqp = 0;
@@ -2261,7 +2261,7 @@ function tick() {
       chgCellQ(bmemv0, bmemv1, Math.abs(x = bmemv2));
     } while (chgcqp < chgcql && x < 0);
   }
-  
+
   x = chgcql;
   chgcqkp = true;
   n = fpattc;
@@ -2279,13 +2279,13 @@ function tick() {
     bmemgE(chgcql-1);
     bmemsE(chgcql-1, bmemv0, bmemv1, Math.abs(bmemv2));
   }
-  
+
   if (!wts1) {
     wts1 = gts;
-  }  
-  
+  }
+
   runcdn = 3000 * ((Math.pow(2,7+3*((100-speed)/100))-1)/1024);
-  
+
   if (ffw !== 0 && (ffwm === -1 || ffwm === 1)) {
     n = ffwc;
     while (ffw !== 0 && n-- >= 1) {
@@ -2301,7 +2301,7 @@ function tick() {
       doffw();
     }
   }
-  
+
   i = 0;
   while (cellsn + rmvcellsn < Math.trunc(cellslen/3)) {
     while (i < cellslen) {
@@ -2330,7 +2330,7 @@ function tick() {
       }
     }
   }
-  
+
   YagolsSetZeroTimeoutFunc(tick);
 };
 
@@ -2444,7 +2444,7 @@ function dspview0() {
   if (histgp > 0) {
     histq0 = prevHist(histh, histi);
   }
-  
+
   if (scalem && scalemcd) {
     x = cellX(posx);
     y = cellY(posy);
@@ -2468,7 +2468,7 @@ function dspview0() {
     }
     posml = [];
   }
-  
+
   if (posm && posmcd) {
     if (Math.abs(posmx-posx) <= 1 && Math.abs(posmy-posy) <= 1) {
       posx = posmx;
@@ -2479,7 +2479,7 @@ function dspview0() {
       posy += (posmy - posy) * x;
     }
   }
-  
+
   if (curskcc > 0 && !trkw) {
     switch (curskcc) {
       case 37:
@@ -2498,13 +2498,13 @@ function dspview0() {
         posmx = posx;
         posmy = posy - (cheight / 15) * Math.pow(1.2, curskd);
         break;
-    }    
+    }
     posm = true;
     posml = [];
     posmcd = gts;
     posmcdn = 400;
   }
-  
+
   if (cellsn > 0 && trkw) {
     x = cellX(posx - cwidth / 2 * 0.9);
     y = cellY(posy + cheight / 2 * 0.9);
@@ -2560,7 +2560,7 @@ function dspview0() {
     posmcdn = 1001 - 1000 * speed / 120;
     curskcc = 0;
   }
-   
+
   chgcanvsz = chgcellsz = chgpos = false;
 
   if (!cwidth || canvas0.offsetWidth !== cwidth || !cheight || canvas0.offsetHeight !== cheight) {
@@ -2591,7 +2591,7 @@ function dspview0() {
     }
     tmet = null;
   }
-  
+
   vwax = cellX(posx - cwidth / 2);
   vway = cellY(posy - cheight / 2);
   vwaw = cwidth / (cellsz+(cellsz>grb?1:cellsz/grb));
@@ -2665,7 +2665,7 @@ function dspview0() {
         }
         tonx = x;
         tony = y;
-        chgcqkp = false;        
+        chgcqkp = false;
       }
     } else if (toncd && gts - toncd > toncdn) {
       ton = true;
@@ -2676,7 +2676,7 @@ function dspview0() {
       chgCellCR(tonx, tony, toncm);
     }
   }
-  
+
   if (acccd && gts - acccd > acccdn) {
     acccd = gts;
     if (ffw !== 0 && ffwc < 20) {
@@ -3001,38 +3001,38 @@ function dspview0() {
     prvcellsz = cellsz;
     chgcellsz = true;
   }
- 
+
   if (posx !== prvposx || posy !== prvposy) {
     prvposx = posx;
     prvposy = posy;
     chgpos = true;
   }
-  
+
   if (!prvcolrs || colrs !== prvcolrs) {
     prvcolrs = colrs;
     drawallcells = true;
   }
-  
+
   if (!prvcsize || csize !== prvcsize) {
     prvcsize = csize;
     drawallcells = true;
     cimgc++;
   }
-  
+
   if (frzc != frzcp) {
     frzcp = frzc;
     drawallcells = true;
   }
- 
+
   if (chgcanvsz || chgcellsz || chgpos) {
     drawbackg = true;
     drawallcells = true;
   }
- 
+
   if (chgcanvsz || chgcellsz) {
     cimgc++;
   }
-  
+
   if (drawbackg || chgcanvsz || chgcellsz || chgpos) {
     drawbackg = false;
     ctx0.fillStyle = "rgba(0,0,0,1)";
@@ -3041,7 +3041,7 @@ function dspview0() {
       drawGrid();
     }
   }
-  
+
   if (frzc || frzccd) {
     if (frzccd) {
       if (frzc) {
@@ -3056,13 +3056,13 @@ function dspview0() {
     x = 1;
   }
   canvas1.style.opacity = "" + x;
-   
+
   drawCells();
-  
+
   drawallcells = false;
 
   ctx1a.clearRect(0, 0, cwidth, cheight);
- 
+
   if (title0cd) {
     if (gts - title0cd > title0cdn) {
       title0cd = null;
@@ -3074,11 +3074,11 @@ function dspview0() {
       canvas2.style.opacity = "" + x;
     }
   }
- 
+
   drawFxa();
 
   ctx1b.clearRect(0, 0, cwidth, cheight);
- 
+
   drawFxb();
 
   ctx2.clearRect(0, 0, cwidth, cheight);
@@ -3104,13 +3104,13 @@ function dspview0() {
       titlemode++;
     }
   }
-  
+
   drawInfo();
-  
+
   if (dwrld && cellsn > 0) {
     drawWrld();
   }
-  
+
   drawFButt();
   drawScale();
   drawSpeed();
@@ -3129,11 +3129,11 @@ function dspview0() {
   drawStpg();
   drawHistPnl();
   drawFcidxPnl();
-  
-  ctx3.clearRect(0, 0, cwidth, cheight);	
+
+  ctx3.clearRect(0, 0, cwidth, cheight);
 
   drawHelp();
-  
+
 }
 
 function calcICellsz() {
@@ -3243,7 +3243,7 @@ function drawCells() {
     rmvcellsf = false;
     for (i = 0; i < cellslen; i++) {
       bmemgA(i);
-      if (bmemv4 === -2) {    
+      if (bmemv4 === -2) {
         cellsfs[cellsfsl++] = i;
         bmemsA(i,bmemv0,bmemv1,bmemv2,0-cellsfsl+1,0);
         px = cwidth / 2 + (bmemv0 * (cellsz+(cellsz>grb?1:cellsz/grb)) + (cellsz>grb?1:cellsz/grb)) - posx;
@@ -3259,7 +3259,7 @@ function drawCells() {
     rmvcellsf = false;
     for (i = 0; i < cellslen; i++) {
       bmemgA(i);
-      if (bmemv4 === -2) {    
+      if (bmemv4 === -2) {
         cellsfs[cellsfsl++] = i;
         bmemsA(i,bmemv0,bmemv1,bmemv2,0-cellsfsl+1,0);
       }
@@ -4377,7 +4377,7 @@ function drawInfo() {
   htgentx = x - 13;
   htgenty = n - 18;
   htgentw = 23 + s.length * 10;
-  htgenth = 19;  
+  htgenth = 19;
   if (htgen2 < 0) {
     htgen2x = 0;
   } else {
@@ -4423,7 +4423,7 @@ function drawInfo() {
           drawStrImg(ctx2, "\uFF0B", x - 17, n - 1, 16, 160, 160, 160, 1);
         }
         n += 4;
-      } else { 
+      } else {
         ctx2.font = "16px " + font;
         if (q[1] > 0) {
           drawStrImg(ctx2, "\uFF0B", x - 17, n - 3, 16, 160, 160, 160, 0.4);
@@ -4437,7 +4437,7 @@ function drawInfo() {
         ctx2.fillStyle = "rgba(170, 170, 170, 1)";
       }
       ctx2.fillText(""+n1, x + 5, n);
-      n = 189; 
+      n = 189;
     }
     if (n2 > 0) {
       if (n1 === 0) {
@@ -4697,7 +4697,7 @@ function drawCRule() {
     s2b = hist[histh][0][histi][1][0][0];
     s2s = hist[histh][0][histi][1][0][1];
   } else {
-    s1b = cruleb; 
+    s1b = cruleb;
     s1s = crules;
     if (cruleb === histcr[0] && crules === histcr[1]) {
       s2b = "";
@@ -4870,7 +4870,7 @@ function drawCRule() {
   drawStrImg(ctx2, "\u2715", rbcbx + 80 - 1, rbcby - 20, 29, 160, 70, 40, 0.8 * (crulem===0?(1-z):z));
   cruleb2y = rbcby - 40;
   cruleb2w = 26;
-  cruleb2h = 25;  
+  cruleb2h = 25;
   if (s2b.length > 0 || s2s.length > 0) {
     if (hlcrcd3) {
       z = (gts-hlcrcd3>hlcrcdn3?hlcrcdn3:gts-hlcrcd3)/hlcrcdn3;
@@ -4890,7 +4890,7 @@ function drawStpg() {
   var x, y, z, z1, z2, s, n;
   if (!stpgax && !stpge && !stpgcd) {
     return;
-  } 
+  }
   x = 230 + Math.round((cwidth - 1000) / 100 * 20);
   y = 145;
   stpgssx = x + 6;
@@ -5019,7 +5019,7 @@ function drawHistPnl() {
 
 function drawFcidxPnl() {
   var s, x, x2;
-  x = 1 - (cidxbc1 ? cidxbc0 !== -1 ? (cidxbc0 + cidxbc2 / cidxbc1) / 2 : cidxbc2 / cidxbc1 : cidxbc0 === -1 ? 0.5 : cidxbc0); 
+  x = 1 - (cidxbc1 ? cidxbc0 !== -1 ? (cidxbc0 + cidxbc2 / cidxbc1) / 2 : cidxbc2 / cidxbc1 : cidxbc0 === -1 ? 0.5 : cidxbc0);
   ctx2.fillStyle = "rgba(30, 90, 50, " + (0.3 * x) + ")";
   fillrr(ctx2, cwidth - 159, cheight - 120, 141, 90, 20);
   ctx2.fillStyle = "rgba(95, 30, 50, " + (0.3 * (1 - x)) + ")";
@@ -5142,8 +5142,8 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
   var lw;
   if (i >= fbutt.length) {
     fbutt[i] = [];
-    fbutt[i][0] = x; 
-    fbutt[i][1] = y; 
+    fbutt[i][0] = x;
+    fbutt[i][1] = y;
     fbutt[i][2] = w;
     fbutt[i][3] = h;
     fbutt[i][4] = false;
@@ -5151,8 +5151,8 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
     fbutt[i][6] = null;
     fbutt[i][7] = f ? f : null;
   }
-  fbutt[i][0] = x; 
-  fbutt[i][1] = y; 
+  fbutt[i][0] = x;
+  fbutt[i][1] = y;
   fbutt[i][5] = t;
   lw = 2;
   if (r) {
@@ -5192,7 +5192,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "W", x + 11, y + 25, 23, 0, 0, 0, 1);
       }
       break;
-    case 2: 
+    case 2:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "P", x + 15, y + 25, 23, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5201,7 +5201,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "P", x + 15, y + 25, 23, 0, 0, 0, 1);
       }
       break;
-    case 3: 
+    case 3:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "\u2317", x + 13, y + 24, 29, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5210,7 +5210,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "\u2317", x + 13, y + 24, 29, 0, 0, 0, 1);
       }
       break;
-    case 4: 
+    case 4:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "\u29BB", x + 9, y + 27, 35, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5219,7 +5219,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "\u29BB", x + 9, y + 27, 35, 0, 0, 0, 1);
       }
       break;
-    case 5: 
+    case 5:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "MSG", x + 5, y + 24, 15, 140, 140, 140, 0.7, 2);
       } else if (fbutt[i][5]) {
@@ -5228,7 +5228,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "MSG", x + 5, y + 24, 15, 0, 0, 0, 1, 2);
       }
       break;
-    case 8: 
+    case 8:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, " \u29B5", x + 2, y + 26, 31, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5237,7 +5237,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, " \u29B5", x + 2, y + 26, 31, 0, 0, 0, 1);
       }
       break;
-    case 10: 
+    case 10:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "\u29B5", x + 9, y + 26, 31, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5246,7 +5246,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "\u29B5", x + 9, y + 26, 31, 0, 0, 0, 1);
       }
       break;
-    case 11: 
+    case 11:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "Tw", x + 7, y + 24, 22, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5255,7 +5255,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "Tw", x + 7, y + 24, 22, 0, 0, 0, 1);
       }
       break;
-    case 13: 
+    case 13:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "vwcrs", x + 10, y + 5, 0, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5264,7 +5264,7 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "vwcrs", x + 10, y + 5, 0, 0, 0, 0, 1);
       }
       break;
-    case 14: 
+    case 14:
       if (fbutt[i][4] || fbutt[i][6]) {
         drawStrImg(ctx2, "\u203B", x + 11, y + 28, 31, 140, 140, 140, 0.7);
       } else if (fbutt[i][5]) {
@@ -5442,11 +5442,11 @@ function drawFxb() {
   if (stopscd) {
     ctx1b.fillStyle = "rgba(240, 240, 0, " + (0.2 * (gts - stopscd > stopscdn ? 0 : 1 - (gts - stopscd) / stopscdn)) + ")";
     ctx1b.fillRect(0, 0, cwidth, cheight);
-  }  
+  }
   if (histcd) {
     ctx1b.fillStyle = "rgba(160, 70, 40, " + (0.2 * (gts - histcd > histcdn ? 0 : 1 - (gts - histcd) / histcdn)) + ")";
     ctx1b.fillRect(0, 0, cwidth, cheight);
-  }  
+  }
   if (frzc || frzccd) {
     if (frzccd) {
       x = gts - frzccd > frzccdn ? 1 : (gts - frzccd) / frzccdn;
@@ -5495,7 +5495,7 @@ function drawHelp() {
       canvas3.style.zIndex = "300";
     }
   }
-  
+
   if (dhlpn !== dhlpn2) {
     if (dhlpql > 0) {
       if (!dhlpq[dhlpql-1][5]) {
@@ -5573,7 +5573,7 @@ function drawHelp() {
   dhlpql = j;
   if (dhlpn === 0 && (!divv || dhlpql === 0)) {
     canvas3.style.zIndex = "100";
-  }  
+  }
 }
 
 function drawHelp0(n) {
@@ -5851,7 +5851,7 @@ function drawHelp0(n) {
   ctxos2.drawImage(canvasos1, 0, 0, w, h, (canvasos2.width - w) / 2, (canvasos2.height - h) / 2, w, h);
   i = new Image();
   i.src = canvasos2.toDataURL("image/png");
-  return [i, dx, dy, canvasos2.width, canvasos2.height, l];  
+  return [i, dx, dy, canvasos2.width, canvasos2.height, l];
 }
 
 function drawHelp1(c, fx, fy, tx, ty, n) {
@@ -6084,14 +6084,14 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.fillText("u", 4, 19);
         ctxos0.fillText("l", 13, 26);
         ctxos0.fillText("e", 17, 28);
-        break;        
+        break;
       case "s":
         canvasos0.width = (w = 15);
         canvasos0.height = (h = 15);
         ctxos0.font = "11px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("s", 0, 13);
-        break;        
+        break;
       case "GoL":
         canvasos0.width = (w = 25);
         canvasos0.height = (h = 30);
@@ -6100,7 +6100,7 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.fillText("G", 0, 22);
         ctxos0.fillText("o", 10, 19);
         ctxos0.fillText("L", 17, 14);
-        break;        
+        break;
       case "???":
         canvasos0.width = (w = 25);
         canvasos0.height = (h = 30);
@@ -6109,7 +6109,7 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.fillText("?", 0, 16);
         ctxos0.fillText("?", 8, 23);
         ctxos0.fillText("?", 16, 30);
-        break;        
+        break;
       case " I ":
   	    ctxos0.beginPath();
         ctxos0.lineWidth = 3;
@@ -6124,14 +6124,14 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.font = "13px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("\u22C5\u22C5Generation\u22C5Slots\u22C5\u22C5", 0, 20);
-        break;        
+        break;
       case "CellIdxBlockSz":
         canvasos0.width = (w = 140);
         canvasos0.height = (h = 20);
         ctxos0.font = "13px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("\u22C5\u22C5CellIdx\u22C5BlockSz\u22C5\u22C5", 0, 20);
-        break;        
+        break;
     }
     d = canvasos0.toDataURL("image/png");
     console.log("pstrimg(\"" + k + "\", \"" + d + "\");");
@@ -6153,7 +6153,7 @@ function pstrimg(k, d) {
   i.src = d;
   strimgt[k] = i;
 }
-    
+
 function hupdates() {
   var i, n, a;
   a = [];
@@ -8214,7 +8214,7 @@ function hbckcheck(hi0) {
         }
       }
       pn += px - hi[14];
-      px = hi[14];      
+      px = hi[14];
       i = hi[0].length - 1;
       while (i >= 0) {
         if (hi[0][i][3] !== 1) {
@@ -8276,8 +8276,8 @@ function hbckcheck(hi0) {
       hist[histh][0][histi][11][0] = p;
       hist[histh][0][histi][11][1] = 0;
       hist[histh][0][histi][11][2] = dx;
-      hist[histh][0][histi][11][3] = dy;      
-      hist[histh][0][histi][16] = pn;      
+      hist[histh][0][histi][11][3] = dy;
+      hist[histh][0][histi][16] = pn;
       if (dx === 0 && dy === 0) {
         dspmsg(["Oscillator!   ","\u22C5      \u22C5","p"+p+" "], 4500, true);
         msgf1 = 21;
@@ -8289,7 +8289,7 @@ function hbckcheck(hi0) {
       if (run && stops) {
         swrun();
         stopscd = performance.now();
-      }      
+      }
     }
   }
 }
@@ -8332,7 +8332,7 @@ function swstmsg(s1, s2) {
   stmsgn1 = s1;
   stmsgn2 = s2;
   stmsgntm1 = null;
-  stmsgntm2 = null; 
+  stmsgntm2 = null;
   if (stmsgcd2) {
     stmsgo1 = s1;
     stmsgo2 = s2;
@@ -8382,7 +8382,7 @@ function bmemsA(i, v0, v1, v2, v3, v4) {
   bmembA[(i-bmembiA*bmemnA)*5+2] = v2;
   bmembA[(i-bmembiA*bmemnA)*5+3] = v3;
   bmembA[(i-bmembiA*bmemnA)*5+4] = v4;
-} 
+}
 function bmemgA(i) {
   bmemxA(i);
   bmemv0 = bmembA[(i-bmembiA*bmemnA)*5+0];
@@ -8413,7 +8413,7 @@ function bmemsB(i, v0, v1, v2, v3) {
   bmembB[(i-bmembiB*bmemnB)*4+1] = v1;
   bmembB[(i-bmembiB*bmemnB)*4+2] = v2;
   bmembB[(i-bmembiB*bmemnB)*4+3] = v3;
-} 
+}
 function bmemgB(i) {
   bmemxB(i);
   bmemv0 = bmembB[(i-bmembiB*bmemnB)*4+0];
@@ -8441,7 +8441,7 @@ function bmemsC(i, v0, v1) {
   bmemxC(i);
   bmembC[(i-bmembiC*bmemnC)*2+0] = v0;
   bmembC[(i-bmembiC*bmemnC)*2+1] = v1;
-} 
+}
 function bmemgC(i) {
   bmemxC(i);
   bmemv0 = bmembC[(i-bmembiC*bmemnC)*2+0];
@@ -8467,7 +8467,7 @@ function bmemsD(i, v0, v1) {
   bmemxD(i);
   bmembD[(i-bmembiD*bmemnD)*2+0] = v0;
   bmembD[(i-bmembiD*bmemnD)*2+1] = v1;
-} 
+}
 function bmemgD(i) {
   bmemxD(i);
   bmemv0 = bmembD[(i-bmembiD*bmemnD)*2+0];
@@ -8494,7 +8494,7 @@ function bmemsE(i, v0, v1, v2) {
   bmembE[(i-bmembiE*bmemnE)*3+0] = v0;
   bmembE[(i-bmembiE*bmemnE)*3+1] = v1;
   bmembE[(i-bmembiE*bmemnE)*3+2] = v2;
-} 
+}
 function bmemgE(i) {
   bmemxE(i);
   bmemv0 = bmembE[(i-bmembiE*bmemnE)*3+0];
