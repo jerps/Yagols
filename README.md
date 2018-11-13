@@ -14,7 +14,7 @@
 
 <br>
 
-## [To Yagols . . .](http://johnerps.com/Yagols/Yagols.html)
+## [To Yagols . . .](http://johnerps.com/Yagols.html)
 
 <br>
 
