@@ -350,6 +350,7 @@ var cwidth = 0, cheight = 0;
 var divl = [-1,-2], divv = false, dive = [];
 var histmax = 500;
 var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
+var dpir = 1;
 var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", stmsgn2 = "Yet \u22C5 another \u22C5 GoL \u22C5 simulator     ", stmsgo1 = "", stmsgo2 = "", stmsgcd = null, stmsgcdn = 1000, stmsgcd2, stmsgcdn2 = 1300, stmsgntm1 = null, stmsgntm2 = null, stmsgotm1 = null, stmsgotm2 = null;
 
 function clrvars0() {
@@ -751,38 +752,43 @@ function init0() {
   var x;
 
   document.getElementById("patternt").value = patttxt;
+
   canvas0 = document.getElementById("canvas0");
-  canvas0.width = canvas0.offsetWidth;
-  canvas0.height = canvas0.offsetHeight;
-  canvas1 = document.getElementById("canvas1");
-  canvas1.width = canvas0.offsetWidth;
-  canvas1.height = canvas0.offsetHeight;
-  canvas1a = document.getElementById("canvas1a");
-  canvas1a.width = canvas0.offsetWidth;
-  canvas1a.height = canvas0.offsetHeight;
-  canvas1b = document.getElementById("canvas1b");
-  canvas1b.width = canvas0.offsetWidth;
-  canvas1b.height = canvas0.offsetHeight;
-  canvas2 = document.getElementById("canvas2");
-  canvas2.width = canvas0.offsetWidth;
-  canvas2.height = canvas0.offsetHeight;
-  canvas3 = document.getElementById("canvas3");
-  canvas3.width = canvas0.offsetWidth;
-  canvas3.height = canvas0.offsetHeight;
+
+  dpir = window.devicePixelRatio || 1;
+  cwidth = canvas0.getBoundingClientRect().width * dpir;
+  cheight = canvas0.getBoundingClientRect().height * dpir;
+
+  canvas0.width = cwidth;
+  canvas0.height = cheight;
+
+  canvas1 = document.getElementById('canvas1');
+  canvas1.width = cwidth;
+  canvas1.height = cheight;
+  canvas1a = document.getElementById('canvas1a');
+  canvas1a.width = cwidth;
+  canvas1a.height = cheight;
+  canvas1b = document.getElementById('canvas1b');
+  canvas1b.width = cwidth;
+  canvas1b.height = cheight;
+  canvas2 = document.getElementById('canvas2');
+  canvas2.width = cwidth;
+  canvas2.height = cheight;
+  canvas3 = document.getElementById('canvas3');
+  canvas3.width = cwidth;
+  canvas3.height = cheight;
   canvasos0 = document.createElement('canvas');
-  canvasos0.width = canvas0.offsetWidth;
-  canvasos0.height = canvas0.offsetHeight;
+  canvasos0.width = cwidth;
+  canvasos0.height = cheight;
   canvasos1 = document.createElement('canvas');
-  canvasos1.width = canvas0.offsetWidth;
-  canvasos1.height = canvas0.offsetHeight;
+  canvasos1.width = cwidth;
+  canvasos1.height = cheight;
   canvasos2 = document.createElement('canvas');
-  canvasos2.width = canvas0.offsetWidth;
-  canvasos2.height = canvas0.offsetHeight;
+  canvasos2.width = cwidth;
+  canvasos2.height = cheight;
   canvasosci = document.createElement('canvas');
-  canvasosci.width = canvas0.offsetWidth;
-  canvasosci.height = canvas0.offsetHeight;
-  cwidth = canvas0.width;
-  cheight = canvas0.height;
+  canvasosci.width = cwidth;
+  canvasosci.height = cheight;
   if (cwidth < 1000) {
     canvasosci.width = 1000;
   }
@@ -799,8 +805,11 @@ function init0() {
   ctx3 = canvas3.getContext("2d");
   ctxos0 = canvasos0.getContext("2d");
   ctxos1 = canvasos1.getContext("2d");
+  ctxos1.scale(dpir, dpir);
   ctxos2 = canvasos2.getContext("2d");
+  ctxos2.scale(dpir, dpir);
   ctxosci = canvasosci.getContext("2d");
+  ctxosci.scale(dpir, dpir);
   ctx0.textBaseline = "bottom";
   ctx0.globalAlpha = 1;
   ctx0.imageSmoothingEnabled = false;
@@ -822,15 +831,19 @@ function init0() {
   ctxos0.textBaseline = "bottom";
   ctxos0.globalAlpha = 1;
   ctxos0.imageSmoothingEnabled = false;
+  ctxos0.scale(dpir, dpir);
   ctxos1.textBaseline = "bottom";
   ctxos1.globalAlpha = 1;
   ctxos1.imageSmoothingEnabled = false;
+  ctxos1.scale(dpir, dpir);
   ctxos2.textBaseline = "bottom";
   ctxos2.globalAlpha = 1;
   ctxos2.imageSmoothingEnabled = false;
+  ctxos1.scale(dpir, dpir);
   ctxosci.textBaseline = "bottom";
   ctxosci.globalAlpha = 1;
   ctxosci.imageSmoothingEnabled = false;
+  ctxosci.scale(dpir, dpir);
 
   dive[0] = document.getElementById("pattern");
   dive[1] = document.getElementById("crule");
@@ -2564,10 +2577,14 @@ function dspview0() {
 
   chgcanvsz = chgcellsz = chgpos = false;
 
-  if (!cwidth || canvas0.offsetWidth !== cwidth || !cheight || canvas0.offsetHeight !== cheight) {
+  x = canvas0.getBoundingClientRect().width * dpir;
+  y = canvas0.getBoundingClientRect().height * dpir;
+
+  if (!cwidth || x !== cwidth || !cheight || y !== cheight || dpir !== (window.devicePixelRatio || 1)) {
     chgcanvsz = true;
-    cwidth = canvas0.offsetWidth;
-    cheight = canvas0.offsetHeight;
+    dpir = window.devicePixelRatio || 1;
+    cwidth = x;
+    cheight = y;
     canvas0.width = cwidth;
     canvas0.height = cheight;
     canvas1.width = cwidth;
