@@ -350,7 +350,7 @@ var cwidth = 0, cheight = 0;
 var divl = [-1,-2], divv = false, dive = [];
 var histmax = 500;
 var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
-var dpir = 1;
+var dpir = 0, dpir2 = 0, dpircd = null, dpircdn = 500; cbrw = 0, cbrh = 0;
 var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", stmsgn2 = "Yet \u22C5 another \u22C5 GoL \u22C5 simulator     ", stmsgo1 = "", stmsgo2 = "", stmsgcd = null, stmsgcdn = 1000, stmsgcd2, stmsgcdn2 = 1300, stmsgntm1 = null, stmsgntm2 = null, stmsgotm1 = null, stmsgotm2 = null;
 
 function clrvars0() {
@@ -755,9 +755,9 @@ function init0() {
 
   canvas0 = document.getElementById("canvas0");
 
-  dpir = window.devicePixelRatio || 1;
-  cwidth = canvas0.getBoundingClientRect().width;
-  cheight = canvas0.getBoundingClientRect().height;
+  dpir = dpir2 = window.devicePixelRatio || 1;
+  cwidth = cbrw = canvas0.getBoundingClientRect().width;
+  cheight = cbrh = canvas0.getBoundingClientRect().height;
 
   canvas0.width = cwidth * dpir;
   canvas0.height = cheight * dpir;
@@ -2580,14 +2580,10 @@ function dspview0() {
 
   chgcanvsz = chgcellsz = chgpos = false;
 
-  x = canvas0.getBoundingClientRect().width;
-  y = canvas0.getBoundingClientRect().height;
-
-  if (!cwidth || x !== cwidth || !cheight || y !== cheight || dpir !== (window.devicePixelRatio || 1)) {
+  if (!cwidth || cbrw !== cwidth || !cheight || cbrh !== cheight || dpir !== dpir2) {
+    cwidth = cbrw = canvas0.getBoundingClientRect().width;
+    cheight = cbrh = canvas0.getBoundingClientRect().height;
     chgcanvsz = true;
-    dpir = window.devicePixelRatio || 1;
-    cwidth = x;
-    cheight = y;
     canvas0.width = cwidth * dpir;
     canvas0.height = cheight * dpir;
     canvas1.width = cwidth * dpir;
@@ -2609,6 +2605,20 @@ function dspview0() {
       canvasosci.height = 1000;
     } else {
       canvasosci.height = cheight * dpir;
+    }
+    dpir2 =  window.devicePixelRatio || 1;
+    if (dpir !== dpir2) {
+      dpir = dpir2;
+      ctx0.scale(dpir, dpir);
+      ctx1.scale(dpir, dpir);
+      ctx1a.scale(dpir, dpir);
+      ctx1b.scale(dpir, dpir);
+      ctx2.scale(dpir, dpir);
+      ctx3.scale(dpir, dpir);
+      ctxos0.scale(dpir, dpir);
+      ctxos1.scale(dpir, dpir);
+      ctxos2.scale(dpir, dpir);
+      ctxosci.scale(dpir, dpir);
     }
     tmet = null;
   }
@@ -2948,6 +2958,12 @@ function dspview0() {
   }
   if (swzmcd2 && gts - swzmcd2 > swzmcdn2) {
     swzmcd2 = null;
+  }
+  if (dpircd && gts - dpircd > dpircdn) {
+    dpir2 = window.devicePixelRatio || 1;
+    cbrw = canvas0.getBoundingClientRect().width;
+    cbrh = canvas0.getBoundingClientRect().height;
+    dpircd = performance.now();
   }
   if (stmsgcd && gts - stmsgcd > stmsgcdn) {
     stmsgcd = null;
