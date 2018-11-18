@@ -756,8 +756,9 @@ function init0() {
   canvas0 = document.getElementById("canvas0");
 
   dpir = dpir2 = window.devicePixelRatio || 1;
-  cwidth = cbrw = canvas0.getBoundingClientRect().width;
-  cheight = cbrh = canvas0.getBoundingClientRect().height;
+  x = getComputedStyle(canvas0);
+  cwidth = cbrw = x.getPropertyValue('width');
+  cheight = cbrh = x.getPropertyValue('height');
 
   canvas0.width = cwidth * dpir;
   canvas0.height = cheight * dpir;
@@ -2581,8 +2582,9 @@ function dspview0() {
   chgcanvsz = chgcellsz = chgpos = false;
 
   if (!cwidth || cbrw !== cwidth || !cheight || cbrh !== cheight || dpir !== dpir2) {
-    cwidth = cbrw = canvas0.getBoundingClientRect().width;
-    cheight = cbrh = canvas0.getBoundingClientRect().height;
+    x = getComputedStyle(canvas0);
+    cwidth = cbrw = x.getPropertyValue('width');
+    cheight = cbrh = x.getPropertyValue('height');
     chgcanvsz = true;
     canvas0.width = cwidth * dpir;
     canvas0.height = cheight * dpir;
@@ -2961,8 +2963,9 @@ function dspview0() {
   }
   if (dpircd && gts - dpircd > dpircdn) {
     dpir2 = window.devicePixelRatio || 1;
-    cbrw = canvas0.getBoundingClientRect().width;
-    cbrh = canvas0.getBoundingClientRect().height;
+    x = getComputedStyle(canvas0);
+    cbrw = x.getPropertyValue('width');
+    cbrh = x.getPropertyValue('height');
     dpircd = performance.now();
   }
   if (stmsgcd && gts - stmsgcd > stmsgcdn) {
