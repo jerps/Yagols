@@ -14,13 +14,13 @@
 
 ### [To Yagols . . .](http://johnerps.com/Yagols.html)
 
-<p align="center">
-  <img src="Screenshot01.png"/>
-</p>
+***
+
+![](Screenshot01.png)
 
 ***
 
-### Features:
+### Features
 
 * Intuitive and fluid user interface.
 
@@ -46,7 +46,7 @@
 
 ***
 
-### About Conway's Game of Life :
+### About Conway's Game of Life
 
 >#### [conwaylife.com](http://www.conwaylife.com)
 >#### [game of life](http://beltoforion.de/article.php?a=game_of_life)
@@ -62,71 +62,57 @@
 
   * Added dpi scaling.
 
-
 * v3.6 (okt 2018)
 
   * Bug fix
-
 
 * v3.5 (sept 2018)
 
   * Bug fixes & misc. improvements.
 
-
 * v3.4e (july 2018)
 
   * Misc. improvements.
-
 
 * v3.4d (july 2018)
 
   * Misc. improvements.
 
-
 * v3.4c (july 2018)
 
   * Misc. improvements.
-
 
 * v3.4b (july 2018)
 
   * Misc. improvements. HAS BUGS
 
-
 * v3.4a (july 2018)
 
   * Misc. improvements. HAS BUGS
-
 
 * V3.3 (july 2018)
 
   * Misc. improvements.
 
-
 * V3.2 (june 2018)
 
   * Misc. improvements.
-
 
 * V3.1c (june 2018)
 
   * Misc. improvements.
 
-
 * V3.1b (june 2018)
 
   * Misc. improvements.
-
 
 * V3.1a (june 2018)
 
   * Misc. improvements.
 
-
 * V3 (may 2018)
 
   * Total redesign.
-
 
 * V2 (jan 2018)
 
@@ -134,13 +120,11 @@
 
   * Misc. improvements.
 
-
 * V1.3 (jan 2018)
 
   * Button > to calculate one generation.
 
   * Misc. improvements.
-
 
 * V1.2 (jan 2018)
 
@@ -148,11 +132,9 @@
 
   * Bugfixes and improvements.
 
-
 * V1.1 (jan 2018)
 
   * Bugfixes and improvements.
-
 
 * V1 (jan 2018)
 
