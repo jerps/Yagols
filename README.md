@@ -1,6 +1,6 @@
-# Yagols v3.7 - Yet another Game of Life simulator
+## Yagols v3.7 - Yet another Game of Life simulator
 
-### Yagols is
+#### Yagols is
 
 * Not a game.
 
