@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <head>
   <!--#include virtual="/include/gtag.html" -->
   <title>Yagols - Yet another Game of Life simulator</title>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="description" content="Yet another Game of Life simulator"/>
@@ -757,8 +757,8 @@ function init0() {
 
   dpir = dpir2 = window.devicePixelRatio || 1;
   x = getComputedStyle(canvas0);
-  cwidth = cbrw = x.getPropertyValue('width');
-  cheight = cbrh = x.getPropertyValue('height');
+  cwidth = cbrw = parseInt(x.getPropertyValue('width').slice(0, -2));
+  cheight = cbrh = parseInt(x.getPropertyValue('height').slice(0, -2));
 
   canvas0.width = cwidth * dpir;
   canvas0.height = cheight * dpir;
@@ -2583,8 +2583,8 @@ function dspview0() {
 
   if (!cwidth || cbrw !== cwidth || !cheight || cbrh !== cheight || dpir !== dpir2) {
     x = getComputedStyle(canvas0);
-    cwidth = cbrw = x.getPropertyValue('width');
-    cheight = cbrh = x.getPropertyValue('height');
+    cwidth = cbrw = parseInt(x.getPropertyValue('width').slice(0, -2));
+    cheight = cbrh = parseInt(x.getPropertyValue('height').slice(0, -2));
     chgcanvsz = true;
     canvas0.width = cwidth * dpir;
     canvas0.height = cheight * dpir;
@@ -2964,8 +2964,8 @@ function dspview0() {
   if (dpircd && gts - dpircd > dpircdn) {
     dpir2 = window.devicePixelRatio || 1;
     x = getComputedStyle(canvas0);
-    cbrw = x.getPropertyValue('width');
-    cbrh = x.getPropertyValue('height');
+    cbrw = parseInt(x.getPropertyValue('width').slice(0, -2));
+    cbrh = parseInt(x.getPropertyValue('height').slice(0, -2));
     dpircd = performance.now();
   }
   if (stmsgcd && gts - stmsgcd > stmsgcdn) {
