@@ -8,11 +8,9 @@
 
 * One .html page with mainly JavaScript and a bit of HTML/CSS. No further dependencies.
 
-* A WIP . . . And a hack . . .
-
 ***
 
-### [To Yagols . . .](http://johnerps.com/Yagols.html)
+### [To Yagols . . .](https://johnerps.com/Yagols.html)
 
 ***
 
