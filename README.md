@@ -14,7 +14,7 @@
 
 ***
 
-[](Screenshot01.png)
+![](Screenshot01.png)
 
 ***
 
