@@ -1,4 +1,4 @@
-## Yagols v3.7 - Yet another Game of Life simulator
+## Yagols v3.8 - Yet another Game of Life simulator
 
 #### Yagols is
 
@@ -55,6 +55,10 @@
 ***
 
 ### Changes
+
+* v3.8 (april 2019)
+
+  * Updated dpi scaling. Added touch events.
 
 * v3.7 (nov 2018)
 

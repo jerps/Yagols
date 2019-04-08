@@ -3,9 +3,9 @@
 <!--
 -----
 
-Yagols v3.7
+Yagols v3.8
 
-(c) 2018 John Erps
+(c) 2018-2019 John Erps
 
 -----
 
@@ -247,7 +247,7 @@ table {
   <canvas id="canvas3" style="position: fixed; left: 0; top: 0; height: 100%; width: 100%;">
   </canvas>
   <div id="cpyr">
-    <a style="color: #444466; user-select: none; outline: none;" href="https://johnerps.com" target="_blank" tabindex="-1">&#x00A9 2018 John Erps</a>
+    <a style="color: #444466; user-select: none; outline: none;" href="https://johnerps.com" target="_blank" tabindex="-1">&#x00A9 2018-2019 John Erps</a>
   </div>
   <div id="crule">
   <div id="crulet"></div>
@@ -350,7 +350,8 @@ var cwidth = 0, cheight = 0;
 var divl = [-1,-2], divv = false, dive = [];
 var histmax = 500;
 var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
-var dpir = 0, dpir2 = 0, dpircd = null, dpircdn = 500; cbrw = 0, cbrh = 0;
+var dpr = window.devicePixelRatio || 1, dpr2 = dpr, dprcd = performance.now(), dprcdn = 500;
+var cbrw = 0, cbrh = 0;
 var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", stmsgn2 = "Yet \u22C5 another \u22C5 GoL \u22C5 simulator     ", stmsgo1 = "", stmsgo2 = "", stmsgcd = null, stmsgcdn = 1000, stmsgcd2, stmsgcdn2 = 1300, stmsgntm1 = null, stmsgntm2 = null, stmsgotm1 = null, stmsgotm2 = null;
 
 function clrvars0() {
@@ -751,103 +752,50 @@ function init0() {
 
   var x;
 
-  document.getElementById("patternt").value = patttxt;
+  document.getElementById('patternt').value = patttxt;
 
-  canvas0 = document.getElementById("canvas0");
+  canvas0 = document.getElementById('canvas0');
 
-  dpir = dpir2 = window.devicePixelRatio || 1;
   x = getComputedStyle(canvas0);
   cwidth = cbrw = parseInt(x.getPropertyValue('width').slice(0, -2));
   cheight = cbrh = parseInt(x.getPropertyValue('height').slice(0, -2));
 
-  canvas0.width = cwidth * dpir;
-  canvas0.height = cheight * dpir;
-
   canvas1 = document.getElementById('canvas1');
-  canvas1.width = cwidth * dpir;
-  canvas1.height = cheight * dpir;
   canvas1a = document.getElementById('canvas1a');
-  canvas1a.width = cwidth * dpir;
-  canvas1a.height = cheight * dpir;
   canvas1b = document.getElementById('canvas1b');
-  canvas1b.width = cwidth * dpir;
-  canvas1b.height = cheight * dpir;
   canvas2 = document.getElementById('canvas2');
-  canvas2.width = cwidth * dpir;
-  canvas2.height = cheight * dpir;
   canvas3 = document.getElementById('canvas3');
-  canvas3.width = cwidth * dpir;
-  canvas3.height = cheight * dpir;
   canvasos0 = document.createElement('canvas');
-  canvasos0.width = cwidth * dpir;
-  canvasos0.height = cheight * dpir;
   canvasos1 = document.createElement('canvas');
-  canvasos1.width = cwidth * dpir;
-  canvasos1.height = cheight * dpir;
   canvasos2 = document.createElement('canvas');
-  canvasos2.width = cwidth * dpir;
-  canvasos2.height = cheight * dpir;
   canvasosci = document.createElement('canvas');
-  canvasosci.width = cwidth * dpir;
-  canvasosci.height = cheight * dpir;
-  if (cwidth < 1000) {
-    canvasosci.width = 1000;
-  }
-  if (cheight < 1000) {
-    canvasosci.height = 1000;
-  }
-  calcICellsz();
-  calcCellsz();
+
   ctx0 = canvas0.getContext("2d");
+  scalec(canvas0, ctx0, cwidth, cheight);
   ctx1 = canvas1.getContext("2d");
+  scalec(canvas1, ctx1, cwidth, cheight);
   ctx1a = canvas1a.getContext("2d");
+  scalec(canvas1a, ctx1a, cwidth, cheight);
   ctx1b = canvas1b.getContext("2d");
+  scalec(canvas1b, ctx1b, cwidth, cheight);
   ctx2 = canvas2.getContext("2d");
+  scalec(canvas2, ctx2, cwidth, cheight);
   ctx3 = canvas3.getContext("2d");
+  scalec(canvas3, ctx3, cwidth, cheight);
   ctxos0 = canvasos0.getContext("2d");
   ctxos1 = canvasos1.getContext("2d");
   ctxos2 = canvasos2.getContext("2d");
   ctxosci = canvasosci.getContext("2d");
-  ctx0.textBaseline = "bottom";
-  ctx0.globalAlpha = 1;
-  ctx0.imageSmoothingEnabled = false;
-  ctx0.scale(dpir, dpir);
-  ctx1.textBaseline = "bottom";
-  ctx1.globalAlpha = 1;
+  scalec(canvasosci, ctxosci, cwidth < 1000 ? 1000 : cwidth, cheight < 1000 ? 1000 : cheight);
+
   ctx1.imageSmoothingEnabled = false;
-  ctx1.scale(dpir, dpir);
   ctx1a.textBaseline = "bottom";
-  ctx1a.globalAlpha = 1;
-  ctx1a.imageSmoothingEnabled = false;
-  ctx1a.scale(dpir, dpir);
-  ctx1b.textBaseline = "bottom";
-  ctx1b.globalAlpha = 1;
-  ctx1b.imageSmoothingEnabled = false;
-  ctx1b.scale(dpir, dpir);
   ctx2.textBaseline = "bottom";
-  ctx2.globalAlpha = 1;
   ctx2.imageSmoothingEnabled = false;
-  ctx2.scale(dpir, dpir);
-  ctx3.textBaseline = "bottom";
-  ctx3.globalAlpha = 1;
   ctx3.imageSmoothingEnabled = false;
-  ctx3.scale(dpir, dpir);
-  ctxos0.textBaseline = "bottom";
-  ctxos0.globalAlpha = 1;
-  ctxos0.imageSmoothingEnabled = false;
-  ctxos0.scale(dpir, dpir);
-  ctxos1.textBaseline = "bottom";
-  ctxos1.globalAlpha = 1;
-  ctxos1.imageSmoothingEnabled = false;
-  ctxos1.scale(dpir, dpir);
-  ctxos2.textBaseline = "bottom";
-  ctxos2.globalAlpha = 1;
-  ctxos2.imageSmoothingEnabled = false;
-  ctxos2.scale(dpir, dpir);
-  ctxosci.textBaseline = "bottom";
-  ctxosci.globalAlpha = 1;
-  ctxosci.imageSmoothingEnabled = false;
-  ctxosci.scale(dpir, dpir);
+
+  calcICellsz();
+  calcCellsz();
 
   dive[0] = document.getElementById("pattern");
   dive[1] = document.getElementById("crule");
@@ -1073,7 +1021,17 @@ function addel() {
     posx = x * (cellsz+(cellsz>grb?1:cellsz/grb));
     posy = y * (cellsz+(cellsz>grb?1:cellsz/grb));
   });
+  canvas3.addEventListener("touchstart", function(e) {
+    if (e.touches.length === 1) {
+      handleMouseDown({pageX: e.touches[0].pageX, pageY: e.touches[0].pageY});
+    }
+    e.preventDefault();
+  }, false);
   canvas3.addEventListener("mousedown", function(e) {
+    handleMouseDown({pageX: e.pageX, pageY: e.pageY});
+    e.preventDefault();
+  }, false);
+  function handleMouseDown(e) {
     var x, y, f = false, p, i, f2;
     lastcc = 0;
     f2 = false;
@@ -1467,9 +1425,18 @@ function addel() {
         trkwdy2 = trkwdy;
       }
     }
+  }
+  canvas3.addEventListener("touchend", function(e) {
+    if (e.touches.length === 0) {
+      handleMouseUp();
+    }
     e.preventDefault();
-  });
+  }, false);
   canvas3.addEventListener("mouseup", function(e) {
+    handleMouseUp();
+    e.preventDefault();
+  }, false);
+  function handleMouseUp() {
     var x;
     scl = false;
     spd = false;
@@ -1492,12 +1459,17 @@ function addel() {
     for (x = 0; x < fbutt.length; x++) {
       fbutt[x][4] = false;
     }
+  }
+  canvas3.addEventListener("touchmove", function(e) {
+    if (e.touches.length === 1) {
+      peMsMove(e.touches[0].pageX, e.touches[0].pageY);
+    }
     e.preventDefault();
-  });
+  }, false);
   canvas3.addEventListener("mousemove", function(e) {
     peMsMove(e.pageX, e.pageY);
     e.preventDefault();
-  });
+  }, false);
   canvas3.addEventListener("dblclick", function(e) {
     var u, x, y, q, f2;
     lastcc = 0;
@@ -1587,11 +1559,11 @@ function addel() {
       }
       e.preventDefault();
     }
-  });
+  }, false);
   canvas3.addEventListener("click", function(e) {
     lastcc = 0;
     e.preventDefault();
-  });
+  }, false);
   window.addEventListener("keydown", function(e) {
     var cc, f = false;
     keyesupp = false;
@@ -1613,7 +1585,7 @@ function addel() {
       keyesupp = true;
       e.preventDefault();
     }
-  });
+  }, false);
   window.addEventListener("keypress", function(e) {
     var cc;
     if (patt) {
@@ -1627,11 +1599,11 @@ function addel() {
     if (peKey(cc)) {
       e.preventDefault();
     }
-  });
+  }, false);
   window.addEventListener("keyup", function(e) {
     keyesupp = false;
     curskcc = 0;
-  });
+  }, false);
 }
 
 function peMsMove(px, py) {
@@ -2581,47 +2553,24 @@ function dspview0() {
 
   chgcanvsz = chgcellsz = chgpos = false;
 
-  if (!cwidth || cbrw !== cwidth || !cheight || cbrh !== cheight || dpir !== dpir2) {
+  if (!cwidth || cbrw !== cwidth || !cheight || cbrh !== cheight || dpr !== dpr2) {
+    dpr = dpr2;
     x = getComputedStyle(canvas0);
     cwidth = cbrw = parseInt(x.getPropertyValue('width').slice(0, -2));
     cheight = cbrh = parseInt(x.getPropertyValue('height').slice(0, -2));
     chgcanvsz = true;
-    canvas0.width = cwidth * dpir;
-    canvas0.height = cheight * dpir;
-    canvas1.width = cwidth * dpir;
-    canvas1.height = cheight * dpir;
-    canvas1a.width = cwidth * dpir;
-    canvas1a.height = cheight * dpir;
-    canvas1b.width = cwidth * dpir;
-    canvas1b.height = cheight * dpir;
-    canvas2.width = cwidth * dpir;
-    canvas2.height = cheight * dpir;
-    canvas3.width = cwidth * dpir;
-    canvas3.height = cheight * dpir;
-    if (cwidth < 1000) {
-      canvasosci.width = 1000;
-    } else {
-      canvasosci.width = cwidth * dpir;
-    }
-    if (cheight < 1000) {
-      canvasosci.height = 1000;
-    } else {
-      canvasosci.height = cheight * dpir;
-    }
-    dpir2 =  window.devicePixelRatio || 1;
-    if (dpir !== dpir2) {
-      dpir = dpir2;
-      ctx0.scale(dpir, dpir);
-      ctx1.scale(dpir, dpir);
-      ctx1a.scale(dpir, dpir);
-      ctx1b.scale(dpir, dpir);
-      ctx2.scale(dpir, dpir);
-      ctx3.scale(dpir, dpir);
-      ctxos0.scale(dpir, dpir);
-      ctxos1.scale(dpir, dpir);
-      ctxos2.scale(dpir, dpir);
-      ctxosci.scale(dpir, dpir);
-    }
+    scalec(canvas0, ctx0, cwidth, cheight);
+    scalec(canvas1, ctx1, cwidth, cheight);
+    scalec(canvas1a, ctx1a, cwidth, cheight);
+    scalec(canvas1b, ctx1b, cwidth, cheight);
+    scalec(canvas2, ctx2, cwidth, cheight);
+    scalec(canvas3, ctx3, cwidth, cheight);
+    scalec(canvasosci, ctxosci, cwidth < 1000 ? 1000 : cwidth, cheight < 1000 ? 1000 : cheight);
+    ctx1.imageSmoothingEnabled = false;
+    ctx1a.textBaseline = "bottom";
+    ctx2.textBaseline = "bottom";
+    ctx2.imageSmoothingEnabled = false;
+    ctx3.imageSmoothingEnabled = false;
     tmet = null;
   }
 
@@ -2961,12 +2910,12 @@ function dspview0() {
   if (swzmcd2 && gts - swzmcd2 > swzmcdn2) {
     swzmcd2 = null;
   }
-  if (dpircd && gts - dpircd > dpircdn) {
-    dpir2 = window.devicePixelRatio || 1;
+  if (dprcd && gts - dprcd > dprcdn) {
+    dpr2 = window.devicePixelRatio || 1;
     x = getComputedStyle(canvas0);
     cbrw = parseInt(x.getPropertyValue('width').slice(0, -2));
     cbrh = parseInt(x.getPropertyValue('height').slice(0, -2));
-    dpircd = performance.now();
+    dprcd = performance.now();
   }
   if (stmsgcd && gts - stmsgcd > stmsgcdn) {
     stmsgcd = null;
@@ -3276,7 +3225,7 @@ function cellY(y,r) {
 }
 
 function drawCells() {
-  var i, px, py, x, px2, py2, c, cx;
+  var i, px, py, x, px2, py2, c, cx, r = dprbspr(ctxosci);
   if (drawallcells) {
     ctx1.clearRect(0, 0, cwidth, cheight);
   } else if (rmvcellsf && !frzc) {
@@ -3327,7 +3276,7 @@ function drawCells() {
           if (px >= 0 - cellsz && px < cwidth + cellsz && py >= 0 - cellsz && py < cheight + cellsz) {
             cellImg(c);
             cx = cellsz < 2 ? 2 - cellsz : 0;
-            x = Math.trunc(canvasosci.width / (cellsz+cx+5));
+            x = Math.trunc(canvasosci.width / r / (cellsz+cx+5));
             py2 = Math.trunc(c / x);
             px2 = Math.ceil((c - py2 * x) * (cellsz+cx+5));
             py2 = Math.ceil(py2 * (cellsz+cx+5));
@@ -3349,9 +3298,9 @@ function cellImg(c) {
   if (cimg[c] < cimgc) {
     cimg[c] = cimgc;
     cx = cellsz < 2 ? 2 - cellsz : 0;
-    cd = (cellsz+cx) * 0.1 + (cellsz+cx)* 0.8 * (1 - csize/100);
+    cd = (cellsz+cx) * 0.1 + (cellsz+cx) * 0.8 * (1 - csize/100);
     cs = (cellsz+cx) - cd;
-    x = Math.trunc(canvasosci.width / (cellsz+cx+5));
+    x = Math.trunc(canvasosci.width / dprbspr(ctxosci) / (cellsz+cx+5));
     py = Math.trunc(c / x);
     px = Math.ceil((c - py * x) * (cellsz+cx+5));
     py = Math.ceil(py * (cellsz+cx+5));
@@ -5627,8 +5576,7 @@ function drawHelp0(n) {
       h = y;
     return x + w2;
   }
-  canvasos1.width = cwidth * (window.devicePixelRatio || 1);
-  canvasos1.height = cheight * (window.devicePixelRatio || 1);
+  scalec(canvasos1, ctxos1, cwidth, cheight);
   ctxos1.clearRect(0, 0, cwidth, cheight);
   x = 0;
   y = 0;
@@ -5864,7 +5812,7 @@ function drawHelp0(n) {
       x2 = drw(ctxos1, "\u22C5  Yagols will also respect the stop when playing (", x + 10, y + 335);
       drawStrImg(ctxos1, "\u25B7\u25B7", x2 + 2, y + 337, 13, 40, 110, 240, 1);
       ctxos1.fillStyle = "rgba(200, 200, 200, 0.8)";
-	  drw(ctxos1, ")  \u22C5", x2 + 30, y + 335);
+	    drw(ctxos1, ")  \u22C5", x2 + 30, y + 335);
       drw(ctxos1, "\u22C5  If a relative stop has been set it will be re-set everytime when stopped  \u22C5", x + 10, y + 359);
       drw(ctxos1, "\u22C5  Consecutive generations without changes (a still life) are treated as a whole  \u22C5", x + 10, y + 379);
       drw(ctxos1, "\u22C5  Therefore, Yagols can not stop at one specific such generation unless it's the last one  \u22C5", x + 10, y + 399);
@@ -5885,10 +5833,9 @@ function drawHelp0(n) {
   h += 7;
   mx = 28;
   my = 20;
-  canvasos2.width = (w + mx * 2) * (window.devicePixelRatio || 1);
-  canvasos2.height = h + my * 2 * (window.devicePixelRatio || 1);
-  ctxos2.clearRect(0, 0, canvasos2.width, canvasos2.height);
-  ctxos2.drawImage(canvasos1, 0, 0, w, h, (canvasos2.width - w) / 2, (canvasos2.height - h) / 2, w, h);
+  scalec(canvasos2, ctxos2, w + mx * 2, h + my * 2);
+  ctxos2.clearRect(0, 0, canvasos2.width / dprbspr(ctxos2), canvasos2.height / dprbspr(ctxos2));
+  ctxos2.drawImage(canvasos1, 0, 0, w, h, (canvasos2.width / dprbspr(ctxos2) - w) / 2, (canvasos2.height / dprbspr(ctxos2) - h) / 2, w, h);
   i = new Image();
   i.src = canvasos2.toDataURL("image/png");
   return [i, dx, dy, canvasos2.width, canvasos2.height, l];
@@ -5973,12 +5920,12 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
   }
   if (!(i = strimgt[k])) {
     if (fs > 0) {
-      canvasos0.width = (w = s.length * fs) * (window.devicePixelRatio || 1);
-      canvasos0.height = (h = fs + (q2?q2:0)) * (window.devicePixelRatio || 1);
+      canvasos0.width = (w = s.length * fs);
+      canvasos0.height = (h = fs + (q2?q2:0));
       ctxos0.clearRect(0, 0, w, h);
       ctxos0.font = "" + fs + "px " + font;
       ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
-      ctxos0.fillText(s, 0, canvasos0.height - 1 - (q?q:0));
+      ctxos0.fillText(s, 0, h - 1 - (q?q:0));
     };
     switch (s) {
       case "MSG":
@@ -5998,8 +5945,8 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
   	    fillrr(ctxos0, 6, 24, 4, 6, 1);
   	    break;
       case "vwcrs":
-        canvasos0.width = (w = 24) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 20) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 24);
+        canvasos0.height = (h = 20);
         ctxos0.clearRect(0, 0, w, h);
   	    ctxos0.beginPath();
         ctxos0.lineWidth = 1;
@@ -6012,8 +5959,8 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.stroke();
         break;
       case "RB":
-        canvasos0.width = (w = 300) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 29) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 300);
+        canvasos0.height = (h = 29);
         ctxos0.beginPath();
         ctxos0.lineWidth = 2;
         ctxos0.setLineDash([1]);
@@ -6038,8 +5985,8 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         }
         break;
       case "RB2":
-        canvasos0.width = (w = 300) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 29) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 300);
+        canvasos0.height = (h = 29);
         ctxos0.beginPath();
         ctxos0.lineWidth = 2;
         ctxos0.setLineDash([1]);
@@ -6064,8 +6011,8 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         }
         break;
       case "RS":
-        canvasos0.width = (w = 300) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 29) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 300);
+        canvasos0.height = (h = 29);
         ctxos0.beginPath();
         ctxos0.lineWidth = 2;
         ctxos0.setLineDash([1]);
@@ -6090,8 +6037,8 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         }
         break;
       case "RS2":
-        canvasos0.width = (w = 300) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 29) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 300);
+        canvasos0.height = (h = 29);
         ctxos0.beginPath();
         ctxos0.lineWidth = 2;
         ctxos0.setLineDash([1]);
@@ -6116,8 +6063,8 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         }
         break;
       case "rule":
-        canvasos0.width = (w = 25) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 30)* (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 25);
+        canvasos0.height = (h = 30);
         ctxos0.font = "14px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("r", 0, 14);
@@ -6126,15 +6073,15 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.fillText("e", 17, 28);
         break;
       case "s":
-        canvasos0.width = (w = 15) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 15) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 15);
+        canvasos0.height = (h = 15);
         ctxos0.font = "11px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("s", 0, 13);
         break;
       case "GoL":
-        canvasos0.width = (w = 25) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 30) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 25);
+        canvasos0.height = (h = 30);
         ctxos0.font = "14px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("G", 0, 22);
@@ -6142,8 +6089,8 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.fillText("L", 17, 14);
         break;
       case "???":
-        canvasos0.width = (w = 25) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 30) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 25);
+        canvasos0.height = (h = 30);
         ctxos0.font = "14px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("?", 0, 16);
@@ -6159,15 +6106,15 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.stroke();
         break;
       case "GenSlots":
-        canvasos0.width = (w = 140) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 20) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 140);
+        canvasos0.height = (h = 20);
         ctxos0.font = "13px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("\u22C5\u22C5Generation\u22C5Slots\u22C5\u22C5", 0, 20);
         break;
       case "CellIdxBlockSz":
-        canvasos0.width = (w = 140) * (window.devicePixelRatio || 1);
-        canvasos0.height = (h = 20) * (window.devicePixelRatio || 1);
+        canvasos0.width = (w = 140);
+        canvasos0.height = (h = 20);
         ctxos0.font = "13px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("\u22C5\u22C5CellIdx\u22C5BlockSz\u22C5\u22C5", 0, 20);
@@ -8542,6 +8489,26 @@ function bmemgE(i) {
   bmemv2 = bmembE[(i-bmembiE*bmemnE)*3+2];
 }
 
+function dprbspr(cc) {
+  var bspr = cc.webkitBackingStorePixelRatio||cc.mozBackingStorePixelRatio||cc.msBackingStorePixelRatio||cc.oBackingStorePixelRatio||cc.backingStorePixelRatio||1;
+  return dpr / bspr;
+}
+function scalec(c, cc, w, h) {
+  var bspr = cc.webkitBackingStorePixelRatio||cc.mozBackingStorePixelRatio||cc.msBackingStorePixelRatio||cc.oBackingStorePixelRatio||cc.backingStorePixelRatio||1;
+  var dprbspr = dpr / bspr;
+  if (dpr === bspr) {
+    c.width = w;
+    c.height = h;
+    c.style.width = '';
+    c.style.height = '';
+  } else {
+    c.width = Math.round(w * dprbspr);
+    c.height = Math.round(h * dprbspr);
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+  }
+  cc.scale(dprbspr, dprbspr);
+}
 </script>
 </html>
 
