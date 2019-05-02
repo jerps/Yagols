@@ -786,7 +786,9 @@ function init0() {
   ctxos1 = canvasos1.getContext("2d");
   ctxos2 = canvasos2.getContext("2d");
   ctxosci = canvasosci.getContext("2d");
-  scalec(canvasosci, ctxosci, cwidth < 1000 ? 1000 : cwidth, cheight < 1000 ? 1000 : cheight);
+
+  canvasosci.width = (cwidth < 1000 ? 1000 : cwidth) * dprbspr(ctxosci);
+  canvasosci.height = (cheight < 1000 ? 1000 : cheight) * dprbspr(ctxosci);
 
   ctx1.imageSmoothingEnabled = false;
   ctx1a.textBaseline = "bottom";
@@ -2565,7 +2567,6 @@ function dspview0() {
     scalec(canvas1b, ctx1b, cwidth, cheight);
     scalec(canvas2, ctx2, cwidth, cheight);
     scalec(canvas3, ctx3, cwidth, cheight);
-    scalec(canvasosci, ctxosci, cwidth < 1000 ? 1000 : cwidth, cheight < 1000 ? 1000 : cheight);
     ctx1.imageSmoothingEnabled = false;
     ctx1a.textBaseline = "bottom";
     ctx2.textBaseline = "bottom";
@@ -3276,11 +3277,11 @@ function drawCells() {
           if (px >= 0 - cellsz && px < cwidth + cellsz && py >= 0 - cellsz && py < cheight + cellsz) {
             cellImg(c);
             cx = cellsz < 2 ? 2 - cellsz : 0;
-            x = Math.trunc(canvasosci.width / r / (cellsz+cx+5));
+            x = Math.trunc(canvasosci.width / ((cellsz+cx)*r+5));
             py2 = Math.trunc(c / x);
-            px2 = Math.ceil((c - py2 * x) * (cellsz+cx+5));
-            py2 = Math.ceil(py2 * (cellsz+cx+5));
-            ctx1.drawImage(canvasosci, px2, py2, cellsz+cx, cellsz+cx, px-cx/2, py-cx/2, cellsz+cx, cellsz+cx);
+            px2 = Math.ceil((c - py2 * x) * ((cellsz+cx)*r+5));
+            py2 = Math.ceil(py2 * ((cellsz+cx)*r+5));
+            ctx1.drawImage(canvasosci, px2, py2, (cellsz+cx)*r, (cellsz+cx)*r, px-cx/2, py-cx/2, cellsz+cx, cellsz+cx);
           }
         }
       }
@@ -3289,22 +3290,23 @@ function drawCells() {
 }
 
 function cellImg(c) {
-  var i, x, px, py, cs, cd, cx;
+  var i, x, px, py, cs, cd, cx, r;
   if (cimg.length === 0) {
     for (i = 0; i < 60; i++) {
       cimg[i] = -1;
     }
   }
   if (cimg[c] < cimgc) {
+    r = dprbspr(ctxosci);
     cimg[c] = cimgc;
     cx = cellsz < 2 ? 2 - cellsz : 0;
-    cd = (cellsz+cx) * 0.1 + (cellsz+cx) * 0.8 * (1 - csize/100);
-    cs = (cellsz+cx) - cd;
-    x = Math.trunc(canvasosci.width / dprbspr(ctxosci) / (cellsz+cx+5));
+    cd = (cellsz+cx) * r * 0.1 + (cellsz+cx) * r * 0.8 * (1 - csize/100);
+    cs = (cellsz+cx) * r - cd;
+    x = Math.trunc(canvasosci.width / ((cellsz+cx)*r+5));
     py = Math.trunc(c / x);
-    px = Math.ceil((c - py * x) * (cellsz+cx+5));
-    py = Math.ceil(py * (cellsz+cx+5));
-    ctxosci.clearRect(px, py, cellsz+cx+5, cellsz+cx+5);
+    px = Math.ceil((c - py * x) * ((cellsz+cx)*r+5));
+    py = Math.ceil(py * ((cellsz+cx)*r+5));
+    ctxosci.clearRect(px, py, (cellsz+cx)*r+5, (cellsz+cx)*r+5);
     x = (59 - c) / 59;
     ctxosci.fillStyle = "rgba(230, 160, "+(100+Math.floor(155*x))+", 1)";
     fillrr(ctxosci, px + cd / 2, py + cd / 2, cs, cs, cs / 4);
