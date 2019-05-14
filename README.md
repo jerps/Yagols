@@ -1,4 +1,4 @@
-## Yagols v3.8 - Yet another Game of Life simulator
+## Yagols v3.9 - Yet another Game of Life simulator
 
 #### Yagols is
 
@@ -59,6 +59,10 @@
 Yagols is [MIT Licensed](LICENSE.md). You may use, distribute and copy it under the license terms.
 
 ### Changes
+
+* v3.9 (may 2019)
+
+  * Removed dpi scaling. Added css property image-rendering: pixelated.
 
 * v3.8 (april 2019)
 
