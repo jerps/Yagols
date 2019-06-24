@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build:yagols:dev": "webpack --config webpack.yagols.js",
-    "build:yagols:prod": "webpack --config webpack.yagols.js --env.prod"
+    "build:dev": "webpack --config webpack.config.js",
+    "build:prod": "webpack --config webpack.config.js --env.prod"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
