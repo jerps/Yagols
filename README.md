@@ -1,4 +1,4 @@
-## Yagols v3.9 - Yet another Game of Life simulator
+## Yagols v4.0 - Yet another Game of Life simulator
 
 #### Yagols is
 
@@ -46,11 +46,15 @@
 
 ### About Conway's Game of Life
 
->#### [conwaylife.com](http://www.conwaylife.com)
->#### [game of life](http://beltoforion.de/article.php?a=game_of_life)
->#### [wonders](http://www.math.com/students/wonders/life/life.html)
->#### [youtube](https://youtu.be/C2vgICfQawE)
->#### [google](https://www.google.nl/search?q=conway+game+of+life)
+#### [conwaylife.com](http://www.conwaylife.com)
+
+#### [game of life](http://beltoforion.de/article.php?a=game_of_life)
+
+#### [wonders](http://www.math.com/students/wonders/life/life.html)
+
+#### [youtube](https://youtu.be/C2vgICfQawE)
+
+#### [google](https://www.google.nl/search?q=conway+game+of+life)
 
 ***
 
@@ -59,6 +63,10 @@
 Yagols is [MIT Licensed](LICENSE.md). You may use, distribute and copy it under the license terms.
 
 ### Changes
+
+* v4.0 (june 2019)
+
+  * Used webpack/babel to package the code.
 
 * v3.9 (may 2019)
 
