@@ -1,13 +1,12 @@
 /*
 
-Yagols v4.0
+Yagols v4.1
 
 (c) 2018-2019 John Erps
 
 This software is licensed under the MIT license (see LICENSE)
 
 */
-
 
 
 var title = [ "Yet another", "Game\u22C5of\u22C5Life", "simulator", "Conway\u22C5s", "\u22C5  Enjoy  \u22C5", "\u22C5   With Yagols   \u22C5", "\u22C5      \u22C5   Click/Press  ?  For Help   \u22C5      \u22C5"];
@@ -30,7 +29,7 @@ var gts = null, wts1 = null;
 var chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, prvcolrs = null, prvcsize = null, drawbackg = true, drawallcells = true;
 var dsppost = false, dsppostx = 0, dspposty = 0, dsppostw = 0, dspposth = 0, dspposcd = null, dspposcdn = 200;
 var patt = false;
-var fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1;
+var fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattn = 0, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1;
 var dwrld = false, wrldx = 0, wrldy = 0, wrldw = 0, wrldh = 0, wrldm = 24, wrldcd = null, wrldcdn = 200, wrlda = false, wrldax = 0, wrlday = 0, wrldaw = 0, wrldah = 0;
 var grb = 4;
 var dsppxct = false, dsppxctx = 0, dsppxcty = 0, dsppxctw = 0, dsppxcth = 0, dsppxccd = null, dsppxccdn = 200;
@@ -76,8 +75,8 @@ var stops = false, stopscd = null, stopscdn = 1100;
 var clrucd = null, clrucdn = 1000;
 var dhlpn = 0, dhlpn2 = 0, dhlpq = [], dhlpql = 0, dhlpcdn = 2000, dhlpcd2 = null, dhlpcdn2 = 600000, dhlplf = 1, dhlpcd3 = null, dhlpcdn3 = 400;
 var frzc = false, frzcp = false, frzccd = null, frzccdn = 1000;
-var hpnl1x = 0, hpnl1y = 0, hpnl1w = 0, hpnl1h = 0, hpnlcd = null, hpnlcdn = 600, hpnl2x = 0, hpnl2y = 0, hpnl2w = 0, hpnl2h = 0, hpnl3x = 0, hpnl3y = 0, hpnl3w = 0, hpnl3h = 0;
-var fpnl1x = 0, fpnl1y = 0, fpnl1w = 0, fpnl1h = 0, fpnlcd = null, fpnlcdn = 600, fpnl2x = 0, fpnl2y = 0, fpnl2w = 0, fpnl2h = 0;
+var hpnl1x = 0, hpnl1y = 0, hpnl1w = 0, hpnl1h = 0, hpnlcd = null, hpnlcdn = 600, hpnl2x = 0, hpnl2y = 0, hpnl2h = 0, hpnl3x = 0, hpnl3y = 0, hpnl3w = 0, hpnl3h = 0;
+var fpnl1x = 0, fpnl1y = 0, fpnl1w = 0, fpnl1h = 0, fpnlcd = null, fpnlcdn = 600, fpnl2x = 0, fpnl2y = 0, fpnl2h = 0;
 var htgen = 0, htgen2 = -1, htgen2x = 0, httot = 0, httot2 = 0, htgent = false, htgencd = null, htgencdn = 200, htgentx = 0, htgenty = 0, htgentw = 0, htgenth = 0;
 var lastcc = 0;
 var acccd = null, acccdn = 500;
@@ -96,6 +95,7 @@ var histmax = 500;
 var cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
 var cbrw = 0, cbrh = 0, cbrcd = performance.now(), cbrcdn = 500;
 var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", stmsgn2 = "Yet \u22C5 another \u22C5 GoL \u22C5 simulator     ", stmsgo1 = "", stmsgo2 = "", stmsgcd = null, stmsgcdn = 1000, stmsgcd2, stmsgcdn2 = 1300, stmsgntm1 = null, stmsgntm2 = null, stmsgotm1 = null, stmsgotm2 = null;
+var diamstop = true;
 
 function clrvars0() {
   chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, prvcolrs = null, prvcsize = null, drawbackg = true, drawallcells = true;
@@ -119,7 +119,7 @@ function clrvars() {
   scalem = false, scalemn = 0, scalemcd = null,  scalemcdn = 2000;
   mingen = 0;
   runt = false, runtx = 0, runty = 0, runtw = 0, runth = 0;
-  fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1;
+  fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattn = 0, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1;
   dwrld = false, wrldx = 0, wrldy = 0, wrldw = 0, wrldh = 0, wrldcd = null, wrlda = false, wrldax = 0, wrlday = 0, wrldaw = 0, wrldah = 0;
   ngen = false, ngencd = null, ngencd2 = null, ngencd3 = 0, ngencd4 = null, ngencd5 = null, ngenb = false, ngenbx = 0, ngenby = 0, ngenbw = 0, ngenbh = 0;
   pgen = false, pgencd = null, pgencd2 = null, pgencd3 = 0, pgencd4 = null, pgencd5 = null, pgenb = false, pgenbx = 0, pgenby = 0, pgenbw = 0, pgenbh = 0;
@@ -198,15 +198,14 @@ var patttxt =
       "#  The decoder is forgiving. Blank lines and lines where the first\r\n" +
       "#  non-whitespace character(s) begin with \"#\", \"=\" or \"x\" are ignored.\r\n" +
       "#  All other lines are considered to contain run-length encoded pattern\r\n" +
-      "#  data.\ Only characters \"b\" / \".\" (\"off\" cell), \"o\" / \"A\" (\"on\" cell),\r\n" +
+      "#  data. Only characters \"b\" / \".\" (\"off\" cell), \"o\" / \"A\" (\"on\" cell),\r\n" +
       "#  \"0\"..\"9\", \"$\" and \"!\" are processed. Any other character and\r\n" +
       "#  whitespace is ignored.\r\n" +
       "\r\n" +
       "#  Clicking one of the \"Patt\" buttons starts the process. It can be\r\n" +
       "#  stopped or restarted any time by clicking \"Patt\" again with an\r\n" +
-      "#  empty text or a different text. As long as the P at the top-right\r\n" +
-      "#  of the screen is red the process is still running. When finished\r\n" +
-      "#  a completion message is added to the beginning of the text in\r\n" +
+      "#  empty text or a different text. When the process is finished a\r\n" +
+      "#  completion message is added to the beginning of the text in\r\n" +
       "#  this text box.\r\n" +
       "\r\n" +
       "#  There are three \"Patt\" buttons. When the \"/Add\" button is clicked,\r\n" +
@@ -234,7 +233,7 @@ var patttxt =
       "24bo11b$22bobo11b$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2o8bo5bo3b2o14b$2o8b\r\n" +
       "o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!";
 
-window.onload = function(e) {
+window.onload = function() {
 
   (function(window) {
     var timeouts = [];
@@ -484,7 +483,7 @@ window.onload = function(e) {
 
     title0cd = performance.now();
 
-    YagolsSetZeroTimeoutFunc(tick);
+    window.YagolsSetZeroTimeoutFunc(tick);
     requestAnimationFrame(dspview);
 
   }, 1500);
@@ -671,6 +670,9 @@ function init0() {
   pstrimg("\u29BB-37-40-110-240", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAAEB0lEQVRYR+1XXYwTZRS9d3aRJbvstCuQNcGQIJlpoiEajC/w4BMBYoyECDwYgUgkkbZmAUlUfroSjZEAS9tVQ6IGosTw4A8JSkLCA+FRE9EHO90HUX6iEbbTsppV6Hc5s91pp+20O9sNyT50+jLt/e75zpx77p2vTLPw4lnIidqkglalrVRbqaAKBF3X9lRbqaAKBF3X9lRLSplxe68Id2VT+jsugLG7sIDvFuMk/BLelEsgrebERGicWLIkdPa/4pzhqx/2/OnmRGK5rbhfkUmFY0GJeNeVy2fG8nFmOV4KymAmGRo0Y/YQM8eDAAvRZ1af/qpxK79B0+jLSeKHrVRob5B8f1Lx/Bom+b4RgJDcIOIvWORXYe6CUo8y02Y81dKGOSKvWKnwpy2TchJNf2IjRe7YPnJ8/iU/cDNqP42yDoPgM24chCEc7YRKH02XkLO+uvtelA6zPz+GDbrKG5AcspLhA83AzWjhedbUt541/xfG9fDNE/zvjElF4rk0eO6sB3I8Fk74bWBEcy9oGn9dFxM5BaNvmRGpZbE7CzuoeA0qzQXQiFK03zVsCZgTmaQ+6N2klpBSsgv5G9AcK1E/hc8yKx36bbrEPN2XOwSwfQ5AUfi5kZR+rl6FCrHamIgMwNRDKOVKlPLyJJET6OIdLZISjsTyF+GwZzEO/sj0hR6jBN9zwHzK85YivqKRnKsYu0Ro4ntCtMiofQXKPoFvf2X69MUuVlByk0qBVNz+eQLIxwsNfYNdXIW8G2IIHwbwHsSuWQ+HlrZMCkA/MfFyP1LOhn7jAopFs0l9uFaB8iAWujvWyf3Xj+mjQVWacG9psbBLCgY9YyVDm2pBjGh+rabJd97fFcnubDJ8tBmp8Q5ZdHUobLdEyi2fH6lm5UOXvplNh95/IOWrGJ2qBp9flwlrWa/Rq4lNqH4JVlhV2zRB1fKMBPsNzJgPStWktzOp0Ht1c8hTrvoZVVIMiq8Awg8lGH8rTEWuTGrxgMzrKdp/w2bdMPuYYjqoER9xAfz8U1dWPAxee+vc4cmq88lMuueXqUjUxqvefTiqVNTyrPTzjRtu4rcLGJyrp0vI032TqRh85qhtww/zXTCUYB+68d1m4EbU3lT9SqJ7ao72SPZI760Zk/J9aqHbinkgm+z9HKV1jiRVl/F6YZWm1CcYLoY34DdUgxIsl8+I59bDQ181TBTBMYTPI/4jfOPcG0heDzL9jXJaJVYhFcu/rLGcdDZwTY2jTEKI97vn8mZPCglPW+P6VrPrzjom9U1pbeMjTzOsKqNHYvYOkJhrpfSkm/T4a9JT7CxsE1IbMfgNnOO78efiH8R7odLv2PgMqYc+ttLdN8vmh+oAfmqqw2EjYrPyf999YlbfNdwuL6EAAAAASUVORK5CYII=");
   pstrimg("filled-11-100-100-100", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAAALCAYAAADLA1tMAAACNUlEQVRIS+2W30tTYRjHe7e5s2Y2KUnoRkIYEV0JgheKQtEP6EKhgTgvtrMfhLK6FrzyVgTvhLmNQXWj0byICEKkoC60f6CL6S5UcIrgYq2xX32e6EA3kxNCJ8XBl/Psfd/neZ/n+/w4R104//1iQP3mQYXD4VHkzmq1upJOp3OyHovFtGKx+NjhcGQ0TasZcjwe/26Wv1AodKfRaGylUqlNszpWnBMiFM6+VUo9EAfq9fos8jO73X6pUqm088yz1k0w3wz5L4IS2/voTqGzaEWAZu9UPp/vosfjOcLZ/mQyuR6NRjuoih4cf498uVar5SHmps1mOzTkRCKxZfICqbQctqex/dykjiXHxNF33HwfHIDdcrkcdTqdc9lsdsjr9bY2I0LX9YeQk0FHA1Wq5h7krQUCARettMzaIyMi9sbZe2lJhCYvVZFIpJeMfQY+Mv+VZxe6GYhoa0YE51o4J2dHyPQK5T/B2jyVdA0SUqzfBQOgAlmfsPf0v68Iyt8jWcfpG2RtV4Ybjr85jgj2x8EM+ACEFJk1fdi5xRz5wn8dW0syf05NaxhEyByQ3jdDBIFOSJbRGQSaEAGOSqVSzu1277E3hq1XZ54IArwCJPOTlPyC3+9vc7lck4VCIcHg/cjeNrNmmFduD/Iq0CHmhcl2teSYalIRr2mNq8cNS2bLE4hY+MPrPK1xmwq5zlzYkJY5VcPyhPSrYDDYId8YfIT9MGxBbgtvik6qYIe1xgnv+CfqPwFxIIUbY3B7DQAAAABJRU5ErkJggg==");
   pstrimg("hit\u22C5rate-11-100-100-100", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAALCAYAAAD7j0ptAAADHklEQVRYR+2XTUiTYRzAe/c9qw1SCazQSEo75KUuHaIIwcI+Dq6DMpxzWh3s1qEPOiRYUKesy/wYbN0GSSVIXULJokuf0KlMoQKbOZ3tU7f1+8uMtXZYouAbDR7e53n+H8/z/z3/5/++U9b9/60qAaWjo8MYDocbdDrdgNvtjuSuZrfb1/t8vvCq7uIfdq60tLSUarXab6lUakd/f/9YdqzZsng8PmU2mweQN/b29k6uBBOXy3UOP1b8da6Ev7XoQ2lvb7cmk0kBvNXj8QRyNqm0trYe5QCeBIPBtNVqDaFblkdvWbEB+DaG5QA+tiwHKjBaBAzcyXQ6PaQoynH2rKF/ra+v72JTU5PFZDKNhEKhOuB6kdUi+85TT9uDzkTugQBtCJ3XzNfQ9kvG41cyX2zkd1+j0dgWFhZqeL5AF7EiJeguoM9yoBcYd4kisg/0DzH/WQUs824xG/AwwZxHq57WCYAtBoMhCvwpxjuRlRDwM9pJwHyZmZl55/f7U06ns5n6PUj9Fj3J+Lfo7qZ/nTaB7gg21bFYbNRoNBbTf8n8TQ7nCocxwLiYNU7r9fof3I4j2HZjU42/sYy8Ct1q4a1GyH+UCDK6iECDBFpFoNNSPrL7ANlOrf4qwdpsNq3FYgmi19jT0zOYASxZfQkoPtGRl2gkErmKDwfDDbQifPiRn+IwuhmX05ebI4fzHL19yB8xNtGv4FmG/40An1c1YIHIVfy0VJMLAZwnYIH0G2Cy8B56tfirJ+ufciC3GG8TqOjeob+ZfoMARvc9z2luzxmgllD749hNAvejGuHKnn9lcCGAM7XayVV/EAgEopSIZE7guYBl/AqdOSAeaGtr20t2DtKGMxl8g3XtlKLKaDRqBqhkeRfyg8hHHQ5HBeXHPjs725VnLVUwLxiwZDewPJmrniK6SpnLBUwWjgPo8lKJwKYOm6GMXgqZlJzH2DZTv3eRqW+QGZl/iM0J9N3IXVl+hwF8WLWA/zYNALAJGPPU4blCbanVBr6hS71er9Tu3JeVfIuX8OknL8lFmbwH+POjSyQSMcAmCl1nLer9BBiL6xsfzJcsAAAAAElFTkSuQmCC");
+  pstrimg("diamstop-0-0-0-0", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAbCAYAAAA3d3w1AAACqklEQVRYR+2XS6iNURTHfzdFMTCRR8qNgceMgbwmcl0mXmUkI4/C1MCbXPeSa2YiKTKglPKeCCVFHgOmMlJIHnlk4q1/rV273T7fXufeT31uvvo6dc7ee+3f/q/13+t0MESfjiHKxX+wf03ZdhUbDvy0t9Gs7YCNAq4BL4B1wI8mk3nBAtRCgznTdDgPmKCuAIuAecAE4ALQaLgS2EjgagR13xRbBVxsMlwVWA5qK/AKOAcMFG40oPeTvX+lVFuBBajZQDfwANgJHLJdrDG4lcAlh3IjgNXA2YTiOnAM0OfXOglzYDmoXcDBJHCAWwFcroCbBhwFltr8G8AtoMsOTV+fBHqB53XBpWCCkgJzgcXAQ2A30NciYAluJvDY5u4AjifpNxZQem+3MeOAN3XAxWA5qD12klWxAtxyc8/glsNMSSmldL5ZschaU1zKbawTLIZSijwC9gIHnEFycCeAO4CU6i+soxqU++oApgNPnXFbDpNiOah9QE+biwe4ZbZJGc4cYBbwxLFWMCK5rWp2UI/AJplCH20jn624Q5fhDaD62QL89k4ojPMoXamYfpwB3DZXWmJ9oFLDC3faamMy8KxJYDm479b0luBiqLvAOzuQ9cBhYAFwzwErF9ZVUFsqxjFT5QQX+sTc3lKo13ZNvAXmAwKVlR9xgMkRdRjemqxcMndBe+FyUHJUKaZHbdN5czqv3Z8CNjgOoTikVUuVwn2LmmEtWoIKgeMLerPNi1snwW+KroNarF7Bq5rgHJy6kpeRUSjVlH6xUulpKiX3R+2T6u4DMDVSR7W1zXktFNUqgeUM5QvwC5hi9SMo/U97X4iWtk7x8Fyr5dp81aDS/7Ec3Jg2odL4ncBEU762pjcN4gGL4aTQeEs/j1KDPvmBLuAFS+EaDaXN/gGxq70c/LobSgAAAABJRU5ErkJggg==");
+  pstrimg("diamstop-0-140-140-140", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAbCAYAAAA3d3w1AAADyUlEQVRYR+3XT2gcVRwH8O9vZpewQlYPKjVSsB6ExggKVVt6FD14EKvgP0RbPOxBTBvmPZJDkVjaEvLe7NpFD0FBrfgXFPx3UQRPKq2iiK3SS4y2ILVi2A12s5nZn7wwU6aT2ZnZMsJa3OPOb36/+ezvvTe/JVymH7pMXfgf9l/r7EAdq9frlVartTY7O+sNOzQ3rNFoXOV53k8Azlar1W21Wm1tmHG5YCGKiDYZDDP/MOy4TFiAOkFEYwB2AdgCoD7suFTY3NzclbZtnzQoZr5fSvmB6ZhSah8RNYYZ1xeWhNJavwRgUQhx+FJxzWbzGs/zri2VSmcnJyf/+Lf2aSIsRAHYZFnWLsdxPlRKvU5Ejwd7bL+U8pDWei+A57M6t7CwcEWr1XKI6EAM8hsz62q1+nKtVvu7SOQGWB/UG0T0WLQwM6/jlFKTRHSkH8513e3M/C6AzcH9Z5j5cyK6C8D1wXfHmPkpKeWPReEughlUqVQ6wczXATB76iOt9ZsAHk0qmIXTWt8N4NOgy0dHRkZEdPk1Go0bPM97kYjuNTG2bW+Zmpr6pQjcBViz2ax2u92TUZRS6i0ieiStUIjTWj8DoBl2DkC53W7/bDpFRHscx3m1Xx6t9bMAngNwTAhxZ2GwGOo+KeUnWuu3ATycp0gSzrKsg2YJMvNRKeWTaXnMHmy326fM0iSiHY7jfJ2nbloMJaGUUu8Q0UODJA9xrus+zcwvMPM5IroawD1CiM+ycoUHEYB9QogjWfFZ16ler9/s+/73ALrlcvnGsbGxc0tLS6fDKSMrQeT6l0KInVprHuCevqF5Op3aMXNxfn5+JxF9AaBdLpe39nq9Nd/3zbSxPkLl+Hy7srKyvVKp3Grb9vEc8ZkhhcCScMy8aobeHLgLKMuyviKiDoAJZj5ARE8AeFAI8X6WxHXd3cz8SmFLMVow3rkAF86JSc92EQrAeSK6RQixpLV+AMB7AF4TQuzOgimljhPRtrx7Mivfhhf0ALgNKN/3J2ZmZn41Rc3o1O12vwtOulzHPTN/I6W8Peuh81xPHKniuE6n0wmH4SBpKiosHH1BA2iMjo7uj45OAV4BWH8dFHXUr+fqp0/CmakEwO/hQWH2lFl+0U7F8wVLshkZnz4G8CeArQDuCOLPANiT57WQp1upsKQDZXl5+a/x8XF/cXHxthDV6/XGp6enT6cVjI9O0Vhz+sVHrbwPn3ncpwXEO7e6urp5EFQ8t1JqgohuYuZTRQ698TqZ/6BjnTsPoGKWX55OFfHLX2qOXLA4bthR5nn/AbgwWDqmp2DXAAAAAElFTkSuQmCC");
+  pstrimg("diamstop-0-190-210-190", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAbCAYAAAA3d3w1AAADwUlEQVRYR+2XwYsbVRzHv98ppnbXLt10PelBqKuy2yQrLO0eRJh5Uev+AXosahWsoBcLLVYUtUWs4EFUsFAU6UFv4sGqmRfoQRZPZna13d2iPbQUrNalkM2mG+cnb5Is2UkyM6kRYnGOeS+/3/vM9/f7ve8Qt+jDW5QL/4P915TtSbHiQvGO7Wvbq9PT0+uDDpoY7Ozy2Ttrq7UlACtrQ2sPzI7PVgcZLhHYBhSxI4ARXBx0uFiwAKpSWwQwSvKAL/69BA8POlwkWHGxOCZVMeU3CuIZJ+OcMoLpkj4O4sggw3UF6wSlPf2lgXFyzks3C+f+6N5F8m4RuaSm1OV/q087grVA7RDI0yqrPtGe/gbAo42DvO9knRfdefctCl+JU25ueW5ktbJ6HMALrSAC+QPAR8Pbhk/MjM9c7ydkG1gnKNdzvyX4SChxHc5z3yR4tBucXtCPiS+nCe6szx25RuEPQtlDMB38JrJkwdpv5+y5fsFtAjNQftVfJDhK4VN2zv5Ue/o7APkuCSPh9Lx+AoLPG5P0jIgcaC2/wkJhwvrLOgVir9njW/5kfnf+537AbYAVzhV2cp1LIagCABWTKIDTnn4DwKtN5dJIby1Xyr8YpUTkkMqpd7vF0fP6AwgOGuVUTt3fN7BWKKHsVxn1mS5pF4STMEkbnEDeIfkhBGecnPN4VBzTg+VK+degNC3sc3Y7pp//0cNOUG7J1STtHiPXy7Lkvk7yNQBlAMMgnnQyzhdxsZqDSCjHVEYdjdsft05d0nuF8j2AWspKjV+ZvHJ5zBv7HU2XERehsS6QcyqrJrSnJeFforclUDoqQNBj2tOzAvkKgkpqS2qiKtWq5Vvne4C7MHJjZGLl9pWHLN/SAwPWCU62SiUwvfHKbUDRpxk26xasKRF5D8Q+gTynsupkHKxbcl8meaJvpdiaMKxcANfwiV0OtgmK4A2CD9pZ+7zruc8S/FggX6usmk0AtkRyPGlPxsVru6B7gGuD8n0/l5/KG28JY51gwTOTrodxv6xy6r64QydZ72ipwnC122qrG2a4HjUSqpl40wUNnB7aNnSw1To14E8SrF8HfRr1JlRXE9wJruFKrjUHhekpU36tSoXfpilJAG837ROAOYH8CcEukoE6gc0in09yLSRRKxKs00CpDdd+u3rP1fX0T+mHm1Dcwow9aV+IShi2Tpv2CtqsVtLDx477qA1tVwGqu3qBCsculoozPv2MJdZ8P01vOE/sF3SrcqbsBJIKpl8Cpfrx5m82RiKwMNygQ5nz/g35FWg6IUTS+gAAAABJRU5ErkJggg==");
 }
 
 function init1() {
@@ -685,7 +687,7 @@ function init1() {
 }
 
 function dspdiv(n) {
-  var i, j, f;
+  var i, j;
   divv = false;
   if (n) {
     i = 0;
@@ -745,7 +747,7 @@ function dspdiv(n) {
 }
 
 function addel() {
-  addWheelListener(canvas3, function(e) {
+  window.addWheelListener(canvas3, function(e) {
     var e2, x, y;
     e.preventDefault();
     if (swzmsw) {
@@ -758,7 +760,7 @@ function addel() {
     lastcc = 0;
     scalem = false;
     posm = false;
-    e2 = normalizeWheel(e);
+    e2 = window.normalizeWheel(e);
     x = cellX(posx);
     y = cellY(posy);
     scale -= e2.spinY;
@@ -880,287 +882,286 @@ function addel() {
         }
       }
     }
-    if (f2) {
-    } else if ((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr+4 && e.pageY > scly-sclr && e.pageY < scly+sclr+5) {
-      if (!scl) {
+    if (!f2) {
+      if ((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr+4 && e.pageY > scly-sclr && e.pageY < scly+sclr+5) {
+        if (!scl) {
+          posm = false;
+          scalem = false;
+          diffx = e.pageX;
+          diffy = e.pageY;
+          scld = e.pageY - scly;
+          sclpx = cellX(posx);
+          sclpy = cellY(posy);
+        }
+        scl = true;
+        swzmsw = false;
+      } else if (e.pageX > spdx-spdr && e.pageX < spdx+spdr+4 && e.pageY > spdy-spdr && e.pageY < spdy+spdr+5) {
+        if (!spd) {
+          diffx = e.pageX;
+          diffy = e.pageY;
+          spdd = e.pageY - spdy;
+        }
+        spd = true;
+      } else if (e.pageX > colrx-colrr && e.pageX < colrx+colrr+4 && e.pageY > colry-colrr && e.pageY < colry+colrr+5) {
+        if (!colr) {
+          diffx = e.pageX;
+          diffy = e.pageY;
+          colrd = e.pageY - colry;
+        }
+        colr = true;
+      } else if (e.pageX > csizx-colrr && e.pageX < csizx+csizr+4 && e.pageY > csizy-csizr && e.pageY < csizy+csizr+5) {
+        if (!csiz) {
+          diffx = e.pageX;
+          diffy = e.pageY;
+          csizd = e.pageY - csizy;
+        }
+        csiz = true;
+      } else if ((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw+6 && e.pageY > sclby && e.pageY < sclby+sclbh+3) {
         posm = false;
         scalem = false;
-        diffx = e.pageX;
-        diffy = e.pageY;
-        scld = e.pageY - scly;
         sclpx = cellX(posx);
         sclpy = cellY(posy);
-      }
-      scl = true;
-      swzmsw = false;
-    } else if (e.pageX > spdx-spdr && e.pageX < spdx+spdr+4 && e.pageY > spdy-spdr && e.pageY < spdy+spdr+5) {
-      if (!spd) {
-        diffx = e.pageX;
-        diffy = e.pageY;
-        spdd = e.pageY - spdy;
-      }
-      spd = true;
-    } else if (e.pageX > colrx-colrr && e.pageX < colrx+colrr+4 && e.pageY > colry-colrr && e.pageY < colry+colrr+5) {
-      if (!colr) {
-        diffx = e.pageX;
-        diffy = e.pageY;
-        colrd = e.pageY - colry;
-      }
-      colr = true;
-    } else if (e.pageX > csizx-colrr && e.pageX < csizx+csizr+4 && e.pageY > csizy-csizr && e.pageY < csizy+csizr+5) {
-      if (!csiz) {
-        diffx = e.pageX;
-        diffy = e.pageY;
-        csizd = e.pageY - csizy;
-      }
-      csiz = true;
-    } else if ((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw+6 && e.pageY > sclby && e.pageY < sclby+sclbh+3) {
-      posm = false;
-      scalem = false;
-      sclpx = cellX(posx);
-      sclpy = cellY(posy);
-      scale = 100*(e.pageY-sclby)/sclbh;
-      calcCellsz();
-      posx = sclpx * (cellsz+(cellsz>grb?1:cellsz/grb));
-      posy = sclpy * (cellsz+(cellsz>grb?1:cellsz/grb));
-      swzmsw = false;
-    } else if (e.pageX > spdbx && e.pageX < spdbx+spdbw && e.pageY > spdby && e.pageY < spdby+spdbh+3) {
-      speed = 100 - 100*(e.pageY-spdby)/spdbh;
-    } else if (e.pageX > colrbx && e.pageX < colrbx+colrbw && e.pageY > colrby && e.pageY < colrby+colrbh+3) {
-      colrs = 100 - 100*(e.pageY-colrby)/colrbh;
-    } else if (e.pageX > csizbx && e.pageX < csizbx+csizbw && e.pageY > csizby && e.pageY < csizby+csizbh+3) {
-      csize = 100 - 100*(e.pageY-csizby)/csizbh;
-    } else if (e.pageX > runtx && e.pageX < runtx+runtw && e.pageY > runty && e.pageY < runty+runth) {
-      if (!runt) {
-        swrun();
-      }
-      runt = true;
-    } else if (!ddiamcd && ddiamx > 0 && e.pageX > ddiamx && e.pageX < ddiamx+ddiamw && e.pageY > ddiamy && e.pageY < ddiamy+ddiamh) {
-      if (hist[histh][0][histi][3][1] + (hupdc > 0 ? 1:0) > 0) {
-        if (revert()) {
-          ddiamcd2 = performance.now();
-        }
-      }
-    } else if (e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth) {
-      if (!dsppost) {
-        posmx = posmy = 0;
-        posm = true;
-        posml = [];
-        posmcd = performance.now();
-        dspposcd = performance.now();
-      }
-      dsppost = true;
-    } else if (crulem !== 0 && e.pageX > rbcbx && e.pageX < rbcbx+rbcbw && e.pageY > rbcby && e.pageY < rbcby+rbcbh) {
-      crulebn = "";
-    } else if (crulem !== 0 && e.pageX > rbcsx && e.pageX < rbcsx+rbcsw && e.pageY > rbcsy && e.pageY < rbcsy+rbcsh) {
-      crulesn = "";
-    } else if (crulem === 0 && e.pageX > 5 && e.pageX < rbcbx && e.pageY > rbcby - 20 && e.pageY < rbcsy) {
-      crulebn = cruleb;
-      crulesn = crules;
-      if (dhlpn > 0) {
-        dhlpn = 3;
-      }
-      crulem2 = crulem;
-      crulem = 1;
-    } else if ((crulem !== 0 || cruleim) && e.pageX > cruleimx && e.pageX < cruleimx+cruleimw && e.pageY > cruleimy && e.pageY < cruleimy+cruleimh) {
-      cruleim = !cruleim;
-      if (crulem === 0 && !cruleim) {
-        cruleimcd = performance.now();
-      }
-    } else if (crulem !== 0 && e.pageX > cruleb1x && e.pageX < cruleb1x+cruleb1w && e.pageY > cruleb1y && e.pageY < cruleb1y+cruleb1h) {
-      crulebut(1);
-    } else if (crulem !== 0 && e.pageX > cruleb2x && e.pageX < cruleb2x+cruleb2w && e.pageY > cruleb2y && e.pageY < cruleb2y+cruleb2h) {
-      crulebut(2);
-    } else if (e.pageX > htgentx && e.pageX < htgentx+htgentw && e.pageY > htgenty && e.pageY < htgenty+htgenth) {
-      if (!htgent) {
-        if (htgen2 < 0) {
-          if (histp > 0) {
-            x = prevHist(histh, histi);
-            rclHist0_2();
-            y = rlHist(histh, histi, histp);
-            rclHist1_2();
-            httot2 = hist[y[2][0]][0][y[2][1]][14] + Math.ceil(histp/hist[x[0]][0][x[1]][11][0]) * hist[x[0]][0][x[1]][16];
-          } else {
-            httot2 = hist[histh][0][histi][14];
-          }
-          htgen2 = gennum;
-        } else {
-          htgen2 = -1;
-        }
-        htgencd = performance.now();
-      }
-      htgent = true;
-    } else if (e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth) {
-      if (!dsppxct) {
-        posm = false;
-        x = cellX(posx);
-        y = cellY(posy);
-        calcICellsz();
+        scale = 100*(e.pageY-sclby)/sclbh;
         calcCellsz();
-        posx = x * (cellsz+(cellsz>grb?1:cellsz/grb));
-        posy = y * (cellsz+(cellsz>grb?1:cellsz/grb));
-        dsppxccd = performance.now();
-      }
-      dsppxct = true;
-    } else if (!genbbl && e.pageX > ngenbx && e.pageX < ngenbx+ngenbw && e.pageY > ngenby && e.pageY < ngenby+ngenbh) {
-      if (!ngenb) {
-        if (nextGen() && stpga) {
+        posx = sclpx * (cellsz+(cellsz>grb?1:cellsz/grb));
+        posy = sclpy * (cellsz+(cellsz>grb?1:cellsz/grb));
+        swzmsw = false;
+      } else if (e.pageX > spdbx && e.pageX < spdbx+spdbw && e.pageY > spdby && e.pageY < spdby+spdbh+3) {
+        speed = 100 - 100*(e.pageY-spdby)/spdbh;
+      } else if (e.pageX > colrbx && e.pageX < colrbx+colrbw && e.pageY > colrby && e.pageY < colrby+colrbh+3) {
+        colrs = 100 - 100*(e.pageY-colrby)/colrbh;
+      } else if (e.pageX > csizbx && e.pageX < csizbx+csizbw && e.pageY > csizby && e.pageY < csizby+csizbh+3) {
+        csize = 100 - 100*(e.pageY-csizby)/csizbh;
+      } else if (e.pageX > runtx && e.pageX < runtx+runtw && e.pageY > runty && e.pageY < runty+runth) {
+        if (!runt) {
+          swrun();
+        }
+        runt = true;
+      } else if (!ddiamcd && ddiamx > 0 && e.pageX > ddiamx && e.pageX < ddiamx+ddiamw && e.pageY > ddiamy && e.pageY < ddiamy+ddiamh) {
+        if (hist[histh][0][histi][3][1] + (hupdc > 0 ? 1:0) > 0) {
+          if (revert()) {
+            ddiamcd2 = performance.now();
+          }
+        }
+      } else if (e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth) {
+        if (!dsppost) {
+          posmx = posmy = 0;
+          posm = true;
+          posml = [];
+          posmcd = performance.now();
+          dspposcd = performance.now();
+        }
+        dsppost = true;
+      } else if (crulem !== 0 && e.pageX > rbcbx && e.pageX < rbcbx+rbcbw && e.pageY > rbcby && e.pageY < rbcby+rbcbh) {
+        crulebn = "";
+      } else if (crulem !== 0 && e.pageX > rbcsx && e.pageX < rbcsx+rbcsw && e.pageY > rbcsy && e.pageY < rbcsy+rbcsh) {
+        crulesn = "";
+      } else if (crulem === 0 && e.pageX > 5 && e.pageX < rbcbx && e.pageY > rbcby - 20 && e.pageY < rbcsy) {
+        crulebn = cruleb;
+        crulesn = crules;
+        if (dhlpn > 0) {
+          dhlpn = 3;
+        }
+        crulem2 = crulem;
+        crulem = 1;
+      } else if ((crulem !== 0 || cruleim) && e.pageX > cruleimx && e.pageX < cruleimx+cruleimw && e.pageY > cruleimy && e.pageY < cruleimy+cruleimh) {
+        cruleim = !cruleim;
+        if (crulem === 0 && !cruleim) {
+          cruleimcd = performance.now();
+        }
+      } else if (crulem !== 0 && e.pageX > cruleb1x && e.pageX < cruleb1x+cruleb1w && e.pageY > cruleb1y && e.pageY < cruleb1y+cruleb1h) {
+        crulebut(1);
+      } else if (crulem !== 0 && e.pageX > cruleb2x && e.pageX < cruleb2x+cruleb2w && e.pageY > cruleb2y && e.pageY < cruleb2y+cruleb2h) {
+        crulebut(2);
+      } else if (e.pageX > htgentx && e.pageX < htgentx+htgentw && e.pageY > htgenty && e.pageY < htgenty+htgenth) {
+        if (!htgent) {
+          if (htgen2 < 0) {
+            if (histp > 0) {
+              x = prevHist(histh, histi);
+              rclHist0_2();
+              y = rlHist(histh, histi, histp);
+              rclHist1_2();
+              httot2 = hist[y[2][0]][0][y[2][1]][14] + Math.ceil(histp/hist[x[0]][0][x[1]][11][0]) * hist[x[0]][0][x[1]][16];
+            } else {
+              httot2 = hist[histh][0][histi][14];
+            }
+            htgen2 = gennum;
+          } else {
+            htgen2 = -1;
+          }
+          htgencd = performance.now();
+        }
+        htgent = true;
+      } else if (e.pageX > dsppxctx && e.pageX < dsppxctx+dsppxctw && e.pageY > dsppxcty && e.pageY < dsppxcty+dsppxcth) {
+        if (!dsppxct) {
+          posm = false;
+          x = cellX(posx);
+          y = cellY(posy);
+          calcICellsz();
+          calcCellsz();
+          posx = x * (cellsz+(cellsz>grb?1:cellsz/grb));
+          posy = y * (cellsz+(cellsz>grb?1:cellsz/grb));
+          dsppxccd = performance.now();
+        }
+        dsppxct = true;
+      } else if (!genbbl && e.pageX > ngenbx && e.pageX < ngenbx+ngenbw && e.pageY > ngenby && e.pageY < ngenby+ngenbh) {
+        if (!ngenb) {
+          if (nextGen() && stpga) {
+            stpgcd2 = performance.now();
+            stpgsf = false;
+          }
+          ngencd = performance.now();
+          ngencd5 = performance.now();
+        }
+        ngenb = true;
+      } else if (!genbbl && histgp > 0 && e.pageX > pgenbx && e.pageX < pgenbx+pgenbw && e.pageY > pgenby && e.pageY < pgenby+pgenbh) {
+        if (!pgenb) {
+          if (prevGen() && stpga) {
+            stpgcd2 = performance.now();
+            stpgsf = false;
+          }
+          pgencd = performance.now();
+          pgencd5 = performance.now();
+        }
+        pgenb = true;
+      } else if (
+          histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1]
+          && (ngenfx > 0 && e.pageX > ngenfx && e.pageX < ngenfx+ngenfw && e.pageY > ngenfy && e.pageY < ngenfy+ngenfh
+              || (f = osctrw > 0 && e.pageX > osctrx && e.pageX < osctrx+osctrw && e.pageY > osctry && e.pageY < osctry+osctrh))) {
+        swffwn(f);
+      } else if (
+          histgp > 0 && (histgn === 0 || hupdc === 0)
+          && (e.pageX > pgenfx && e.pageX < pgenfx+pgenfw && e.pageY > pgenfy && e.pageY < pgenfy+pgenfh
+              || (f = osctlw > 0 && e.pageX > osctlx && e.pageX < osctlx+osctlw && e.pageY > osctly && e.pageY < osctly+osctlh))) {
+        swffwp(f);
+      } else if (stpga && !stpge && e.pageX > stpgdx && e.pageX < stpgdx+stpgdw && e.pageY > stpgdy && e.pageY < stpgdy+stpgdh) {
+        if (ffw !== 0 && ffwstp) {
+          ffw = 0;
+          ffwstp = false;
+          genbbl = false;
+        } else if ((x = stpgnm === 0 ? stpgn : stpgnc + stpgn * stpgnm) === gennum) {
+          ffw = 0;
+          ffwstp = false;
           stpgcd2 = performance.now();
           stpgsf = false;
+          if (stpgnm !== 0) {
+            stpgnc = gennum;
+          }
+          genbbl = false;
+        } else if (
+                x > gennum && histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1]
+              || x < gennum && histgp > 0 && (histgn === 0 || hupdc === 0)) {
+          if (run) {
+            swrun();
+          }
+          if (x > gennum) {
+            ffw = 1;
+            ffwm = 0;
+            swffwn(false);
+          } else {
+            ffw = -1;
+            ffwm = 0;
+            swffwp(false);
+          }
+          ffwstp = true;
+          genbbl = true;
         }
-        ngencd = performance.now();
-        ngencd5 = performance.now();
-      }
-      ngenb = true;
-    } else if (!genbbl && histgp > 0 && e.pageX > pgenbx && e.pageX < pgenbx+pgenbw && e.pageY > pgenby && e.pageY < pgenby+pgenbh) {
-      if (!pgenb) {
-        if (prevGen() && stpga) {
-          stpgcd2 = performance.now();
-          stpgsf = false;
+      } else if ((cruleb !== histcr[0] || crules !== histcr[1]) && e.pageX > orulex && e.pageX < orulex+orulew && e.pageY > oruley && e.pageY < oruley+oruleh) {
+        cruleb = histcr[0];
+        crules = histcr[1];
+        hlcrcd2 = performance.now();
+        hlcrcd = null;
+        hlcrcd3 = null;
+        hlcrcd4 = null;
+      } else if (e.pageX > swzmtx && e.pageX < swzmtx+swzmtw && e.pageY > swzmty && e.pageY < swzmty+swzmth) {
+        if (!swzmt) {
+          swzmf = !swzmf;
+          x = performance.now();
+          if (swzmcd2) {
+            swzmcd2 = x-swzmcd2>swzmcdn2?x:x-swzmcdn2*(1-(x-swzmcd2)/swzmcdn2);
+          } else {
+            swzmcd2 = x;
+          }
+          swzmcd = performance.now();
         }
-        pgencd = performance.now();
-        pgencd5 = performance.now();
-      }
-      pgenb = true;
-    } else if (
-        histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1]
-        && (ngenfx > 0 && e.pageX > ngenfx && e.pageX < ngenfx+ngenfw && e.pageY > ngenfy && e.pageY < ngenfy+ngenfh
-            || (f = osctrw > 0 && e.pageX > osctrx && e.pageX < osctrx+osctrw && e.pageY > osctry && e.pageY < osctry+osctrh))) {
-      swffwn(f);
-    } else if (
-        histgp > 0 && (histgn === 0 || hupdc === 0)
-        && (e.pageX > pgenfx && e.pageX < pgenfx+pgenfw && e.pageY > pgenfy && e.pageY < pgenfy+pgenfh
-            || (f = osctlw > 0 && e.pageX > osctlx && e.pageX < osctlx+osctlw && e.pageY > osctly && e.pageY < osctly+osctlh))) {
-      swffwp(f);
-    } else if (stpga && !stpge && e.pageX > stpgdx && e.pageX < stpgdx+stpgdw && e.pageY > stpgdy && e.pageY < stpgdy+stpgdh) {
-      if (ffw !== 0 && ffwstp) {
+        swzmt = true;
+        swzmsw = false;
+      } else if (ffw !== 0 && !ffwsbcd && e.pageX > captx && e.pageX < captx+captw && e.pageY > captyffw && e.pageY < captyffw+capth) {
         ffw = 0;
         ffwstp = false;
         genbbl = false;
-      } else if ((x = stpgnm === 0 ? stpgn : stpgnc + stpgn * stpgnm) === gennum) {
-        ffw = 0;
-        ffwstp = false;
-        stpgcd2 = performance.now();
+      } else if (histgn > 0 && ffw === 0 && e.pageX > captx && e.pageX < captx+captw && e.pageY > capty && e.pageY < capty+capth) {
+        capHist();
+        capcd = performance.now();
+      } else if ((stpge || stpga) && e.pageX > stpgssx && e.pageX < stpgssx+stpgssw && e.pageY > stpgssy && e.pageY < stpgssy+stpgssh) {
+        if (stpge) {
+          stpgn2 = -1;
+        } else {
+          if (ffw !== 0 && ffwstp) {
+            ffw = 0;
+            ffwstp = false;
+            genbbl = false;
+          }
+          stpgn2 = -2;
+        }
+        stpge = false;
+        stpga = false;
+        stpgax = false;
+        x = performance.now();
+        if (!stpgcd || (x - stpgcd) > stpgcdn) {
+          stpgcd = x;
+        } else {
+          stpgcd = x - (stpgcdn - (x - stpgcd));
+        }
+        stpgcd2 = null;
         stpgsf = false;
+      } else if (stpge && stpgn > 0 && e.pageX > stpgssx2 && e.pageX < stpgssx2+stpgssw2 && e.pageY > stpgssy2 && e.pageY < stpgssy2+stpgssh2) {
         if (stpgnm !== 0) {
           stpgnc = gennum;
         }
-        genbbl = false;
-      } else if (
-               x > gennum && histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1]
-            || x < gennum && histgp > 0 && (histgn === 0 || hupdc === 0)) {
-        if (run) {
-          swrun();
-        }
-        if (x > gennum) {
-          ffw = 1;
-          ffwm = 0;
-          swffwn(false);
-        } else {
-          ffw = -1;
-          ffwm = 0;
-          swffwp(false);
-        }
-        ffwstp = true;
-        genbbl = true;
-      }
-    } else if ((cruleb !== histcr[0] || crules !== histcr[1]) && e.pageX > orulex && e.pageX < orulex+orulew && e.pageY > oruley && e.pageY < oruley+oruleh) {
-      cruleb = histcr[0];
-      crules = histcr[1];
-      hlcrcd2 = performance.now();
-      hlcrcd = null;
-      hlcrcd3 = null;
-      hlcrcd4 = null;
-    } else if (e.pageX > swzmtx && e.pageX < swzmtx+swzmtw && e.pageY > swzmty && e.pageY < swzmty+swzmth) {
-      if (!swzmt) {
-        swzmf = !swzmf;
+        stpge = false;
+        stpga = true;
+        stpgax = true;
         x = performance.now();
-        if (swzmcd2) {
-          swzmcd2 = x-swzmcd2>swzmcdn2?x:x-swzmcdn2*(1-(x-swzmcd2)/swzmcdn2);
+        if (!stpgcd || (x - stpgcd) > stpgcdn) {
+          stpgcd = x;
         } else {
-          swzmcd2 = x;
+          stpgcd = x - (stpgcdn - (x - stpgcd));
         }
-        swzmcd = performance.now();
-      }
-      swzmt = true;
-      swzmsw = false;
-    } else if (ffw !== 0 && !ffwsbcd && e.pageX > captx && e.pageX < captx+captw && e.pageY > captyffw && e.pageY < captyffw+capth) {
-      ffw = 0;
-      ffwstp = false;
-      genbbl = false;
-    } else if (histgn > 0 && ffw === 0 && e.pageX > captx && e.pageX < captx+captw && e.pageY > capty && e.pageY < capty+capth) {
-      capHist();
-      capcd = performance.now();
-    } else if ((stpge || stpga) && e.pageX > stpgssx && e.pageX < stpgssx+stpgssw && e.pageY > stpgssy && e.pageY < stpgssy+stpgssh) {
-      if (stpge) {
-        stpgn2 = -1;
-      } else {
+        stpgcd2 = null;
+        stpgsf = false;
         if (ffw !== 0 && ffwstp) {
           ffw = 0;
           ffwstp = false;
           genbbl = false;
         }
-        stpgn2 = -2;
-      }
-      stpge = false;
-      stpga = false;
-      stpgax = false;
-      x = performance.now();
-      if (!stpgcd || (x - stpgcd) > stpgcdn) {
-        stpgcd = x;
-      } else {
-        stpgcd = x - (stpgcdn - (x - stpgcd));
-      }
-      stpgcd2 = null;
-      stpgsf = false;
-    } else if (stpge && stpgn > 0 && e.pageX > stpgssx2 && e.pageX < stpgssx2+stpgssw2 && e.pageY > stpgssy2 && e.pageY < stpgssy2+stpgssh2) {
-      if (stpgnm !== 0) {
-        stpgnc = gennum;
-      }
-      stpge = false;
-      stpga = true;
-      stpgax = true;
-      x = performance.now();
-      if (!stpgcd || (x - stpgcd) > stpgcdn) {
-        stpgcd = x;
-      } else {
-        stpgcd = x - (stpgcdn - (x - stpgcd));
-      }
-      stpgcd2 = null;
-      stpgsf = false;
-      if (ffw !== 0 && ffwstp) {
-        ffw = 0;
-        ffwstp = false;
-        genbbl = false;
-      }
-    } else if (e.pageX > hpnl1x && e.pageX < hpnl1x+hpnl1w && e.pageY > hpnl1y && e.pageY < hpnl1y+hpnl1h) {
-      histinc(1);
-      hpnlcd = performance.now();
-    } else if (e.pageX > hpnl2x && e.pageX < hpnl2x+hpnl1w && e.pageY > hpnl2y && e.pageY < hpnl2y+hpnl2h) {
-      histinc(2);
-      hpnlcd = performance.now();
-    } else if (e.pageX > hpnl3x && e.pageX < hpnl3x+hpnl3w && e.pageY > hpnl3y && e.pageY < hpnl3y+hpnl3h) {
-      histrst();
-    } else if (e.pageX > fpnl1x && e.pageX < fpnl1x+fpnl1w && e.pageY > fpnl1y && e.pageY < fpnl1y+fpnl1h) {
-      if (cidxb[cidxbi][0].length < 7) {
-        fcidxinc();
+      } else if (e.pageX > hpnl1x && e.pageX < hpnl1x+hpnl1w && e.pageY > hpnl1y && e.pageY < hpnl1y+hpnl1h) {
+        histinc(1);
+        hpnlcd = performance.now();
+      } else if (e.pageX > hpnl2x && e.pageX < hpnl2x+hpnl1w && e.pageY > hpnl2y && e.pageY < hpnl2y+hpnl2h) {
+        histinc(2);
+        hpnlcd = performance.now();
+      } else if (e.pageX > hpnl3x && e.pageX < hpnl3x+hpnl3w && e.pageY > hpnl3y && e.pageY < hpnl3y+hpnl3h) {
+        histrst();
+      } else if (e.pageX > fpnl1x && e.pageX < fpnl1x+fpnl1w && e.pageY > fpnl1y && e.pageY < fpnl1y+fpnl1h) {
+        if (cidxb[cidxbi][0].length < 7) {
+          fcidxinc();
+          fpnlcd = performance.now();
+        }
+      } else if (e.pageX > fpnl2x && e.pageX < fpnl2x+fpnl1w && e.pageY > fpnl2y && e.pageY < fpnl2y+fpnl2h) {
+        fcidxrst();
         fpnlcd = performance.now();
-      }
-    } else if (e.pageX > fpnl2x && e.pageX < fpnl2x+fpnl1w && e.pageY > fpnl2y && e.pageY < fpnl2y+fpnl2h) {
-      fcidxrst();
-      fpnlcd = performance.now();
-    } else if (dwrld && cellsn > 0 && wrldw > wrldm && wrldh > wrldm && wrldax > 0 - wrldaw && wrldax < cwidth && wrlday > 0 - wrldah && wrlday < cheight && e.pageX >= wrldax && e.pageX < wrldax+wrldaw && e.pageY > wrlday && e.pageY < wrlday+wrldah) {
-      if (!wrlda) {
-        posm = false;
-        scalem = false;
-        posx2 = posx;
-        posy2 = posy;
-        diffx = e.pageX;
-        diffy = e.pageY;
-        wrldcd = performance.now();
-      }
-    } else {
-      if (!mdown) {
+      } else if (dwrld && cellsn > 0 && wrldw > wrldm && wrldh > wrldm && wrldax > 0 - wrldaw && wrldax < cwidth && wrlday > 0 - wrldah && wrlday < cheight && e.pageX >= wrldax && e.pageX < wrldax+wrldaw && e.pageY > wrlday && e.pageY < wrlday+wrldah) {
+        if (!wrlda) {
+          posm = false;
+          scalem = false;
+          posx2 = posx;
+          posy2 = posy;
+          diffx = e.pageX;
+          diffy = e.pageY;
+          wrldcd = performance.now();
+        }
+      } else if (!mdown && (!dwrld || cellsn === 0 || (e.pageX < wrldx || e.pageX > wrldx + wrldw) && (e.pageY < wrldy || e.pageY > wrldy + wrldh))) {
         posm = false;
         scalem = false;
         toncd = performance.now();
@@ -1222,7 +1223,7 @@ function addel() {
     e.preventDefault();
   }, false);
   canvas3.addEventListener("dblclick", function(e) {
-    var u, x, y, q, f2;
+    var x, y, f2;
     lastcc = 0;
     if ((!((swzmf || swzmcd2) && e.pageX > sclx-sclr && e.pageX < sclx+sclr+4 && e.pageY > scly-sclr && e.pageY < scly+sclr+5))
         && (!((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw && e.pageY > sclby && e.pageY < sclby+sclbh+3))
@@ -1256,7 +1257,7 @@ function addel() {
         && (!(stpge && stpgn > 0 && e.pageX > stpgssx2 && e.pageX < stpgssx2+stpgssw2 && e.pageY > stpgssy2 && e.pageY < stpgssy2+stpgssh2))
         && (!(e.pageX > hpnl1x && e.pageX < hpnl1x+hpnl1w && e.pageY > hpnl1y && e.pageY < hpnl1y+hpnl1h))
         && (!(e.pageX > hpnl2x && e.pageX < hpnl2x+hpnl1w && e.pageY > hpnl2y && e.pageY < hpnl2y+hpnl2h))
-        && (!(e.pageX > hpnl3x && e.pageX < hpnl3x+hpnl1w && e.pageY > hpnl3y && e.pageY < hpnl3y+hpnz3h))
+        && (!(e.pageX > hpnl3x && e.pageX < hpnl3x+hpnl1w && e.pageY > hpnl3y && e.pageY < hpnl3y+hpnl3h))
         && (!(e.pageX > fpnl1x && e.pageX < fpnl1x+fpnl1w && e.pageY > fpnl1y && e.pageY < fpnl1y+fpnl1h))
         && (!(e.pageX > fpnl2x && e.pageX < fpnl2x+fpnl1w && e.pageY > fpnl2y && e.pageY < fpnl2y+fpnl2h))) {
 
@@ -1351,10 +1352,30 @@ function addel() {
       e.preventDefault();
     }
   }, false);
-  window.addEventListener("keyup", function(e) {
+  window.addEventListener("keyup", function() {
     keyesupp = false;
     curskcc = 0;
   }, false);
+  document.querySelector('#cruleba').addEventListener('click', (e) => {
+    e.preventDefault();
+    crulebut(1);
+  }, false);
+  document.querySelector('#crulebf').addEventListener('click', (e) => {
+    e.preventDefault();
+    crulebut(2);
+  });
+  document.querySelector('#patternb1').addEventListener('click', (e) => {
+    e.preventDefault();
+    fpattbf(1);
+  });
+  document.querySelector('#patternb2').addEventListener('click', (e) => {
+    e.preventDefault();
+    fpattbf(2);
+  });
+  document.querySelector('#patternb3').addEventListener('click', (e) => {
+    e.preventDefault();
+    fpattbf(3);
+  });
 }
 
 function peMsMove(px, py) {
@@ -1433,16 +1454,14 @@ function peMsMove(px, py) {
 }
 
 function peKey(cc) {
-  var s, p, i, q, f = false;
+  var s, p, i, q, f = false, x;
   if ((lastcc === 84 || lastcc === 116) && (cc === 87 || cc === 119)) {
     f = true;
     swtrkw();
   }
   lastcc = cc;
 
-  if (f) {
-  } else if (cc === 92 && (stpge || stpga)) {
-    f = true;
+  if (f && cc === 92 && (stpge || stpga)) {
     if (stpge) {
       stpgn2 = -1;
     } else {
@@ -1466,80 +1485,80 @@ function peKey(cc) {
     stpgsf = false;
   }
 
-  if (f) {
-  } else if (crulem && cc === 13) {
-    f = true;
-    crulebut(1);
-  } else if (crulem && cc === 27) {
-    f = true;
-    crulebut(2);
-  } else if (cc === 98 || cc === 66 || cc === 115 || cc === 83 || (crulem && cc >= 48 && cc <= 57)) {
-    f = true;
-    if (cc === 98 || cc === 66) {
-      if (crulem === 0) {
-        crulebn = cruleb;
-        crulesn = crules;
-        if (dhlpn > 0) {
-          dhlpn = 3;
+  if (!f) {
+    if (crulem && cc === 13) {
+      f = true;
+      crulebut(1);
+    } else if (crulem && cc === 27) {
+      f = true;
+      crulebut(2);
+    } else if (cc === 98 || cc === 66 || cc === 115 || cc === 83 || (crulem && cc >= 48 && cc <= 57)) {
+      f = true;
+      if (cc === 98 || cc === 66) {
+        if (crulem === 0) {
+          crulebn = cruleb;
+          crulesn = crules;
+          if (dhlpn > 0) {
+            dhlpn = 3;
+          }
         }
-      }
-      crulem2 = crulem;
-      crulem = 1;
-      if (cc === 66) {
-        crulebn = "";
-      }
-    } else if (cc === 115 || cc === 83) {
-      if (crulem === 0) {
-        crulebn = cruleb;
-        crulesn = crules;
-        if (dhlpn > 0) {
-          dhlpn = 3;
+        crulem2 = crulem;
+        crulem = 1;
+        if (cc === 66) {
+          crulebn = "";
         }
-      }
-      crulem2 = crulem;
-      crulem = 2;
-      if (cc === 83) {
-        crulesn = "";
-      }
-    } else if (crulem === 1 && cc === 48) {
-      if (srb0insc > 0) {
-        srb0insc--;
-        dspmsg(["No support      ","\u22C5      \u22C5","      for rule B0"], 4000, true);
-      }
-    } else if (cc !== 57 && crulem !== 0 && (cc !== 48 || crulem !== 1)) {
-      if (crulem === 1) {
-        s = crulebn;
-      } else {
-        s = crulesn;
-      }
-      p = -1;
-      for (i = 0; i < s.length; i++) {
-        if (s.charCodeAt(i) > cc) {
-          break;
+      } else if (cc === 115 || cc === 83) {
+        if (crulem === 0) {
+          crulebn = cruleb;
+          crulesn = crules;
+          if (dhlpn > 0) {
+            dhlpn = 3;
+          }
+        }
+        crulem2 = crulem;
+        crulem = 2;
+        if (cc === 83) {
+          crulesn = "";
+        }
+      } else if (crulem === 1 && cc === 48) {
+        if (srb0insc > 0) {
+          srb0insc--;
+          dspmsg(["No support      ","\u22C5      \u22C5","      for rule B0"], 4000, true);
+        }
+      } else if (cc !== 57 && crulem !== 0 && (cc !== 48 || crulem !== 1)) {
+        if (crulem === 1) {
+          s = crulebn;
         } else {
-          p = i;
+          s = crulesn;
+        }
+        p = -1;
+        for (i = 0; i < s.length; i++) {
+          if (s.charCodeAt(i) > cc) {
+            break;
+          } else {
+            p = i;
+          }
+        }
+        if (p === -1 || s.charCodeAt(p) !== cc) {
+          s = s.substring(0,p+1) + String.fromCharCode(cc) + s.substring(p+1);
+        } else if (p >= 0) {
+          s = s.substring(0,p) + s.substring(p+1);
+        }
+        if (crulem === 1) {
+          crulebn = s;
+        } else {
+          crulesn = s;
         }
       }
-      if (p === -1 || s.charCodeAt(p) !== cc) {
-        s = s.substring(0,p+1) + String.fromCharCode(cc) + s.substring(p+1);
-      } else if (p >= 0) {
-        s = s.substring(0,p) + s.substring(p+1);
-      }
-      if (crulem === 1) {
-        crulebn = s;
-      } else {
-        crulesn = s;
-      }
+    } else if (crulem && (cc === 100 || cc === 68)) {
+      f = true;
+      crulebn = "3";
+      crulesn = "23";
+      crulebut(1);
     }
-  } else if (crulem && (cc === 100 || cc === 68)) {
-    f = true;
-    crulebn = "3";
-    crulesn = "23";
-    rulebut(1);
   }
 
-  if (f) {
-  } else if (stpge) {
+  if (!f && stpge) {
     if (cc === 13) {
       f = true;
       if (stpgn > 0) {
@@ -1604,8 +1623,7 @@ function peKey(cc) {
     }
   }
 
-  if (f) {
-  } else if (cc >= 48 && cc <= 57) {
+  if (!f && cc >= 48 && cc <= 57) {
     f = true;
     if (ffw !== 0 && ffwstp) {
       ffw = 0;
@@ -1633,78 +1651,80 @@ function peKey(cc) {
     }
   }
 
-  if (f) {
-  } else if (dspgrd && cc === 35) {
-    f = true;
-    swdspgrd();
-  } else if (dwrld && (cc === 27 || cc === 87 || cc === 119)) {
-    f = true;
-    swdwrld();
+  if (!f) {
+    if (dspgrd && cc === 35) {
+      f = true;
+      swdspgrd();
+    } else if (dwrld && (cc === 27 || cc === 87 || cc === 119)) {
+      f = true;
+      swdwrld();
+    }
   }
 
-  if (f) {
-  } else if (cc === 32) {
-    f = true;
-    if (ffw === 0) {
-      swrun();
-    } else {
-      ffw = 0;
-      ffwstp = false;
-      genbbl = false;
-    }
-  } else if (cc === 80 || cc === 112) {
-    f = true;
-    swpatt();
-  } else if (cc === 87 || cc === 119) {
-    f = true;
-    swdwrld();
-  } else if (cc === 63) {
-    f = true;
-    swdhlp();
-  } else if (cc === 35) {
-    f = true;
-    swdspgrd();
-  } else if (cc === 67 || cc === 99) {
-    f = true;
-    swclru();
-  } else if (cc === 43 || cc === 45) {
-    f = true;
-    if (cc === 43) {
-      scalemn = scale + 1;
-    } else {
-      scalemn = scale - 1;
-    }
-    if (scalemn > 100) {
-      scalemn = 100;
-    }
-    if (scalemn < 0) {
-      scalemn = 0;
-    }
-    scalem = true;
-    scalemcd = gts;
-    scalemcdn = 400;
-  } else if (!genbbl && (cc === 46 || cc === 62)) {
-    f = true;
-    if (!genbbl) {
-      if (nextGen() && stpga) {
-        stpgcd2 = performance.now();
-        stpgsf = false;
+  if (!f) {
+    if (cc === 32) {
+      f = true;
+      if (ffw === 0) {
+        swrun();
+      } else {
+        ffw = 0;
+        ffwstp = false;
+        genbbl = false;
       }
-    }
-  } else if (!genbbl && histgp > 0 && (cc === 44 || cc === 60)) {
-    f = true;
-    if (!genbbl && histgp > 0) {
-      if (prevGen() && stpga) {
-        stpgcd2 = performance.now();
-        stpgsf = false;
+    } else if (cc === 80 || cc === 112) {
+      f = true;
+      swpatt();
+    } else if (cc === 87 || cc === 119) {
+      f = true;
+      swdwrld();
+    } else if (cc === 63) {
+      f = true;
+      swdhlp();
+    } else if (cc === 35) {
+      f = true;
+      swdspgrd();
+    } else if (cc === 67 || cc === 99) {
+      f = true;
+      swclru();
+    } else if (cc === 43 || cc === 45) {
+      f = true;
+      if (cc === 43) {
+        scalemn = scale + 1;
+      } else {
+        scalemn = scale - 1;
       }
+      if (scalemn > 100) {
+        scalemn = 100;
+      }
+      if (scalemn < 0) {
+        scalemn = 0;
+      }
+      scalem = true;
+      scalemcd = gts;
+      scalemcdn = 400;
+    } else if (!genbbl && (cc === 46 || cc === 62)) {
+      f = true;
+      if (!genbbl) {
+        if (nextGen() && stpga) {
+          stpgcd2 = performance.now();
+          stpgsf = false;
+        }
+      }
+    } else if (!genbbl && histgp > 0 && (cc === 44 || cc === 60)) {
+      f = true;
+      if (!genbbl && histgp > 0) {
+        if (prevGen() && stpga) {
+          stpgcd2 = performance.now();
+          stpgsf = false;
+        }
+      }
+    } else if (histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1] && (cc === 70 || cc === 102)) {
+      f = true;
+      swffwn(false);
+    } else if (histgp > 0 && (histgn === 0 || hupdc === 0) && (cc === 82 || cc === 114)) {
+      f = true;
+      swffwp(false);
     }
-  } else if (histgn > 0 && hupdc === 0 && cruleb === histcr[0] && crules === histcr[1] && (cc === 70 || cc === 102)) {
-    f = true;
-    swffwn(false);
-  } else if (histgp > 0 && (histgn === 0 || hupdc === 0) && (cc === 82 || cc === 114)) {
-    f = true;
-    swffwp(false);
   }
 
   if (f) {
@@ -1975,8 +1995,12 @@ function swtrkw() {
   trkwdy2 = 0;
 }
 
+function swdiamstop() {
+  diamstop = !diamstop;
+}
+
 function tick() {
-  var gts = performance.now(), i, n, k;
+  var gts = performance.now(), i, n, x;
 
   if (!tickct) {
     tickct = gts;
@@ -2009,9 +2033,7 @@ function tick() {
   while (fpattf !== 0 && n-- >= 1) {
     if (fpattf === 1) {
       pattf1();
-      console.log("A"+fpattc);
     } else if (fpattf === 2) {
-      console.log("B"+fpattc+"-"+fpatta.length+"-"+fpattz2);
       pattf2();
     }
   }
@@ -2072,8 +2094,8 @@ function tick() {
     }
   }
 
-  YagolsSetZeroTimeoutFunc(tick);
-};
+  window.YagolsSetZeroTimeoutFunc(tick);
+}
 
 function doffw() {
   var p0, q;
@@ -2097,7 +2119,7 @@ function doffw() {
             p0 = hist[q[0]][0][q[1]][11][1];
           }
         }
-        if (ffwm > 0 && (histp === 0 || histp === p0) || (!ffwstp || !stpga) && (histp === 0 || histp === p0) && (hist[histh][0][histi][3][0] > 0 || hist[histh][0][histi][3][1] > 0)) {
+        if (ffwm > 0 && (histp === 0 || histp === p0) || diamstop && (!ffwstp || !stpga) && (histp === 0 || histp === p0) && (hist[histh][0][histi][3][0] > 0 || hist[histh][0][histi][3][1] > 0)) {
           ffw = 0;
         }
       }
@@ -2123,7 +2145,7 @@ function doffw() {
           p0 = hist[q[0]][0][q[1]][11][1];
         }
       }
-      if (ffwm > 0 && histp === 0 || (!ffwstp || !stpga) && (histp === 0 || histp === p0) && (hist[histh][0][histi][3][0] > 0 || hist[histh][0][histi][3][1] > 0)) {
+      if (ffwm > 0 && histp === 0 || diamstop && (!ffwstp || !stpga) && (histp === 0 || histp === p0) && (hist[histh][0][histi][3][0] > 0 || hist[histh][0][histi][3][1] > 0)) {
         ffw = 0;
       }
     }
@@ -2640,7 +2662,7 @@ function dspview0() {
         }
       }
     }
-    if (msgf1 === 0 && (maxl >= vwax && maxl < vwax + vwaw || maxr >= vwax && maxr < vwax + vwaw || maxb >= vway && max < vway + vwah || maxt >= vway && maxt < vway + vwah)) {
+    if (msgf1 === 0 && (maxl >= vwax && maxl < vwax + vwaw || maxr >= vwax && maxr < vwax + vwaw || maxb >= vway && maxb < vway + vwah || maxt >= vway && maxt < vway + vwah)) {
       drawMsgsStm("There Be Dragons !", "");
       msgf1 = 901;
     }
@@ -2891,7 +2913,7 @@ function calcCellsz() {
 }
 
 function chgCellCR(c, r, f) {
-  var x, c0 = c, r0 = r, k;
+  var c0 = c, r0 = r;
   if (c0 < maxl) {
     c0 = maxr - maxl + c0 + 1;
   }
@@ -2915,7 +2937,7 @@ function chgCellQ(c, r, f) {
 }
 
 function toggleCellCR(c, r) {
-  var i, n, g, n2, a, z, q;
+  var i, n, g, n2, z, q;
   clrcellsx();
   i = fcidxg0(c,r) === 1 ? fcidxg2(c,r) - 1 : cellslen;
   n = tidx[crkey(c,r)];
@@ -3126,7 +3148,7 @@ function calcWrld3() {
 }
 
 function drawWrld() {
-  var i, ulw, w, h, d, x, y, x2, y2, wlw;
+  var i, w, h, d, x, y, x2, y2, wlw, vw, vh;
   if (cellsn === 0) {
     return;
   }
@@ -3140,7 +3162,7 @@ function drawWrld() {
   ctx2.strokeRect(Math.round(wrldx+wrldm/2-3.5), Math.round(wrldy+wrldm/2-3.5), Math.round(wrldw-wrldm+7.5), Math.round(wrldh-wrldm+7.5));
   ctx2.setLineDash([]);
   ctx2.strokeStyle = "rgba(130, 160, 0, 0.8)";
-  ctx2.strokeRect(Math.round(wrldx), Math.round(wrldy), Math.round(wrldw), Math.round(wrldh));
+  ctx2.strokeRect(Math.round(wrldx), Math.round(wrldy-1.5), Math.round(wrldw), Math.round(wrldh+3));
   ctx2.fillStyle = "rgba(0, 0, 0, 0.7)";
   ctx2.fillRect(Math.round(wrldx+wlw), Math.round(wrldy+wlw), Math.round(wrldw-wlw*2), Math.round(wrldh-wlw*2));
   w = (wrldw-wrldm) / (cellsr-cellsl+1);
@@ -3282,8 +3304,7 @@ function drawWrld() {
 }
 
 function drawScale() {
-  var w = 11;
-  var h = Math.floor(cheight * slidh);
+  var w = 11, h = Math.floor(cheight * slidh), p, q;
   if (h > cheight) {
     h = cheight;
   }
@@ -3361,8 +3382,7 @@ function drawScale() {
 }
 
 function drawSpeed() {
-  var w = 11;
-  var h = Math.floor(cheight * slidh);
+  var w = 11, h = Math.floor(cheight * slidh), p, q;
   if (h > cheight) {
     h = cheight;
   }
@@ -3418,8 +3438,7 @@ function drawSpeed() {
 }
 
 function drawColrs() {
-  var w = 11;
-  var h = Math.floor(cheight * slidh);
+  var w = 11, h = Math.floor(cheight * slidh), p, q;
   if (h > cheight) {
     h = cheight;
   }
@@ -3465,8 +3484,7 @@ function drawColrs() {
 }
 
 function drawCSize() {
-  var w = 11;
-  var h = Math.floor(cheight * slidh);
+  var w = 11, h = Math.floor(cheight * slidh), p, q;
   if (h > cheight) {
     h = cheight;
   }
@@ -4024,7 +4042,7 @@ function drawCapButton() {
 }
 
 function drawInfo() {
-  var s, x, z, n, n1, n2, q, hi, m;
+  var s, x, z, n, n1, n2, q, m;
   if (genbtcd) {
     z = gts - genbtcd > genbtcdn ? 1 : (gts - genbtcd) / genbtcdn;
     if (genbtl) {
@@ -4433,7 +4451,7 @@ function drawPos() {
 }
 
 function drawCRule() {
-  var s1b, s1s, s2b, s2s, x, y, w, h, p, d, z, z2;
+  var s1b, s1s, s2b, s2s, p, d, z, z2;
   if (hist[histh][0][histi][1] && cruleb === histcr[0] && crules === histcr[1]) {
     s1b = hist[histh][0][histi][1][1][0];
     s1s = hist[histh][0][histi][1][1][1];
@@ -4741,7 +4759,6 @@ function drawHistPnl() {
   hpnl2x = cwidth - 281;
   drawStrImg(ctx2, "\u2A01", hpnl1x - 3, cheight - 39, 29, 40, 110, 240, 0.5, 3);
   hpnl2y = cheight - 60;
-  hpnl2w = 26;
   hpnl2h = 26;
   drawStrImg(ctx2, "\u00D72", hpnl1x + 13, cheight - 34, 11, 145, 145, 145, 0.5);
   hpnl3x = cwidth - 250;
@@ -4785,7 +4802,6 @@ function drawFcidxPnl() {
   fpnl2x = cwidth - 111;
   drawStrImg(ctx2, "\u29BB", fpnl2x - 1, cheight - 39, 37, 40, 110, 240, 0.45);
   fpnl2y = cheight - 62;
-  fpnl2w = 27;
   fpnl2h = 26;
   ctx2.font = "18px " + font;
   ctx2.fillStyle = "rgba(110, 110, 110, 0.6)";
@@ -4808,16 +4824,16 @@ function drawFButt() {
   var x, y, px, py;
   px = cwidth - 3, py = 104;
   x = px - 51 - 51 - 51;
-  drawFButt0(x -= 51, py, 44, 32, 0, dhlpn > 0, 0, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 0, dhlpn > 0, 0, function(/*fb*/) {
     swdhlp();
   });
-  drawFButt0(x -= 51, py, 44, 32, 1, dwrld, 0, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 1, dwrld, 0, function(/*fb*/) {
     swdwrld();
   });
-  drawFButt0(x -= 51, py, 44, 32, 2, patt, 0, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 2, patt, 0, function(/*fb*/) {
     swpatt();
   });
-  drawFButt0(x -= 51, py, 44, 32, 3, dspgrd, 0, function(fb) {
+  drawFButt0(x -= 51, py, 44, 32, 3, dspgrd, 0, function(/*fb*/) {
     swdspgrd();
   });
   x = px;
@@ -4826,58 +4842,59 @@ function drawFButt() {
   x -= 51;
   x -= 51;
   y = py;
-  drawFButt0(x, y -= 41, 44, 32, 4, null, 1, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 4, null, 1, function(/*fb*/) {
     swclru();
   });
-  drawFButt0(x, y -= 41, 44, 32, 5, !dmsgs, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 5, !dmsgs, 0, function(/*fb*/) {
     swdmsgs();
   });
   x -= 51;
   y = py;
-  drawFButt0(x, y -= 41, 44, 32, 6, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 6, null, 0, function(/*fb*/) {
   });
-  drawFButt0(x, y -= 41, 44, 32, 7, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 7, null, 0, function(/*fb*/) {
   });
   x -= 51;
   y = py;
-  drawFButt0(x, y -= 41, 44, 32, 8, stops, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 8, stops, 0, function(/*fb*/) {
     swstops();
   });
-  drawFButt0(x, y -= 41, 44, 32, 9, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 9, null, 0, function(/*fb*/) {
   });
   x -= 51;
   y = py;
-  drawFButt0(x, y -= 41, 44, 32, 10, stpge, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 10, stpge, 0, function(/*fb*/) {
     swstpge();
   });
-  drawFButt0(x, y -= 41, 44, 32, 11, trkw, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 11, trkw, 0, function(/*fb*/) {
     swtrkw();
   });
   x = cwidth - 3, y = 145;
   x -= 51;
-  drawFButt0(x, y -= 41, 44, 32, 12, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 12, null, 0, function(/*fb*/) {
   });
-  drawFButt0(x, y -= 41, 44, 32, 13, vwcrs, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 13, vwcrs, 0, function(/*fb*/) {
     swvwcrs();
   });
-  drawFButt0(x, y -= 41, 44, 32, 14, frzc, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 14, frzc, 0, function(/*fb*/) {
     swfrzc();
   });
   y = 145;
   x -= 51;
-  drawFButt0(x, y -= 41, 44, 32, 15, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 15, null, 0, function(/*fb*/) {
   });
-  drawFButt0(x, y -= 41, 44, 32, 16, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 16, null, 0, function(/*fb*/) {
   });
-  drawFButt0(x, y -= 41, 44, 32, 17, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 17, null, 0, function(/*fb*/) {
   });
   y = 145;
   x -= 51;
-  drawFButt0(x, y -= 41, 44, 32, 18, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 18, null, 0, function(/*fb*/) {
   });
-  drawFButt0(x, y -= 41, 44, 32, 19, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 19, diamstop, 0, function(/*fb*/) {
+    swdiamstop();
   });
-  drawFButt0(x, y -= 41, 44, 32, 20, null, 0, function(fb) {
+  drawFButt0(x, y -= 41, 44, 32, 20, null, 0, function(/*fb*/) {
   });
 }
 
@@ -5016,11 +5033,20 @@ function drawFButt0(x, y, w, h, i, t, r, f) {
         drawStrImg(ctx2, "\u203B", x + 11, y + 28, 31, 0, 0, 0, 1);
       }
       break;
+    case 19:
+      if (fbutt[i][4] || fbutt[i][6]) {
+        drawStrImg(ctx2, "diamstop", x + 3, y - 2, 0, 140, 140, 140, 0.7);
+      } else if (fbutt[i][5]) {
+        drawStrImg(ctx2, "diamstop", x + 3, y - 2, 0, 190, 210, 190, 0.6);
+      } else {
+        drawStrImg(ctx2, "diamstop", x + 3, y - 2, 0, 0, 0, 0, 1);
+      }
+      break;
   }
 }
 
 function drawGrid() {
-  var w = cwidth, h = cheight, p, p2, n;
+  var w = cwidth, h = cheight, p, p2;
   p = w/2 - (posx / (cellsz + 1) - Math.floor(posx / (cellsz + 1))) * (cellsz + 1);
   p = p - Math.ceil(p / (cellsz + 1)) * (cellsz + 1);
   p2 = Math.round(cellX(posx+(p-w/2)));
@@ -5100,6 +5126,7 @@ function drawGrid() {
 }
 
 function drawFxa() {
+  var x, dx, dy, p1, p2;
   if (clrucd) {
     ctx1a.fillStyle = "rgba(160, 70, 40, " + (0.7 * (gts - clrucd > clrucdn ? 0 : 1 - (gts - clrucd) / clrucdn)) + ")";
     ctx1a.fillRect(0, 0, cwidth, cheight);
@@ -5320,7 +5347,7 @@ function drawHelp() {
 }
 
 function drawHelp0(n) {
-  var w = 0, h = 0, x, x2, i, dx, dy, px, py, mx, my, l, x3;
+  var w = 0, h = 0, x, y, x2, i, dx, dy, mx, my, l, x3;
   function drw(c, s, x, y) {
     var w2 = c.measureText(s).width;
     c.fillText(s, x, y);
@@ -5567,7 +5594,7 @@ function drawHelp0(n) {
       x2 = drw(ctxos1, "\u22C5  Yagols will also respect the stop when playing (", x + 10, y + 335);
       drawStrImg(ctxos1, "\u25B7\u25B7", x2 + 2, y + 337, 13, 40, 110, 240, 1);
       ctxos1.fillStyle = "rgba(200, 200, 200, 0.8)";
-	    drw(ctxos1, ")  \u22C5", x2 + 30, y + 335);
+      drw(ctxos1, ")  \u22C5", x2 + 30, y + 335);
       drw(ctxos1, "\u22C5  If a relative stop has been set it will be re-set everytime when stopped  \u22C5", x + 10, y + 359);
       drw(ctxos1, "\u22C5  Consecutive generations without changes (a still life) are treated as a whole  \u22C5", x + 10, y + 379);
       drw(ctxos1, "\u22C5  Therefore, Yagols can not stop at one specific such generation unless it's the last one  \u22C5", x + 10, y + 399);
@@ -5579,6 +5606,7 @@ function drawHelp0(n) {
       ctxos1.font = "13px " + font;
       ctxos1.fillStyle = "rgba(210, 210, 210, 1)";
       drw(ctxos1, "\u22C5  Enter new rule  \u22C5", x, y + 15);
+      break;
     default:
       ctxos1.font = "13px " + font;
       ctxos1.fillStyle = "rgba(200, 200, 200, 1)";
@@ -5674,18 +5702,21 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
   if (q) {
     k += "-"+q;
   }
+  function draws(s, fs) {
+    canvasos0.width = (w = s.length * fs);
+    canvasos0.height = (h = fs + (q2||0));
+    ctxos0.clearRect(0, 0, w, h);
+    ctxos0.font = "" + fs + "px " + font;
+    ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
+    ctxos0.fillText(s, 0, h - 1 - (q||0));
+  }
   if (!(i = strimgt[k])) {
     if (fs > 0) {
-      canvasos0.width = (w = s.length * fs);
-      canvasos0.height = (h = fs + (q2?q2:0));
-      ctxos0.clearRect(0, 0, w, h);
-      ctxos0.font = "" + fs + "px " + font;
-      ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
-      ctxos0.fillText(s, 0, h - 1 - (q?q:0));
-    };
+      draws(s, fs);
+    }
     switch (s) {
       case "MSG":
-  	    ctxos0.beginPath();
+        ctxos0.beginPath();
         ctxos0.lineWidth = 2;
         ctxos0.setLineDash([]);
         ctxos0.strokeStyle = "rgba("+r+","+g+","+b+",1)";
@@ -5696,15 +5727,15 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.stroke();
         break;
       case " \u29B5":
-  	    fillrr(ctxos0, 6, 10, 4, 6, 1);
-  	    fillrr(ctxos0, 6, 17, 4, 6, 1);
-  	    fillrr(ctxos0, 6, 24, 4, 6, 1);
-  	    break;
+        fillrr(ctxos0, 6, 10, 4, 6, 1);
+        fillrr(ctxos0, 6, 17, 4, 6, 1);
+        fillrr(ctxos0, 6, 24, 4, 6, 1);
+        break;
       case "vwcrs":
         canvasos0.width = (w = 24);
         canvasos0.height = (h = 20);
         ctxos0.clearRect(0, 0, w, h);
-  	    ctxos0.beginPath();
+        ctxos0.beginPath();
         ctxos0.lineWidth = 1;
         ctxos0.setLineDash([]);
         ctxos0.strokeStyle = "rgba("+r+","+g+","+b+",1)";
@@ -5854,7 +5885,7 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.fillText("?", 16, 30);
         break;
       case " I ":
-  	    ctxos0.beginPath();
+        ctxos0.beginPath();
         ctxos0.lineWidth = 3;
         ctxos0.setLineDash([1]);
         ctxos0.strokeStyle = "rgba("+r+","+g+","+b+",1)";
@@ -5874,6 +5905,12 @@ function drawStrImg(c, s, x, y, fs, r, g, b, a, q, q2) {
         ctxos0.font = "13px " + font;
         ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
         ctxos0.fillText("\u22C5\u22C5CellIdx\u22C5BlockSz\u22C5\u22C5", 0, 20);
+        break;
+      case "diamstop":
+        draws("\u25C8 ", 27);
+        ctxos0.font = "bold 24px " + font;
+        ctxos0.fillStyle = "rgba("+r+","+g+","+b+",1)";
+        ctxos0.fillText("\u29B5", 19, 24);
         break;
     }
     d = canvasos0.toDataURL("image/png");
@@ -5913,7 +5950,7 @@ function hupdates() {
 }
 
 function calcGen(u) {
-  var i, u2, q, hi = hist[histh][0][histi], z, c, hf = false, q1, q2, p, pp, dx, dy, cp, cm, cxv, cv, x, v0, v1, v2, v3, v4;
+  var i, u2, q, hi = hist[histh][0][histi], z, c, hf = false, q1, q2, p, pp, dx, dy, cp, cm, x, v0, v1, v2, v3;
   c = cellsn;
   cp = 0;
   cm = 0;
@@ -5935,8 +5972,6 @@ function calcGen(u) {
     hi[1] = [histcr, [cruleb,crules]];
     histcr = [cruleb,crules];
     hlcrcd = performance.now();
-    hlcrd2 = null;
-    hlcrd3 = null;
     hi[3][0]++;
     drawMsgsStm("New Rule", "B"+cruleb+" S"+crules);
   }
@@ -6475,6 +6510,7 @@ function pattf2() {
 }
 
 function crulecomp() {
+  var i;
   if (ccruleb === "") {
     ccrulebx = false;
   } else {
@@ -6500,7 +6536,6 @@ function crulecomp() {
 }
 
 function crulebut(f) {
-  var i;
   if (f === 1) {
     cruleb = crulebn;
     crules = crulesn;
@@ -6546,7 +6581,8 @@ function capHist() {
   }
   histh = h;
   histi = i;
-  if (hi = hist[histh][0][histi]) {
+  hi = hist[histh][0][histi];
+  if (hi) {
     a = null;
     for (i = 0; i < hi[0].length; i++) {
       if (hi[0][i][3] !== 1) {
@@ -6730,7 +6766,7 @@ function prevGen() {
 }
 
 function prevGen2(hi, pp, dx, dy) {
-  var i, c, r, g, z, x;
+  var i, c, r, g, z;
   i = hi[0].length - 1;
   while (i >= 0) {
     if (hi[0][i][3] !== 1) {
@@ -6916,7 +6952,7 @@ function nextGen() {
 }
 
 function nextGen2(hi, pp, dx, dy) {
-  var i, c, r, g, z, v;
+  var i, c, r, g, z;
   i = 0;
   while (i < hi[0].length) {
     if (hi[0][i][3] !== 1) {
@@ -6965,7 +7001,7 @@ function nextGen2(hi, pp, dx, dy) {
 }
 
 function revert() {
-  var q;
+  var q, c, r, g, z;
   if (hupdc === 0 && histp > 0) {
     q = prevHist(histh, histi);
     if (hist[q[0]][0][q[1]][11][0] > 0 && histp < hist[q[0]][0][q[1]][11][1]) {
@@ -7060,7 +7096,7 @@ function fcidxs3(c, r, v) {
 }
 
 function fcidx(c, r, v, vx, e, f, g, h) {
-  var n = Math.pow(2,cidxb[cidxbi][0].length+5), c2, r2, v2, d, c0 = c, r0 = r, u, v20, v21, v22, v23, v0, v1, v2, v3;
+  var n = Math.pow(2,cidxb[cidxbi][0].length+5), c2, r2, d, c0 = c, r0 = r, u, v20, v21, v22, v23, v0, v1, v2, v3;
   if (c0 < maxl) {
     c0 = maxr - maxl + c0 + 1;
   }
@@ -7096,16 +7132,12 @@ function fcidx(c, r, v, vx, e, f, g, h) {
     switch (v) {
       case 20:
         return v20;
-        break;
       case 21:
         return v21;
-        break;
       case 22:
         return v22;
-        break;
       case 23:
         return v23;
-        break;
       default:
         return 0;
     }
@@ -7202,7 +7234,7 @@ function fcidx(c, r, v, vx, e, f, g, h) {
 }
 
 function fcidxb(bi, l, c, r, q) {
-  var b, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, l2, c3, r3, bb, f, i2, j2;
+  var b, j, k, c2, r2, n, b1, b2, b3, b4, t, n2, k2, i, l2, c3, r3, f, i2, j2;
   t = l === cidxb[bi][0].length - 1 && cidxb[bi][2] === -1;
   if (!t && (!cidxb[bi][0][l] || cidxb[bi][0][l].size < 1)) {
     if (l === 0 && cidxb[bi][1] === -1) {
@@ -7218,7 +7250,8 @@ function fcidxb(bi, l, c, r, q) {
     }
   }
   k = crkey(c,r);
-  if (b = (cidxb[bi][0][l] && cidxb[bi][0][l] !== true ? cidxb[bi][0][l].get(k) : null)) {
+  b = cidxb[bi][0][l] && cidxb[bi][0][l] !== true ? cidxb[bi][0][l].get(k) : null;
+  if (b) {
     if (!t) {
       cidxb[bi][0][l].delete(k);
       if (cidxb[bi][0][l].size < 1) {
@@ -7256,7 +7289,8 @@ function fcidxb(bi, l, c, r, q) {
         r2 = r < 0 ? Math.ceil((r + 1) / (n2 / n)) - 1 : Math.floor(r / (n2 / n));
         if (!cidxb[bi][3].has(k2 = crkey(c2,r2))) {
           cidxb[bi][3].set(k2, true);
-          if (b1 = fcidxb(cidxb[bi][1],l2,c2,r2,q)) {
+          b1 = fcidxb(cidxb[bi][1],l2,c2,r2,q);
+          if (b1) {
             i = 0;
             while (i < n2) {
               j = 0;
@@ -7376,7 +7410,8 @@ function fcidxbc2(n1, n2, s, t, c, r) {
   while (i < n2) {
     j = 0;
     while (j < n2) {
-      if (t[i*n2*4+j*4+2] = s[(c+i)*n1*4+(r+j)*4+2]) {
+      t[i*n2*4+j*4+2] = s[(c+i)*n1*4+(r+j)*4+2];
+      if (t[i*n2*4+j*4+2]) {
         t[1]++;
         t[i*n2*4+j*4+1+2] = s[(c+i)*n1*4+(r+j)*4+1+2];
         t[i*n2*4+j*4+2+2] = s[(c+i)*n1*4+(r+j)*4+2+2];
@@ -7477,7 +7512,7 @@ function clrCib() {
 }
 
 function clrcellsx(f) {
-  var i, v, v0, v1;
+  var i, v0, v1;
   if (!f) {
     hbcksll = 0;
   }
@@ -7638,7 +7673,7 @@ function rclHist1_2() {
 }
 
 function prevHist(h, i, f) {
-  var h2, i2, x;
+  var h2, h3, i2, x;
   h2 = h;
   i2 = i;
   if (hist[h2][6] !== -1 && i2 === hist[h2][4][hist[h2][6]]) {
@@ -7753,7 +7788,7 @@ function histinc(f) {
 }
 
 function histrst() {
-  var hi, a, x;
+  var hi, a, x, i;
   hi = hist[histh][0][histi];
   x = hi[3][1];
   a = null;
@@ -7910,8 +7945,8 @@ function hbckhac() {
   return h;
 }
 
-function hbckcheck(hi0) {
-  var p, i, h, x, n, hi, q, j, c, r, g, z, k, p0, q1, pp, dx, dy, pn, px;
+function hbckcheck() {
+  var p, i, h, x, n, hi, q, j, c, r, g, z, k, p0, q0, q1, pp, dx, dy, pn, px;
   if (!hbcksl || gennum < 3 || hbcksll < 3 || hbcksm && !hbcksm.has(hbcksl[hbckslf])) {
     return;
   }

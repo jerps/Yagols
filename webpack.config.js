@@ -10,6 +10,8 @@ This software is licensed under the MIT license (see LICENSE)
 
 const path = require('path');
 const merge = require('webpack-merge');
+const webpack = require('webpack');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -18,14 +20,14 @@ module.exports = env => {
 
   env = env ? env : {};
 
-  conf = {
+  let conf = {
     mode: env.prod ? 'production' : 'development',
-    context: path.resolve(__dirname),
     entry: {
       yagols: path.resolve(__dirname, 'src/Yagols.js')
     },
     output: {
-      path: path.resolve(__dirname)
+      filename: 'Yagols.min.js',
+      path: path.resolve(__dirname, 'dist')
     },
     resolve: {
       modules: ['node_modules']
@@ -37,18 +39,14 @@ module.exports = env => {
         inlineSource: '.js$'
       }),
       new HtmlWebpackInlineSourcePlugin(),
-      new CleanWebpackPlugin({
-        cleanOnceBeforeBuildPatterns: [],
-        cleanAfterEveryBuildPatterns: ['Yagols.js']
-      })
-    ],
-    optimization: {
-    }
+      new CleanWebpackPlugin(),
+      new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, 'LICENSE.txt'), 'utf8'))
+    ]
   };
 
   if (env.prod) {conf=merge(conf, {
+    devtool: 'source-map',
     module: {
-      devtool: 'source-map',
       rules : [
         {
           test: /\.js$/,

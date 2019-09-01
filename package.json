@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build:dev": "webpack --config webpack.config.js",
-    "build:prod": "webpack --config webpack.config.js --env.prod"
+    "build:dev": "node build.dev.js",
+    "build:prod": "node build.prod.js"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

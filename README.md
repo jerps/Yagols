@@ -1,4 +1,4 @@
-## Yagols v4.0 - Yet another Game of Life simulator
+## Yagols v4.1 - Yet another Game of Life simulator
 
 #### Yagols is
 
@@ -60,9 +60,14 @@
 
 ### License
 
-Yagols is [MIT Licensed](LICENSE.md). You may use, distribute and copy it under the license terms.
+Yagols is [MIT Licensed](LICENSE.txt). You may use, distribute and copy it under the license terms.
 
 ### Changes
+
+* v4.1 (august 2019)
+
+  * Some bugfixes and a bit of code clean-up.
+  * Added button to enable/disable stop on diamond when ffw & rew.
 
 * v4.0 (june 2019)
 
