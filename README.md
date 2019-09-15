@@ -1,4 +1,4 @@
-## Yagols v4.1 - Yet another Game of Life simulator
+## Yagols v4.2 - Yet another Game of Life simulator
 
 #### Yagols is
 
@@ -63,6 +63,10 @@
 Yagols is [MIT Licensed](LICENSE.txt). You may use, distribute and copy it under the license terms.
 
 ### Changes
+
+* v4.2 (september 2019)
+
+  * Updated node modules. Added node_modules to repository.
 
 * v4.1 (august 2019)
 

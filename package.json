@@ -3,16 +3,21 @@
     "build:dev": "node build.dev.js",
     "build:prod": "node build.prod.js"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jerps/Yagols.git"
+  },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "^3.2.0",
     "path": "^0.12.7",
-    "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.2",
-    "webpack-merge": "^4.2.1"
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.8",
+    "webpack-merge": "^4.2.2"
   }
 }
