@@ -1,6 +1,6 @@
 /*
 
-Yagols v4.2
+Yagols v4.2.1
 
 (c) 2018-2019 John Erps
 
@@ -5992,7 +5992,7 @@ function calcGen(u) {
       hbcksl = [];
     }
     hbcksm = new Map();
-    for (i = hbcksl.length; i < 1000; i++) {
+    for (i = hbcksl.length; i < 200; i++) {
       hbcksl[i] = 0;
     }
     z = histgp;

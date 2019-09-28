@@ -1,4 +1,4 @@
-## Yagols v4.2 - Yet another Game of Life simulator
+## Yagols v4.2.1 - Yet another Game of Life simulator
 
 #### Yagols is
 
@@ -60,9 +60,13 @@
 
 ### License
 
-Yagols is [MIT Licensed](LICENSE.txt). You may use, distribute and copy it under the license terms.
+Yagols is [MIT Licensed](LICENSE). You may use, distribute and copy it under the license terms.
 
 ### Changes
+
+* v4.2.1 (september 2019)
+
+  * Search 200 gen deep instead of 1000 to look for oscillators and spaceships (max p200).
 
 * v4.2 (september 2019)
 
