@@ -1,4 +1,4 @@
-## Yagols v4.2.1 - Yet another Game of Life simulator
+## Yagols v4.3 - Yet another Game of Life simulator
 
 #### Yagols is
 
@@ -63,6 +63,12 @@
 Yagols is [MIT Licensed](LICENSE). You may use, distribute and copy it under the license terms.
 
 ### Changes
+
+* v4.3 (october 2019)
+
+  * Fixed cell colors.
+
+  * Removed sliders for cell colors and cell size.
 
 * v4.2.1 (september 2019)
 

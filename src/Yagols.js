@@ -1,6 +1,6 @@
 /*
 
-Yagols v4.2.1
+Yagols v4.3
 
 (c) 2018-2019 John Erps
 
@@ -19,14 +19,12 @@ var titlefd = 0, titlefdt = null, titlefds = 1000, titlemode = 0, tmet = null, t
 var mdown = false, ton = false, toncd = null, toncdn = 300, toncm = 1, tonx = 0, tony = 0;
 var scl = false, sclx = 0, scly = 0, sclr = 0, sclpx = 0, sclpy = 0, sclbx = 0, sclby = 0, sclbw = 0, sclbh = 0, scld = 0;
 var spd = false, spdx = 0, spdy = 0, spdr = 0, spdbx = 0, spdby = 0, spdbw = 0, spdbh = 0, spdd = 0;
-var colrs = 100, colr = false, colrx = 0, colry = 0, colrr = 0, colrbx = 0, colrby = 0, colrbw = 0, colrbh = 0, colrd = 0;
-var csize = 100, csiz = false, csizx = 0, csizy = 0, csizr = 0, csizbx = 0, csizby = 0, csizbw = 0, csizbh = 0, csizd = 0;
 var diffx = 0, diffy = 0, curx = 0, cury = 0;
 var dspgrd = false;
 var runt = false, runtx = 0, runty = 0, runtw = 0, runth = 0;
 var dspvc = 0, rsct = null, frpsn = 0;
 var gts = null, wts1 = null;
-var chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, prvcolrs = null, prvcsize = null, drawbackg = true, drawallcells = true;
+var chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, drawbackg = true, drawallcells = true;
 var dsppost = false, dsppostx = 0, dspposty = 0, dsppostw = 0, dspposth = 0, dspposcd = null, dspposcdn = 200;
 var patt = false;
 var fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattn = 0, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1;
@@ -98,7 +96,7 @@ var stmsgn1 = "Y \u22C5 a \u22C5 g \u22C5 o \u22C5 l \u22C5 s                ", 
 var diamstop = true;
 
 function clrvars0() {
-  chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, prvcolrs = null, prvcsize = null, drawbackg = true, drawallcells = true;
+  chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, drawbackg = true, drawallcells = true;
   hist = [[[[[],null,0,[0,0],false,0,0,0,0,0,0,[0,0,0,0],0,0,0,0,0]],0,-1,-1,[],[],-1,-1,[]]], histh = 0, histod = 0, histcr = [cruleb,crules], histi = 0, histp = 0, histq = null, histq0 = null, histgp = 0, histgn = 0, histn = 1, histrcll1 = 0, histrcll2 = 0;
   histdvh = 0, histdvi = 0, histdvp = 0;
   ffw = 0, ffwm = 0, ffwstp = false, ngenfx = 0, ngenfy = 0, ngenfw = 0, ngenfh = 0, ngenfcd = null, ngenfcd2 = null, pgenfx = 0, pgenfy = 0, pgenfw = 0, pgenfh = 0, pgenfcd = null, pgenfcd2 = null;
@@ -902,20 +900,6 @@ function addel() {
           spdd = e.pageY - spdy;
         }
         spd = true;
-      } else if (e.pageX > colrx-colrr && e.pageX < colrx+colrr+4 && e.pageY > colry-colrr && e.pageY < colry+colrr+5) {
-        if (!colr) {
-          diffx = e.pageX;
-          diffy = e.pageY;
-          colrd = e.pageY - colry;
-        }
-        colr = true;
-      } else if (e.pageX > csizx-colrr && e.pageX < csizx+csizr+4 && e.pageY > csizy-csizr && e.pageY < csizy+csizr+5) {
-        if (!csiz) {
-          diffx = e.pageX;
-          diffy = e.pageY;
-          csizd = e.pageY - csizy;
-        }
-        csiz = true;
       } else if ((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw+6 && e.pageY > sclby && e.pageY < sclby+sclbh+3) {
         posm = false;
         scalem = false;
@@ -928,10 +912,6 @@ function addel() {
         swzmsw = false;
       } else if (e.pageX > spdbx && e.pageX < spdbx+spdbw && e.pageY > spdby && e.pageY < spdby+spdbh+3) {
         speed = 100 - 100*(e.pageY-spdby)/spdbh;
-      } else if (e.pageX > colrbx && e.pageX < colrbx+colrbw && e.pageY > colrby && e.pageY < colrby+colrbh+3) {
-        colrs = 100 - 100*(e.pageY-colrby)/colrbh;
-      } else if (e.pageX > csizbx && e.pageX < csizbx+csizbw && e.pageY > csizby && e.pageY < csizby+csizbh+3) {
-        csize = 100 - 100*(e.pageY-csizby)/csizbh;
       } else if (e.pageX > runtx && e.pageX < runtx+runtw && e.pageY > runty && e.pageY < runty+runth) {
         if (!runt) {
           swrun();
@@ -1192,8 +1172,6 @@ function addel() {
     var x;
     scl = false;
     spd = false;
-    colr = false;
-    csiz = false;
     runt = false;
     dsppost = false;
     htgent = false;
@@ -1229,10 +1207,6 @@ function addel() {
         && (!((swzmf || swzmcd2) && e.pageX > sclbx && e.pageX < sclbx+sclbw && e.pageY > sclby && e.pageY < sclby+sclbh+3))
         && (!(e.pageX > spdx-spdr && e.pageX < spdx+spdr+4 && e.pageY > spdy-spdr && e.pageY < spdy+spdr+5))
         && (!(e.pageX > spdbx && e.pageX < spdbx+spdbw && e.pageY > spdby && e.pageY < spdby+spdbh+3))
-        && (!(e.pageX > colrx-colrr && e.pageX < colrx+colrr+4 && e.pageY > colry-colrr && e.pageY < colry+colrr+5))
-        && (!(e.pageX > colrbx && e.pageX < colrbx+colrbw && e.pageY > colrby && e.pageY < colrby+colrbh+3))
-        && (!(e.pageX > csizx-csizr && e.pageX < csizx+csizr+4 && e.pageY > csizy-csizr && e.pageY < csizy+csizr+5))
-        && (!(e.pageX > csizbx && e.pageX < csizbx+csizbw && e.pageY > csizby && e.pageY < csizby+csizbh+3))
         && (!(e.pageX > runtx && e.pageX < runtx+runtw && e.pageY > runty && e.pageY < runty+runth))
         && (!(e.pageX > dsppostx && e.pageX < dsppostx+dsppostw && e.pageY > dspposty && e.pageY < dspposty+dspposth))
         && (!(crulem !== 0 && e.pageX > rbcbx && e.pageX < rbcbx+rbcbw && e.pageY > rbcby && e.pageY < rbcby+rbcbh))
@@ -1425,26 +1399,6 @@ function peMsMove(px, py) {
     calcCellsz();
     posx = sclpx * (cellsz+(cellsz>grb?1:cellsz/grb));
     posy = sclpy * (cellsz+(cellsz>grb?1:cellsz/grb));
-  }
-  if (colr) {
-    p = cury - colrd;
-    if (p < colrby) {
-      p = colrby;
-    }
-    if (p >= colrby + colrbh) {
-      p = colrby + colrbh - 1;
-    }
-    colrs = 100 - 100*(p-colrby)/colrbh;
-  }
-  if (csiz) {
-    p = cury - csizd;
-    if (p < csizby) {
-      p = csizby;
-    }
-    if (p >= csizby + csizbh) {
-      p = csizby + csizbh - 1;
-    }
-    csize = 100 - 100*(p-csizby)/csizbh;
   }
   if (wrlda) {
     posm = false;
@@ -2773,17 +2727,6 @@ function dspview0() {
     chgpos = true;
   }
 
-  if (!prvcolrs || colrs !== prvcolrs) {
-    prvcolrs = colrs;
-    drawallcells = true;
-  }
-
-  if (!prvcsize || csize !== prvcsize) {
-    prvcsize = csize;
-    drawallcells = true;
-    cimgc++;
-  }
-
   if (frzc != frzcp) {
     frzcp = frzc;
     drawallcells = true;
@@ -2879,8 +2822,6 @@ function dspview0() {
   drawFButt();
   drawScale();
   drawSpeed();
-  drawColrs();
-  drawCSize();
   drawRunToggle();
   drawNGenButton();
   drawPGenButton();
@@ -3036,12 +2977,7 @@ function drawCells() {
     for (i = 0; i < cellslen; i++) {
       bmemgA(i);
       if (bmemv3 === 1) {
-        x = Math.trunc(60 * Math.pow(2, 3+7*colrs/100) / 1024);
-        if (x < 1) {
-          x = 1;
-        }
-        c = Math.trunc((1 - ((bmemv2>0?bmemv2:gennum)-mingen+1) / (gennum-mingen+1)) * 59 / (60 / x));
-        c = Math.round(c * 60 / x * 2);
+        c = Math.trunc((1 - (bmemv2-mingen+1) / (gennum-mingen+1)) * 59);
         if (c > 59) {
           c = 59;
         }
@@ -3074,7 +3010,7 @@ function cellImg(c) {
   if (cimg[c] < cimgc) {
     cimg[c] = cimgc;
     cx = cellsz < 2 ? 2 - cellsz : 0;
-    cd = (cellsz+cx) * 0.1 + (cellsz+cx) * 0.8 * (1 - csize/100);
+    cd = (cellsz+cx) * 0.1;
     cs = cellsz+cx-cd;
     x = Math.trunc(canvasosci.width / (cellsz+cx+5));
     py = Math.trunc(c / x);
@@ -3311,7 +3247,7 @@ function drawScale() {
   if (h < 1) {
     h = 1;
   }
-  var x = cwidth - w * 11.3, y = 130 + Math.floor((cheight - h - 170) / 2), fs, t;
+  var x = cwidth - w * 6, y = 130 + Math.floor((cheight - h - 170) / 2), fs, t;
   if (swzmcd2) {
     t = gts - swzmcd2 > swzmcdn2 ? 1 : (gts - swzmcd2) / swzmcdn2;
     if (!swzmf) {
@@ -3386,16 +3322,16 @@ function drawSpeed() {
   if (h > cheight) {
     h = cheight;
   }
-  var x = cwidth - w * 15.4, y = 130 + Math.floor((cheight - h - 170) / 2), fs, t;
+  var x = cwidth - w * 11, y = 130 + Math.floor((cheight - h - 170) / 2), fs, t;
   if (swzmcd2) {
-    x = (w * 15.4 - w * 11.3) * (gts - swzmcd2 > swzmcdn2 ? 1 : (gts - swzmcd2) / swzmcdn2);
+    x = (w * 11 - w * 6) * (gts - swzmcd2 > swzmcdn2 ? 1 : (gts - swzmcd2) / swzmcdn2);
     if (swzmf) {
-      x = (cwidth - w * 11.3) - x;
+      x = (cwidth - w * 6) - x;
     } else {
-      x = (cwidth - w * 15.4) + x;
+      x = (cwidth - w * 11) + x;
     }
   } else if (!swzmf) {
-    x = cwidth - w * 11.3;
+    x = cwidth - w * 6;
   }
   t = 1;
   spdbx = x;
@@ -3434,98 +3370,6 @@ function drawSpeed() {
     ctx2.strokeStyle = "rgba(0, 100, 150, " + (t*0.7) + ")";
   }
   ctx2.arc(Math.round(spdx), Math.round(spdy), Math.round(spdr), 0, 2 * Math.PI);
-  ctx2.stroke();
-}
-
-function drawColrs() {
-  var w = 11, h = Math.floor(cheight * slidh), p, q;
-  if (h > cheight) {
-    h = cheight;
-  }
-  var x = cwidth - w * 7.2, y = 130 + Math.floor((cheight - h - 170) / 2), fs, t;
-  t = 1;
-  colrbx = x;
-  colrby = y;
-  colrbw = w;
-  colrbh = h;
-  ctx2.strokeStyle = "rgba(120, 120, 170, " + (t*0.7) + ")";
-  ctx2.setLineDash([]);
-  ctx2.lineWidth = w/4;
-  strokerr(ctx2, Math.round(x), Math.round(y), Math.round(w), Math.round(h), w/2);
-  q = colrs;
-  if (colr) {
-    fs = "rgba(50, 70, 90, " + (t*0.4) + ")";
-    p = cury - colrd;
-    if (p < y) {
-      p = y;
-    }
-    if (p >= y + h) {
-      p = y + h - 1;
-    }
-    q = 100 - 100*(p-y)/h;
-  } else {
-    fs = "rgba(0, 0, 0, " + (t*0.6) + ")";
-  }
-  colrx = x+w/2;
-  colry = y+h-h*q/100;
-  colrr = w*1.5;
-  drawStrImg(ctx2, "clr", Math.round(x+w/2-13) + 2, Math.round(colry+w/2-1), 16, 200, 200, 200, t * 0.8);
-  ctx2.fillStyle = fs;
-  ctx2.beginPath();
-  ctx2.arc(Math.round(colrx), Math.round(colry), Math.round(colrr), 0, 2 * Math.PI);
-  ctx2.fill();
-  if (colr) {
-    ctx2.strokeStyle = "rgba(0, 140, 180, " + (t*0.7) + ")";
-  } else {
-    ctx2.strokeStyle = "rgba(0, 100, 150, " + (t*0.7) + ")";
-  }
-  ctx2.arc(Math.round(colrx), Math.round(colry), Math.round(colrr), 0, 2 * Math.PI);
-  ctx2.stroke();
-}
-
-function drawCSize() {
-  var w = 11, h = Math.floor(cheight * slidh), p, q;
-  if (h > cheight) {
-    h = cheight;
-  }
-  var x = cwidth - w * 3.1, y = 130 + Math.floor((cheight - h - 170) / 2), fs, t;
-  t = 1;
-  csizbx = x;
-  csizby = y;
-  csizbw = w;
-  csizbh = h;
-  ctx2.strokeStyle = "rgba(120, 120, 170, " + (t*0.7) + ")";
-  ctx2.setLineDash([]);
-  ctx2.lineWidth = w/4;
-  strokerr(ctx2, Math.round(x), Math.round(y), Math.round(w), Math.round(h), w/2);
-  q = csize;
-  if (csiz) {
-    fs = "rgba(50, 70, 90, " + (t*0.4) + ")";
-    p = cury - csizd;
-    if (p < y) {
-      p = y;
-    }
-    if (p >= y + h) {
-      p = y + h - 1;
-    }
-    q = 100 - 100*(p-y)/h;
-  } else {
-    fs = "rgba(0, 0, 0, " + (t*0.6) + ")";
-  }
-  csizx = x+w/2;
-  csizy = y+h-h*q/100;
-  csizr = w*1.5;
-  drawStrImg(ctx2, "sz", Math.round(x+w/2-12) + 3, Math.round(csizy+w/2-1), 17, 200, 200, 200, t * 0.8);
-  ctx2.fillStyle = fs;
-  ctx2.beginPath();
-  ctx2.arc(Math.round(csizx), Math.round(csizy), Math.round(csizr), 0, 2 * Math.PI);
-  ctx2.fill();
-  if (csiz) {
-    ctx2.strokeStyle = "rgba(0, 140, 180, " + (t*0.7) + ")";
-  } else {
-    ctx2.strokeStyle = "rgba(0, 100, 150, " + (t*0.7) + ")";
-  }
-  ctx2.arc(Math.round(csizx), Math.round(csizy), Math.round(csizr), 0, 2 * Math.PI);
   ctx2.stroke();
 }
 
