@@ -64,6 +64,10 @@ Yagols is [MIT Licensed](LICENSE). You may use, distribute and copy it under the
 
 ### Changes
 
+* v4.4 (october 2019)
+
+  * A pattern format can now be (a mix of) RLE and plaintext.
+
 * v4.3 (october 2019)
 
   * Fixed cell colors.

@@ -27,7 +27,7 @@ var gts = null, wts1 = null;
 var chgcanvsz = true, chgcellsz = true, chgpos = true, prvcellsz = null, prvposx = null, prvposy = null, drawbackg = true, drawallcells = true;
 var dsppost = false, dsppostx = 0, dspposty = 0, dsppostw = 0, dspposth = 0, dspposcd = null, dspposcdn = 200;
 var patt = false;
-var fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattn = 0, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1;
+var fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattn = 0, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1, fpatteol = false, fpattpd = false;
 var dwrld = false, wrldx = 0, wrldy = 0, wrldw = 0, wrldh = 0, wrldm = 24, wrldcd = null, wrldcdn = 200, wrlda = false, wrldax = 0, wrlday = 0, wrldaw = 0, wrldah = 0;
 var grb = 4;
 var dsppxct = false, dsppxctx = 0, dsppxcty = 0, dsppxctw = 0, dsppxcth = 0, dsppxccd = null, dsppxccdn = 200;
@@ -117,7 +117,7 @@ function clrvars() {
   scalem = false, scalemn = 0, scalemcd = null,  scalemcdn = 2000;
   mingen = 0;
   runt = false, runtx = 0, runty = 0, runtw = 0, runth = 0;
-  fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattn = 0, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1;
+  fpatt = null, fpattf = 0, fpattpos = 0, fpattd = null, fpattn = 0, fpattnt = 0, fpatth = 0, fpattw = 0, fpattnl = false, fpattm = 0, fpattnum = 0, fpatthx = 0, fpattnr = true, fpattx = 0, fpattnx = 0, fpattz = 0, fpattzx = null, fpattzy = 0, fpattzxp = 0, fpattzyp = 0, fpattnn = true, fpattz2 = 0, fpatta = [], fpattc = 1, fpatteol = false, fpattpd = false;
   dwrld = false, wrldx = 0, wrldy = 0, wrldw = 0, wrldh = 0, wrldcd = null, wrlda = false, wrldax = 0, wrlday = 0, wrldaw = 0, wrldah = 0;
   ngen = false, ngencd = null, ngencd2 = null, ngencd3 = 0, ngencd4 = null, ngencd5 = null, ngenb = false, ngenbx = 0, ngenby = 0, ngenbw = 0, ngenbh = 0;
   pgen = false, pgencd = null, pgencd2 = null, pgencd3 = 0, pgencd4 = null, pgencd5 = null, pgenb = false, pgenbx = 0, pgenby = 0, pgenbw = 0, pgenbh = 0;
@@ -180,13 +180,22 @@ var patttxt =
       "\r\n" +
       "\r\n" +
       "#  This text box is used to paste text in (Extended) RLE format\r\n" +
-      "#  (Run Length Encoding) which encodes a cell pattern.\r\n" +
+      "#  (Run Length Encoding), which encodes a cell pattern, or to paste\r\n" +
+      "#  a plaintext cell pattern.\r\n" +
       "#  See http://golly.sourceforge.net/Help/formats.html#rle.\r\n" +
       "\r\n" +
+      "#  The following is the plaintext and the RLE encoding of a glider.\r\n" +
+      "\r\n" +
+      "#        Plaintext:                     RLE:\r\n" +
+      "\r\n" +
+      "#          o..                          o$o.o$oo!\r\n" +
+      "#          o.o\r\n" +
+      "#          oo.\r\n" +
+      "\r\n" +
       "#  This preloaded text is already in Extended RLE format. Click a \"Patt\"\r\n" +
-      "#  button to start decoding the text and, when decoded, add the pattern,\r\n" +
+      "#  button to start decoding the text and, when decoded, to add the pattern,\r\n" +
       "#  named \"Gosper glider gun\", to the part of the universe that is in the\r\n" +
-      "#  center of the current viewing area, by switching cells on and/or off.\r\n" +
+      "#  center of the current viewing area, by switching cells on and off.\r\n" +
       "\r\n" +
       "#  Cells are always two-state (cell is on or off). Any given dimension\r\n" +
       "#  or rule with line \"x = ...\" is simply ignored. Only the actual encoded\r\n" +
@@ -195,16 +204,21 @@ var patttxt =
       "\r\n" +
       "#  The decoder is forgiving. Blank lines and lines where the first\r\n" +
       "#  non-whitespace character(s) begin with \"#\", \"=\" or \"x\" are ignored.\r\n" +
-      "#  All other lines are considered to contain run-length encoded pattern\r\n" +
-      "#  data. Only characters \"b\" / \".\" (\"off\" cell), \"o\" / \"A\" (\"on\" cell),\r\n" +
-      "#  \"0\"..\"9\", \"$\" and \"!\" are processed. Any other character and\r\n" +
-      "#  whitespace is ignored.\r\n" +
+      "#  Also, all lines where the first non-whitespace character is \"!\" and which\r\n" +
+      "#  occur before the first line with pattern data are also ignored. All other\r\n" +
+      "#  lines are considered to contain pattern data. Only characters \"b\" / \".\"\r\n" +
+      "#  (\"off\" cell), \"o\" / \"O\" / \"A\" (\"on\" cell), \"0\"..\"9\", \"$\" and \"!\" are processed.\r\n" +
+      "#  Whitespace and any other character is ignored.\r\n" +
       "\r\n" +
-      "#  Clicking one of the \"Patt\" buttons starts the process. It can be\r\n" +
-      "#  stopped or restarted any time by clicking \"Patt\" again with an\r\n" +
-      "#  empty text or a different text. When the process is finished a\r\n" +
-      "#  completion message is added to the beginning of the text in\r\n" +
-      "#  this text box.\r\n" +
+      "#  When no dollarsign (\"$\") occurs from the first line with actual pattern\r\n" +
+      "#  data until the end of the text (including any intermediate comment lines)\r\n" +
+      "#  then the text is considered to be a plaintext pattern. In this case each\r\n" +
+      "#  end-of-line is treated as being a dollarsign, marking the end of a row cells.\r\n" +
+      "\r\n" +
+      "#  Clicking one of the \"Patt\" buttons starts the process. It can be stopped\r\n" +
+      "#  or restarted any time by clicking \"Patt\" again with an empty text or a\r\n" +
+      "#  different text. When the process is finished a completion message is\r\n" +
+      "#  added to the beginning of the text in this text box.\r\n" +
       "\r\n" +
       "#  There are three \"Patt\" buttons. When the \"/Add\" button is clicked,\r\n" +
       "#  the process just adds the \"on\" cells of the pattern to the universe,\r\n" +
@@ -6223,6 +6237,8 @@ function fpattbf(mode) {
   fpattnn = true;
   fpatta = [];
   fpattc = 1;
+  fpatteol = false;
+  fpattpd = false;
   if (patt) {
     dspdiv(1);
   }
@@ -6268,10 +6284,20 @@ function pattf1() {
   } else if (fpattnl) {
     if (c.search(/\S|$/) === 0) {
       fpattnl = false;
-      if (c === "#" ||  c2 === "x=" || c2 === "x ") {
+      if (c === "#" ||  c2 === "x=" || c2 === "x " || (!fpattpd || fpatteol) && c === '!') {
         fpattpos += fpatt.substring(fpattpos).search(/\n|\r|$/);
         fpattnl = true;
       } else {
+        if (!fpattpd) {
+         fpatteol = fpatt.indexOf('$', fpattpos) === -1;
+        }
+        if (fpatteol) {
+          fpattnum === 0 ? fpatthx++ : fpatthx += fpattnum;
+          fpattnr = true;
+          fpattx = 0;
+          fpattnum = 0;
+        }
+        fpattpd = true;
         fpattpos--;
       }
     }
@@ -6288,7 +6314,7 @@ function pattf1() {
     fpattnr = true;
     fpattx = 0;
     fpattnum = 0;
-  } else if (c === "b" || c === "." || c === "o" || c === "A") {
+  } else if (c === "b" || c === "." || c === "o" || c === "O" || c === "A") {
     if (fpattnr) {
       fpattnr = false;
       fpatth += fpatthx;
@@ -6297,7 +6323,7 @@ function pattf1() {
     x = fpattx;
     fpattnum === 0 ? fpattx++ : fpattx += fpattnum;
     fpattnum = 0;
-    if (c === "o" || c === "A") {
+    if (c === "o" || c === "O" || c === "A") {
       for (; x < fpattx; x++) {
         fpattd[""+x+"-"+(fpatth-1)] = true;
         fpattn++;
