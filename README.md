@@ -62,6 +62,8 @@
 
 Yagols is [MIT Licensed](LICENSE). You may use, distribute and copy it under the license terms.
 
+***
+
 ### Changes
 
 * v4.4 (october 2019)
