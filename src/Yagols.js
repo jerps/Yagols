@@ -1,6 +1,6 @@
 /*
 
-Yagols v4.4.1
+Yagols v4.4.2
 
 (c) 2018-2019 John Erps
 
@@ -57,7 +57,7 @@ var ddiama = 0, ddiamb = 0, ddiamcd = null, ddiamcdn = 800, ddiamx = 0, ddiamy =
 var vwcrs = false;
 var swzmt = false, swzmtx = 0, swzmty = 0, swzmtw = 0, swzmth = 0, swzmcd = null, swzmcdn = 200, swzmcd2 = null, swzmcdn2 = 300, swzmf = true, swzmsw = true;
 var trkw = false, trkwdx = 0, trkwdx2 = 0, trkwdy = 0, trkwdy2 = 0;
-var hbcksl = null, hbcksll = 0, hbckslf = 0, hbcksm = null;
+var hbcksl = null, hbcksll = 0, hbckslf = 0;
 var stpgn = 0, stpgn2 = 0, stpgnm = 0, stpgnm2 = 0, stpge = false, stpga = false, stpgax = false, stpgcd = null, stpgcdn = 500, stpgcd2 = null, stpgcdn2 = 500, stpgsf = false, stpgnc = 0, stpgnc2 = 0, stpgssx = 0, stpgssy = 0, stpgssw = 0, stpgssh = 0, stpgssx2 = 0, stpgssy2 = 0, stpgssw2 = 0, stpgssh2 = 0, stpgdx = 0, stpgdy = 0, stpgdw = 0, stpgdh = 0;
 var tickct = null, tickcr1 = 0, tickcr2 = 0, tickcr3 = 0;
 var msgl = [], msgll = 0, msgf1 = 0, msgcd1 = null, msgcdn1 = 30000, msgcd2 = null, msgcdn2 = 2000, msgl1 = "", msgl2 = "", msgl3 = "";
@@ -101,7 +101,7 @@ function clrvars0() {
   histdvh = 0, histdvi = 0, histdvp = 0;
   ffw = 0, ffwm = 0, ffwstp = false, ngenfx = 0, ngenfy = 0, ngenfw = 0, ngenfh = 0, ngenfcd = null, ngenfcd2 = null, pgenfx = 0, pgenfy = 0, pgenfw = 0, pgenfh = 0, pgenfcd = null, pgenfcd2 = null;
   ffwsbcd = null, ffwsbcdn = 500, ffwsbf = false, ffwsbm = 0;
-  hbcksl = null, hbcksll = 0, hbckslf = 0, hbcksm = null;
+  hbcksl = null, hbcksll = 0, hbckslf = 0;
   htgen = 0, htgen2 = -1, htgen2x = 0, httot = 0, httot2 = 0;
   if (!run) {
     genbbl = false;
@@ -143,7 +143,7 @@ function clrvars() {
   bmemv0 = 0, bmemv1 = 0, bmemv2 = 0, bmemv3 = 0, bmemv4 = 0;
   cellsl = 0, cellsr = 0, cellst = 0, cellsb = 0;
   calcWrld();
-  while (fl -- > 0) {
+  while (fl-- > 0) {
     fcidxinc();
   }
   clrucd = performance.now();
@@ -1314,7 +1314,7 @@ function addel() {
     if (cc === 8 || cc === 27) {
       f = peKey(cc);
     } else if (cc === 37 || cc === 38 || cc === 39 || cc === 40) {
-      f - true;
+      f = true;
       if (curskcc === 0) {
         curskcc = cc;
         curskd = 1;
@@ -5849,8 +5849,7 @@ function calcGen(u) {
     if (!hbcksl) {
       hbcksl = [];
     }
-    hbcksm = new Map();
-    for (i = hbcksl.length; i < 200; i++) {
+    for (i = hbcksl.length; i < 400; i++) {
       hbcksl[i] = 0;
     }
     z = histgp;
@@ -5873,13 +5872,12 @@ function calcGen(u) {
         q2 = rlHist(q1[0], q1[1], p--)[2];
         rclHist1_2();
         hbcksl[hbcksll++] = hist[q2[0]][0][q2[1]][10];
-        hbcksm.set(hist[q2[0]][0][q2[1]][10], true);
-        if (p <= 0) {
+        if (p === 0) {
           p = -1;
+          q1 = q2;
         }
       } else if (p === 0) {
         hbcksl[hbcksll++] = hist[q1[0]][0][q1[1]][10];
-        hbcksm.set(hist[q1[0]][0][q1[1]][10], true);
         if (hist[q1[0]][0][q1[1]][3][0] > 0 || hist[q1[0]][0][q1[1]][3][1] > 0) {
           break;
         }
@@ -6076,11 +6074,8 @@ function calcGen(u) {
       }
       if (hbcksll < hbcksl.length) {
         hbcksll++;
-      } else {
-        hbcksm.delete(hbcksl[hbckslf]);
       }
       hbcksl[hbckslf] = hist[histh][0][histi][10];
-      hbcksm.set(hist[histh][0][histi][10], true);
     }
     if (cellsn > 0 && cellsxl === 0) {
       if (msgf1 !== 3) {
@@ -6952,9 +6947,6 @@ function fcidxg2(c, r) {
 function fcidxg3(c, r) {
   return fcidx(c, r, 23);
 }
-function fcidxs0(c, r, v) {
-  fcidx(c, r, 10, v);
-}
 function fcidxs1(c, r, v) {
   fcidx(c, r, 11, v);
 }
@@ -7817,20 +7809,20 @@ function hbckhac() {
 
 function hbckcheck() {
   var p, i, h, x, n, hi, q, j, c, r, g, z, k, p0, q0, q1, pp, dx, dy, pn, px;
-  if (!hbcksl || gennum < 3 || hbcksll < 3 || hbcksm && !hbcksm.has(hbcksl[hbckslf])) {
+  if (!hbcksl || gennum < 2 || hbcksll < 3) {
     return;
   }
   p = 0;
   h = hbcksl[hbckslf];
   i = hbckslf;
-  while (p < 2 || p < gennum && p < hbcksll && h !== hbcksl[i]) {
+  while (p < 2 || p <= gennum && p < hbcksll && h !== hbcksl[i]) {
     p++;
     i++;
     if (i >= hbcksl.length) {
       i = 0;
     }
   }
-  if (p < gennum && p < hbcksll) {
+  if (p <= gennum && p < hbcksll) {
     x = new Map();
     for (i = 0; i < cellslen; i++) {
       bmemgA(i);
@@ -7851,14 +7843,19 @@ function hbckcheck() {
         q1 = rlHist(q[0], q[1], p0--);
         rclHist1_2();
         hi = hist[q1[0]][0][q1[1]];
+        if (p0 === 0 && j < p) {
+          q0 = prevHist(q1[0], q1[1], 2);
+        }
       } else {
         q = q0;
-        q0 = prevHist(q[0], q[1], 2);
         hi = hist[q[0]][0][q[1]];
-        if ((pp = hist[q0[0]][0][q0[1]][11][0]) > 0) {
-          p0 = hist[q0[0]][0][q0[1]][11][1];
-          dx = hist[q0[0]][0][q0[1]][11][2];
-          dy = hist[q0[0]][0][q0[1]][11][3];
+        if (j < p) {
+          q0 = prevHist(q[0], q[1], 2);
+          if ((pp = hist[q0[0]][0][q0[1]][11][0]) > 0) {
+            p0 = hist[q0[0]][0][q0[1]][11][1];
+            dx = hist[q0[0]][0][q0[1]][11][2];
+            dy = hist[q0[0]][0][q0[1]][11][3];
+          }
         }
       }
       pn += px - hi[14];
@@ -8013,11 +8010,11 @@ function bmemxA(i) {
     bmemmA = new Map();
     bmembA = null;
     bmembiA = -1;
-    bmemnA = Math.trunc(60000/5);
+    bmemnA = 6000/5;
   }
   if ((x = Math.trunc(i/bmemnA)) !== bmembiA || !bmembA) {
     if (!(bmembA = bmemmA.get(x))) {
-      bmembA = new Int32Array(60000);
+      bmembA = new Int32Array(6000);
       bmemmA.set(x, bmembA);
     }
     bmembiA = x;
@@ -8045,11 +8042,11 @@ function bmemxB(i) {
     bmemmB = new Map();
     bmembB = null;
     bmembiB = -1;
-    bmemnB = Math.trunc(60000/4);
+    bmemnB = 6000/4;
   }
   if ((x = Math.trunc(i/bmemnB)) !== bmembiB || !bmembB) {
     if (!(bmembB = bmemmB.get(x))) {
-      bmembB = new Int32Array(60000);
+      bmembB = new Int32Array(6000);
       bmemmB.set(x, bmembB);
     }
     bmembiB = x;
@@ -8075,11 +8072,11 @@ function bmemxC(i) {
     bmemmC = new Map();
     bmembC = null;
     bmembiC = -1;
-    bmemnC = Math.trunc(60000/2);
+    bmemnC = 6000/2;
   }
   if ((x = Math.trunc(i/bmemnC)) !== bmembiC || !bmembC) {
     if (!(bmembC = bmemmC.get(x))) {
-      bmembC = new Int32Array(60000);
+      bmembC = new Int32Array(6000);
       bmemmC.set(x, bmembC);
     }
     bmembiC = x;
@@ -8101,11 +8098,11 @@ function bmemxD(i) {
     bmemmD = new Map();
     bmembD = null;
     bmembiD = -1;
-    bmemnD = Math.trunc(60000/2);
+    bmemnD = 6000/2;
   }
   if ((x = Math.trunc(i/bmemnD)) !== bmembiD || !bmembD) {
     if (!(bmembD = bmemmD.get(x))) {
-      bmembD = new Int32Array(60000);
+      bmembD = new Int32Array(6000);
       bmemmD.set(x, bmembD);
     }
     bmembiD = x;
@@ -8127,11 +8124,11 @@ function bmemxE(i) {
     bmemmE = new Map();
     bmembE = null;
     bmembiE = -1;
-    bmemnE = Math.trunc(60000/3);
+    bmemnE = 6000/3;
   }
   if ((x = Math.trunc(i/bmemnE)) !== bmembiE || !bmembE) {
     if (!(bmembE = bmemmE.get(x))) {
-      bmembE = new Int32Array(60000);
+      bmembE = new Int32Array(6000);
       bmemmE.set(x, bmembE);
     }
     bmembiE = x;

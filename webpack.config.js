@@ -1,13 +1,3 @@
-/*
-
-Yagols v4.0
-
-(c) 2018-2019 John Erps
-
-This software is licensed under the MIT license (see LICENSE)
-
-*/
-
 const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
