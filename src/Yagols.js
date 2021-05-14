@@ -1,8 +1,8 @@
 /*
 
-Yagols v4.4.2
+Yagols v4.4.3
 
-(c) 2018-2019 John Erps
+(c) 2018-2021 John Erps
 
 This software is licensed under the MIT license (see LICENSE)
 

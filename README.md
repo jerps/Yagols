@@ -1,4 +1,4 @@
-## Yagols v4.4.2 - Yet another Game of Life simulator
+## Yagols v4.4.3 - Yet another Game of Life simulator
 
 #### Yagols is
 
