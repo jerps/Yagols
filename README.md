@@ -1,3 +1,5 @@
+# This project has been archived
+
 ## Yagols v4.4.3 - Yet another Game of Life simulator
 
 #### Yagols is
@@ -7,6 +9,10 @@
 * A browser (canvas) implementation of the well-known simulation "Conway's Game of Life" (cellular automaton).
 
 * One .html page with mainly JavaScript and a bit of HTML/CSS. No further dependencies.
+
+***
+
+Usage tip: Place cursor and press left button for 0.5s to place (a) cell(s).
 
 ***
 
@@ -65,6 +71,10 @@ Yagols is [MIT Licensed](LICENSE). You may use, distribute and copy it under the
 ***
 
 ### Changes
+
+* v4.4.3 (may 2021)
+
+  * Security updates.
 
 * v4.4.2 (june 2020)
 
