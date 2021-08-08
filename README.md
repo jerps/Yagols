@@ -72,6 +72,10 @@ Yagols is [MIT Licensed](LICENSE). You may use, distribute and copy it under the
 
 ### Changes
 
+* v4.4.4 (august 2021)
+
+  * Removed gtag.
+
 * v4.4.3 (may 2021)
 
   * Security updates.
